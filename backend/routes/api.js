@@ -7,7 +7,7 @@ router.get('/todos', (req, res, next) => {
 
 router.post('/todos', (req, res, next) => {
   // post placeholder
-});
+}); 
 
 router.delete('/todos/:id', (req, res, next) => {
   // delete placeholder
