@@ -5,11 +5,11 @@ JiffyJobs is a job board curated for students to find quick jobs either on-campu
 
 ## Table of Content 
 * [Installation](#Installation)
-* Running the App
-* Built With
-* Snapshots
-* About Us
-* What We Learned
+* [Running the App](#Running-the-App)
+* [Built With](#Built-With)
+* [Snapshots](#Snapshots)
+* [About Us](#About-Us)
+* [What We Learned](#What-We-Learned)
 
 ## Installation 
 
