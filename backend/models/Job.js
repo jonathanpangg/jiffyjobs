@@ -11,7 +11,7 @@ const jobsSchema = new mongoose.Schema(
             required: true
         },
         pay: {
-            type: String,
+            type: Number,
             required: true
         },
         location: {
@@ -23,11 +23,11 @@ const jobsSchema = new mongoose.Schema(
             required: true
         },
         time: {
-            type: String,
+            type: [Date],
             required: true
         },
         date_posted: { 
-            type: String,
+            type: Date,
             required: true
         }
     }
