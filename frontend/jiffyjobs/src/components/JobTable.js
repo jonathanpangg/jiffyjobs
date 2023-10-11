@@ -17,7 +17,7 @@ const rows = [
 export function JobTable() {
     return (
         <Box sx={{ height: 400, width: '100%' }}>
-        <DataGrid rows={rows} columns={columns}/>
+            <DataGrid rows={rows} columns={columns}/>
         </Box>
     );
 }
