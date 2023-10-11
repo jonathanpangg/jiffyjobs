@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 
-const jobsSchema = new mongoose.Schema(
+const JobsSchema = new mongoose.Schema(
     {
-        job_title:{
+        title:{
             type: String,
             required: true
         },
@@ -36,3 +36,6 @@ const jobsSchema = new mongoose.Schema(
         }
     }
 );
+
+const Jobs = mongoose.model("Job", JobsSchema);
+export default Jobs;
