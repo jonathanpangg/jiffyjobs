@@ -6,6 +6,10 @@ import {
     handleBadRequest,
     } from "../utils/handler";
 
+    /**
+     * Takes in an id and it returns the Job object associated 
+     * with this id
+     */
 export const getJob = async (req, res) => {
     const { id } = req.params;
 
@@ -22,6 +26,10 @@ export const getJob = async (req, res) => {
     }
 };
 
+    /**
+     * Takes in an id and it removes that specific job from
+     * the database then returns the message "Sucessfully deleted"
+     */
 export const deleteJobsByID = async (req, res) => {
     const { id } = req.params;
 
@@ -38,6 +46,12 @@ export const deleteJobsByID = async (req, res) => {
     }
 };
 
+    /**
+     * This takes in 
+     * (title, description, pay, location, categories, time, date_posted) as
+     * the inputs and then creates a job object in the database.
+     * it also returns the created job. 
+     */
 export const postJobs = async (req, res) => {
     const { title, description, pay, location, categories, time, date_posted} = req.body;
 
@@ -63,6 +77,12 @@ export const postJobs = async (req, res) => {
     }
 };
 
+    /**
+     * This takes in and id and 
+     * (title, description, pay, location, categories, time, date_posted) as
+     * the inputs and then edits the job object in the database.
+     * Then it returns the edited Job object. 
+     */
 export const updateJobs = async (req, res) => {
     const { title, description, pay, location, categories, time, date_posted} = req.body;
     const { id } = req.params;

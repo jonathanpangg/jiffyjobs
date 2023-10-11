@@ -4,7 +4,7 @@ import {
         deleteJobsByID, 
         postJobs, 
         updateJobs
-    } from "../controllers/job";
+    } from "../controllers/jobController";
 
     const router = express.Router();
 
@@ -12,3 +12,5 @@ import {
     router.delete("/id", deleteJobsByID);
     router.post("/create", postJobs);
     router.put("/:id", updateJobs);
+
+    export default router;
