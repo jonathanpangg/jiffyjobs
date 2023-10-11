@@ -69,21 +69,31 @@ export const updateJobs = async (req, res) => {
 
     try {
 
-        const editJob = await Jobs.findByIdAndUpdate({
-            title,
-            description,
-            pay,
-            location,
-            categories,
-            time,
-            date_posted
-        });
+        const updateFields = {};
 
-        if (!editJob) {
-            return handleBadRequest(res, "Unable to edit Job");
-        }
+		if (title) updateFields.title = title;
+		if (description) updateFields.description = description;
+        if (pay) updateFields.pay = pay;
+        if (location) updateFields.location = location;
+        if (categories) updateFields.categories = categories;
+        if (time) updateFields.time = time;
+        if (date_posted) updateFields.date_posted = date_posted;
 
-        return handleSuccess(res, editJob);
+		updateFields.updatedAt = Date.now();
+
+		const editJob = await Jobs.findByIdAndUpdate(
+			id,
+			updateFields,
+			{
+				new: true,
+			}
+		);
+
+		if (!healthData) {
+			return handleNotFound(res, "Job not found");
+		}
+
+		return handleSuccess(res, editJob);
     } catch (error) {
         return handleServerError(res, "Internal server error");
     }
