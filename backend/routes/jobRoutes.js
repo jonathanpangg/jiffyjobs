@@ -4,8 +4,7 @@ import {
         deleteJobsByID, 
         postJobs, 
         updateJobs
-    } from "../controllers/jobController";
-
+} from "../controllers/jobController";
 const router = express.Router();
 
 // routes for the job board
@@ -21,5 +20,6 @@ const router = express.Router();
 
     // update a job
     router.put("/:id", updateJobs);
-    
-module.exports = router
+
+    // module.exports = router;
+export default router;
