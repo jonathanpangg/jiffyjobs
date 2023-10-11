@@ -44,7 +44,8 @@ export const deleteJobsByID = async (req, res) => {
     } catch (error) {
         return handleServerError(res, "Internal server error");
     }
-};
+}; 
+
 
 
 /**
