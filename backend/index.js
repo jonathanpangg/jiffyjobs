@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 
 
 // routes
-app.use('api/jobs', jobRoutes)
+app.use('/api/jobs', jobRoutes)
 
 
 // connect to db

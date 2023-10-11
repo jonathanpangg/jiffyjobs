@@ -8,7 +8,7 @@ const JobsSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        job_poster_id: {
+        job_poster: {
             type: String,
             required: true
         },

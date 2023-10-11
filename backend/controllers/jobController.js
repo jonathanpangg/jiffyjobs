@@ -1,16 +1,16 @@
-import Jobs from "../models/JobSchema";
+import Jobs from "../models/JobSchema.js";
 import {
     handleNotFound,
 	handleSuccess,
 	handleServerError,
     handleBadRequest,
-    } from "../utils/handler";
+    } from "../utils/handler.js";
 
 /**
  * Takes in an id and it returns the Job object associated 
  * with this id
  */
-const getJob = async (req, res) => {
+export const getJob = async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -30,7 +30,7 @@ const getJob = async (req, res) => {
  * Takes in an id and it removes that specific job from
  * the database then returns the message "Sucessfully deleted"
  */
-const deleteJobsByID = async (req, res) => {
+export const deleteJobsByID = async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -53,7 +53,7 @@ const deleteJobsByID = async (req, res) => {
  * the inputs and then creates a job object in the database.
  * it also returns the created job. 
  */
-postJobs = async (req, res) => {
+export const postJobs = async (req, res) => {
     const { 
         title, 
         job_poster,
@@ -64,10 +64,8 @@ postJobs = async (req, res) => {
         time, 
         date_posted
     } = req.body;
-    console.log("hello")
 
     try {
-
         const makeJob = await Jobs.create({
             title,
             job_poster,
@@ -78,13 +76,15 @@ postJobs = async (req, res) => {
             time,
             date_posted
         });
+        console.log(title, job_poster, description)
+
 
         if (!makeJob) {
             return handleBadRequest(res, "Unable to create Job");
         }
-
         return handleSuccess(res, makeJob);
     } catch (error) {
+        
         return handleServerError(res, "Internal server error");
     }
 };
@@ -95,8 +95,17 @@ postJobs = async (req, res) => {
  * the inputs and then edits the job object in the database.
  * Then it returns the edited Job object. 
  */
-const updateJobs = async (req, res) => {
-    const { title, description, pay, location, categories, time, date_posted} = req.body;
+export const updateJobs = async (req, res) => {
+    const { 
+        title,
+        job_poster,
+        description,
+        pay,
+        location,
+        categories,
+        time,
+        date_posted
+    } = req.body;
     const { id } = req.params;
 
     try {
@@ -104,6 +113,7 @@ const updateJobs = async (req, res) => {
         const updateFields = {};
 
 		if (title) updateFields.title = title;
+        if (job_poster) updateFields.job_poster = job_poster;
 		if (description) updateFields.description = description;
         if (pay) updateFields.pay = pay;
         if (location) updateFields.location = location;
@@ -131,9 +141,3 @@ const updateJobs = async (req, res) => {
     }
 };
 
-module.exports = {
-    getJob,
-    deleteJobsByID,
-    postJobs,
-    updateJobs
-}

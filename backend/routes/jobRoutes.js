@@ -4,7 +4,8 @@ import {
         deleteJobsByID, 
         postJobs, 
         updateJobs
-} from "../controllers/jobController";
+} from "../controllers/jobController.js";
+
 const router = express.Router();
 
 // routes for the job board
