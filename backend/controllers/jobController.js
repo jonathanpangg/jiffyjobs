@@ -1,4 +1,4 @@
-import Jobs from "../models/Job";
+import Jobs from "../models/JobSchema";
 import {
     handleNotFound,
 	handleSuccess,
@@ -6,7 +6,8 @@ import {
     handleBadRequest,
     } from "../utils/handler";
 
-export const getJob = async (req, res) => {
+
+const getJob = async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -22,7 +23,7 @@ export const getJob = async (req, res) => {
     }
 };
 
-export const deleteJobsByID = async (req, res) => {
+const deleteJobsByID = async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -38,13 +39,23 @@ export const deleteJobsByID = async (req, res) => {
     }
 };
 
-export const postJobs = async (req, res) => {
-    const { title, description, pay, location, categories, time, date_posted} = req.body;
-
+const postJobs = async (req, res) => {
+    const { 
+        title, 
+        job_poster,
+        description, 
+        pay, 
+        location, 
+        categories, 
+        time, 
+        date_posted
+    } = req.body;
+    console.log("hello")
     try {
 
         const makeJob = await Jobs.create({
             title,
+            job_poster,
             description,
             pay,
             location,
@@ -63,7 +74,7 @@ export const postJobs = async (req, res) => {
     }
 };
 
-export const updateJobs = async (req, res) => {
+const updateJobs = async (req, res) => {
     const { title, description, pay, location, categories, time, date_posted} = req.body;
     const { id } = req.params;
 
@@ -98,3 +109,10 @@ export const updateJobs = async (req, res) => {
         return handleServerError(res, "Internal server error");
     }
 };
+
+module.exports = {
+    getJob,
+    deleteJobsByID,
+    postJobs,
+    updateJobs
+}
