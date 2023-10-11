@@ -28,7 +28,7 @@ export const deleteJobsByID = async (req, res) => {
     try {
         const deleteJob = await Jobs.findByIdAndRemove(id);
 
-		if (!job) {
+		if (!deleteJob) {
 			return handleNotFound(res, "Job not found");
 		}
 
@@ -53,11 +53,47 @@ export const postJobs = async (req, res) => {
             date_posted
         });
 
-        if (!job) {
+        if (!makeJob) {
             return handleBadRequest(res, "Unable to create Job");
         }
 
         return handleSuccess(res, makeJob);
+    } catch (error) {
+        return handleServerError(res, "Internal server error");
+    }
+};
+
+export const updateJobs = async (req, res) => {
+    const { title, description, pay, location, categories, time, date_posted} = req.body;
+    const { id } = req.params;
+
+    try {
+
+        const updateFields = {};
+
+		if (title) updateFields.title = title;
+		if (description) updateFields.description = description;
+        if (pay) updateFields.pay = pay;
+        if (location) updateFields.location = location;
+        if (categories) updateFields.categories = categories;
+        if (time) updateFields.time = time;
+        if (date_posted) updateFields.date_posted = date_posted;
+
+		updateFields.updatedAt = Date.now();
+
+		const editJob = await Jobs.findByIdAndUpdate(
+			id,
+			updateFields,
+			{
+				new: true,
+			}
+		);
+
+		if (!healthData) {
+			return handleNotFound(res, "Job not found");
+		}
+
+		return handleSuccess(res, editJob);
     } catch (error) {
         return handleServerError(res, "Internal server error");
     }
