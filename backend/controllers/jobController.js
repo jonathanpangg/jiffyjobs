@@ -22,7 +22,7 @@ export const getJob = async (req, res) => {
 
 		return handleSuccess(res, Jobs);
     } catch (error) {
-        return handleServerError(res, "Internal server error");
+        return handleServerError(res, error);
     }
 };
 
@@ -42,7 +42,7 @@ export const deleteJobsByID = async (req, res) => {
 
 		return handleSuccess(res, {message: "Sucessfully deleted"});
     } catch (error) {
-        return handleServerError(res, "Internal server error");
+        return handleServerError(res, error);
     }
 };
 
@@ -57,7 +57,7 @@ export const postJobs = async (req, res) => {
 
     try {
 
-        const makeJob = await Jobs.create({
+        const makeJob = new Jobs({
             title,
             description,
             pay,
@@ -67,13 +67,11 @@ export const postJobs = async (req, res) => {
             date_posted
         });
 
-        if (!makeJob) {
-            return handleBadRequest(res, "Unable to create Job");
-        }
+        const newJob = await makeJob.save();
 
-        return handleSuccess(res, makeJob);
+        return handleSuccess(res, newJob);
     } catch (error) {
-        return handleServerError(res, "Internal server error");
+        return handleServerError(res, error);
     }
 };
 
@@ -115,6 +113,6 @@ export const updateJobs = async (req, res) => {
 
 		return handleSuccess(res, editJob);
     } catch (error) {
-        return handleServerError(res, "Internal server error");
+        return handleServerError(res, error);
     }
 };
