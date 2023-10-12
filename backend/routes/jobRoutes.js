@@ -11,7 +11,7 @@ const router = express.Router();
 // routes for the job board
 
     // get job by id
-    router.get("/:id/Job", getJob);
+    router.get("/:id", getJob);
 
     // delete job by id
     router.delete("/:id", deleteJobsByID);

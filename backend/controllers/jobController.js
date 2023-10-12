@@ -20,9 +20,9 @@ export const getJob = async (req, res) => {
 			return handleNotFound(res, "Job not found.");
 		}
 
-		return handleSuccess(res, Jobs);
+		return handleSuccess(res, job);
     } catch (error) {
-        return handleServerError(res, "Internal server error");
+        return handleServerError(res, error);
     }
 };
 
@@ -40,9 +40,9 @@ export const deleteJobsByID = async (req, res) => {
 			return handleNotFound(res, "Job not found");
 		}
 
-		return handleSuccess(res, {message: "Sucessfully deleted"});
+		return handleSuccess(res, deleteJob);
     } catch (error) {
-        return handleServerError(res, "Internal server error");
+        return handleServerError(res, error);
     }
 }; 
 
@@ -67,7 +67,8 @@ export const postJobs = async (req, res) => {
     } = req.body;
 
     try {
-        const makeJob = await Jobs.create({
+
+        const makeJob = new Jobs({
             title,
             job_poster,
             description,
@@ -80,13 +81,11 @@ export const postJobs = async (req, res) => {
         console.log(title, job_poster, description)
 
 
-        if (!makeJob) {
-            return handleBadRequest(res, "Unable to create Job");
-        }
-        return handleSuccess(res, makeJob);
+        const newJob = await makeJob.save();
+
+        return handleSuccess(res, newJob);
     } catch (error) {
-        
-        return handleServerError(res, "Internal server error");
+        return handleServerError(res, error);
     }
 };
 
@@ -132,13 +131,13 @@ export const updateJobs = async (req, res) => {
 			}
 		);
 
-		if (!healthData) {
+		if (!editJob) {
 			return handleNotFound(res, "Job not found");
 		}
 
 		return handleSuccess(res, editJob);
     } catch (error) {
-        return handleServerError(res, "Internal server error");
+        return handleServerError(res, error);
     }
 };
 
