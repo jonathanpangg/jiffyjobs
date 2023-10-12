@@ -4,7 +4,6 @@ import mongoose from 'mongoose';
 import cors from "cors"
 
 import jobRoutes from "./routes/jobRoutes.js"
-// const jobRoutes = require('./routes/jobRoutes')
 dotenv.config();
 
 
@@ -34,7 +33,7 @@ mongoose.connect(process.env.DB)
         // listen for requests
         app.listen(process.env.PORT, () => {
             console.log('connected to db & listening on port', process.env.PORT)
-        }) 
+        })
     })
     .catch((error) => {
         console.log(error)

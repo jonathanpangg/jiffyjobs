@@ -14,7 +14,7 @@ const router = express.Router();
     router.get("/:id/Job", getJob);
 
     // delete job by id
-    router.delete("/id", deleteJobsByID);
+    router.delete("/:id", deleteJobsByID);
 
     // post a new job
     router.post("/create", postJobs);
