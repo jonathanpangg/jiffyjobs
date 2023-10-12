@@ -3,7 +3,8 @@ import {
         getJob, 
         deleteJobsByID, 
         postJobs, 
-        updateJobs
+        updateJobs,
+        applytoJobs
 } from "../controllers/jobController.js";
 
 const router = express.Router();
@@ -22,5 +23,10 @@ const router = express.Router();
     // update a job
     router.put("/:id", updateJobs);
 
-    // module.exports = router;
+    // submit a job application
+    router.post("/apply/:seeker_id/:job_id", applytoJobs)
+
+    // withdraw a job application
+    router.delete("/withdraw/:seeker_id/:job_id")
+
 export default router;

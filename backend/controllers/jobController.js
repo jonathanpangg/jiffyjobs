@@ -141,3 +141,26 @@ export const updateJobs = async (req, res) => {
     }
 };
 
+/*
+* Takes in seekerId and addes it to the jobs schema "applicants"
+*/
+export const applytoJobs = async (req, res) => {
+    const seeker_id = req.params.seeker_id
+    const job_id = req.params.job_id
+
+    try {
+        const job = await Jobs.findById(job_id);
+    
+        if (!job) {
+          return handleNotFound(res, 'Job not found');
+        }
+    
+        job.applicants.push({ _id: seeker_id });
+    
+        const updatedJob = await job.save();
+        return handleSuccess(res, updatedJob);
+    } catch (error) {
+        return handleServerError(res, error);
+    }
+}
+
