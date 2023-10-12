@@ -96,36 +96,29 @@ export const postJobs = async (req, res) => {
  * Then it returns the edited Job object. 
  */
 export const updateJobs = async (req, res) => {
-    const { 
-        title,
-        job_poster,
-        description,
-        pay,
-        location,
-        categories,
-        time,
-        date_posted
-    } = req.body;
     const { id } = req.params;
+    // set values to be updated to empty
+    const updateFields = {}; 
 
     try {
+        // for any key that's not an empty value we add to 
+        // the to be updated listed
+        for (const key in req.body) {
+            if (req.body[key] !== undefined) {
+                updateFields[key] = req.body[key];
+            }
+        };
 
-        const updateFields = {};
-
-		if (title) updateFields.title = title;
-        if (job_poster) updateFields.job_poster = job_poster;
-		if (description) updateFields.description = description;
-        if (pay) updateFields.pay = pay;
-        if (location) updateFields.location = location;
-        if (categories) updateFields.categories = categories;
-        if (time) updateFields.time = time;
-        if (date_posted) updateFields.date_posted = date_posted;
+        if (Object.keys(updateFields).length === 0) {
+            return handleBadRequest(res, "Nothing to update");
+        }
 
 		updateFields.updatedAt = Date.now();
 
+        // the $set allows us to set specific keys to a new value
 		const editJob = await Jobs.findByIdAndUpdate(
 			id,
-			updateFields,
+			{$set: updateFields},
 			{
 				new: true,
 			}
