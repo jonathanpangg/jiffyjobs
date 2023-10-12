@@ -36,3 +36,30 @@
     transform: rotate(360deg);
   }
 }
+
+.top-bar {
+  display: flex;
+}
+
+.logo-font {
+  font-family: "Righteous-Regular";
+  font-size: xx-large;
+  padding-left: 5%;
+  padding-top: 1%;
+}
+
+.tab-font {
+  font-family: "Outfit";
+  font-size: medium;
+  padding: 0.75%;
+  padding-left: 5%;
+  vertical-align: center;
+  align-items: center;
+}
+
+.name-font {
+  font-family: "Outfit";
+  font-size: large;
+  padding-left: 75%;
+  padding-top: 3.15%;
+}

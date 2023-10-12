@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
+import Grid from '@mui/material/Grid';
 
 const columns = [
     { field: 'id', headerName: 'ID', width: 25 },
@@ -16,8 +17,17 @@ const rows = [
 
 export function JobTable() {
     return (
-        <Box sx={{ height: 400, width: '100%' }}>
-            <DataGrid rows={rows} columns={columns}/>
-        </Box>
+        // <Box sx={{ height: 400, width: '100%' }}>
+        //     <DataGrid rows={rows} columns={columns}/>
+        // </Box>
+        <div> 
+            <Box sx={{ flexGrow: 1 }}>
+                <Grid container spacing={2}>
+                    <Grid item xs={1}>
+                        
+                    </Grid>
+                </Grid>
+            </Box>
+        </div>
     );
 }
