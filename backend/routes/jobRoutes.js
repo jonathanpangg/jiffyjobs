@@ -27,6 +27,6 @@ const router = express.Router();
     router.post("/apply/:seeker_id/:job_id", applytoJobs)
 
     // withdraw a job application
-    router.delete("/withdraw/:seeker_id/:job_id")
+    router.delete("/withdraw/:seeker_id/:job_id", )
 
 export default router;
