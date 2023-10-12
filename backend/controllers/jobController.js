@@ -20,7 +20,7 @@ export const getJob = async (req, res) => {
 			return handleNotFound(res, "Job not found.");
 		}
 
-		return handleSuccess(res, Jobs);
+		return handleSuccess(res, job);
     } catch (error) {
         return handleServerError(res, error);
     }
@@ -40,7 +40,7 @@ export const deleteJobsByID = async (req, res) => {
 			return handleNotFound(res, "Job not found");
 		}
 
-		return handleSuccess(res, {message: "Sucessfully deleted"});
+		return handleSuccess(res, deleteJob);
     } catch (error) {
         return handleServerError(res, error);
     }
@@ -131,7 +131,7 @@ export const updateJobs = async (req, res) => {
 			}
 		);
 
-		if (!healthData) {
+		if (!editJob) {
 			return handleNotFound(res, "Job not found");
 		}
 
