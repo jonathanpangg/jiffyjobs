@@ -1,15 +1,15 @@
-import Jobs from "../models/Job";
+import Jobs from "../models/JobSchema.js";
 import {
     handleNotFound,
 	handleSuccess,
 	handleServerError,
     handleBadRequest,
-    } from "../utils/handler";
+    } from "../utils/handler.js";
 
-    /**
-     * Takes in an id and it returns the Job object associated 
-     * with this id
-     */
+/**
+ * Takes in an id and it returns the Job object associated 
+ * with this id
+ */
 export const getJob = async (req, res) => {
     const { id } = req.params;
 
@@ -26,10 +26,10 @@ export const getJob = async (req, res) => {
     }
 };
 
-    /**
-     * Takes in an id and it removes that specific job from
-     * the database then returns the message "Sucessfully deleted"
-     */
+/**
+ * Takes in an id and it removes that specific job from
+ * the database then returns the message "Sucessfully deleted"
+ */
 export const deleteJobsByID = async (req, res) => {
     const { id } = req.params;
 
@@ -44,21 +44,33 @@ export const deleteJobsByID = async (req, res) => {
     } catch (error) {
         return handleServerError(res, error);
     }
-};
+}; 
 
-    /**
-     * This takes in 
-     * (title, description, pay, location, categories, time, date_posted) as
-     * the inputs and then creates a job object in the database.
-     * it also returns the created job. 
-     */
+
+
+/**
+ * This takes in 
+ * (title, description, pay, location, categories, time, date_posted) as
+ * the inputs and then creates a job object in the database.
+ * it also returns the created job. 
+ */
 export const postJobs = async (req, res) => {
-    const { title, description, pay, location, categories, time, date_posted} = req.body;
+    const { 
+        title, 
+        job_poster,
+        description, 
+        pay, 
+        location, 
+        categories, 
+        time, 
+        date_posted
+    } = req.body;
 
     try {
 
         const makeJob = new Jobs({
             title,
+            job_poster,
             description,
             pay,
             location,
@@ -66,6 +78,8 @@ export const postJobs = async (req, res) => {
             time,
             date_posted
         });
+        console.log(title, job_poster, description)
+
 
         const newJob = await makeJob.save();
 
@@ -75,14 +89,23 @@ export const postJobs = async (req, res) => {
     }
 };
 
-    /**
-     * This takes in and id and 
-     * (title, description, pay, location, categories, time, date_posted) as
-     * the inputs and then edits the job object in the database.
-     * Then it returns the edited Job object. 
-     */
+/**
+ * This takes in and id and 
+ * (title, description, pay, location, categories, time, date_posted) as
+ * the inputs and then edits the job object in the database.
+ * Then it returns the edited Job object. 
+ */
 export const updateJobs = async (req, res) => {
-    const { title, description, pay, location, categories, time, date_posted} = req.body;
+    const { 
+        title,
+        job_poster,
+        description,
+        pay,
+        location,
+        categories,
+        time,
+        date_posted
+    } = req.body;
     const { id } = req.params;
 
     try {
@@ -90,6 +113,7 @@ export const updateJobs = async (req, res) => {
         const updateFields = {};
 
 		if (title) updateFields.title = title;
+        if (job_poster) updateFields.job_poster = job_poster;
 		if (description) updateFields.description = description;
         if (pay) updateFields.pay = pay;
         if (location) updateFields.location = location;
@@ -116,3 +140,4 @@ export const updateJobs = async (req, res) => {
         return handleServerError(res, error);
     }
 };
+

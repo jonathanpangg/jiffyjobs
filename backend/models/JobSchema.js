@@ -8,7 +8,7 @@ const JobsSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        job_poster_id: {
+        job_poster: {
             type: String,
             required: true
         },
@@ -45,5 +45,5 @@ const JobsSchema = new mongoose.Schema(
     }
 );
 
-const Jobs = mongoose.model("Job", JobsSchema);
+const Jobs = mongoose.model("Jobs", JobsSchema);
 export default Jobs;

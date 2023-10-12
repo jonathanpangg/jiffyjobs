@@ -1,13 +1,15 @@
-require('dotenv').config()
+import dotenv from 'dotenv';
+import express from 'express';
+import mongoose from 'mongoose';
+import cors from "cors"
 
-const express = require('express');
-const mongoose = require('mongoose')
-const cors = require('cors')
+import jobRoutes from "./routes/jobRoutes.js"
+// const jobRoutes = require('./routes/jobRoutes')
+dotenv.config();
 
 
 // express app
 const app = express();
-
 
 app.use(cors({
   origin: '*'
@@ -21,8 +23,9 @@ app.use((req, res, next) => {
 })
 
 
+
 // routes
-// app.use()
+app.use('/api/jobs', jobRoutes)
 
 
 // connect to db
