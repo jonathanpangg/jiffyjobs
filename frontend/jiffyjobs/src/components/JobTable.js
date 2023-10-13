@@ -6,34 +6,41 @@ import Grid from '@mui/material/Grid';
 export function JobTable() {
     const [jobList, setJobList] = useState([])
 
-    const GetAllJobs = async () => {
-        const route = "localhost:4000/api/jobs/get"
-        const res = await fetch(route, {
-          method: "GET",
-          headers: {
-            'Content-Type': 'application/json',
-            'x-functions-key': 'SHSHFt8CN3CxKEUGRrPt0hQohqQ3YDWF0DNT0UaQqIALAzFuCzfNfw=='
-          }
-        });
-        const json = await res.json();
-        setJobList(json)
-    }
-
     useEffect(() => {
+        async function GetAllJobs() {
+            const route = "http://localhost:4000/api/jobs/get"
+            fetch(route)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    setJobList(data.map(function(obj) {
+                        return (obj.title)
+                    }))
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+                
+                // console.log(jobList)
+        }
         GetAllJobs()
-    });
+    }, [jobList]);
 
-    return(
-        <div className='job-board-outer'>
+    return (
+        <div className='job-board-outer'> */
             <Box sx={{ flexGrow: 1 }}>
                 <Grid item xs={12}>
                     <Grid container className='job-table-grid' spacing={2}>
-                        {jobList.map((value) => (
-                        <Grid key={value} item>
-                            <Card sx={{height: 275, width: 275}} elevation={6} square={false} className='paper-grid`'>
-                                {value}
-                            </Card>
-                        </Grid>
+                        {jobList.map((key) => (
+                            <Grid key={key} item>
+                                <Card sx={{height: 275, width: 275}} elevation={6} square={false} className='paper-grid`'>
+                                    {key}
+                                </Card>
+                            </Grid>
                         ))}
                     </Grid>
                 </Grid>   
