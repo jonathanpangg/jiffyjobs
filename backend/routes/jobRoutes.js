@@ -4,12 +4,16 @@ import {
         deleteJobsByID, 
         postJobs, 
         updateJobs,
-        applytoJobs
+        applytoJobs,
+        getJobs
 } from "../controllers/jobController.js";
 
 const router = express.Router();
 
 // routes for the job board
+
+    // get all jobs
+    router.get("/get", getJobs);
 
     // get job by id
     router.get("/:id", getJob);
@@ -27,6 +31,6 @@ const router = express.Router();
     router.post("/apply/:seeker_id/:job_id", applytoJobs)
 
     // withdraw a job application
-    router.delete("/withdraw/:seeker_id/:job_id")
+    router.delete("/withdraw/:seeker_id/:job_id", )
 
 export default router;

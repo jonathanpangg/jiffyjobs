@@ -6,6 +6,26 @@ import {
     handleBadRequest,
     } from "../utils/handler.js";
 
+
+/**
+ * 
+ * Gets all the jobs in the database
+ */
+export const getJobs = async (req, res) => {
+    try {
+        const jobs = await Jobs.find();
+
+        if (!jobs) {
+            return handleNotFound(res, "No Jobs");
+        }
+
+        return handleSuccess(res, jobs);
+    } catch (error) {
+        return handleServerError(res, error);
+    }
+}
+
+
 /**
  * Takes in an id and it returns the Job object associated 
  * with this id
