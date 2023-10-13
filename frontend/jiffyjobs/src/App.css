@@ -37,29 +37,63 @@
   }
 }
 
-.top-bar {
+.nav-outer {
   display: flex;
 }
 
 .logo-font {
   font-family: "Righteous-Regular";
   font-size: xx-large;
+  vertical-align: center;
+  align-items: center;
   padding-left: 5%;
-  padding-top: 1%;
+  padding-bottom: 0.875%;
+}
+
+.first-tab {
+  font-family: "Outfit";
+  font-size: medium;
+  vertical-align: center;
+  align-items: center;
+  padding: 0.75%;
+  padding-top: 2.175%;
+  padding-bottom: 0.875%;
+  padding-left: 35%;
 }
 
 .tab-font {
   font-family: "Outfit";
   font-size: medium;
-  padding: 0.75%;
-  padding-left: 5%;
   vertical-align: center;
   align-items: center;
+  padding: 0.75%;
+  padding-top: 2.175%;
+  padding-left: 2.5%;
+  padding-bottom: 0.875%;
 }
 
 .name-font {
   font-family: "Outfit";
-  font-size: large;
-  padding-left: 75%;
-  padding-top: 3.15%;
+  font-size: medium;
+  padding-top: 2.175%;
+  padding-left: 10%;
+  padding-bottom: 0.875%;
+}
+
+.horizontal-line {
+  border-top: 1px solid black;
+}
+
+.job-board-outer {
+  background-color: #D9D9D9;
+  height: 100vh;
+}
+
+.job-table-grid {
+  font-family: "Outfit";
+  font-size: medium;
+  justify-content: start;
+  padding-left: 10.5%;
+  text-align: center;
+  align-content: center;
 }

@@ -1,14 +1,11 @@
 import './App.css';
-import { JobTable } from './components/JobTable'
-import { SearchBar } from './components/SearchBar'
-import { FilterSection } from './components/FilterSelection';
-import { NavBar } from './components/NavBar';
+import { JobBoard } from './components/JobBoard'
 
 function App() {
   return (
     <div /*className="App"*/>
       <header /*className="App-header"*/>
-        <NavBar> </NavBar>
+        <JobBoard/>
       </header>
     </div>
   );
