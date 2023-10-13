@@ -4,12 +4,16 @@ import {
         deleteJobsByID, 
         postJobs, 
         updateJobs,
-        applytoJobs
+        applytoJobs,
+        getJobs
 } from "../controllers/jobController.js";
 
 const router = express.Router();
 
 // routes for the job board
+
+    // get all jobs
+    router.get("/get", getJobs);
 
     // get job by id
     router.get("/:id", getJob);
