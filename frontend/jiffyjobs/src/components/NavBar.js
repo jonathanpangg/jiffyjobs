@@ -1,4 +1,5 @@
 import * as React from 'react';
+// import { Divider } from '@mui/material';
 
 export function NavBar() {
     return (
@@ -18,6 +19,7 @@ export function NavBar() {
             <div className='tab-font'>
                 Notifications
             </div>
+            {/* <Divider orientation="vertical" flexItem /> */}
             <div className='name-font'>
                 Lucas Yoon
             </div>
