@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
 
 export function JobTable() {
-    const [jobList, setJobList] = useState([])
+    const [jobData, setJobData] = useState([])
 
     useEffect(() => {
         async function GetAllJobs() {
@@ -17,28 +17,30 @@ export function JobTable() {
                     return response.json();
                 })
                 .then((data) => {
-                    setJobList(data.map(function(obj) {
-                        return (obj.title)
+                    setJobData (data.map(function(obj) {
+                        return [[0, obj.title], ["", "Job Provider: " + obj.job_poster], ["", "Location: " + obj.location], ["", "Pay: $" + obj.pay]]
                     }))
                 })
                 .catch((error) => {
                     console.log(error)
                 })
-                
-                // console.log(jobList)
         }
         GetAllJobs()
-    }, [jobList]);
+    }, [jobData]);
 
     return (
-        <div className='job-board-outer'> */
+        <div className='job-board-outer'>
             <Box sx={{ flexGrow: 1 }}>
                 <Grid item xs={12}>
                     <Grid container className='job-table-grid' spacing={2}>
-                        {jobList.map((key) => (
+                        {jobData.map((key) => (
                             <Grid key={key} item>
-                                <Card sx={{height: 275, width: 275}} elevation={6} square={false} className='paper-grid`'>
-                                    {key}
+                                <Card sx={{height: 300, width: 300}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px'}}>
+                                    {key.map((data) => (
+                                        <text className={'card-grid-' + data[0]}>
+                                            {data[1]} <br></br>
+                                        </text>
+                                    ))}
                                 </Card>
                             </Grid>
                         ))}
