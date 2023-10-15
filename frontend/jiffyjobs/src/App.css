@@ -47,7 +47,7 @@
   vertical-align: center;
   align-items: center;
   padding-left: 5%;
-  padding-bottom: 0.875%;
+  padding-bottom: 0.85%;
 }
 
 .first-tab {
@@ -56,7 +56,7 @@
   vertical-align: center;
   align-items: center;
   padding: 0.75%;
-  padding-top: 2.175%;
+  padding-top: 2.25%;
   padding-bottom: 0.875%;
   padding-left: 35%;
 }
@@ -67,7 +67,7 @@
   vertical-align: center;
   align-items: center;
   padding: 0.75%;
-  padding-top: 2.175%;
+  padding-top: 2.25%;
   padding-left: 2.5%;
   padding-bottom: 0.875%;
 }
@@ -75,13 +75,9 @@
 .name-font {
   font-family: "Outfit";
   font-size: medium;
-  padding-top: 2.175%;
+  padding-top: 2.25%;
   padding-left: 10%;
   padding-bottom: 0.875%;
-}
-
-.horizontal-line {
-  border-top: 1px solid black;
 }
 
 .job-board-outer {
@@ -89,11 +85,53 @@
   height: 100vh;
 }
 
+.job-search-tab {
+  padding-top: 2.5%;
+  text-align: center;
+}
+
+.job-search-text {
+  font-family: "Outfit";
+  font-size: xx-large;
+}
+
+.job-textfield {
+  font-family: "Outfit";
+  padding-top: 1%;
+  text-align: center;
+  vertical-align: center;
+}
+
+.job-button {
+  font-family: "Outfit";;
+  padding-left: 2.5%;
+  text-align: center;
+  vertical-align: center;
+  align-items: center;
+}
+
+.MuiButton-contained {
+  font-family: "Outfit";
+  text-transform: lowercase !important;
+}
+
+.job-search-logo {
+  font-family: "Righteous-Regular";
+  font-size: xx-large;
+}
+
+.recently-posted-jobs {
+  font-family: "Outfit";
+  font-size: xx-large;
+  padding-left: 1.5%;
+  padding-top: 2.5%;
+}
+
 .job-table-grid {
   font-family: "Outfit";
   font-size: medium;
   justify-content: start;
-  padding-left: 10.5%;
+  padding-left: 6.5%;
   text-align: start;
   align-content: center;
 }
@@ -102,7 +140,7 @@
   font-family: "Outfit";
   font-size: medium;
   justify-content: start;
-  padding-left: 2.5%;
+  padding-left: 2%;
 }
 
 .card-grid- {

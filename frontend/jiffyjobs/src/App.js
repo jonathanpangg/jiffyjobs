@@ -9,7 +9,6 @@ function App() {
       <header>
         <NavBar/>
         <Routes>      
-          <Route path="/" />  
           <Route path="/JobBoard"  element={<JobBoard/>} />
         </Routes>
       </header>
