@@ -13,25 +13,61 @@ import MenuItem from '@mui/material/MenuItem';
 
 export function JobBoard() {
     const [jobData, setJobData] = useState([])
-    const [open, setOpen] = React.useState(false);
-
-    const handleClickOpen = () => {
-        setOpen(true);
+    const [openStartPop, setOpenStartPop] = useState(false)
+    const [openSecondPop, setOpenSecondPop] = useState(false)
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    const ITEM_HEIGHT = 48;
+    const ITEM_PADDING_TOP = 8;
+    const MenuProps = {
+      PaperProps: {
+        style: {
+          maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+          width: 175,
+        },
+      },
     };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+    const openPop = () => {
+        setOpenStartPop(true)
+    }
 
-    const descriptionElementRef = React.useRef(null);
+    const closePop = () => {
+        setOpenStartPop(false)
+    }
+
+    const openNextPop = () => {
+        setOpenStartPop(false)
+        setOpenSecondPop(true)
+    }
+
+    const closeNextPop = () => {
+        setOpenSecondPop(false)
+    }
+
+    const backSecondPop = () => {
+        setOpenSecondPop(false)
+        setOpenStartPop(true)
+    }
+
+    const descriptionElementRefStartPop = React.useRef(null)
     React.useEffect(() => {
-        if (open) {
-        const { current: descriptionElement } = descriptionElementRef;
-        if (descriptionElement !== null) {
-            descriptionElement.focus();
+        if (openStartPop) {
+            const { current: descriptionElement } = descriptionElementRefStartPop
+            if (descriptionElement !== null) {
+                descriptionElement.focus();
+            }
         }
+    }, [openStartPop])
+
+    const descriptionElementRefNextPop = React.useRef(null)
+    React.useEffect(() => {
+        if (openSecondPop) {
+            const { current: descriptionElement } = descriptionElementRefNextPop
+            if (descriptionElement !== null) {
+                descriptionElement.focus();
+            }
         }
-    }, [open]);
+    }, [openSecondPop])
 
     useEffect(() => {
         async function GetAllJobs() {
@@ -73,73 +109,128 @@ export function JobBoard() {
                                     <TextField placeholder="Find Jobs..." type="search" square={false} style={{width: '45%'}}/>
                                     <Grid className='job-button'>
                                         <Card sx={{height: 55, width: '100%'}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px', background: "#8253E7", color: 'white'}}>
-                                            <CardContent style={{ display: 'flex', alignItems: 'center' }} onClick={handleClickOpen}> 
+                                            <CardContent style={{ display: 'flex', alignItems: 'center' }} onClick={openPop}> 
                                                 Post a Job
                                             </CardContent>
                                         </Card>
-                                        <Dialog open={open} onClose={handleClose} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
+                                        <Dialog open={openStartPop} onClose={closePop} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
                                             <div className='popup-title'>
                                                 <DialogTitle style={{width: "90%"}}> 
                                                     Tell us more about the job!
                                                 </DialogTitle>
-                                                <IconButton onClick={handleClose}>
+                                                <IconButton onClick={closePop}>
                                                     <ClearIcon/>
                                                 </IconButton>
                                             </div>
                                             <Divider/>
                                                 <DialogContent>
-                                                    <DialogContentText ref={descriptionElementRef} tabIndex={-1} style={{width: '1000px'}}>
+                                                    <DialogContentText ref={descriptionElementRefStartPop} tabIndex={-1} style={{width: '1000px'}}>
                                                         <div>
                                                             <text className='pop-textfield-title'>
                                                                 Job Title
                                                             </text> <br></br>
-                                                            <TextField required placeholder="" type="search" square={false} style={{width: '100%'}}/>
+                                                            <TextField required placeholder="" type="search" square={false} style={{width: '98.5%'}}/>
                                                         </div>
                                                         <div style={{paddingTop: '2.5%'}}>
                                                             <text className='pop-textfield-title'>
                                                                 Company or Employer Name
                                                             </text> <br></br>
-                                                            <TextField required placeholder="" type="search" square={false} style={{width: '100%'}}/>
+                                                            <TextField required placeholder="" type="search" square={false} style={{width: '98.5%'}}/>
                                                         </div>
                                                         <div style={{paddingTop: '2.5%'}}>
                                                             <text className='pop-textfield-title'>
                                                                 Job Location
                                                             </text> <br></br>
-                                                            <TextField required placeholder="" type="search" square={false} style={{width: '100%'}}/>
+                                                            <TextField required placeholder="" type="search" square={false} style={{width: '98.5%'}}/>
                                                         </div>
                                                         <div style={{paddingTop: '2.5%', display: 'flex'}}>
-                                                            <div style={{width: '32%', paddingRight: '2.5%'}}>
+                                                            <div style={{width: '35%', paddingRight: '2.5%'}}>
                                                                 <text className='pop-textfield-title'>
-                                                                    Pay
+                                                                    Pay 
                                                                 </text> <br></br>
-                                                                <Select style={{width: '100%'}} className='pop-textfield-title'>
-                                                                    <MenuItem value={"Hourly"}> Hourly </MenuItem>
-                                                                    <MenuItem value={"Daily"}> Daily </MenuItem>
-                                                                </Select>
-                                                            </div>
-                                                            <div style={{width: '32%', paddingRight: '2.5%'}}>
-                                                                <text className='pop-textfield-title'>
-                                                                    Pay Range
-                                                                </text> <br></br>
-                                                                <TextField required placeholder="Enter minimum range" type="search" square={false} className='pop-textfield-title' style={{width: '100%'}}/>
-                                                            </div>
-                                                            <div style={{width: '32%'}}>
-                                                                <br></br>
-                                                                <TextField required placeholder="Enter maximum range" type="search" square={false} className='pop-textfield-title' style={{width: '100%'}}/>
+                                                                <TextField required placeholder="" type="search" square={false} className='pop-textfield-title' style={{width: '100%'}}/>
                                                             </div>
                                                         </div>
                                                     </DialogContentText>
                                                 </DialogContent>
                                             <Divider/>
+                                                <DialogActions>
+                                                    <Card sx={{height: 50, width: '10%'}} square={false} style={{overflow:'hidden', borderRadius: '15px', color: 'black', border: "1px solid black"}}>
+                                                        <CardContent style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} onClick={closePop}> 
+                                                            Back
+                                                        </CardContent>
+                                                    </Card>
+                                                    <Card sx={{height: 50, width: '10%'}} square={false} style={{overflow:'hidden', borderRadius: '15px', background: "gray", color: 'white'}}>
+                                                        <CardContent style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} onClick={openNextPop}> 
+                                                            Next
+                                                        </CardContent>
+                                                    </Card>
+                                                </DialogActions>
+                                        </Dialog>
+                                        <Dialog open={openSecondPop} onClose={closeNextPop} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
+                                            <div className='popup-title'>
+                                                <DialogTitle style={{width: "90%"}}> 
+                                                    Tell us more about the job!
+                                                </DialogTitle>
+                                                <IconButton onClick={closeNextPop}>
+                                                    <ClearIcon/>
+                                                </IconButton>
+                                            </div>
+                                        <Divider/>
+                                            <DialogContent>
+                                                <DialogContentText ref={descriptionElementRefNextPop} tabIndex={-1} style={{width: '1000px'}}>
+                                                    <div>
+                                                        <text className='pop-textfield-title'>
+                                                            Start date/time
+                                                        </text> <br></br>
+                                                        <Select style={{width: '17.5%'}} className='pop-textfield-title' MenuProps={MenuProps}>
+                                                            {months.map((month) => (
+                                                                <MenuItem value={month}> {month} </MenuItem>
+                                                            ))}
+                                                        </Select>
+                                                        <TextField required placeholder="Date" type="search" square={false} style={{width: '17.5%', paddingLeft: '1%', paddingRight: '1%'}}/>
+                                                        <TextField required placeholder="Year" type="search" square={false} style={{width: '17.5%', paddingRight: '8%'}}/>
+                                                        <TextField required placeholder="Hour" type="search" square={false} style={{width: '17.5%', paddingRight: '1%'}}/>
+                                                        <TextField required placeholder="Minute" type="search" square={false} style={{width: '17.5%', paddingRight: '1%'}}/>
+                                                    </div>
+                                                    <div style={{paddingTop: '2.5%'}}>
+                                                    <text className='pop-textfield-title'>
+                                                            End date/time
+                                                        </text> <br></br>
+                                                        <Select style={{width: '17.5%'}} className='pop-textfield-title' MenuProps={MenuProps}>
+                                                            {months.map((month) => (
+                                                                <MenuItem value={month}> {month} </MenuItem>
+                                                            ))}
+                                                        </Select>
+                                                        <TextField required placeholder="Date" type="search" square={false} style={{width: '17.5%', paddingLeft: '1%', paddingRight: '1%'}}/>
+                                                        <TextField required placeholder="Year" type="search" square={false} style={{width: '17.5%', paddingRight: '8%'}}/>
+                                                        <TextField required placeholder="Hour" type="search" square={false} style={{width: '17.5%', paddingRight: '1%'}}/>
+                                                        <TextField required placeholder="Minute" type="search" square={false} style={{width: '17.5%', paddingRight: '1%'}}/>
+                                                    </div>
+                                                    <div style={{paddingTop: '2.5%'}}>
+                                                        <text className='pop-textfield-title'>
+                                                            Description
+                                                        </text> <br></br>
+                                                        <TextField required placeholder="" type="search" square={false} style={{width: '98.5%'}}/>
+                                                    </div>
+                                                    <div style={{paddingTop: '2.5%'}}>
+                                                        <text className='pop-textfield-title'>
+                                                            Category
+                                                        </text> <br></br>
+                                                        <TextField required placeholder="" type="search" square={false} style={{width: '98.5%'}}/>
+                                                    </div>
+                                                </DialogContentText>
+                                            </DialogContent>
+                                            <Divider/>
                                             <DialogActions>
                                                 <Card sx={{height: 50, width: '10%'}} square={false} style={{overflow:'hidden', borderRadius: '15px', color: 'black', border: "1px solid black"}}>
-                                                    <CardContent style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} onClick={handleClose}> 
+                                                    <CardContent style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} onClick={backSecondPop}> 
                                                         Back
                                                     </CardContent>
                                                 </Card>
                                                 <Card sx={{height: 50, width: '10%'}} square={false} style={{overflow:'hidden', borderRadius: '15px', background: "gray", color: 'white'}}>
-                                                    <CardContent style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} onClick={handleClickOpen}> 
-                                                        Next
+                                                    <CardContent style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} onClick={openNextPop}> 
+                                                        Submit
                                                     </CardContent>
                                                 </Card>
                                             </DialogActions>
