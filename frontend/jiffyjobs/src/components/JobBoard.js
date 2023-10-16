@@ -147,7 +147,16 @@ export function JobBoard() {
         }
         const route = "http://localhost:4000/api/jobs/create"
         fetch(route, requestOptions)
-            .then(response => response.json())
+            .then((response) => {
+                response.json()
+                setTitle("")
+                setName("")
+                setPay(0)
+                setLocation("")
+                setDescription("")
+                setOpenStartPop(false)
+                setOpenSecondPop(false)
+            })
             .catch((error) => {
                 console.log(error)
             })
