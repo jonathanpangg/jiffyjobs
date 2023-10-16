@@ -1,11 +1,16 @@
 import './App.css';
+import { NavBar } from './components/NavBar'
 import { JobBoard } from './components/JobBoard'
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div /*className="App"*/>
-      <header /*className="App-header"*/>
-        <JobBoard/>
+    <div>
+      <header>
+        <NavBar/>
+        <Routes>      
+          <Route path="/JobBoard"  element={<JobBoard/>} />
+        </Routes>
       </header>
     </div>
   );

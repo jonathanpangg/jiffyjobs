@@ -1,14 +1,20 @@
 import * as React from 'react';
-// import { Divider } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 export function NavBar() {
+    const navigate = useNavigate()
+
+    const AllJobs = () => {
+        navigate('/JobBoard')
+    }
+
     return (
         <div className='nav-outer'> 
              <h1 className='logo-font'>
                 JIFFYJOBS
             </h1>
-            <div className='first-tab'>
-                All Jobs
+            <div className='first-tab' onClick={AllJobs}>
+                All Jobs 
             </div>
             <div className='tab-font'>
                 Recent Jobs
