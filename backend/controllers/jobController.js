@@ -182,5 +182,16 @@ export const applytoJobs = async (req, res) => {
 * find jobs by each filtering option.
 * filters include: location, job category. duration, pay, on/off campus
 */
-export const 
+export const filterJobs = async (req, res) => {
+    const {
+        Location,
+        job_Category,
+        Duration,
+        Pay,
+        is_on_campus
+    }  = req.body;
+    
+
+
+}
 
