@@ -7,6 +7,7 @@ import jobRoutes from "./routes/jobRoutes.js"
 dotenv.config();
 
 
+
 // express app
 const app = express();
 
