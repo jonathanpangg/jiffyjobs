@@ -6,7 +6,7 @@ import {
 	handleServerError,
     handleBadRequest,
     } from "../utils/handler.js";
-
+// import axios from "axios"
 
 /**
  * 
@@ -185,7 +185,7 @@ export const applytoJobs = async (req, res) => {
 */
 export const filterJobs = async (req, res) => {
     const {
-        Location,
+        location,
         job_Category,
         job_type,
         Pay,
@@ -195,17 +195,17 @@ export const filterJobs = async (req, res) => {
             // Create a query object to build the filter criteria
             const query = {};
             query.$and = []
-            const andstatement = []
-            
             // Add filters based on the request parameters
-            if (Location) {
-                const locationquery = {location : Location}
+            if (location) {
+                const mylocation = JSON.stringify(location)
+                console.log(mylocation)
+                const locationquery = {location : location}
                 query.$and.push(locationquery);
             }
     
             if (job_Category) {
                 const jcquery = {categories : {'$in' : job_Category}}
-                query.$and.categories = { jcquery };
+                query.$and.categories.push({jcquery });
             }
     
             if (job_type) {
