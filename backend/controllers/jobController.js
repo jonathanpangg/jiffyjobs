@@ -6,7 +6,7 @@ import {
 	handleServerError,
     handleBadRequest,
     } from "../utils/handler.js";
-// import axios from "axios"
+import calculateDistance from '../utils/controllerFunctions.js'
 
 /**
  * 
@@ -84,7 +84,8 @@ export const postJobs = async (req, res) => {
         location, 
         categories, 
         time, 
-        date_posted
+        date_posted,
+        job_type
     } = req.body;
 
     try {
@@ -96,6 +97,7 @@ export const postJobs = async (req, res) => {
             pay,
             location,
             categories,
+            job_type,
             time,
             date_posted
         });
@@ -196,13 +198,6 @@ export const filterJobs = async (req, res) => {
             const query = {};
             query.$and = []
             // Add filters based on the request parameters
-            if (location) {
-                const mylocation = JSON.stringify(location)
-                console.log(mylocation)
-                const locationquery = {location : location}
-                query.$and.push(locationquery);
-            }
-    
             if (job_Category) {
                 const jcquery = {categories : {'$in' : job_Category}}
                 query.$and.categories.push({jcquery });
@@ -229,14 +224,20 @@ export const filterJobs = async (req, res) => {
             // Use the Jobs model to find jobs matching the filter criteria
             console.log(query)
             const jobs = await Jobs.find(query);
+
+            if (location) {
+                // implement
+                const mylocation = JSON.stringify(location)
+                console.log(mylocation)
+                const locationquery = {location : location}
+                query.$and.push(locationquery);
+            }
+
     
             // Return the filtered jobs as a response
-            res.json({ jobs });
+            handleSuccess(res, jobs);
     } catch (error) {
         return handleServerError(res, error);
     }
-    
-
-
 }
 
