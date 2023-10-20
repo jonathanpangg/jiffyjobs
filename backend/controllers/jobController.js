@@ -1,3 +1,4 @@
+import { json } from "express";
 import Jobs from "../models/JobSchema.js";
 import {
     handleNotFound,
@@ -186,10 +187,54 @@ export const filterJobs = async (req, res) => {
     const {
         Location,
         job_Category,
-        Duration,
+        job_type,
         Pay,
-        is_on_campus
+        date_range
     }  = req.body;
+    try {
+            // Create a query object to build the filter criteria
+            const query = {};
+            query.$and = []
+            const andstatement = []
+            
+            // Add filters based on the request parameters
+            if (Location) {
+                const locationquery = {location : Location}
+                query.$and.push(locationquery);
+            }
+    
+            if (job_Category) {
+                const jcquery = {categories : {'$in' : job_Category}}
+                query.$and.categories = { jcquery };
+            }
+    
+            if (job_type) {
+                const durationqr = {job_type: job_type}
+                query.$and.push(durationqr);
+            }
+    
+            if (Pay) {
+                const mn = Pay[0]
+                const mx = Pay[1]
+                const Payquery = { pay: { $gte: Pay[0], $lte: Pay[1] } };
+                query.$and.push(Payquery)
+            }
+    
+            if (date_range) {
+                const [startDate, endDate] = date_range;
+                const drquery = {date_posted : { $gte: new Date(startDate), $lte: new Date(endDate) }}
+                query.$and.push(drquery);
+            }
+    
+            // Use the Jobs model to find jobs matching the filter criteria
+            console.log(query)
+            const jobs = await Jobs.find(query);
+    
+            // Return the filtered jobs as a response
+            res.json({ jobs });
+    } catch (error) {
+        return handleServerError(res, error);
+    }
     
 
 
