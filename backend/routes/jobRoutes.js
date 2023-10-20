@@ -33,4 +33,7 @@ const router = express.Router();
     // withdraw a job application
     router.delete("/withdraw/:seeker_id/:job_id", )
 
+    // find jobs by category
+    router.get("/filter")
+
 export default router;

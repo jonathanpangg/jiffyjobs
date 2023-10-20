@@ -177,3 +177,10 @@ export const applytoJobs = async (req, res) => {
     }
 }
 
+
+/*
+* find jobs by each filtering option.
+* filters include: location, job category. duration, pay, on/off campus
+*/
+export const 
+
