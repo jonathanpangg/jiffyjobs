@@ -10,6 +10,7 @@ function App() {
     <div>
       <header>
         <NavBar/>
+        <Filter/>
         <Routes>      
           <Route path="/JobBoard"  element={<JobBoard/>} />
         </Routes>

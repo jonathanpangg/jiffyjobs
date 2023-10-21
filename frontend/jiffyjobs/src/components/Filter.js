@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { Form } from 'react-router-dom';
-
+import Chip from '@mui/material/Chip';
 
 
 export function Filter() {
@@ -24,6 +24,7 @@ export function Filter() {
     const handleDurationChange = (event) => { setDuration(event.target.value); };
     const handlePayRateChange = (event) => { setPayRate(event.target.value); };
     const handleOnOffCampusChange = (event) => { setOnOffCampus(event.target.value); };
+    const removeSelectedOption = (option, stateUpdater) => { stateUpdater((prevSelected) => prevSelected.filter((item) => item !== option)); };
   
     const locationOptions = ['Less than a mile away', '1-2 miles away', '3-5 miles away', '7+ miles away'];
     const categoryOptions = ['Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Other'];
@@ -31,9 +32,45 @@ export function Filter() {
     const payOptions = ['$15/hour', '$15-20/hour', '$20+/hour', 'Stipend based'];
     const campusOptions = ['On campus', 'Off campus'];
 
+    const anyFilterSelected =
+    location.length > 0 ||
+    category.length > 0 ||
+    duration.length > 0 ||
+    payRate.length > 0 ||
+    onOffCampus.length > 0;
+
+    const renderSelectedOptions = (selected, stateUpdater) => {
+      return selected.map((option) => (
+          <Chip
+              key={option}
+              label={option}
+              onDelete={() => removeSelectedOption(option, stateUpdater)}
+              color="primary"
+              style={{ margin: '4px' }}
+          />
+      ));
+    };
+
+    const selectedOptions = (
+      <Card sx={{ m: 2 }}>
+          <CardContent>
+            <div>
+                <p>
+                    {renderSelectedOptions(location, setLocation)} 
+                    {renderSelectedOptions(category, setCategory)}
+                    {renderSelectedOptions(duration, setDuration)}
+                    {renderSelectedOptions(payRate, setPayRate)}
+                    {renderSelectedOptions(onOffCampus, setOnOffCampus)}
+                </p>
+            </div>
+          </CardContent>
+      </Card>
+    );
+
     return (
-        <Box display="flex" >
-            <Card sx={{ minWidth: 275 }}>
+      <Box sx={{ flexGrow: 1 }}>
+      <Grid item xs={12}>
+          <Grid container className='job-table-grid' rowSpacing={2} columnSpacing={2}>
                 <Grid container spacing={1} flexWrap="nowrap">
                     <Grid item xs={1} sm={6}>
                         <FormControl sx={{ m: 1, width: 200}}>
@@ -184,10 +221,11 @@ export function Filter() {
                                   ))}
                             </Select>
                         </FormControl>
-                    </Grid>     
+                        </Grid> 
                     </Grid>
-               
-            </Card>
+               </Grid>
+               </Grid> 
+            {anyFilterSelected && (selectedOptions)} 
         </Box>
     );
 }
