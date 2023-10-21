@@ -28,6 +28,11 @@ const JobsSchema = new mongoose.Schema(
             type: [],
             required: true
         },
+        job_type: {
+            // is this a quick job ( < 1 day)? Short job ( 1 ~ 7 days)? or a part time job? (7< days)?
+            type: String,
+            required: true
+        },
         time: {
             type: [Date],
             required: true

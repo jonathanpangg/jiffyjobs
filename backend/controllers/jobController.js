@@ -1,3 +1,4 @@
+import { json } from "express";
 import Jobs from "../models/JobSchema.js";
 import {
     handleNotFound,
@@ -5,7 +6,7 @@ import {
 	handleServerError,
     handleBadRequest,
     } from "../utils/handler.js";
-
+import calculateDistance from '../utils/controllerFunctions.js'
 
 /**
  * 
@@ -83,7 +84,8 @@ export const postJobs = async (req, res) => {
         location, 
         categories, 
         time, 
-        date_posted
+        date_posted,
+        job_type
     } = req.body;
 
     try {
@@ -95,6 +97,7 @@ export const postJobs = async (req, res) => {
             pay,
             location,
             categories,
+            job_type,
             time,
             date_posted
         });
@@ -184,14 +187,57 @@ export const applytoJobs = async (req, res) => {
 */
 export const filterJobs = async (req, res) => {
     const {
-        Location,
+        location,
         job_Category,
-        Duration,
+        job_type,
         Pay,
-        is_on_campus
+        date_range
     }  = req.body;
+    try {
+            // Create a query object to build the filter criteria
+            const query = {};
+            query.$and = []
+            // Add filters based on the request parameters
+            if (job_Category) {
+                const jcquery = {categories : {'$in' : job_Category}}
+                query.$and.categories.push({jcquery });
+            }
     
+            if (job_type) {
+                const durationqr = {job_type: job_type}
+                query.$and.push(durationqr);
+            }
+    
+            if (Pay) {
+                const mn = Pay[0]
+                const mx = Pay[1]
+                const Payquery = { pay: { $gte: Pay[0], $lte: Pay[1] } };
+                query.$and.push(Payquery)
+            }
+    
+            if (date_range) {
+                const [startDate, endDate] = date_range;
+                const drquery = {date_posted : { $gte: new Date(startDate), $lte: new Date(endDate) }}
+                query.$and.push(drquery);
+            }
+    
+            // Use the Jobs model to find jobs matching the filter criteria
+            console.log(query)
+            const jobs = await Jobs.find(query);
 
+            if (location) {
+                // implement
+                const mylocation = JSON.stringify(location)
+                console.log(mylocation)
+                const locationquery = {location : location}
+                query.$and.push(locationquery);
+            }
 
+    
+            // Return the filtered jobs as a response
+            handleSuccess(res, jobs);
+    } catch (error) {
+        return handleServerError(res, error);
+    }
 }
 
