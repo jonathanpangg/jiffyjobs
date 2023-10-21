@@ -39,6 +39,11 @@ export function Filter() {
     payRate.length > 0 ||
     onOffCampus.length > 0;
 
+    const customDropdownStyle = {
+      width: '80%', 
+      fontSize: '10px',   
+  };
+
     const renderSelectedOptions = (selected, stateUpdater) => {
       return selected.map((option) => (
           <Chip
@@ -72,8 +77,8 @@ export function Filter() {
       <Grid item xs={12}>
           <Grid container className='job-table-grid' rowSpacing={2} columnSpacing={2}>
                 <Grid container spacing={1} flexWrap="nowrap">
-                    <Grid item xs={1} sm={6}>
-                        <FormControl sx={{ m: 1, width: 200}}>
+                   
+                        <FormControl sx={{ m: 1, ...customDropdownStyle}}>
                             <InputLabel>Location</InputLabel>
                             <Select
                                 label="Location"
@@ -101,9 +106,9 @@ export function Filter() {
                                   ))}
                             </Select>
                         </FormControl>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                    <FormControl sx={{ m: 1, width: 200}}>
+                    
+                    
+                    <FormControl sx={{ m: 1, ...customDropdownStyle }}>
                             <InputLabel>Category</InputLabel>
                             <Select
                                 label="Category"
@@ -131,9 +136,9 @@ export function Filter() {
                                   ))}
                             </Select>
                         </FormControl>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                    <FormControl sx={{ m: 1, width: 200}}>
+               
+                 
+                    <FormControl sx={{ m: 1, ...customDropdownStyle }}>
                             <InputLabel>Duration</InputLabel>
                             <Select
                                 label="Duration"
@@ -161,9 +166,8 @@ export function Filter() {
                                   ))}
                             </Select>
                         </FormControl>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                    <FormControl sx={{ m: 1, width: 200}}>
+              
+                    <FormControl sx={{ m: 1, ...customDropdownStyle }}>
                             <InputLabel>Pay Rate</InputLabel>
                             <Select
                                 label="Pay Rate"
@@ -191,9 +195,8 @@ export function Filter() {
                                   ))}
                             </Select>
                         </FormControl>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                    <FormControl sx={{ m: 1, width: 200}}>
+                    
+                    <FormControl sx={{ m: 1, ...customDropdownStyle }}>
                             <InputLabel>On/Off Campus</InputLabel>
                             <Select
                                 label="On/Off Campus"
@@ -221,7 +224,7 @@ export function Filter() {
                                   ))}
                             </Select>
                         </FormControl>
-                        </Grid> 
+                       
                     </Grid>
                </Grid>
                </Grid> 

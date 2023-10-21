@@ -12,6 +12,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+import { Filter } from './additions/Filter';
 
 export function JobBoard() {
 
@@ -336,160 +337,10 @@ export function JobBoard() {
                         
                         <text style={{width: "100%"}} className='recently-posted-jobs'> 
                             Recently Posted Jobs
-
-                            <Grid container  flexWrap="nowrap" style={{ paddingRight: '15%', paddingTop: '1.5%'}}>
-                                    <Grid item xs={1} sm={6}>
-                                        <FormControl sx={{ m: 1, width: 200}}>
-                                            <InputLabel>Location</InputLabel>
-                                            <Select
-                                                label="Location"
-                                                multiple
-                                                value={flocation}
-                                                onChange={handleLocationeChange}
-                                                renderValue={(selected) => (
-                                                    <div>
-                                                    {selected.map((value) => (
-                                                        <div key={value}>{value}</div>
-                                                    ))}
-                                                    </div>
-                                                )}
-                                                >
-                                                {locationOptions.map((option) => (
-                                                    <MenuItem key={option} value={option}>
-                                                    <div>
-                                                        <input
-                                                        type="checkbox"
-                                                        checked={flocation.indexOf(option) > -1}
-                                                        />
-                                                        {option}
-                                                    </div>
-                                                    </MenuItem>
-                                                ))}
-                                            </Select>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={12} sm={6}>
-                                    <FormControl sx={{ m: 1, width: 200}}>
-                                            <InputLabel>Category</InputLabel>
-                                            <Select
-                                                label="Category"
-                                                multiple
-                                                value={category}
-                                                onChange={handleCategoryChange}
-                                                renderValue={(selected) => (
-                                                    <div>
-                                                    {selected.map((value) => (
-                                                        <div key={value}>{value}</div>
-                                                    ))}
-                                                    </div>
-                                                )}
-                                                >
-                                                {categoryOptions.map((option) => (
-                                                    <MenuItem key={option} value={option}>
-                                                    <div>
-                                                        <input
-                                                        type="checkbox"
-                                                        checked={category.indexOf(option) > -1}
-                                                        />
-                                                        {option}
-                                                    </div>
-                                                    </MenuItem>
-                                                ))}
-                                            </Select>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={12} sm={6}>
-                                    <FormControl sx={{ m: 1, width: 200}}>
-                                            <InputLabel>Duration</InputLabel>
-                                            <Select
-                                                label="Duration"
-                                                multiple
-                                                value={duration}
-                                                onChange={handleDurationChange}
-                                                renderValue={(selected) => (
-                                                    <div>
-                                                    {selected.map((value) => (
-                                                        <div key={value}>{value}</div>
-                                                    ))}
-                                                    </div>
-                                                )}
-                                                >
-                                                {durationOptions.map((option) => (
-                                                    <MenuItem key={option} value={option}>
-                                                    <div>
-                                                        <input
-                                                        type="checkbox"
-                                                        checked={duration.indexOf(option) > -1}
-                                                        />
-                                                        {option}
-                                                    </div>
-                                                    </MenuItem>
-                                                ))}
-                                            </Select>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={12} sm={6}>
-                                    <FormControl sx={{ m: 1, width: 200}}>
-                                            <InputLabel>Pay Rate</InputLabel>
-                                            <Select
-                                                label="Pay Rate"
-                                                multiple
-                                                value={payRate}
-                                                onChange={handlePayRateChange}
-                                                renderValue={(selected) => (
-                                                    <div>
-                                                    {selected.map((value) => (
-                                                        <div key={value}>{value}</div>
-                                                    ))}
-                                                    </div>
-                                                )}
-                                                >
-                                                {payOptions.map((option) => (
-                                                    <MenuItem key={option} value={option}>
-                                                    <div>
-                                                        <input
-                                                        type="checkbox"
-                                                        checked={payRate.indexOf(option) > -1}
-                                                        />
-                                                        {option}
-                                                    </div>
-                                                    </MenuItem>
-                                                ))}
-                                            </Select>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={12} sm={6}>
-                                    <FormControl sx={{ m: 1, width: 200}}>
-                                            <InputLabel>On/Off Campus</InputLabel>
-                                            <Select
-                                                label="On/Off Campus"
-                                                multiple
-                                                value={onOffCampus}
-                                                onChange={handleOnOffCampusChange}
-                                                renderValue={(selected) => (
-                                                    <div>
-                                                    {selected.map((value) => (
-                                                        <div key={value}>{value}</div>
-                                                    ))}
-                                                    </div>
-                                                )}
-                                                >
-                                                {campusOptions.map((option) => (
-                                                    <MenuItem key={option} value={option}>
-                                                    <div>
-                                                        <input
-                                                        type="checkbox"
-                                                        checked={onOffCampus.indexOf(option) > -1}
-                                                        />
-                                                        {option}
-                                                    </div>
-                                                    </MenuItem>
-                                                ))}
-                                            </Select>
-                                        </FormControl>
-                                    </Grid>     
-                                </Grid>
-                            
+                       
+                        </text> 
+                        <text style={{width: "100%"}} className='recently-posted-jobs'> 
+                        <Filter/>
                         </text> 
                         {jobData.map((key) => (
                             <Grid key={key} item>
