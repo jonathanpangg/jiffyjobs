@@ -128,3 +128,12 @@
   font-family: "Outfit";
   font-size: medium;
 }
+
+.selected-options {
+  background: #f0f0f000; /* Set the background color as needed */
+  border: 1px solid #ccc; /* Add a border if desired */
+  padding: 5px; /* Adjust padding as needed */
+  border-radius: 5px; /* Add border radius for rounded corners */
+  max-height: 80px; /* Limit the maximum height of the display */
+  overflow-y: auto; /* Add a scrollbar when content overflows */
+}

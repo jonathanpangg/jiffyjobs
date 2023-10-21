@@ -19,19 +19,20 @@ export function Filter() {
     const [onOffCampus, setOnOffCampus] = useState([]);
 
 
-    const handleLocationeChange = (event) => { setLocation(event.target.value); };
+    const handleLocationChange = (event) => { setLocation(event.target.value); };
     const handleCategoryChange = (event) => { setCategory(event.target.value); };
     const handleDurationChange = (event) => { setDuration(event.target.value); };
     const handlePayRateChange = (event) => { setPayRate(event.target.value); };
     const handleOnOffCampusChange = (event) => { setOnOffCampus(event.target.value); };
     const removeSelectedOption = (option, stateUpdater) => { stateUpdater((prevSelected) => prevSelected.filter((item) => item !== option)); };
   
-    const locationOptions = ['Less than a mile away', '1-2 miles away', '3-5 miles away', '7+ miles away'];
-    const categoryOptions = ['Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Other'];
-    const durationOptions = ['Less than 6 hours', '1 day', 'Few days - 1 week', 'A few weeks', '1 month', 'More than 1 month'];
-    const payOptions = ['$15/hour', '$15-20/hour', '$20+/hour', 'Stipend based'];
-    const campusOptions = ['On campus', 'Off campus'];
-
+    const filterOptions = {
+      location: ['Less than a mile away', '1-2 miles away', '3-5 miles away', '7+ miles away'],
+      category: ['Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Other'],
+      duration: ['Less than 6 hours', '1 day', 'Few days - 1 week', 'A few weeks', '1 month', 'More than 1 month'],
+      payRate: ['$15/hour', '$15-20/hour', '$20+/hour', 'Stipend based'],
+      onOffCampus: ['On campus', 'Off campus'],
+    };
     const anyFilterSelected =
     location.length > 0 ||
     category.length > 0 ||
@@ -40,7 +41,7 @@ export function Filter() {
     onOffCampus.length > 0;
 
     const customDropdownStyle = {
-      width: '80%', 
+      width: '200px', 
       fontSize: '10px',   
   };
 
@@ -57,7 +58,7 @@ export function Filter() {
     };
 
     const selectedOptions = (
-      <Card sx={{ m: 2 }}>
+      <Card sx={{ m: 2, backgroundColor: '#f0f0f000',  height: '80px', display: 'flex', alignItems: 'center', border: 'none'}}>
           <CardContent>
             <div>
                 <p>
@@ -73,163 +74,49 @@ export function Filter() {
     );
 
     return (
+      <Card sx={{ m: 2, backgroundColor: '#f0f0f000', border: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+      <CardContent>
       <Box sx={{ flexGrow: 1 }}>
-      <Grid item xs={12}>
-          <Grid container className='job-table-grid' rowSpacing={2} columnSpacing={2}>
-                <Grid container spacing={1} flexWrap="nowrap">
-                   
-                        <FormControl sx={{ m: 1, ...customDropdownStyle}}>
-                            <InputLabel>Location</InputLabel>
-                            <Select
-                                label="Location"
-                                multiple
-                                value={location}
-                                onChange={handleLocationeChange}
-                                renderValue={(selected) => (
-                                    <div>
-                                      {selected.map((value) => (
-                                        <div key={value}>{value}</div>
-                                      ))}
-                                    </div>
-                                  )}
-                                >
-                                  {locationOptions.map((option) => (
-                                    <MenuItem key={option} value={option}>
-                                      <div>
-                                        <input
-                                          type="checkbox"
-                                          checked={location.indexOf(option) > -1}
-                                        />
-                                        {option}
-                                      </div>
-                                    </MenuItem>
-                                  ))}
-                            </Select>
-                        </FormControl>
-                    
-                    
-                    <FormControl sx={{ m: 1, ...customDropdownStyle }}>
-                            <InputLabel>Category</InputLabel>
-                            <Select
-                                label="Category"
-                                multiple
-                                value={category}
-                                onChange={handleCategoryChange}
-                                renderValue={(selected) => (
-                                    <div>
-                                      {selected.map((value) => (
-                                        <div key={value}>{value}</div>
-                                      ))}
-                                    </div>
-                                  )}
-                                >
-                                  {categoryOptions.map((option) => (
-                                    <MenuItem key={option} value={option}>
-                                      <div>
-                                        <input
-                                          type="checkbox"
-                                          checked={category.indexOf(option) > -1}
-                                        />
-                                        {option}
-                                      </div>
-                                    </MenuItem>
-                                  ))}
-                            </Select>
-                        </FormControl>
-               
-                 
-                    <FormControl sx={{ m: 1, ...customDropdownStyle }}>
-                            <InputLabel>Duration</InputLabel>
-                            <Select
-                                label="Duration"
-                                multiple
-                                value={duration}
-                                onChange={handleDurationChange}
-                                renderValue={(selected) => (
-                                    <div>
-                                      {selected.map((value) => (
-                                        <div key={value}>{value}</div>
-                                      ))}
-                                    </div>
-                                  )}
-                                >
-                                  {durationOptions.map((option) => (
-                                    <MenuItem key={option} value={option}>
-                                      <div>
-                                        <input
-                                          type="checkbox"
-                                          checked={duration.indexOf(option) > -1}
-                                        />
-                                        {option}
-                                      </div>
-                                    </MenuItem>
-                                  ))}
-                            </Select>
-                        </FormControl>
-              
-                    <FormControl sx={{ m: 1, ...customDropdownStyle }}>
-                            <InputLabel>Pay Rate</InputLabel>
-                            <Select
-                                label="Pay Rate"
-                                multiple
-                                value={payRate}
-                                onChange={handlePayRateChange}
-                                renderValue={(selected) => (
-                                    <div>
-                                      {selected.map((value) => (
-                                        <div key={value}>{value}</div>
-                                      ))}
-                                    </div>
-                                  )}
-                                >
-                                  {payOptions.map((option) => (
-                                    <MenuItem key={option} value={option}>
-                                      <div>
-                                        <input
-                                          type="checkbox"
-                                          checked={payRate.indexOf(option) > -1}
-                                        />
-                                        {option}
-                                      </div>
-                                    </MenuItem>
-                                  ))}
-                            </Select>
-                        </FormControl>
-                    
-                    <FormControl sx={{ m: 1, ...customDropdownStyle }}>
-                            <InputLabel>On/Off Campus</InputLabel>
-                            <Select
-                                label="On/Off Campus"
-                                multiple
-                                value={onOffCampus}
-                                onChange={handleOnOffCampusChange}
-                                renderValue={(selected) => (
-                                    <div>
-                                      {selected.map((value) => (
-                                        <div key={value}>{value}</div>
-                                      ))}
-                                    </div>
-                                  )}
-                                >
-                                  {campusOptions.map((option) => (
-                                    <MenuItem key={option} value={option}>
-                                      <div>
-                                        <input
-                                          type="checkbox"
-                                          checked={onOffCampus.indexOf(option) > -1}
-                                        />
-                                        {option}
-                                      </div>
-                                    </MenuItem>
-                                  ))}
-                            </Select>
-                        </FormControl>
-                       
-                    </Grid>
-               </Grid>
-               </Grid> 
-            {anyFilterSelected && (selectedOptions)} 
-        </Box>
+        <Grid item xs={12}>
+          <Grid container rowSpacing={2} columnSpacing={10} flexWrap="nowrap" >
+            {Object.keys(filterOptions).map((filterCategory) => (
+              <FormControl key={filterCategory} sx={{ m: 1, ...customDropdownStyle }}>
+                <InputLabel>{filterCategory === 'location' ? 'Location' : filterCategory === 'category' ? 'Category' : filterCategory === 'duration' ? 'Duration' : filterCategory === 'payRate' ? 'Pay Rate' : 'On/Off Campus'}</InputLabel>
+                <Select
+                  label={filterCategory}
+                  multiple
+                  value={filterCategory === 'location' ? location : filterCategory === 'category' ? category : filterCategory === 'duration' ? duration : filterCategory === 'payRate' ? payRate : onOffCampus}
+                  onChange={(e) => {
+                    if (filterCategory === 'location') handleLocationChange(e);
+                    else if (filterCategory === 'category') handleCategoryChange(e);
+                    else if (filterCategory === 'duration') handleDurationChange(e);
+                    else if (filterCategory === 'payRate') handlePayRateChange(e);
+                    else if (filterCategory === 'onOffCampus') handleOnOffCampusChange(e);
+                  }}
+                  renderValue={(selected) => (
+                    <div>
+                      {selected.map((value) => (
+                        <div key={value}>{value}</div>
+                      ))}
+                    </div>
+                  )}
+                >
+                  {filterOptions[filterCategory].map((option) => (
+                    <MenuItem key={option} value={option}>
+                      <div>
+                        <input type="checkbox" checked={filterCategory === 'location' ? location.indexOf(option) > -1 : filterCategory === 'category' ? category.indexOf(option) > -1 : filterCategory === 'duration' ? duration.indexOf(option) > -1 : filterCategory === 'payRate' ? payRate.indexOf(option) > -1 : onOffCampus.indexOf(option) > -1} />
+                        {option}
+                      </div>
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            ))}
+          </Grid>
+        </Grid>
+        {anyFilterSelected && selectedOptions}
+      </Box>
+      </CardContent>
+      </Card>
     );
-}
-
+  }

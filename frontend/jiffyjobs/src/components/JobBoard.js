@@ -342,6 +342,7 @@ export function JobBoard() {
                         <text style={{width: "100%"}} className='recently-posted-jobs'> 
                         <Filter/>
                         </text> 
+                        
                         {jobData.map((key) => (
                             <Grid key={key} item>
                                 <Card sx={{height: 300, width: 300}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px'}}>
