@@ -41,9 +41,28 @@ export function Filter() {
     onOffCampus.length > 0;
 
     const customDropdownStyle = {
-      width: '200px', 
-      fontSize: '10px',   
-  };
+      width: '200px',
+      fontSize: '10px',
+      '& .MuiOutlinedInput-notchedOutline': {
+        border: 'none',
+      },
+      '&:hover .MuiOutlinedInput-notchedOutline': {
+        border: 'none',
+      },
+      '& .MuiSelect-select': {
+        border: 'none',
+        paddingRight: '24px', 
+      },
+    };
+
+    const getKeyFromValue = (value, filterCategory) => {
+      for (const key in filterOptions) {
+        if (filterOptions[key].includes(value) && key === filterCategory) {
+          return key;
+        }
+      }
+      return '';
+    };
 
     const renderSelectedOptions = (selected, stateUpdater) => {
       return selected.map((option) => (
@@ -73,6 +92,12 @@ export function Filter() {
       </Card>
     );
 
+    const renderValue = (selected, filterCategory) => {
+      // const selectedKey = getKeyFromValue(selected[0], filterCategory);
+      // return selectedKey;
+      return ' ';
+    };
+
     return (
       <Card sx={{ m: 2, backgroundColor: '#f0f0f000', border: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
       <CardContent>
@@ -93,13 +118,7 @@ export function Filter() {
                     else if (filterCategory === 'payRate') handlePayRateChange(e);
                     else if (filterCategory === 'onOffCampus') handleOnOffCampusChange(e);
                   }}
-                  renderValue={(selected) => (
-                    <div>
-                      {selected.map((value) => (
-                        <div key={value}>{value}</div>
-                      ))}
-                    </div>
-                  )}
+                  renderValue={(selected) => renderValue(selected, filterCategory)}
                 >
                   {filterOptions[filterCategory].map((option) => (
                     <MenuItem key={option} value={option}>
