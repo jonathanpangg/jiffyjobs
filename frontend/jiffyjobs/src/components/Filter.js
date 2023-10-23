@@ -32,6 +32,7 @@ export function Filter() {
     };
 
     function handleFilterList(event) {
+      
       const val = event.target.value
       if (filterList.has(val)) {
         filterList.delete(val)
@@ -57,6 +58,7 @@ export function Filter() {
           <Chip
               key={option}
               label={option}
+              onDelete={(event) => {handleFilterList(event)}}
               style={{ margin: '4px', background: "gray"}}
           />
       ));
