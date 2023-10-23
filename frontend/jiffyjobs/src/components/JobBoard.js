@@ -10,32 +10,9 @@ import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from '@mui/material/IconButton';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
 import { Filter } from './additions/Filter';
 
 export function JobBoard() {
-
-    const [flocation, setfLocation] = useState([]);
-    const [category, setCategory] = useState([]);
-    const [duration, setDuration] = useState([]);
-    const [payRate, setPayRate] = useState([]);
-    const [onOffCampus, setOnOffCampus] = useState([]);
-
-
-    const handleLocationeChange = (event) => { setfLocation(event.target.value); };
-    const handleCategoryChange = (event) => { setCategory(event.target.value); };
-    const handleDurationChange = (event) => { setDuration(event.target.value); };
-    const handlePayRateChange = (event) => { setPayRate(event.target.value); };
-    const handleOnOffCampusChange = (event) => { setOnOffCampus(event.target.value); };
-  
-    const locationOptions = ['Less than a mile away', '1-2 miles away', '3-5 miles away', '7+ miles away'];
-    const categoryOptions = ['Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Other'];
-    const durationOptions = ['Less than 6 hours', '1 day', 'Few days - 1 week', 'A few weeks', '1 month', 'More than 1 month'];
-    const payOptions = ['$15/hour', '$15-20/hour', '$20+/hour', 'Stipend based'];
-    const campusOptions = ['On campus', 'Off campus'];
-
-
     const [jobData, setJobData] = useState([])
     const [openStartPop, setOpenStartPop] = useState(false)
     const [openSecondPop, setOpenSecondPop] = useState(false)
@@ -154,7 +131,7 @@ export function JobBoard() {
         GetAllJobs()
     }, [jobData, size]);
 
-    function PostJobs() {
+    async function PostJobs() {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -341,6 +318,7 @@ export function JobBoard() {
                         </text> 
                         <text style={{width: "100%"}} className='recently-posted-jobs'> 
                         <Filter/>
+                        <Divider style={{ paddingTop: '1%', width: '92.5%'}}/> 
                         </text> 
                         
                         {jobData.map((key) => (

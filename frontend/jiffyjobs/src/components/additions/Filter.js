@@ -1,141 +1,105 @@
-import React, { useEffect, useState } from 'react';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import { Form } from 'react-router-dom';
 import Chip from '@mui/material/Chip';
-
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 
 export function Filter() {
-    const [location, setLocation] = useState([]);
-    const [category, setCategory] = useState([]);
-    const [duration, setDuration] = useState([]);
-    const [payRate, setPayRate] = useState([]);
-    const [onOffCampus, setOnOffCampus] = useState([]);
-
-
-    const handleLocationChange = (event) => { setLocation(event.target.value); };
-    const handleCategoryChange = (event) => { setCategory(event.target.value); };
-    const handleDurationChange = (event) => { setDuration(event.target.value); };
-    const handlePayRateChange = (event) => { setPayRate(event.target.value); };
-    const handleOnOffCampusChange = (event) => { setOnOffCampus(event.target.value); };
-    const removeSelectedOption = (option, stateUpdater) => { stateUpdater((prevSelected) => prevSelected.filter((item) => item !== option)); };
-  
+    const [Location] = useState([]);
+    const [Category] = useState([]);
+    const [Duration] = useState([]);
+    const [PayRate] = useState([]);
+    const [OnOffCampus] = useState([]);
+    const [expandMap, setExpandMap] = useState(new Map(
+      [["Location", false],
+      ["Category", false],
+      ["Duration", false],
+      ["PayRate", false],
+      ["OnOffCampus", false]]
+    )) 
+    const [filterList, setFilterList] = useState(new Set())
     const filterOptions = {
-      location: ['Less than a mile away', '1-2 miles away', '3-5 miles away', '7+ miles away'],
-      category: ['Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Other'],
-      duration: ['Less than 6 hours', '1 day', 'Few days - 1 week', 'A few weeks', '1 month', 'More than 1 month'],
-      payRate: ['$15/hour', '$15-20/hour', '$20+/hour', 'Stipend based'],
-      onOffCampus: ['On campus', 'Off campus'],
-    };
-    const anyFilterSelected =
-    location.length > 0 ||
-    category.length > 0 ||
-    duration.length > 0 ||
-    payRate.length > 0 ||
-    onOffCampus.length > 0;
-
-    const customDropdownStyle = {
-      width: '200px',
-      fontSize: '10px',
-      '& .MuiOutlinedInput-notchedOutline': {
-        border: 'none',
-      },
-      '&:hover .MuiOutlinedInput-notchedOutline': {
-        border: 'none',
-      },
-      '& .MuiSelect-select': {
-        border: 'none',
-        paddingRight: '24px', 
-      },
+      Location: ['Less than a mile away', '1-2 miles away', '3-5 miles away', '7+ miles away'],
+      Category: ['Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Other'],
+      Duration: ['Less than 6 hours', '1 day', 'Few days - 1 week', 'A few weeks', '1 month', 'More than 1 month'],
+      PayRate: ['$15/hour', '$15-20/hour', '$20+/hour', 'Stipend based'],
+      OnOffCampus: ['On campus', 'Off campus'],
     };
 
-    const getKeyFromValue = (value, filterCategory) => {
-      for (const key in filterOptions) {
-        if (filterOptions[key].includes(value) && key === filterCategory) {
-          return key;
-        }
+    function handleFilterList(event) {
+      const val = event.target.value
+      if (filterList.has(val)) {
+        filterList.delete(val)
+        setFilterList(filterList)
+      } else {
+        filterList.add(val)
+        setFilterList(filterList)
       }
-      return '';
     };
 
-    const renderSelectedOptions = (selected, stateUpdater) => {
-      return selected.map((option) => (
+    function toggleFilter(type, bool) { 
+      if (bool) 
+        setExpandMap(expandMap.set(type, false))
+      else {
+        var keys = Array.from(expandMap.keys())
+        keys.forEach(function reset(i) {setExpandMap(expandMap.set(i, false))})
+        setExpandMap(expandMap.set(type, true))
+      }
+    };
+  
+    const renderSelectedOptions = (selected) => {
+      return Array.from(selected, option => (
           <Chip
               key={option}
               label={option}
-              onDelete={() => removeSelectedOption(option, stateUpdater)}
-              color="primary"
-              style={{ margin: '4px' }}
+              style={{ margin: '4px', background: "gray"}}
           />
       ));
     };
 
-    const selectedOptions = (
-      <Card sx={{ m: 2, backgroundColor: '#f0f0f000',  height: '80px', display: 'flex', alignItems: 'center', border: 'none'}}>
-          <CardContent>
+    const renderFilters = (filterCategory, bool) => {
+      return (
+        <div style={{width: '12.5%'}} className='filters'>
+          <Grid item
+            xs={1.5}
+            value={filterCategory === 'Location' ? Location : filterCategory === 'Category' ? Category : filterCategory === 'Duration' ? Duration : filterCategory === 'PayRate' ? PayRate : OnOffCampus}
+            onClick = {() => {toggleFilter(filterCategory, bool)}}
+            className = 'filter-tab'
+          >
+              { filterCategory } 
+              { bool ? <KeyboardArrowDownIcon className='arrow-pad'/> : <KeyboardArrowUpIcon className='arrow-pad'/> }
+          </Grid>
+          { bool ? 
             <div>
-                <p>
-                    {renderSelectedOptions(location, setLocation)} 
-                    {renderSelectedOptions(category, setCategory)}
-                    {renderSelectedOptions(duration, setDuration)}
-                    {renderSelectedOptions(payRate, setPayRate)}
-                    {renderSelectedOptions(onOffCampus, setOnOffCampus)}
-                </p>
-            </div>
-          </CardContent>
-      </Card>
-    );
-
-    const renderValue = (selected, filterCategory) => {
-      // const selectedKey = getKeyFromValue(selected[0], filterCategory);
-      // return selectedKey;
-      return ' ';
-    };
+              {filterOptions[filterCategory].map((option) => (
+                <FormGroup>
+                  { filterList.has(option) ? 
+                    <FormControlLabel sx={{ color: 'gray' }} control={<Checkbox checked/>} key={option} value={option} label={option} onChange={(event) => {handleFilterList(event)}} className='checkboxes'/> :
+                    <FormControlLabel control={<Checkbox/>} key={option} value={option} label={option} onChange={(event) => {handleFilterList(event)}} className='checkboxes' /> }
+                </FormGroup>
+            ))}
+          </div>: <></>}
+        </div>
+      )
+    }
 
     return (
-      <Card sx={{ m: 2, backgroundColor: '#f0f0f000', border: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-      <CardContent>
       <Box sx={{ flexGrow: 1 }}>
-        <Grid item xs={12}>
-          <Grid container rowSpacing={2} columnSpacing={10} flexWrap="nowrap" >
-            {Object.keys(filterOptions).map((filterCategory) => (
-              <FormControl key={filterCategory} sx={{ m: 1, ...customDropdownStyle }}>
-                <InputLabel>{filterCategory === 'location' ? 'Location' : filterCategory === 'category' ? 'Category' : filterCategory === 'duration' ? 'Duration' : filterCategory === 'payRate' ? 'Pay Rate' : 'On/Off Campus'}</InputLabel>
-                <Select
-                  label={filterCategory}
-                  multiple
-                  value={filterCategory === 'location' ? location : filterCategory === 'category' ? category : filterCategory === 'duration' ? duration : filterCategory === 'payRate' ? payRate : onOffCampus}
-                  onChange={(e) => {
-                    if (filterCategory === 'location') handleLocationChange(e);
-                    else if (filterCategory === 'category') handleCategoryChange(e);
-                    else if (filterCategory === 'duration') handleDurationChange(e);
-                    else if (filterCategory === 'payRate') handlePayRateChange(e);
-                    else if (filterCategory === 'onOffCampus') handleOnOffCampusChange(e);
-                  }}
-                  renderValue={(selected) => renderValue(selected, filterCategory)}
-                >
-                  {filterOptions[filterCategory].map((option) => (
-                    <MenuItem key={option} value={option}>
-                      <div>
-                        <input type="checkbox" checked={filterCategory === 'location' ? location.indexOf(option) > -1 : filterCategory === 'category' ? category.indexOf(option) > -1 : filterCategory === 'duration' ? duration.indexOf(option) > -1 : filterCategory === 'payRate' ? payRate.indexOf(option) > -1 : onOffCampus.indexOf(option) > -1} />
-                        {option}
-                      </div>
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            ))}
+          <Grid container columnSpacing={1}>
+            
+              { Object.keys(filterOptions).map((filterCategory) => (
+                renderFilters(filterCategory, expandMap.get(filterCategory))
+              ))}   
+            
           </Grid>
-        </Grid>
-        {anyFilterSelected && selectedOptions}
+          <Grid container columnSpacing={2}>
+            { filterList.size > 0 && <text className='filterby-tag'> Filtered By: </text>}
+            { renderSelectedOptions(filterList, setFilterList) } 
+          </Grid>
       </Box>
-      </CardContent>
-      </Card>
     );
   }
