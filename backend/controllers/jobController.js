@@ -6,7 +6,7 @@ import {
 	handleServerError,
     handleBadRequest,
     } from "../utils/handler.js";
-import calculateDistance from '../utils/controllerFunctions.js'
+import {getDistanceBetweenAddresses} from '../utils/controllerFunctions.js'
 
 /**
  * 
@@ -190,10 +190,9 @@ export const filterJobs = async (req, res) => {
         location,
         job_Category,
         job_type,
-        Pay,
         date_range
     }  = req.body;
-    try {
+    try {           
             // Create a query object to build the filter criteria
             const query = {};
             query.$and = []
@@ -208,12 +207,7 @@ export const filterJobs = async (req, res) => {
                 query.$and.push(durationqr);
             }
     
-            if (Pay) {
-                const mn = Pay[0]
-                const mx = Pay[1]
-                const Payquery = { pay: { $gte: Pay[0], $lte: Pay[1] } };
-                query.$and.push(Payquery)
-            }
+            
     
             if (date_range) {
                 const [startDate, endDate] = date_range;
@@ -221,23 +215,27 @@ export const filterJobs = async (req, res) => {
                 query.$and.push(drquery);
             }
     
-            // Use the Jobs model to find jobs matching the filter criteria
-            console.log(query)
             const jobs = await Jobs.find(query);
+            // console.log(jobs);
 
-            if (location) {
+            if (location && jobs) {
                 // implement
-                const mylocation = JSON.stringify(location)
-                console.log(mylocation)
-                const locationquery = {location : location}
-                query.$and.push(locationquery);
+                const mylocation = JSON.stringify(location);
+                try{
+                    const mycoord = await getDistanceBetweenAddresses(location);
+                    console.log(mycoord);
+                    for (const each_job of jobs) {
+                        const jobcoord = await getDistanceBetweenAddresses(each_job.location)
+                        console.log(jobcoord);
+                    }
+                } catch (e){
+                    return handleServerError(res, e);
+                }
             }
 
-    
             // Return the filtered jobs as a response
             handleSuccess(res, jobs);
     } catch (error) {
         return handleServerError(res, error);
     }
 }
-
