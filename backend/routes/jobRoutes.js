@@ -34,7 +34,9 @@ const router = express.Router();
     // withdraw a job application
     // router.delete("/withdraw/:seeker_id/:job_id", )
 
-    // find jobs by category
-    router.get("/filter/jobs", filterJobs)
+    // find jobs by category.
+    // if a filter category is not selected, it should send an asterisk (*) as its parameters.
+    // if multiple items for category or date_range, it should be separated by comma (",") with no space
+    router.get("/filter/:location/:location_metric/:category/:job_type/:date_range", filterJobs)
 
 export default router;

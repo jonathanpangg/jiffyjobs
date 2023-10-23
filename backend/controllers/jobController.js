@@ -6,7 +6,7 @@ import {
 	handleServerError,
     handleBadRequest,
     } from "../utils/handler.js";
-import {getDistanceBetweenAddresses} from '../utils/controllerFunctions.js'
+import {getDistanceBetweenAddresses, distance} from '../utils/controllerFunctions.js'
 
 /**
  * 
@@ -186,48 +186,49 @@ export const applytoJobs = async (req, res) => {
 * filters include: location, job category. duration, pay, on/off campus
 */
 export const filterJobs = async (req, res) => {
-    const {
-        location,
-        job_Category,
-        job_type,
-        date_range
-    }  = req.body;
+    const location = req.params.location;
+    const job_Category = req.params.category.split(",");
+    const job_type = req.params.job_type;
+    const date_range = req.params.date_range.split(",");
+    const location_metric = req.params.location_metric;
     try {           
             // Create a query object to build the filter criteria
             const query = {};
             query.$and = []
             // Add filters based on the request parameters
-            if (job_Category) {
+            if (job_Category[0] != "*") {            
                 const jcquery = {categories : {'$in' : job_Category}}
-                query.$and.categories.push({jcquery });
+                query.$and.push({jcquery});
             }
-    
-            if (job_type) {
+            
+            if (job_type != "*") {
                 const durationqr = {job_type: job_type}
                 query.$and.push(durationqr);
             }
     
-            
-    
-            if (date_range) {
+            if (date_range != ["*"]) {
                 const [startDate, endDate] = date_range;
                 const drquery = {date_posted : { $gte: new Date(startDate), $lte: new Date(endDate) }}
                 query.$and.push(drquery);
             }
-    
-            const jobs = await Jobs.find(query);
-            // console.log(jobs);
 
-            if (location && jobs) {
-                // implement
+            const jobs = await Jobs.find(query);
+
+            if (location != "*" && jobs) {
                 const mylocation = JSON.stringify(location);
                 try{
                     const mycoord = await getDistanceBetweenAddresses(location);
-                    console.log(mycoord);
-                    for (const each_job of jobs) {
-                        const jobcoord = await getDistanceBetweenAddresses(each_job.location)
-                        console.log(jobcoord);
-                    }
+                    const jobWithCoords = await Promise.all(jobs.map(async (each_job) => {
+                        const jobcoord = await getDistanceBetweenAddresses(each_job.location);
+                        const dist = distance(mycoord.lat, mycoord.lon, jobcoord.lat, jobcoord.lon)
+                        return {
+                            job: each_job,
+                            coord: dist
+                        };
+                    }));
+                    const sortedJobs = jobWithCoords.sort((a, b) => a.coord - b.coord);
+                    const finalJobs = sortedJobs.map(item => item.job);
+                    return handleSuccess(res,finalJobs);
                 } catch (e){
                     return handleServerError(res, e);
                 }
@@ -235,6 +236,7 @@ export const filterJobs = async (req, res) => {
 
             // Return the filtered jobs as a response
             handleSuccess(res, jobs);
+
     } catch (error) {
         return handleServerError(res, error);
     }
