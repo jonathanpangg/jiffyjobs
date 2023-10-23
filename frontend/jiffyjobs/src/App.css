@@ -43,6 +43,11 @@
 
 .job-board-outer {
   background-color: #D9D9D9;
+  height: 100%;
+}
+
+.job-board-outer1 {
+  background-color: #D9D9D9;
   height: 100vh;
 }
 
@@ -93,6 +98,7 @@
   font-size: medium;
   justify-content: start;
   padding-left: 6.5%;
+  padding-bottom: 1%;
   text-align: start;
   align-content: center;
 }
@@ -122,4 +128,43 @@
 .pop-textfield-title {
   font-family: "Outfit";
   font-size: medium;
+}
+
+.selected-options {
+  background: #f0f0f000; /* Set the background color as needed */
+  border: 1px solid #ccc; /* Add a border if desired */
+  padding: 5px; /* Adjust padding as needed */
+  border-radius: 5px; /* Add border radius for rounded corners */
+  max-height: 80px; /* Limit the maximum height of the display */
+  overflow-y: auto; /* Add a scrollbar when content overflows */
+}
+
+.filter-tab {
+  font-family: "Outfit";
+  font-size: large;
+  vertical-align: center;
+  display: inline-flex;
+}
+
+.arrow-pad {
+  padding-right: '25%';
+}
+
+.filters {
+  padding-left: 0.925%;
+  display: grid
+}
+
+.checkboxes {
+  font-size: small;
+  font-family: 'Outfit';
+}
+
+.filterby-tag {
+  font-size: medium;
+  font-family: 'Outfit';
+  vertical-align: text-bottom;
+  align-items: center;
+  padding-top: 0.75%;
+  padding-left: 1.5%;
 }
