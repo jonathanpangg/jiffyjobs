@@ -10,7 +10,8 @@ import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from '@mui/material/IconButton';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { Filter } from './additions/Filter';
+import { Filter } from './Filter';
+import categoryList from './Filter';
 
 export function JobBoard() {
     const [jobData, setJobData] = useState([])
@@ -28,12 +29,11 @@ export function JobBoard() {
       },
     };
 
-    const [title ,setTitle] = useState("")
-    const [name ,setName] = useState("")
-    const [location ,setLocation] = useState("")
-    const [pay ,setPay] = useState(0)
-    const [description ,setDescription] = useState("")
-    // const [startTime ,setStartTime] = useState(Date())
+    const [title, setTitle] = useState("")
+    const [name, setName] = useState("")
+    const [location, setLocation] = useState("")
+    const [pay, setPay] = useState(0)
+    const [description, setDescription] = useState("")
 
     function updateTitle(event) {
         console.log(event)
@@ -114,7 +114,7 @@ export function JobBoard() {
                 })
                 .then((data) => {
                     setJobData(data.map(function(obj) {
-                        return [[0, obj.title], ["", "Job Provider: " + obj.job_poster], ["", "Location: " + obj.location], ["", "Pay: $" + obj.pay]]
+                        return [[0, obj.title], ["", "Job Provider: " + obj.job_poster], ["", "Location: " + obj.location], ["", "Pay: $" + obj.pay], ["", "Category: " + obj.categories]]
                     }))
                     setSize(jobData.length)
 
@@ -128,8 +128,43 @@ export function JobBoard() {
                     console.log(error)
                 })
         }
-        GetAllJobs()
+        // if (categoryList.value.length === 0)
+            GetAllJobs()
     }, [jobData, size]);
+
+    useEffect(() => {
+        async function FilterJobs() {
+            console.log(categoryList.value)
+            const requestOptions = {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    "job_category": categoryList
+                })
+            }
+            const route = "http://localhost:4000/api/jobs/filter/jobs"
+            fetch(route, requestOptions)
+                .then((data) => {
+                    setJobData(data.map(function(obj) {
+                        return [[0, obj.title], ["", "Job Provider: " + obj.job_poster], ["", "Location: " + obj.location], ["", "Pay: $" + obj.pay], ["", "Category: " + obj.categories]]
+                    }))
+                    setSize(jobData.length)
+
+                    if (size <= 4) {
+                        setBackground("1")
+                    } else {
+                        setBackground("")
+                    }
+                })
+                .catch((error) => {
+                    console.log(error)
+                }
+            )
+        }
+        
+        if (categoryList.value.length >= 1)
+            FilterJobs()
+    }, [jobData, size])
 
     async function PostJobs() {
         const requestOptions = {
@@ -169,7 +204,7 @@ export function JobBoard() {
                 <Grid item xs={12}>
                     <Grid container className='job-table-grid' rowSpacing={2} columnSpacing={2}>
                         <Grid item className='job-search-tab'> 
-                            <Card sx={{height: 200, width: 1250}} elevation={8} square={false} style={{overflow: 'hidden', borderRadius: '15px', paddingTop: '3.5%'}}>
+                            <Card sx={{height: 200, width: '147.5%'}} elevation={8} style={{overflow: 'hidden', borderRadius: '15px', paddingTop: '3.5%'}}>
                                 <text className='job-search-text'> 
                                     Find jobs or hire college students starting now with {" "}
                                 </text>
@@ -178,9 +213,9 @@ export function JobBoard() {
                                 </text>
                                 <br></br>
                                 <Grid container className='job-table-grid' columnSpacing={2} style={{paddingLeft: '30%', paddingTop: '1.5%'}}> 
-                                    <TextField placeholder="Find Jobs..." type="search" square={false} style={{width: '45%'}}/>
+                                    <TextField placeholder="Find Jobs..." type="search" style={{width: '45%'}}/>
                                     <Grid className='job-button'>
-                                        <Card sx={{height: 55, width: '100%'}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px', background: "#8253E7", color: 'white'}}>
+                                        <Card sx={{height: 55, width: '100%'}} elevation={8} style={{overflow:'hidden', borderRadius: '15px', background: "#8253E7", color: 'white'}}>
                                             <CardContent style={{ display: 'flex', alignItems: 'center' }} onClick={openPop}> 
                                                 Post a Job
                                             </CardContent>
@@ -201,38 +236,38 @@ export function JobBoard() {
                                                             <text className='pop-textfield-title'>
                                                                 Job Title
                                                             </text> <br></br>
-                                                            <TextField required={true} placeholder="" type="search" square={false} style={{width: '98.5%'}} onChange={updateTitle} value={title}/>
+                                                            <TextField required={true} placeholder="" type="search" style={{width: '98.5%'}} onChange={updateTitle} value={title}/>
                                                         </div>
                                                         <div style={{paddingTop: '2.5%'}}>
                                                             <text className='pop-textfield-title'>
                                                                 Company or Employer Name
                                                             </text> <br></br>
-                                                            <TextField required={true} placeholder="" type="search" square={false} style={{width: '98.5%'}} onChange={updateName} value={name}/>
+                                                            <TextField required={true} placeholder="" type="search" style={{width: '98.5%'}} onChange={updateName} value={name}/>
                                                         </div>
                                                         <div style={{paddingTop: '2.5%'}}>
                                                             <text className='pop-textfield-title'>
                                                                 Job Location
                                                             </text> <br></br>
-                                                            <TextField required={true} placeholder="" type="search" square={false} style={{width: '98.5%'}} onChange={updateLocation} value={location}/>
+                                                            <TextField required={true} placeholder="" type="search" style={{width: '98.5%'}} onChange={updateLocation} value={location}/>
                                                         </div>
                                                         <div style={{paddingTop: '2.5%', display: 'flex'}}>
                                                             <div style={{width: '35%', paddingRight: '2.5%'}}>
                                                                 <text className='pop-textfield-title'>
                                                                     Pay 
                                                                 </text> <br></br>
-                                                                <TextField required={true} placeholder="" type="search" square={false} className='pop-textfield-title' style={{width: '100%'}} onChange={updatePay} value={pay}/>
+                                                                <TextField required={true} placeholder="" type="search" className='pop-textfield-title' style={{width: '100%'}} onChange={updatePay} value={pay}/>
                                                             </div>
                                                         </div>
                                                     </DialogContentText>
                                                 </DialogContent>
                                             <Divider/>
                                                 <DialogActions>
-                                                    <Card sx={{height: 50, width: '10%'}} square={false} style={{overflow:'hidden', borderRadius: '15px', color: 'black', border: "1px solid black"}}>
+                                                    <Card sx={{height: 50, width: '10%'}} style={{overflow:'hidden', borderRadius: '15px', color: 'black', border: "1px solid black"}}>
                                                         <CardContent style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} onClick={closePop}> 
                                                             Back
                                                         </CardContent>
                                                     </Card>
-                                                    <Card sx={{height: 50, width: '10%'}} square={false} style={{overflow:'hidden', borderRadius: '15px', background: "gray", color: 'white'}}>
+                                                    <Card sx={{height: 50, width: '10%'}} style={{overflow:'hidden', borderRadius: '15px', background: "gray", color: 'white'}}>
                                                         <CardContent style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} onClick={openNextPop}> 
                                                             Next
                                                         </CardContent>
@@ -260,7 +295,7 @@ export function JobBoard() {
                                                                 <MenuItem value={month}> {month} </MenuItem>
                                                             ))}
                                                         </Select>
-                                                        <TextField required={true} placeholder="Date" type="search" square={false} style={{width: '17.5%', paddingLeft: '1%', paddingRight: '1%'}}/>
+                                                        <TextField required={true} placeholder="Date" type="search" style={{width: '17.5%', paddingLeft: '1%', paddingRight: '1%'}}/>
                                                         <TextField required={true} placeholder="Year" type="search" square={false} style={{width: '17.5%', paddingRight: '8%'}}/>
                                                         <TextField required={true} placeholder="Hour" type="search" square={false} style={{width: '17.5%', paddingRight: '1%'}}/>
                                                         <TextField required={true} placeholder="Minute" type="search" square={false} style={{width: '17.5%', paddingRight: '1%'}}/>

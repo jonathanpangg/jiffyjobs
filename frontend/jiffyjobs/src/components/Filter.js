@@ -8,6 +8,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
+var categoryList = new Set()
 export function Filter() {
     const [Location] = useState([]);
     const [Category] = useState([]);
@@ -25,9 +26,9 @@ export function Filter() {
     const filterOptions = {
       Location: ['Less than a mile away', '1-2 miles away', '3-5 miles away', '7+ miles away'],
       Category: ['Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Other'],
-      Duration: ['Less than 6 hours', '1 day', 'Few days - 1 week', 'A few weeks', '1 month', 'More than 1 month'],
+      Duration: ['Quick Jobs (1 day)', 'Short Term Jobs (1-7 days)', 'Part-Time Jobs (7+ Days)'],
       PayRate: ['$15/hour', '$15-20/hour', '$20+/hour', 'Stipend based'],
-      OnOffCampus: ['On campus', 'Off campus'],
+      // OnOffCampus: ['On campus', 'Off campus']
     };
 
     function handleFilterList(event) {
@@ -78,8 +79,8 @@ export function Filter() {
               {filterOptions[filterCategory].map((option) => (
                 <FormGroup>
                   { filterList.has(option) ? 
-                    <FormControlLabel sx={{ color: 'gray' }} control={<Checkbox checked/>} key={option} value={option} label={option} onChange={(event) => {handleFilterList(event)}} className='checkboxes'/> :
-                    <FormControlLabel control={<Checkbox/>} key={option} value={option} label={option} onChange={(event) => {handleFilterList(event)}} className='checkboxes' /> }
+                    <FormControlLabel sx={{ color: 'gray' }} color='default' control={<Checkbox checked/>} key={option} value={option} label={option} onChange={(event) => {handleFilterList(event)}} className='checkboxes'/> :
+                    <FormControlLabel control={<Checkbox/>} color='default' key={option} value={option} label={option} onChange={(event) => {handleFilterList(event)}} className='checkboxes' /> }
                 </FormGroup>
             ))}
           </div>: <></>}
@@ -103,3 +104,7 @@ export function Filter() {
       </Box>
     );
   }
+
+export default categoryList = {
+    value: categoryList
+};
