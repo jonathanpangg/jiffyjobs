@@ -10,6 +10,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from '@mui/material/IconButton';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import { Filter } from './additions/Filter';
 
 export function JobBoard() {
     const [jobData, setJobData] = useState([])
@@ -130,7 +131,7 @@ export function JobBoard() {
         GetAllJobs()
     }, [jobData, size]);
 
-    function PostJobs() {
+    async function PostJobs() {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -313,7 +314,13 @@ export function JobBoard() {
                         
                         <text style={{width: "100%"}} className='recently-posted-jobs'> 
                             Recently Posted Jobs
+                       
                         </text> 
+                        <text style={{width: "100%"}} className='recently-posted-jobs'> 
+                        <Filter/>
+                        <Divider style={{ paddingTop: '1%', width: '92.5%'}}/> 
+                        </text> 
+                        
                         {jobData.map((key) => (
                             <Grid key={key} item>
                                 <Card sx={{height: 300, width: 300}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px'}}>
