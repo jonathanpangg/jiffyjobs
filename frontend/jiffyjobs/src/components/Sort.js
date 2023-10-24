@@ -8,11 +8,11 @@ import Menu from '@mui/material/Menu';
 
 
 export function Sort() {
-    const [selectedSortby, setSelectedSortby] = useState('');
+    const [selectedSortBy, setSelectedSortBy] = useState('');
     const [anchorEl, setAnchorEl] = useState(null);
 
     const filterOptions = {
-        Sortby: ['Pay: Hight to Low', 'Pay: Low to High', 'Date: New to Old', 'Date: Old to New']
+        SortBy: ['Pay: Hight to Low', 'Pay: Low to High', 'Date: New to Old', 'Date: Old to New']
     };
 
     const handleClick = (event) => {
@@ -20,7 +20,7 @@ export function Sort() {
     };
 
     const handleClose = (value) => {
-        setSelectedSortby(value);
+        setSelectedSortBy(value);
         setAnchorEl(null);
     };
 
@@ -34,7 +34,7 @@ export function Sort() {
                       onClick={handleClick}
                       className='filter-tab'
                     >
-                        Sortby 
+                        SortBy 
                         { anchorEl 
                             ? <KeyboardArrowDownIcon className='arrow-pad'/> 
                             : <KeyboardArrowUpIcon className='arrow-pad'/>
@@ -47,7 +47,7 @@ export function Sort() {
                         open={Boolean(anchorEl)}
                         onClose={() => setAnchorEl(null)}
                     >
-                        {filterOptions.Sortby.map(option => (
+                        {filterOptions.SortBy.map(option => (
                             <MenuItem key={option} onClick={() => handleClose(option)}>
                                 {option}
                             </MenuItem>
