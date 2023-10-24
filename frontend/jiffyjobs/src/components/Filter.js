@@ -56,6 +56,11 @@ export function Filter() {
       filterList.delete(option);
       setFilterList(new Set([...filterList]));
     }
+
+
+    function clearAllFilters() {
+      setFilterList(new Set());
+    }
   
     const renderSelectedOptions = (selected) => {
       return Array.from(selected, option => (
@@ -104,6 +109,15 @@ export function Filter() {
           <Grid container columnSpacing={2}>
             { filterList.size > 0 && <text className='filterby-tag'> Filtered By: </text>}
             { renderSelectedOptions(filterList, setFilterList) } 
+            { filterList.size > 0 && 
+              <text 
+                  className='filterby-tag'
+                  onClick={clearAllFilters} 
+                  style={{ cursor: 'pointer', textDecoration: 'underline', margin: '4px' }}
+              >
+                  CLEAR ALL
+              </text>
+            }
           </Grid>
       </Box>
     );
