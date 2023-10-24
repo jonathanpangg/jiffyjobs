@@ -42,15 +42,15 @@ export function Filter() {
       }
     };
 
-    function toggleFilter(type, bool) { 
-      if (bool) 
-        setExpandMap(expandMap.set(type, false))
-      else {
-        var keys = Array.from(expandMap.keys())
-        keys.forEach(function reset(i) {setExpandMap(expandMap.set(i, false))})
-        setExpandMap(expandMap.set(type, true))
-      }
-    };
+    function toggleFilter(type) { 
+      setExpandMap(prevMap => {
+        const newMap = new Map(prevMap);  
+        newMap.forEach((val, key) => {
+          newMap.set(key, key === type ? !val : false);  
+        });
+        return newMap;
+    });
+}
   
     const renderSelectedOptions = (selected) => {
       return Array.from(selected, option => (
@@ -67,30 +67,28 @@ export function Filter() {
         <div style={{width: '12.5%'}} className='filters'>
           <Grid item
             xs={1.5}
-            value={filterCategory === 'Location' ? Location : filterCategory === 'Category' ? Category : filterCategory === 'Duration' ? Duration : filterCategory === 'PayRate' ? PayRate : OnOffCampus}
-            onClick = {() => {toggleFilter(filterCategory, bool)}}
+            onClick={() => toggleFilter(filterCategory)}
             className = 'filter-tab'
           >
               { filterCategory } 
               { bool ? <KeyboardArrowDownIcon className='arrow-pad'/> : <KeyboardArrowUpIcon className='arrow-pad'/> }
           </Grid>
-          { bool ? 
-            <div>
+          { bool && 
+            <div style={{ whiteSpace: 'nowrap', minWidth: '250%', overflowX: 'auto' }}>
               {filterOptions[filterCategory].map((option) => (
-                <FormGroup>
-                  { filterList.has(option) ? 
-                    <FormControlLabel sx={{ color: 'gray' }} color='default' control={<Checkbox checked/>} key={option} value={option} label={option} onChange={(event) => {handleFilterList(event)}} className='checkboxes'/> :
-                    <FormControlLabel control={<Checkbox/>} color='default' key={option} value={option} label={option} onChange={(event) => {handleFilterList(event)}} className='checkboxes' /> }
+                <FormGroup key={option}>
+                    <FormControlLabel control={<Checkbox checked={filterList.has(option)} />} color='default' value={option} label={option} onChange={handleFilterList} className='checkboxes' />
                 </FormGroup>
             ))}
-          </div>: <></>}
+          </div>
+          }
         </div>
       )
     }
 
     return (
       <Box sx={{ flexGrow: 1 }}>
-          <Grid container columnSpacing={1}>
+          <Grid container columnSpacing={1} wrap="nowrap">
             
               { Object.keys(filterOptions).map((filterCategory) => (
                 renderFilters(filterCategory, expandMap.get(filterCategory))
