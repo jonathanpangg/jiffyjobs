@@ -49,14 +49,20 @@ export function Filter() {
           newMap.set(key, key === type ? !val : false);  
         });
         return newMap;
-    });
-}
+      });
+    }
+    
+    function handleDelete(option) {
+      filterList.delete(option);
+      setFilterList(new Set([...filterList]));
+    }
   
     const renderSelectedOptions = (selected) => {
       return Array.from(selected, option => (
           <Chip
               key={option}
               label={option}
+              onDelete={() => handleDelete(option)}
               style={{ margin: '4px', background: "gray"}}
           />
       ));
