@@ -6,7 +6,7 @@ import {
 	handleServerError,
     handleBadRequest,
     } from "../utils/handler.js";
-import calculateDistance from '../utils/controllerFunctions.js'
+// import calculateDistance from '../utils/controllerFunctions.js'
 
 /**
  * 

@@ -12,6 +12,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { Filter } from './Filter';
 import categoryList from './Filter';
+import { Sort } from './Sort';
 
 export function JobBoard() {
     const [jobData, setJobData] = useState([])
@@ -349,13 +350,18 @@ export function JobBoard() {
                         
                         <text style={{width: "100%"}} className='recently-posted-jobs'> 
                             Recently Posted Jobs
-                       
-                        </text> 
-                        <text style={{width: "100%"}} className='recently-posted-jobs'> 
-                        <Filter/>
-                        <Divider style={{ paddingTop: '1%', width: '92.5%'}}/> 
-                        </text> 
+                        </text>
                         
+                        <text style={{width: "100%"}} className='recently-posted-jobs'>
+                            <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>
+                                <Filter />
+                                <div style={{ marginLeft: 'auto', marginRight: '8%' }}>
+                                    <Sort />
+                                </div>
+                            </div>
+                            <Divider style={{ paddingTop: '1%', width: '92.5%'}}/>
+                        </text>
+
                         {jobData.map((key) => (
                             <Grid key={key} item>
                                 <Card sx={{height: 300, width: 300}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px'}}>
