@@ -16,6 +16,7 @@ import { Sort } from './Sort';
 
 export function JobBoard() {
     const [jobData, setJobData] = useState([])
+    const [rawData, setRawData] = useState([]);
     const [openStartPop, setOpenStartPop] = useState(false)
     const [openSecondPop, setOpenSecondPop] = useState(false)
     const [size, setSize] = useState(0)
@@ -114,6 +115,7 @@ export function JobBoard() {
                     return response.json();
                 })
                 .then((data) => {
+                    setRawData(data);
                     setJobData(data.map(function(obj) {
                         return [[0, obj.title], ["", "Job Provider: " + obj.job_poster], ["", "Location: " + obj.location], ["", "Pay: $" + obj.pay], ["", "Category: " + obj.categories]]
                     }))
@@ -131,7 +133,7 @@ export function JobBoard() {
         }
         // if (categoryList.value.length === 0)
             GetAllJobs()
-    }, [jobData, size]);
+    }, []);
 
     useEffect(() => {
         async function FilterJobs() {
@@ -165,7 +167,7 @@ export function JobBoard() {
         
         if (categoryList.value.length >= 1)
             FilterJobs()
-    }, [jobData, size])
+    }, [])
 
     async function PostJobs() {
         const requestOptions = {
@@ -197,6 +199,10 @@ export function JobBoard() {
             .catch((error) => {
                 console.log(error)
             })
+    }
+    const handleLogJobData = () => {
+        console.log('rawdata: ', rawData);
+        console.log('jobdata: ', jobData);
     }
     
     return (
@@ -356,11 +362,12 @@ export function JobBoard() {
                             <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>
                                 <Filter />
                                 <div style={{ marginLeft: 'auto', marginRight: '8%' }}>
-                                    <Sort />
+                                <Sort rawData={rawData} setRawData={setRawData} setJobData={setJobData} />
                                 </div>
                             </div>
                             <Divider style={{ paddingTop: '1%', width: '92.5%'}}/>
                         </text>
+                        {/* <button onClick={handleLogJobData}>Log Job Data</button> */}
 
                         {jobData.map((key) => (
                             <Grid key={key} item>

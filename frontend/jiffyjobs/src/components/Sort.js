@@ -7,12 +7,12 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 
 
-export function Sort() {
+export function Sort({ rawData, setRawData, setJobData }) {
     const [selectedSortBy, setSelectedSortBy] = useState('');
     const [anchorEl, setAnchorEl] = useState(null);
 
     const filterOptions = {
-        SortBy: ['Pay: Hight to Low', 'Pay: Low to High', 'Date: New to Old', 'Date: Old to New']
+        SortBy: ['Pay: High to Low', 'Pay: Low to High', 'Date: New to Old', 'Date: Old to New']
     };
 
     const handleClick = (event) => {
@@ -21,8 +21,36 @@ export function Sort() {
 
     const handleClose = (value) => {
         setSelectedSortBy(value);
-        setAnchorEl(null);
+        
+        console.log("Before sorting: ", rawData);
+        const sortedData = sortJobs(value, rawData);
+        console.log("After sorting: ", sortedData);
+        
+        setRawData(sortedData);
+        setJobData(sortedData.map(obj => {
+            return [[0, obj.title], ["", "Job Provider: " + obj.job_poster], ["", "Location: " + obj.location], ["", "Pay: $" + obj.pay], ["", "Category: " + obj.categories]];
+        }));
     };
+    
+    const sortJobs = (criteria, data) => {
+        console.log("Selected criteria: ", criteria);
+        let sorted = [...data];
+        if (criteria === 'Pay: High to Low') {
+            console.log("Sorting by Pay: High to Low");
+            sorted.sort((a, b) => b.pay - a.pay);
+        } else if (criteria === 'Pay: Low to High') {
+            console.log("Sorting by Pay: Low to High");
+            sorted.sort((a, b) => a.pay - b.pay);
+        } else if (criteria === 'Date: New to Old') {
+            console.log("Sorting by Date: New to Old");
+            sorted.sort((a, b) => new Date(b.date_posted) - new Date(a.date_posted));
+        } else if (criteria === 'Date: Old to New') {
+            console.log("Sorting by Date: Old to New");
+            sorted.sort((a, b) => new Date(a.date_posted) - new Date(b.date_posted));
+        }
+        return sorted;
+    };
+    
 
     return (
         <Box sx={{ flexGrow: 1 }}>
