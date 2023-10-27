@@ -116,12 +116,15 @@ export function JobBoard() {
                 })
                 .then((data) => {
                     setRawData(data);
-                    setJobData(data.map(function(obj) {
+                    const newJobData = data.map(function(obj) {
                         return [[0, obj.title], ["", "Job Provider: " + obj.job_poster], ["", "Location: " + obj.location], ["", "Pay: $" + obj.pay], ["", "Category: " + obj.categories]]
-                    }))
-                    setSize(jobData.length)
+                    });
+                    setJobData(newJobData);
 
-                    if (size <= 4) {
+                    const newSize = newJobData.length;
+                    setSize(newSize);
+
+                    if (newSize <= 4) {
                         setBackground("1")
                     } else {
                         setBackground("")
