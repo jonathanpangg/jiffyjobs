@@ -10,25 +10,22 @@ import Checkbox from '@mui/material/Checkbox';
 
 var categoryList = new Set()
 export function Filter() {
-    const [Location] = useState([]);
     const [Category] = useState([]);
-    const [Duration] = useState([]);
-    const [PayRate] = useState([]);
+    const [DateRange] = useState([]);
     const [OnOffCampus] = useState([]);
     const [expandMap, setExpandMap] = useState(new Map(
-      [["Location", false],
-      ["Category", false],
-      ["Duration", false],
-      ["PayRate", false],
+      [["Category", false],
+      ["DateRange", false],
       ["OnOffCampus", false]]
     )) 
     const [filterList, setFilterList] = useState(new Set())
     const filterOptions = {
-      Location: ['Less than a mile away', '1-2 miles away', '3-5 miles away', '7+ miles away'],
-      Category: ['Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Other'],
-      Duration: ['Quick Jobs (1 day)', 'Short Term Jobs (1-7 days)', 'Part-Time Jobs (7+ Days)'],
-      PayRate: ['$15/hour', '$15-20/hour', '$20+/hour', 'Stipend based'],
-      // OnOffCampus: ['On campus', 'Off campus']
+      Category: ['Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving', 
+                 'Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving',
+                 'Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving',
+                 'Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving'],
+      DateRange: ['Quick Jobs (1 day)', 'Short Term Jobs (1-7 days)', 'Part-Time Jobs (7+ Days)'],
+      OnOffCampus: ['On campus', 'Off campus'],
     };
 
     function handleFilterList(event) {
@@ -68,12 +65,17 @@ export function Filter() {
               key={option}
               label={option}
               onDelete={() => handleDelete(option)}
-              style={{ margin: '4px', background: "gray"}}
-          />
+              style={{ margin: '4px', background: 'transparent', border: 'none', paddingLeft: '4px', paddingRight: '4px', display: 'flex', alignItems: 'center', }}
+              deleteIcon={<span style={{ fontSize: '12px', fontWeight: 'bold', cursor: 'pointer' }}>X</span>}
+            />
       ));
     };
 
     const renderFilters = (filterCategory, bool) => {
+      const options = filterOptions[filterCategory];
+      const maxColumns = 5; 
+      const columns = Math.ceil(options.length / maxColumns);
+
       return (
         <div style={{width: '12.5%'}} className='filters'>
           <Grid item
@@ -85,11 +87,39 @@ export function Filter() {
               { bool ? <KeyboardArrowDownIcon className='arrow-pad'/> : <KeyboardArrowUpIcon className='arrow-pad'/> }
           </Grid>
           { bool && 
-            <div style={{ whiteSpace: 'nowrap', minWidth: '250%', overflowX: 'auto' }}>
-              {filterOptions[filterCategory].map((option) => (
-                <FormGroup key={option}>
-                    <FormControlLabel control={<Checkbox checked={filterList.has(option)} />} color='default' value={option} label={option} onChange={handleFilterList} className='checkboxes' />
-                </FormGroup>
+            <div style={{ display: 'flex', whiteSpace: 'nowrap', minWidth: '250%' }}>
+            {Array.from({ length: columns }, (_, columnIndex) => (
+              <div key={columnIndex} style={{ display: 'flex', flexDirection: 'column', marginRight: '16px' }}>
+                {options
+                  .slice(columnIndex * maxColumns, (columnIndex + 1) * maxColumns)
+                  .map((option) => (
+                    <FormGroup key={option}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={filterList.has(option)}
+                            color='primary'
+                            icon={
+                              <span
+                                style={{ backgroundColor: 'white', width: '16px', height: '16px', display: 'block', borderRadius: '4px', border: '1px solid grey' }}
+                              ></span>
+                            }
+                            checkedIcon={
+                              <span
+                                style={{ backgroundColor: 'gray', width: '16px', height: '16px', display: 'block', borderRadius: '4px', border: '1px solid grey' }}
+                              ></span>
+                            }
+                          />
+                        }
+                        color='default'
+                        value={option}
+                        label={option}
+                        onChange={handleFilterList}
+                        className='checkboxes'
+                      />
+                    </FormGroup>
+                  ))}
+              </div>
             ))}
           </div>
           }

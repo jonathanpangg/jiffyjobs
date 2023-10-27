@@ -349,7 +349,7 @@ export function JobBoard() {
                         </Grid>
                         
                         <text style={{width: "100%"}} className='recently-posted-jobs'> 
-                            Recently Posted Jobs
+                            Job Board
                         </text>
                         
                         <text style={{width: "100%"}} className='recently-posted-jobs'>
