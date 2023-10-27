@@ -49,11 +49,26 @@ export function Filter() {
       });
     }
     
+    function handleFilterList(event) {
+      const val = event.target.value;
+      setFilterList((prevFilterList) => {
+        const newFilterList = new Set(prevFilterList);
+        if (newFilterList.has(val)) {
+          newFilterList.delete(val);
+        } else {
+          newFilterList.add(val);
+        }
+        return newFilterList;
+      });
+    };
+    
     function handleDelete(option) {
-      filterList.delete(option);
-      setFilterList(new Set([...filterList]));
+      setFilterList((prevFilterList) => {
+        const newFilterList = new Set(prevFilterList);
+        newFilterList.delete(option);
+        return newFilterList;
+      });
     }
-
 
     function clearAllFilters() {
       setFilterList(new Set());
