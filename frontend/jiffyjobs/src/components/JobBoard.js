@@ -133,7 +133,7 @@ export function JobBoard() {
         }
         // if (categoryList.value.length === 0)
             GetAllJobs()
-    }, []);
+    }, [jobData, size]);
 
     useEffect(() => {
         async function FilterJobs() {
