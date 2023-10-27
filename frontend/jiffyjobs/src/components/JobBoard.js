@@ -11,6 +11,10 @@ import IconButton from '@mui/material/IconButton';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { Filter } from './additions/Filter';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import dayjs from 'dayjs';
 
 export function JobBoard() {
     const [jobData, setJobData] = useState([])
@@ -19,6 +23,14 @@ export function JobBoard() {
     const [size, setSize] = useState(0)
     const [background, setBackground] = useState("")
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    const types = ["Quick Jobs", "Short-term Jobs"]
+    const [titleError, setTitleError] = useState(false)
+    const [nameError, setNameError] = useState(false)
+    const [locationError, setLocationError] = useState(false)
+    const [payError, setPayError] = useState(false)
+    const [descriptionError, setDescriptionError] = useState(false)
+    const [categoryError, setCategoryError] = useState(false)
+
     const MenuProps = {
       PaperProps: {
         style: {
@@ -33,31 +45,61 @@ export function JobBoard() {
     const [location ,setLocation] = useState("")
     const [pay ,setPay] = useState(0)
     const [description ,setDescription] = useState("")
-    // const [startTime ,setStartTime] = useState(Date())
+    const [jobType, setJobType] = useState("")
+    const [category, setCategory] = useState([])
+    const [startTime, setStartTime] = useState(dayjs('2022-04-17T15:30')) 
+    const [endTime, setEndTime] = useState(dayjs('2022-04-17T15:30')) 
 
     function updateTitle(event) {
         console.log(event)
-        setTitle(event.target.value)
+        const value = event.target.value
+        setTitle(value)
+        setTitleError(value === "")
+        
     }
 
     function updateName(event) {
         console.log(event)
+        const value = event.target.value
         setName(event.target.value)
+        setNameError(value === "")
+        
     }
 
     function updateLocation(event) {
         console.log(event)
+        const value = event.target.value
         setLocation(event.target.value)
+        setLocationError(value === "")
     }
 
     function updateDescription(event) {
         console.log(event)
+        const value = event.target.value
         setDescription(event.target.value)
+        setDescriptionError(value === "")
     }
 
     function updatePay(event) {
         console.log(event)
+        const value = event.target.value
         setPay(event.target.value)
+        setPayError(value === "" || value <= 0)
+    }
+
+    function updateJobType(event) {
+        console.log(event)
+        setJobType(event.target.value)
+    }
+
+    function updateStartTime(event) {
+        console.log(event)
+        setStartTime(event.target.value)
+    }
+
+    function updateEndTime(event) {
+        console.log(event)
+        setEndTime(event.target.value)
     }
 
     const openPop = () => {
@@ -69,8 +111,10 @@ export function JobBoard() {
     }
 
     const openNextPop = () => {
-        setOpenStartPop(false)
-        setOpenSecondPop(true)
+        if (titleError === false && nameError === false && locationError === false && payError === false) {
+            setOpenStartPop(false)
+            setOpenSecondPop(true)
+        }
     }
 
     const closeNextPop = () => {
@@ -138,12 +182,13 @@ export function JobBoard() {
             body: JSON.stringify({
                 title: title,
                 job_poster: name,
-                description: "Our server ran away, we need a replacement for this weekend ASAP",
+                description: description,
                 pay: pay,
                 location: location,
-                categories: ["serving", "cleaning"],
-                time: ["2023-10-20T10:00:00", "2023-10-20T18:00:00"],
-                date_posted: "2023-10-20T10:00:00"
+                categories: category,
+                time: [startTime, endTime],
+                job_type: jobType,
+                date_posted: new Date()
             })
         }
         const route = "http://localhost:4000/api/jobs/create"
@@ -201,26 +246,26 @@ export function JobBoard() {
                                                             <text className='pop-textfield-title'>
                                                                 Job Title
                                                             </text> <br></br>
-                                                            <TextField required={true} placeholder="" type="search" square={false} style={{width: '98.5%'}} onChange={updateTitle} value={title}/>
+                                                            <TextField error={titleError} helperText={titleError ? "*This field is required" : ""} required={true} placeholder="" type="search" square={false} style={{width: '98.5%'}} onChange={updateTitle} value={title}/>
                                                         </div>
                                                         <div style={{paddingTop: '2.5%'}}>
                                                             <text className='pop-textfield-title'>
                                                                 Company or Employer Name
                                                             </text> <br></br>
-                                                            <TextField required={true} placeholder="" type="search" square={false} style={{width: '98.5%'}} onChange={updateName} value={name}/>
+                                                            <TextField error={nameError} helperText={nameError ? "*This field is required" : ""} required={true} placeholder="" type="search" square={false} style={{width: '98.5%'}} onChange={updateName} value={name}/>
                                                         </div>
                                                         <div style={{paddingTop: '2.5%'}}>
                                                             <text className='pop-textfield-title'>
                                                                 Job Location
                                                             </text> <br></br>
-                                                            <TextField required={true} placeholder="" type="search" square={false} style={{width: '98.5%'}} onChange={updateLocation} value={location}/>
+                                                            <TextField error={locationError} helperText={locationError ? "*This field is required" : ""} required={true} placeholder="" type="search" square={false} style={{width: '98.5%'}} onChange={updateLocation} value={location}/>
                                                         </div>
                                                         <div style={{paddingTop: '2.5%', display: 'flex'}}>
                                                             <div style={{width: '35%', paddingRight: '2.5%'}}>
                                                                 <text className='pop-textfield-title'>
                                                                     Pay 
                                                                 </text> <br></br>
-                                                                <TextField required={true} placeholder="" type="search" square={false} className='pop-textfield-title' style={{width: '100%'}} onChange={updatePay} value={pay}/>
+                                                                <TextField error={payError} helperText={payError ? "*This field is required or pay must be greater than 0" : ""} required={true} placeholder="" type="search" square={false} className='pop-textfield-title' style={{width: '100%'}} onChange={updatePay} value={pay}/>
                                                             </div>
                                                         </div>
                                                     </DialogContentText>
@@ -255,29 +300,14 @@ export function JobBoard() {
                                                         <text className='pop-textfield-title'>
                                                             Start date/time
                                                         </text> <br></br>
-                                                        <Select style={{width: '17.5%'}} className='pop-textfield-title' MenuProps={MenuProps}>
-                                                            {months.map((month) => (
-                                                                <MenuItem value={month}> {month} </MenuItem>
-                                                            ))}
-                                                        </Select>
-                                                        <TextField required={true} placeholder="Date" type="search" square={false} style={{width: '17.5%', paddingLeft: '1%', paddingRight: '1%'}}/>
-                                                        <TextField required={true} placeholder="Year" type="search" square={false} style={{width: '17.5%', paddingRight: '8%'}}/>
-                                                        <TextField required={true} placeholder="Hour" type="search" square={false} style={{width: '17.5%', paddingRight: '1%'}}/>
-                                                        <TextField required={true} placeholder="Minute" type="search" square={false} style={{width: '17.5%', paddingRight: '1%'}}/>
-                                                    </div>
-                                                    <div style={{paddingTop: '2.5%'}}>
-                                                    <text className='pop-textfield-title'>
-                                                            End date/time
-                                                        </text> <br></br>
-                                                        <Select style={{width: '17.5%'}} className='pop-textfield-title' MenuProps={MenuProps}>
-                                                            {months.map((month) => (
-                                                                <MenuItem value={month}> {month} </MenuItem>
-                                                            ))}
-                                                        </Select>
-                                                        <TextField required={true} placeholder="Date" type="search" square={false} style={{width: '17.5%', paddingLeft: '1%', paddingRight: '1%'}}/>
-                                                        <TextField required={true} placeholder="Year" type="search" square={false} style={{width: '17.5%', paddingRight: '8%'}}/>
-                                                        <TextField required={true} placeholder="Hour" type="search" square={false} style={{width: '17.5%', paddingRight: '1%'}}/>
-                                                        <TextField required={true} placeholder="Minute" type="search" square={false} style={{width: '17.5%', paddingRight: '1%'}}/>
+                                                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                            <DateTimePicker 
+                                                            renderInput={(props) => <TextField {...props} />}
+                                                            label="Start date and time"
+                                                            value={startTime}
+                                                            onChange={updateStartTime}
+                                                            minDateTime={new Date()}/>
+                                                        </LocalizationProvider>
                                                     </div>
                                                     <div style={{paddingTop: '2.5%'}}>
                                                         <text className='pop-textfield-title'>
