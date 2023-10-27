@@ -47,8 +47,8 @@ export function JobBoard() {
     const [description ,setDescription] = useState("")
     const [jobType, setJobType] = useState("")
     const [category, setCategory] = useState([])
-    const [startTime, setStartTime] = useState(dayjs('2022-04-17T15:30')) 
-    const [endTime, setEndTime] = useState(dayjs('2022-04-17T15:30')) 
+    const [startTime, setStartTime] = useState() 
+    const [endTime, setEndTime] = useState() 
 
     function updateTitle(event) {
         console.log(event)
@@ -93,13 +93,18 @@ export function JobBoard() {
     }
 
     function updateStartTime(event) {
-        console.log(event)
-        setStartTime(event.target.value)
+        console.log(event.$d)
+        setStartTime(event.$d)
     }
 
     function updateEndTime(event) {
+        console.log(event.$d)
+        setEndTime(event.$d)
+    }
+
+    function updateCategory(event) {
         console.log(event)
-        setEndTime(event.target.value)
+        setCategory(event.target.value)
     }
 
     const openPop = () => {
@@ -187,7 +192,7 @@ export function JobBoard() {
                 location: location,
                 categories: category,
                 time: [startTime, endTime],
-                job_type: jobType,
+                job_type: "Quick Jobs",
                 date_posted: new Date()
             })
         }
@@ -265,7 +270,7 @@ export function JobBoard() {
                                                                 <text className='pop-textfield-title'>
                                                                     Pay 
                                                                 </text> <br></br>
-                                                                <TextField error={payError} helperText={payError ? "*This field is required or pay must be greater than 0" : ""} required={true} placeholder="" type="search" square={false} className='pop-textfield-title' style={{width: '100%'}} onChange={updatePay} value={pay}/>
+                                                                <TextField error={payError} helperText={payError ? "*Pay must be greater than 0" : ""} required={true} placeholder="" type="search" square={false} className='pop-textfield-title' style={{width: '100%'}} onChange={updatePay} value={pay}/>
                                                             </div>
                                                         </div>
                                                     </DialogContentText>
@@ -296,30 +301,47 @@ export function JobBoard() {
                                         <Divider/>
                                             <DialogContent>
                                                 <DialogContentText ref={descriptionElementRefNextPop} tabIndex={-1} style={{width: '1000px'}}>
-                                                    <div>
+                                                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                                                        <div style={{ flex: 1 }}>
                                                         <text className='pop-textfield-title'>
                                                             Start date/time
                                                         </text> <br></br>
                                                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                             <DateTimePicker 
                                                             renderInput={(props) => <TextField {...props} />}
-                                                            label="Start date and time"
+                                                            label=""
                                                             value={startTime}
                                                             onChange={updateStartTime}
-                                                            minDateTime={new Date()}/>
+                                                            // minDateTime={new Date()}
+                                                            />
                                                         </LocalizationProvider>
+                                                        </div>
+                                                        <div style={{ flex: 1 }}>
+                                                            <text className='pop-textfield-title'>
+                                                            End date/time
+                                                        </text> <br></br>
+                                                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                            <DateTimePicker 
+                                                            renderInput={(props) => <TextField {...props} />}
+                                                            label=""
+                                                            value={endTime}
+                                                            onChange={updateEndTime}
+                                                            // minDateTime={new Date()}
+                                                            />
+                                                        </LocalizationProvider>
+                                                        </div>
                                                     </div>
                                                     <div style={{paddingTop: '2.5%'}}>
                                                         <text className='pop-textfield-title'>
                                                             Description
                                                         </text> <br></br>
-                                                        <TextField required placeholder="" type="search" square={false} style={{width: '98.5%'}} onChange={updateDescription} value={description}/>
+                                                        <TextField error={descriptionError} helperText={descriptionError ? "*This field is required" : ""} required={true} placeholder="" type="search" square={false} style={{width: '98.5%'}} onChange={updateDescription} value={description}/>
                                                     </div>
                                                     <div style={{paddingTop: '2.5%'}}>
                                                         <text className='pop-textfield-title'>
                                                             Category
                                                         </text> <br></br>
-                                                        <TextField required={true} placeholder="" type="search" square={false} style={{width: '98.5%'}}/>
+                                                        <TextField error={categoryError} helperText={categoryError ? "*This field is required" : ""} required={true} placeholder="" type="search" square={false} style={{width: '98.5%'}} onChange={updateCategory} value={category}/>
                                                     </div>
                                                 </DialogContentText>
                                             </DialogContent>
