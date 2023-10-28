@@ -163,7 +163,7 @@ export function JobBoard() {
                 })
                 .then((data) => {
                     setJobData(data.map(function(obj) {
-                        return [[0, obj.title], ["", "Job Provider: " + obj.job_poster], ["", "Location: " + obj.location], ["", "Pay: $" + obj.pay]]
+                        return [[0, obj.title], ["", "Job Provider: " + obj.job_poster], ["", "Location: " + obj.location], ["", "Pay: $" + obj.pay], ["", "Description:" + obj.description], ["", "Time:" + obj.time.toString()], ["", "Categories:" + obj.categories.toString()]]
                     }))
                     setSize(jobData.length)
 
