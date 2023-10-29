@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from '@mui/material/IconButton';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
 import { Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import CardContent from '@mui/material/CardContent';
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
 import { Divider } from '@mui/material';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 export function JobPosting() {
     const [openStartPop, setOpenStartPop] = useState(false)
@@ -18,15 +19,15 @@ export function JobPosting() {
     const [name, setName] = useState("")
     const [location, setLocation] = useState("")
     const [pay, setPay] = useState(0)
-    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-    const MenuProps = {
-      PaperProps: {
-        style: {
-          maxHeight: 48 * 4.5 + 8,
-          width: 175,
-        },
-      },
-    };
+    const [titleError, setTitleError] = useState(false)
+    const [nameError, setNameError] = useState(false)
+    const [locationError, setLocationError] = useState(false)
+    const [payError, setPayError] = useState(false)
+    const [descriptionError, setDescriptionError] = useState(false)
+    const [categoryError, setCategoryError] = useState(false)
+    const [category, setCategory] = useState([])
+    const [startTime, setStartTime] = useState() 
+    const [endTime, setEndTime] = useState() 
 
     function updateTitle(event) {
         console.log(event)
@@ -62,8 +63,10 @@ export function JobPosting() {
     }
 
     const openNextPop = () => {
-        setOpenStartPop(false)
-        setOpenSecondPop(true)
+        if (titleError === false && nameError === false && locationError === false && payError === false) {
+            setOpenStartPop(false)
+            setOpenSecondPop(true)
+        }
     }
 
     const closeNextPop = () => {
@@ -73,6 +76,21 @@ export function JobPosting() {
     const backSecondPop = () => {
         setOpenSecondPop(false)
         setOpenStartPop(true)
+    }
+
+    function updateStartTime(event) {
+        console.log(event.$d)
+        setStartTime(event.$d)
+    }
+
+    function updateEndTime(event) {
+        console.log(event.$d)
+        setEndTime(event.$d)
+    }
+
+    function updateCategory(event) {
+        console.log(event)
+        setCategory(event.target.value)
     }
 
     const descriptionElementRefStartPop = React.useRef(null)
@@ -113,26 +131,26 @@ export function JobPosting() {
                                 <text className='pop-textfield-title'>
                                     Job Title
                                 </text> <br></br>
-                                <TextField required={true} placeholder="" type="search" style={{width: '98.5%'}} onChange={updateTitle} value={title}/>
+                                <TextField error={titleError} helperText={titleError ? "*This field is required" : ""} required={true} placeholder="" type="search" square={false} style={{width: '98.5%'}} onChange={updateTitle} value={title}/>
                             </div>
                             <div style={{paddingTop: '2.5%'}}>
                                 <text className='pop-textfield-title'>
                                     Company or Employer Name
                                 </text> <br></br>
-                                <TextField required={true} placeholder="" type="search" style={{width: '98.5%'}} onChange={updateName} value={name}/>
+                                <TextField error={nameError} helperText={nameError ? "*This field is required" : ""} required={true} placeholder="" type="search" square={false} style={{width: '98.5%'}} onChange={updateName} value={name}/>
                             </div>
                             <div style={{paddingTop: '2.5%'}}>
                                 <text className='pop-textfield-title'>
                                     Job Location
                                 </text> <br></br>
-                                <TextField required={true} placeholder="" type="search" style={{width: '98.5%'}} onChange={updateLocation} value={location}/>
+                                <TextField error={locationError} helperText={locationError ? "*This field is required" : ""} required={true} placeholder="" type="search" square={false} style={{width: '98.5%'}} onChange={updateLocation} value={location}/>
                             </div>
                             <div style={{paddingTop: '2.5%', display: 'flex'}}>
                                 <div style={{width: '35%', paddingRight: '2.5%'}}>
                                     <text className='pop-textfield-title'>
                                         Pay 
                                     </text> <br></br>
-                                    <TextField required={true} placeholder="" type="search" className='pop-textfield-title' style={{width: '100%'}} onChange={updatePay} value={pay}/>
+                                    <TextField error={payError} helperText={payError ? "*Pay must be greater than 0" : ""} required={true} placeholder="" type="search" square={false} className='pop-textfield-title' style={{width: '100%'}} onChange={updatePay} value={pay}/>
                                 </div>
                             </div>
                         </DialogContentText>
@@ -172,41 +190,41 @@ export function JobPosting() {
                             <text className='pop-textfield-title'>
                                 Start date/time
                             </text> <br></br>
-                            <Select style={{width: '17.5%'}} className='pop-textfield-title' MenuProps={MenuProps}>
-                                {months.map((month) => (
-                                    <MenuItem value={month}> {month} </MenuItem>
-                                ))}
-                            </Select>
-                            <TextField required={true} placeholder="Date" type="search" style={{width: '17.5%', paddingLeft: '1%', paddingRight: '1%'}}/>
-                            <TextField required={true} placeholder="Year" type="search" square={false} style={{width: '17.5%', paddingRight: '8%'}}/>
-                            <TextField required={true} placeholder="Hour" type="search" square={false} style={{width: '17.5%', paddingRight: '1%'}}/>
-                            <TextField required={true} placeholder="Minute" type="search" square={false} style={{width: '17.5%', paddingRight: '1%'}}/>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DateTimePicker 
+                                    renderInput={(props) => <TextField {...props} />}
+                                    label=""
+                                    value={startTime}
+                                    onChange={updateStartTime}
+                                    // minDateTime={new Date()}
+                                />
+                            </LocalizationProvider>
                         </div>
-                        <div style={{paddingTop: '2.5%'}}>
-                        <text className='pop-textfield-title'>
+                        <div style={{ flex: 1 }}>
+                            <text className='pop-textfield-title'>
                                 End date/time
                             </text> <br></br>
-                            <Select style={{width: '17.5%'}} className='pop-textfield-title' MenuProps={MenuProps}>
-                                {months.map((month) => (
-                                    <MenuItem value={month}> {month} </MenuItem>
-                                ))}
-                            </Select>
-                            <TextField required={true} placeholder="Date" type="search" square={false} style={{width: '17.5%', paddingLeft: '1%', paddingRight: '1%'}}/>
-                            <TextField required={true} placeholder="Year" type="search" square={false} style={{width: '17.5%', paddingRight: '8%'}}/>
-                            <TextField required={true} placeholder="Hour" type="search" square={false} style={{width: '17.5%', paddingRight: '1%'}}/>
-                            <TextField required={true} placeholder="Minute" type="search" square={false} style={{width: '17.5%', paddingRight: '1%'}}/>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DateTimePicker 
+                                    renderInput={(props) => <TextField {...props} />}
+                                    label=""
+                                    value={endTime}
+                                    onChange={updateEndTime}
+                                    // minDateTime={new Date()}
+                                />
+                            </LocalizationProvider>
                         </div>
                         <div style={{paddingTop: '2.5%'}}>
                             <text className='pop-textfield-title'>
                                 Description
                             </text> <br></br>
-                            <TextField required placeholder="" type="search" square={false} style={{width: '98.5%'}} onChange={updateDescription} value={description}/>
+                            <TextField error={descriptionError} helperText={descriptionError ? "*This field is required" : ""} required={true} placeholder="" type="search" square={false} style={{width: '98.5%'}} onChange={updateDescription} value={description}/>
                         </div>
                         <div style={{paddingTop: '2.5%'}}>
                             <text className='pop-textfield-title'>
                                 Category
                             </text> <br></br>
-                            <TextField required={true} placeholder="" type="search" square={false} style={{width: '98.5%'}}/>
+                            <TextField error={categoryError} helperText={categoryError ? "*This field is required" : ""} required={true} placeholder="" type="search" square={false} style={{width: '98.5%'}} onChange={updateCategory} value={category}/>
                         </div>
                     </DialogContentText>
                 </DialogContent>
