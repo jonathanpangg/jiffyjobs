@@ -139,32 +139,3 @@
   overflow-y: auto; /* Add a scrollbar when content overflows */
 }
 
-.filter-tab {
-  font-family: "Outfit";
-  font-size: large;
-  vertical-align: center;
-  display: inline-flex;
-}
-
-.arrow-pad {
-  padding-right: '25%';
-}
-
-.filters {
-  padding-left: 0.925%;
-  display: grid
-}
-
-.checkboxes {
-  font-size: small;
-  font-family: 'Outfit';
-}
-
-.filterby-tag {
-  font-size: medium;
-  font-family: 'Outfit';
-  vertical-align: text-bottom;
-  align-items: center;
-  padding-top: 0.75%;
-  padding-left: 1.5%;
-}
