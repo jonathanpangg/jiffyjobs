@@ -88,11 +88,7 @@ export function Filter() {
 
     return (
       <div style={{width: '12.5%'}} className='filters'>
-        <Grid item
-          xs={1.5}
-          onClick={() => toggleFilter(filterCategory)}
-          className = 'filter-tab'
-        >
+        <Grid item xs={1.5} onClick={() => toggleFilter(filterCategory)} className = 'filter-tab'>
             { filterCategory } 
             { bool ? <KeyboardArrowDownIcon className='arrow-pad'/> : <KeyboardArrowUpIcon className='arrow-pad'/> }
         </Grid>
