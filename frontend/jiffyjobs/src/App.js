@@ -1,6 +1,6 @@
 import './App.css';
 import { NavBar } from './components/NavBar'
-import { JobBoard } from './components/JobBoard'
+import { JobBoard } from './pages/JobBoard'
 import { Routes, Route } from "react-router-dom";
 
 function App() {

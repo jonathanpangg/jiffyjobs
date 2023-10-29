@@ -10,9 +10,9 @@ import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from '@mui/material/IconButton';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { Filter } from './Filter';
-import categoryList from './Filter';
-import { Sort } from './Sort';
+import { Filter } from '../components/Filter';
+import categoryList from '../components/Filter';
+import { Sort } from '../components/Sort';
 
 export function JobBoard() {
     const [jobData, setJobData] = useState([])
@@ -225,8 +225,8 @@ export function JobBoard() {
                                 <Grid container className='job-table-grid' columnSpacing={2} style={{paddingLeft: '30%', paddingTop: '1.5%'}}> 
                                     <TextField placeholder="Find Jobs..." type="search" style={{width: '45%'}}/>
                                     <Grid className='job-button'>
-                                        <Card sx={{height: 55, width: '100%'}} elevation={8} style={{overflow:'hidden', borderRadius: '15px', background: "#8253E7", color: 'white'}}>
-                                            <CardContent style={{ display: 'flex', alignItems: 'center' }} onClick={openPop}> 
+                                        <Card sx={{height: 55, width: '105%'}} elevation={8} style={{overflow:'hidden', borderRadius: '15px', background: "#8253E7", color: 'white'}}>
+                                            <CardContent style={{ alignItems: 'center' }} onClick={openPop}> 
                                                 Post a Job
                                             </CardContent>
                                         </Card>
