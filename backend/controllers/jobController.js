@@ -6,11 +6,7 @@ import {
 	handleServerError,
     handleBadRequest,
     } from "../utils/handler.js";
-<<<<<<< HEAD
-// import calculateDistance from '../utils/controllerFunctions.js'
-=======
 import {getDistanceBetweenAddresses, distance} from '../utils/controllerFunctions.js'
->>>>>>> origin/jobPosting
 
 /**
  * 
