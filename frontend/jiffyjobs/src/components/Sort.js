@@ -28,7 +28,7 @@ export function Sort({ rawData, setRawData, setJobData }) {
         
         setRawData(sortedData);
         setJobData(sortedData.map(obj => {
-            return [[0, obj.title], ["", "Job Provider: " + obj.job_poster], ["", "Location: " + obj.location], ["", "Pay: $" + obj.pay], ["", "Category: " + obj.categories]];
+            return [[0, obj.title], ["", "Job Provider: " + obj.job_poster], ["", "Location: " + obj.location], ["", "Pay: $" + obj.pay], ["", "Description: " + obj.description], ["", "Time: " + obj.time[0] + " - " + obj.time[1]], ["", "Categories: " + obj.categories.toString()]];
         }));
     };
     
