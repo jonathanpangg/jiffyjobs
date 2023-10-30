@@ -48,7 +48,7 @@ export function JobBoard() {
         if (filterList.size === 0) {
             GetAllJobs()
         }
-    }, [filterList, jobData]);
+    }, [filterList]);
 
     // handles filtering job
     useEffect(() => {
