@@ -28,7 +28,7 @@ export function JobBoard() {
                 .then((data) => {
                     setRawData(data);
                     const newJobData = data.map(function(obj) {
-                        return [[0, obj.title], ["", "Job Provider: " + obj.job_poster], ["", "Location: " + obj.location], ["", "Pay: $" + obj.pay], ["", "Description:" + obj.description], ["", "Time:" + obj.time.toString()], ["", "Categories:" + obj.categories.toString()]]
+                        return [[0, obj.title], ["", "Job Provider: " + obj.job_poster], ["", "Location: " + obj.location], ["", "Pay: $" + obj.pay], ["", "Description: " + obj.description], ["", "Time: " + obj.time[0] + " - " + obj.time[1]], ["", "Categories: " + obj.categories.toString()]]
                     });
                     setJobData(newJobData);
 
@@ -100,7 +100,7 @@ export function JobBoard() {
                         <text style={{width: "100%"}} className='recently-posted-jobs'>
                             <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>
                                 { render }
-                                { console.log (filterList )}
+                                { console.log (filterList)}
                                 <div style={{ marginLeft: 'auto', marginRight: '8%' }}>
                                 <Sort rawData={rawData} setRawData={setRawData} setJobData={setJobData} />
                                 </div>
