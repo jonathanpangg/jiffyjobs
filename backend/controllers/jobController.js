@@ -206,7 +206,7 @@ export const filterJobs = async (req, res) => {
                 query.$and.push(durationqr);
             }
     
-            if (date_range != ["*"]) {
+            if (date_range[0] != "*") {
                 const [startDate, endDate] = date_range;
                 const drquery = {date_posted : { $gte: new Date(startDate), $lte: new Date(endDate) }}
                 query.$and.push(drquery);
@@ -214,25 +214,25 @@ export const filterJobs = async (req, res) => {
 
             const jobs = await Jobs.find(query);
 
-            if (location != "*" && jobs) {
-                const mylocation = JSON.stringify(location);
-                try{
-                    const mycoord = await getDistanceBetweenAddresses(location);
-                    const jobWithCoords = await Promise.all(jobs.map(async (each_job) => {
-                        const jobcoord = await getDistanceBetweenAddresses(each_job.location);
-                        const dist = distance(mycoord.lat, mycoord.lon, jobcoord.lat, jobcoord.lon)
-                        return {
-                            job: each_job,
-                            coord: dist
-                        };
-                    }));
-                    const sortedJobs = jobWithCoords.sort((a, b) => a.coord - b.coord);
-                    const finalJobs = sortedJobs.map(item => item.job);
-                    return handleSuccess(res,finalJobs);
-                } catch (e){
-                    return handleServerError(res, e);
-                }
-            }
+            // if (location != "*" && jobs) {
+            //     const mylocation = JSON.stringify(location);
+            //     try{
+            //         const mycoord = await getDistanceBetweenAddresses(location);
+            //         const jobWithCoords = await Promise.all(jobs.map(async (each_job) => {
+            //             const jobcoord = await getDistanceBetweenAddresses(each_job.location);
+            //             const dist = distance(mycoord.lat, mycoord.lon, jobcoord.lat, jobcoord.lon)
+            //             return {
+            //                 job: each_job,
+            //                 coord: dist
+            //             };
+            //         }));
+            //         const sortedJobs = jobWithCoords.sort((a, b) => a.coord - b.coord);
+            //         const finalJobs = sortedJobs.map(item => item.job);
+            //         return handleSuccess(res,finalJobs);
+            //     } catch (e){
+            //         return handleServerError(res, e);
+            //     }
+            // }
 
             // Return the filtered jobs as a response
             handleSuccess(res, jobs);
