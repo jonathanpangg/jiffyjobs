@@ -1,5 +1,5 @@
 import express from "express";
-import {getUserinfo, deleteUser} from "../controllers/userController.js"
+import {getUserinfo} from "../controllers/userController.js"
 const router = express.Router();
 
 
@@ -7,7 +7,7 @@ const router = express.Router();
 router.get("/getinfo/:email", getUserinfo);
 
 // deleteuser
-router.delete("/deleteuser/:id", deleteUser);
+// router.delete("/deleteuser/:id", deleteUser);
 
 
 

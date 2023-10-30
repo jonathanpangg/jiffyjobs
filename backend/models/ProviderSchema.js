@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 // Create schema for providers
-const ProviderSchema = new Schema({
+const ProviderSchema = new mongoose.Schema({
   email: {
       type: String,
       required: true
@@ -38,4 +38,4 @@ const ProviderSchema = new Schema({
 
 // Create model for providers
 const Providers = mongoose.model('Providers', ProviderSchema);
-export default Seekers;
+export default Providers;
