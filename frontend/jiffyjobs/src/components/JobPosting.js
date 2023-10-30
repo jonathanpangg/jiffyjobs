@@ -18,11 +18,12 @@ export function JobPosting() {
     const [title, setTitle] = useState("")
     const [name, setName] = useState("")
     const [location, setLocation] = useState("")
-    const [pay, setPay] = useState(0)
+    const [pay, setPay] = useState()
     const [titleError, setTitleError] = useState(false)
     const [nameError, setNameError] = useState(false)
     const [locationError, setLocationError] = useState(false)
     const [payError, setPayError] = useState(false)
+    const [payInvalidError, setInvalidError] = useState(false)
     const [descriptionError, setDescriptionError] = useState(false)
     const [categoryError, setCategoryError] = useState(false)
     const [category, setCategory] = useState([])
@@ -58,10 +59,19 @@ export function JobPosting() {
     }
 
     function updatePay(event) {
-        console.log(event)
-        const value = event.target.value
-        setPay(event.target.value)
-        setPayError(value === "" || value <= 0)
+        const value = event.target.value;
+        if (value === "") {
+            setPay(""); 
+            setPayError(false); 
+        } else {
+            const re = /^[0-9]*(\.[0-9]{0,2})?$/; 
+            if (re.test(value) && parseFloat(value) > 0) {
+                setPay(event.target.value);
+                setPayError(false);
+            } else {
+                setPayError(true); 
+            }
+        }
     }
 
     const openPop = () => {
@@ -160,7 +170,7 @@ export function JobPosting() {
                                     <text className='pop-textfield-title'>
                                         Pay 
                                     </text> <br></br>
-                                    <TextField error={payError} helperText={payError ? "*Pay must be greater than 0" : ""} required={true} placeholder="$" type="search" square={false} className='pop-textfield-title' style={{width: '100%'}} onChange={updatePay} value={pay}/>
+                                    <TextField InputProps={{inputProps: {inputMode: 'numeric', pattern: '[0-9.]*'}}} error={payError} helperText={payError ? "*Invalid number" : ""} required={true} placeholder="$" type="search" square={false} className='pop-textfield-title' style={{width: '100%'}} onChange={updatePay} value={pay}/>
                                 </div>
                             </div>
                         </DialogContentText>
