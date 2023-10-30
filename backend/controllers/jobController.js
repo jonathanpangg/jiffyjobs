@@ -191,14 +191,14 @@ export const filterJobs = async (req, res) => {
     const job_type = req.params.job_type;
     const date_range = req.params.date_range.split(",");
     const location_metric = req.params.location_metric;
-    try {           
+    try { 
             // Create a query object to build the filter criteria
             const query = {};
             query.$and = []
             // Add filters based on the request parameters
-            if (job_Category[0] != "*") {            
+            if (job_Category[0] != "*") {   
                 const jcquery = {categories : {'$in' : job_Category}}
-                query.$and.push({jcquery});
+                query.$and.push(jcquery);
             }
             
             if (job_type != "*") {
@@ -212,7 +212,13 @@ export const filterJobs = async (req, res) => {
                 query.$and.push(drquery);
             }
 
-            const jobs = await Jobs.find(query);
+            if(query.$and.length == 0) {
+                const jobs = await Jobs.find();
+                handleSuccess(res, jobs);
+            } else {
+                const jobs = await Jobs.find(query);
+                handleSuccess(res, jobs);
+            }
 
             // if (location != "*" && jobs) {
             //     const mylocation = JSON.stringify(location);
@@ -235,7 +241,7 @@ export const filterJobs = async (req, res) => {
             // }
 
             // Return the filtered jobs as a response
-            handleSuccess(res, jobs);
+            
 
     } catch (error) {
         return handleServerError(res, error);

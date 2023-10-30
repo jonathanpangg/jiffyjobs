@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import cors from "cors"
 
 import jobRoutes from "./routes/jobRoutes.js"
+import userRoutes from "./routes/userRoutes.js"
 dotenv.config();
 
 
@@ -26,6 +27,7 @@ app.use((req, res, next) => {
 
 // routes
 app.use('/api/jobs', jobRoutes)
+app.use('/api/users', userRoutes)
 
 
 // connect to db
