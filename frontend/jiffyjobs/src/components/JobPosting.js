@@ -31,27 +31,37 @@ export function JobPosting() {
 
     function updateTitle(event) {
         console.log(event)
-        setTitle(event.target.value)
+        const value = event.target.value
+        setTitle(value)
+        setTitleError(value === "")
     }
 
     function updateName(event) {
         console.log(event)
+        const value = event.target.value
         setName(event.target.value)
+        setNameError(value === "")
     }
 
     function updateLocation(event) {
         console.log(event)
+        const value = event.target.value
         setLocation(event.target.value)
+        setLocationError(value === "")
     }
 
     function updateDescription(event) {
         console.log(event)
+        const value = event.target.value
         setDescription(event.target.value)
+        setDescriptionError(value === "")
     }
 
     function updatePay(event) {
         console.log(event)
+        const value = event.target.value
         setPay(event.target.value)
+        setPayError(value === "" || value <= 0)
     }
 
     const openPop = () => {
@@ -252,12 +262,13 @@ export function JobPosting() {
             body: JSON.stringify({
                 title: title,
                 job_poster: name,
-                description: "Our server ran away, we need a replacement for this weekend ASAP",
+                description: description,
                 pay: pay,
                 location: location,
-                categories: ["serving", "cleaning"],
-                time: ["2023-10-20T10:00:00", "2023-10-20T18:00:00"],
-                date_posted: "2023-10-20T10:00:00"
+                categories: category,
+                time: [startTime, endTime],
+                job_type: "Quick Jobs",
+                date_posted: new Date()
             })
         }
         const route = "http://localhost:4000/api/jobs/create"
