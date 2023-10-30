@@ -10,8 +10,6 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import ClearIcon from '@mui/icons-material/Clear';
 
-var categoryList = new Set()
-
 export function Filter() {
     const [expandMap, setExpandMap] = useState(new Map(
       [["Category", false],
@@ -133,7 +131,9 @@ export function Filter() {
     )
   }
 
-  return (
+  return {
+    filterList,
+    render: (
     <Box sx={{ flexGrow: 1 }}>
         <Grid container columnSpacing={1} wrap="nowrap">
             { Object.keys(filterOptions).map((filterCategory) => (
@@ -150,5 +150,5 @@ export function Filter() {
           }
         </Grid>
     </Box>
-  );
+  )};
 }

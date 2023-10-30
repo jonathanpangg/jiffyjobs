@@ -12,6 +12,7 @@ export function JobBoard() {
     const [rawData, setRawData] = useState([]);
     const [size, setSize] = useState(0)
     const [background, setBackground] = useState("")
+    const { render, filterList } = Filter()
 
     // handles getting all jobs
     useEffect(() => {
@@ -27,7 +28,7 @@ export function JobBoard() {
                 .then((data) => {
                     setRawData(data);
                     const newJobData = data.map(function(obj) {
-                        return [[0, obj.title], ["", "Job Provider: " + obj.job_poster], ["", "Location: " + obj.location], ["", "Pay: $" + obj.pay], ["", "Category: " + obj.categories]]
+                        return [[0, obj.title], ["", "Job Provider: " + obj.job_poster], ["", "Location: " + obj.location], ["", "Pay: $" + obj.pay], ["", "Description:" + obj.description], ["", "Time:" + obj.time.toString()], ["", "Categories:" + obj.categories.toString()]]
                     });
                     setJobData(newJobData);
 
@@ -44,21 +45,22 @@ export function JobBoard() {
                     console.log(error)
                 })
         }
-        // if (categoryList.value.length === 0)
-        GetAllJobs()
-    }, []);
+        if (filterList.size === 0) {
+            GetAllJobs()
+        }
+    }, [filterList, jobData]);
 
     // handles filtering job
     useEffect(() => {
         async function FilterJobs() {
             const requestOptions = {
                 method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    // "job_category": categoryList
-                })
+                headers: { 'Content-Type': 'application/json' }
             }
-            const route = "http://localhost:4000/api/jobs/filter/jobs"
+            var route = "http://localhost:4000/api/jobs/filter"
+            var query = "/*/*/" + Array.from(filterList) + "/*/*"
+            route = route + query
+            console.log(route)
             fetch(route, requestOptions)
                 .then((data) => {
                     setJobData(data.map(function(obj) {
@@ -78,16 +80,11 @@ export function JobBoard() {
             )
         }
         
-        // if (categoryList.value.length >= 1)
-        //     FilterJobs()
-    }, [])
-
-    // handles posting jobs
-    
-    // const handleLogJobData = () => {
-    //     console.log('rawdata: ', rawData);
-    //     console.log('jobdata: ', jobData);
-    // }
+        if (filterList.size !== 0) {
+            setJobData([])
+            FilterJobs()
+        }
+    }, [filterList, jobData])
     
     return (
         <div className={'job-board-outer' + background}>
@@ -102,7 +99,8 @@ export function JobBoard() {
                         
                         <text style={{width: "100%"}} className='recently-posted-jobs'>
                             <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>
-                                <Filter />
+                                { render }
+                                { console.log (filterList )}
                                 <div style={{ marginLeft: 'auto', marginRight: '8%' }}>
                                 <Sort rawData={rawData} setRawData={setRawData} setJobData={setJobData} />
                                 </div>
