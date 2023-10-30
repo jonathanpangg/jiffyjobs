@@ -62,10 +62,18 @@ export function JobBoard() {
             route = route + query
             console.log(route)
             fetch(route, requestOptions)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
                 .then((data) => {
-                    setJobData(data.map(function(obj) {
-                        return [[0, obj.title], ["", "Job Provider: " + obj.job_poster], ["", "Location: " + obj.location], ["", "Pay: $" + obj.pay], ["", "Category: " + obj.categories]]
-                    }))
+                    setRawData(data);
+                    const newJobData = data.map(function(obj) {
+                        return [[0, obj.title], ["", "Job Provider: " + obj.job_poster], ["", "Location: " + obj.location], ["", "Pay: $" + obj.pay], ["", "Description: " + obj.description], ["", "Time: " + obj.time[0] + " - " + obj.time[1]], ["", "Categories: " + obj.categories.toString()]]
+                    });
+                    setJobData(newJobData);
                     setSize(jobData.length)
 
                     if (size <= 4) {
@@ -84,7 +92,7 @@ export function JobBoard() {
             setJobData([])
             FilterJobs()
         }
-    }, [filterList, jobData])
+    }, [filterList])
     
     return (
         <div className={'job-board-outer' + background}>
