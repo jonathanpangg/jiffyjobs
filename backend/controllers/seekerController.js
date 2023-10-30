@@ -1,4 +1,4 @@
-import Seeker from "../models/SeekerSchema";
+import Seeker from "../models/SeekerSchema.js";
 import {
     handleNotFound,
 	handleSuccess,

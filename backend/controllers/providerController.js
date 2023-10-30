@@ -1,4 +1,4 @@
-import Provider from "../models/ProviderSchema";
+import Provider from "../models/ProviderSchema.js";
 import {
     handleNotFound,
 	handleSuccess,

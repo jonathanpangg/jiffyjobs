@@ -26,6 +26,18 @@ const SeekerSchema = mongoose.Schema({
         school: {
             type: String,
             required: true
+        },
+        major: {
+            type: String,
+            required: false
+        },
+        gpa: {
+            type: String,
+            required: false
+        },
+        has_resume: {
+            type: Boolean,
+            required: false
         }
     },
     jobs_completed: [{

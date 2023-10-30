@@ -191,15 +191,16 @@ export const filterJobs = async (req, res) => {
     const job_type = req.params.job_type;
     const date_range = req.params.date_range.split(",");
     const location_metric = req.params.location_metric;
-    try {           
+    try { 
             // Create a query object to build the filter criteria
             const query = {};
             query.$and = []
             // Add filters based on the request parameters
-            if (job_Category[0] != "*") {   
-                const catj = job_Category.map(category => category.toLowerCase());         
-                const jcquery = {categories : {'$in' : catj}}
-                query.$and.push({jcquery});
+            if (job_Category[0] != "*") {  
+                const c = job_Category.map(category => category.toLowerCase());   
+                console.log(c)       
+                const jcquery = {categories : {'$in' : c}}
+                query.$and.push(jcquery);
             }
             
             if (job_type != "*") {
@@ -207,36 +208,42 @@ export const filterJobs = async (req, res) => {
                 query.$and.push(durationqr);
             }
     
-            if (date_range != ["*"]) {
+            if (date_range[0] != "*") {
                 const [startDate, endDate] = date_range;
                 const drquery = {date_posted : { $gte: new Date(startDate), $lte: new Date(endDate) }}
                 query.$and.push(drquery);
             }
 
-            const jobs = await Jobs.find(query);
-
-            if (location != "*" && jobs) {
-                const mylocation = JSON.stringify(location);
-                try{
-                    const mycoord = await getDistanceBetweenAddresses(location);
-                    const jobWithCoords = await Promise.all(jobs.map(async (each_job) => {
-                        const jobcoord = await getDistanceBetweenAddresses(each_job.location);
-                        const dist = distance(mycoord.lat, mycoord.lon, jobcoord.lat, jobcoord.lon)
-                        return {
-                            job: each_job,
-                            coord: dist
-                        };
-                    }));
-                    const sortedJobs = jobWithCoords.sort((a, b) => a.coord - b.coord);
-                    const finalJobs = sortedJobs.map(item => item.job);
-                    return handleSuccess(res,finalJobs);
-                } catch (e){
-                    return handleServerError(res, e);
-                }
+            if(query.$and.length == 0) {
+                const jobs = await Jobs.find();
+                handleSuccess(res, jobs);
+            } else {
+                const jobs = await Jobs.find(query);
+                handleSuccess(res, jobs);
             }
 
+            // if (location != "*" && jobs) {
+            //     const mylocation = JSON.stringify(location);
+            //     try{
+            //         const mycoord = await getDistanceBetweenAddresses(location);
+            //         const jobWithCoords = await Promise.all(jobs.map(async (each_job) => {
+            //             const jobcoord = await getDistanceBetweenAddresses(each_job.location);
+            //             const dist = distance(mycoord.lat, mycoord.lon, jobcoord.lat, jobcoord.lon)
+            //             return {
+            //                 job: each_job,
+            //                 coord: dist
+            //             };
+            //         }));
+            //         const sortedJobs = jobWithCoords.sort((a, b) => a.coord - b.coord);
+            //         const finalJobs = sortedJobs.map(item => item.job);
+            //         return handleSuccess(res,finalJobs);
+            //     } catch (e){
+            //         return handleServerError(res, e);
+            //     }
+            // }
+
             // Return the filtered jobs as a response
-            handleSuccess(res, jobs);
+            
 
     } catch (error) {
         return handleServerError(res, error);
