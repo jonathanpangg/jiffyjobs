@@ -141,26 +141,26 @@ export function JobPosting() {
                                 <text className='pop-textfield-title'>
                                     Job Title
                                 </text> <br></br>
-                                <TextField error={titleError} helperText={titleError ? "*This field is required" : ""} required={true} placeholder="" type="search" square={false} style={{width: '98.5%'}} onChange={updateTitle} value={title}/>
+                                <TextField error={titleError} helperText={titleError ? "*This field is required" : ""} required={true} placeholder="Add the title you are hiring for" type="search" square={false} style={{width: '98.5%'}} onChange={updateTitle} value={title}/>
                             </div>
                             <div style={{paddingTop: '2.5%'}}>
                                 <text className='pop-textfield-title'>
                                     Company or Employer Name
                                 </text> <br></br>
-                                <TextField error={nameError} helperText={nameError ? "*This field is required" : ""} required={true} placeholder="" type="search" square={false} style={{width: '98.5%'}} onChange={updateName} value={name}/>
+                                <TextField error={nameError} helperText={nameError ? "*This field is required" : ""} required={true} placeholder="Add your or your company/department name" type="search" square={false} style={{width: '98.5%'}} onChange={updateName} value={name}/>
                             </div>
                             <div style={{paddingTop: '2.5%'}}>
                                 <text className='pop-textfield-title'>
                                     Job Location
                                 </text> <br></br>
-                                <TextField error={locationError} helperText={locationError ? "*This field is required" : ""} required={true} placeholder="" type="search" square={false} style={{width: '98.5%'}} onChange={updateLocation} value={location}/>
+                                <TextField error={locationError} helperText={locationError ? "*This field is required" : ""} required={true} placeholder="Add the job location" type="search" square={false} style={{width: '98.5%'}} onChange={updateLocation} value={location}/>
                             </div>
                             <div style={{paddingTop: '2.5%', display: 'flex'}}>
                                 <div style={{width: '35%', paddingRight: '2.5%'}}>
                                     <text className='pop-textfield-title'>
                                         Pay 
                                     </text> <br></br>
-                                    <TextField error={payError} helperText={payError ? "*Pay must be greater than 0" : ""} required={true} placeholder="" type="search" square={false} className='pop-textfield-title' style={{width: '100%'}} onChange={updatePay} value={pay}/>
+                                    <TextField error={payError} helperText={payError ? "*Pay must be greater than 0" : ""} required={true} placeholder="$" type="search" square={false} className='pop-textfield-title' style={{width: '100%'}} onChange={updatePay} value={pay}/>
                                 </div>
                             </div>
                         </DialogContentText>
@@ -228,7 +228,7 @@ export function JobPosting() {
                             <text className='pop-textfield-title'>
                                 Description
                             </text> <br></br>
-                            <TextField error={descriptionError} helperText={descriptionError ? "*This field is required" : ""} required={true} placeholder="" type="search" square={false} style={{width: '98.5%'}} onChange={updateDescription} value={description}/>
+                            <TextField error={descriptionError} helperText={descriptionError ? "*This field is required" : ""} required={true} placeholder="Add the job description" type="search" square={false} style={{width: '98.5%'}} onChange={updateDescription} value={description}/>
                         </div>
                         <div style={{paddingTop: '2.5%'}}>
                             <text className='pop-textfield-title'>
