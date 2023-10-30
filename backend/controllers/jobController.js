@@ -196,8 +196,10 @@ export const filterJobs = async (req, res) => {
             const query = {};
             query.$and = []
             // Add filters based on the request parameters
-            if (job_Category[0] != "*") {   
-                const jcquery = {categories : {'$in' : job_Category}}
+            if (job_Category[0] != "*") {  
+                const c = job_Category.map(category => category.toLowerCase());   
+                console.log(c)       
+                const jcquery = {categories : {'$in' : c}}
                 query.$and.push(jcquery);
             }
             
