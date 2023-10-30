@@ -73,7 +73,13 @@ export function JobPosting() {
     }
 
     const openNextPop = () => {
-        if (titleError === false && nameError === false && locationError === false && payError === false) {
+        if (title === '' || name === '' || location === '' || pay === 0) {
+            setTitleError(true)
+            setNameError(true)
+            setLocationError(true)
+            setPayError(true)
+        }
+        else if (titleError === false && nameError === false && locationError === false && payError === false) {
             setOpenStartPop(false)
             setOpenSecondPop(true)
         }
