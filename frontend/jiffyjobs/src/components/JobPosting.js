@@ -31,27 +31,37 @@ export function JobPosting() {
 
     function updateTitle(event) {
         console.log(event)
-        setTitle(event.target.value)
+        const value = event.target.value
+        setTitle(value)
+        setTitleError(value === "")
     }
 
     function updateName(event) {
         console.log(event)
+        const value = event.target.value
         setName(event.target.value)
+        setNameError(value === "")
     }
 
     function updateLocation(event) {
         console.log(event)
+        const value = event.target.value
         setLocation(event.target.value)
+        setLocationError(value === "")
     }
 
     function updateDescription(event) {
         console.log(event)
+        const value = event.target.value
         setDescription(event.target.value)
+        setDescriptionError(value === "")
     }
 
     function updatePay(event) {
         console.log(event)
+        const value = event.target.value
         setPay(event.target.value)
+        setPayError(value === "" || value <= 0)
     }
 
     const openPop = () => {
