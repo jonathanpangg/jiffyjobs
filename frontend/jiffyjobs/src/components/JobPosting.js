@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import '../styles/JobPosting.css';
 import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from '@mui/material/IconButton';
 import { Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText } from '@mui/material';
@@ -9,69 +10,239 @@ import Grid from '@mui/material/Grid';
 import { Divider } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import dayjs from 'dayjs';
+var objectSupport = require("dayjs/plugin/objectSupport");
+dayjs.extend(objectSupport);
 
 export function JobPosting() {
     const [openStartPop, setOpenStartPop] = useState(false)
     const [openSecondPop, setOpenSecondPop] = useState(false)
-    const [description, setDescription] = useState("")
-    const [title, setTitle] = useState("")
-    const [name, setName] = useState("")
-    const [location, setLocation] = useState("")
-    const [pay, setPay] = useState()
-    const [titleError, setTitleError] = useState(false)
-    const [nameError, setNameError] = useState(false)
-    const [locationError, setLocationError] = useState(false)
-    const [payError, setPayError] = useState(false)
-    const [payInvalidError, setInvalidError] = useState(false)
-    const [descriptionError, setDescriptionError] = useState(false)
-    const [categoryError, setCategoryError] = useState(false)
-    const [category, setCategory] = useState([])
-    const [startTime, setStartTime] = useState() 
-    const [endTime, setEndTime] = useState() 
-
-    function updateTitle(event) {
-        console.log(event)
-        const value = event.target.value
-        setTitle(value)
-        setTitleError(value === "")
-    }
-
-    function updateName(event) {
-        console.log(event)
-        const value = event.target.value
-        setName(event.target.value)
-        setNameError(value === "")
-    }
-
-    function updateLocation(event) {
-        console.log(event)
-        const value = event.target.value
-        setLocation(event.target.value)
-        setLocationError(value === "")
-    }
-
-    function updateDescription(event) {
-        console.log(event)
-        const value = event.target.value
-        setDescription(event.target.value)
-        setDescriptionError(value === "")
-    }
-
-    function updatePay(event) {
-        const value = event.target.value;
-        if (value === "") {
-            setPay(""); 
-            setPayError(false); 
-        } else {
-            const re = /^[0-9]*(\.[0-9]{0,2})?$/; 
-            if (re.test(value) && parseFloat(value) > 0) {
-                setPay(event.target.value);
-                setPayError(false);
-            } else {
-                setPayError(true); 
-            }
+    const [val, setVal] = useState({
+        title: '',
+        name: '',
+        location: '',
+        pay: '',
+        description: '',
+        category: [],
+        date: {
+            month: new Date().getMonth()+1,
+            day: new Date().getDate(),
+            year: new Date().getFullYear()
+        },
+        startTime: {
+            hour: '0',
+            min: '0'
+        },
+        endTime: {
+            hour: '0',
+            min: '0'
         }
+    })
+
+    const [error, setError] = useState({
+        titleError: false,
+        nameError: false,
+        locationError: false,
+        payError: false,
+        descriptionError: false,
+        categoryError: false,
+    })
+
+    function handleError() {
+        setError({
+            titleError: val.title === '',
+            nameError: val.name === '',
+            locationError: val.location === '',
+            payError: val.pay === '',
+            descriptionError: val.description === '',
+            categoryError: val.category.length === 0
+        })
+    }
+
+    function empytyVals() {
+        setVal({
+            title: '',
+            name: '',
+            location: '',
+            pay: '',
+            description: '',
+            category: [],
+            date: {
+                month: new Date().getMonth()+1,
+                day: new Date().getDate(),
+                year: new Date().getFullYear()
+            },
+            startTime: {
+                hour: '0',
+                min: '0'
+            },
+            endTime: {
+                hour: '0',
+                min: '0'
+            }
+        })
+    }
+
+    function handleValues(event) {
+        if (event.target.id === 'title') {
+            setVal({
+                title: event.target.value,
+                name: val.name,
+                location: val.location,
+                pay: val.pay,
+                description: val.description,
+                category: val.category,
+                date: val.date,
+                startTime: val.startTime,
+                endTime: val.endTime
+            })
+        } else if (event.target.id === 'name') {
+            setVal({
+                title: val.title,
+                name: event.target.value,
+                location: val.location,
+                pay: val.pay,
+                description: val.description,
+                category: val.category,
+                date: val.date,
+                startTime: val.startTime,
+                endTime: val.endTime
+            })
+        } else if (event.target.id === 'location') {
+            setVal({
+                title: val.title,
+                name: val.name,
+                location: event.target.value,
+                pay: val.pay,
+                description: val.description,
+                category: val.category,
+                date: val.date,
+                startTime: val.startTime,
+                endTime: val.endTime
+            })
+        } else if (event.target.id === 'pay') {
+            if (event.target.value === "") {
+                setVal({
+                    title: val.title,
+                    name: val.name,
+                    location: val.location,
+                    pay: val.pay,
+                    description: val.description,
+                    category: val.category,
+                    date: val.date,
+                    startTime: val.startTime,
+                    endTime: val.endTime
+                })
+            } else {
+                const re = /^[0-9]*(\.[0-9]{0,2})?$/; 
+                if (re.test(event.target.value) && parseFloat(event.target.value) > 0) {
+                    setVal({
+                        title: val.title,
+                        name: val.name,
+                        location: val.location,
+                        pay: event.target.value,
+                        description: val.description,
+                        category: val.category,
+                        date: val.date,
+                        startTime: val.startTime,
+                        endTime: val.endTime
+                    })
+                } else {
+                    setVal({
+                        title: val.title,
+                        name: val.name,
+                        location: val.location,
+                        pay: val.pay,
+                        description: val.description,
+                        category: val.category,
+                        date: val.date,
+                        startTime: val.startTime,
+                        endTime: val.endTime
+                    })
+                }
+            }
+        } else if (event.target.id === 'description') {
+            setVal({
+                title: val.title,
+                name: val.name,
+                location: val.location,
+                pay: val.pay,
+                description: event.target.value,
+                category: val.category,
+                date: val.date,
+                startTime: val.startTime,
+                endTime: val.endTime
+            })
+        } else if (event.target.id === 'category') {
+            setVal({
+                title: val.title,
+                name: val.name,
+                location: val.location,
+                pay: val.pay,
+                description: val.description,
+                category: event.target.value,
+                date: val.date,
+                startTime: val.startTime,
+                endTime: val.endTime
+            })
+        }
+    }
+
+    // handles the date calendar data
+    function handleDate(event) {
+        setVal({
+            title: val.title,
+            name: val.name,
+            location: val.location,
+            pay: val.pay,
+            description: val.description,
+            category: val.category, 
+            date: {
+                month: event.$M+1,
+                day: event.$D,
+                year: event.$y
+            },
+            startTime: val.startTime,
+            endTime: val.endTime
+        })
+    }
+
+    // handles the start time 
+    function handleStartTime(event) {
+        setVal({
+            title: val.title,
+            name: val.name,
+            location: val.location,
+            pay: val.pay,
+            description: val.description,
+            category: val.category, 
+            date: val.date,
+            startTime: {
+                hour: event.$H+1,
+                min: event.$m
+            },
+            endTime: val.endTime
+        })
+    }
+
+    // handles the end time
+    function handleEndTime(event) {
+        setVal({
+            title: val.title,
+            name: val.name,
+            location: val.location,
+            pay: val.pay,
+            description: val.description,
+            category: val.category, 
+            date: val.date,
+            startTime: val.startTime,
+            endTime: {
+                hour: event.$H+1,
+                min: event.$m
+            }
+        })
     }
 
     const openPop = () => {
@@ -79,20 +250,20 @@ export function JobPosting() {
     }
 
     const closePop = () => {
+        empytyVals()
         setOpenStartPop(false)
     }
 
     const openNextPop = () => {
-        if (title === '' || name === '' || location === '' || pay === 0) {
-            setTitleError(true)
-            setNameError(true)
-            setLocationError(true)
-            setPayError(true)
-        }
-        else if (titleError === false && nameError === false && locationError === false && payError === false) {
-            setOpenStartPop(false)
-            setOpenSecondPop(true)
-        }
+        if (val.title === '' || val.name === '' || val.location === '' || val.pay === 0) {
+            handleError()
+        } else {
+            handleError()
+            if (error.titleError === false && error.nameError === false && error.locationError === false && error.payError === false) {
+                setOpenStartPop(false)
+                setOpenSecondPop(true)
+            }   
+        }    
     }
 
     const closeNextPop = () => {
@@ -103,22 +274,7 @@ export function JobPosting() {
         setOpenSecondPop(false)
         setOpenStartPop(true)
     }
-
-    function updateStartTime(event) {
-        console.log(event.$d)
-        setStartTime(event.$d)
-    }
-
-    function updateEndTime(event) {
-        console.log(event.$d)
-        setEndTime(event.$d)
-    }
-
-    function updateCategory(event) {
-        console.log(event)
-        setCategory(event.target.value)
-    }
-
+    
     const descriptionElementRefStartPop = React.useRef(null)
     React.useEffect(() => {
         if (openStartPop) {
@@ -157,26 +313,26 @@ export function JobPosting() {
                                 <text className='pop-textfield-title'>
                                     Job Title
                                 </text> <br></br>
-                                <TextField error={titleError} helperText={titleError ? "*This field is required" : ""} required={true} placeholder="Add the title you are hiring for" type="search" square={false} style={{width: '98.5%'}} onChange={updateTitle} value={title}/>
+                                <TextField error={error.titleError} helperText={error.titleError ? "*This field is required" : ""} required={true} placeholder="Add the title you are hiring for" type="search" square={false} style={{width: '98.5%'}} onChange={(e) => {handleValues(e)}} id='title' value={val.title}/>
                             </div>
                             <div style={{paddingTop: '2.5%'}}>
                                 <text className='pop-textfield-title'>
                                     Company or Employer Name
                                 </text> <br></br>
-                                <TextField error={nameError} helperText={nameError ? "*This field is required" : ""} required={true} placeholder="Add your or your company/department name" type="search" square={false} style={{width: '98.5%'}} onChange={updateName} value={name}/>
+                                <TextField error={error.nameError} helperText={error.nameError ? "*This field is required" : ""} required={true} placeholder="Add your or your company/department name" type="search" square={false} style={{width: '98.5%'}} onChange={(e) => {handleValues(e)}} id='name' value={val.name}/>
                             </div>
                             <div style={{paddingTop: '2.5%'}}>
                                 <text className='pop-textfield-title'>
                                     Job Location
                                 </text> <br></br>
-                                <TextField error={locationError} helperText={locationError ? "*This field is required" : ""} required={true} placeholder="Add the job location" type="search" square={false} style={{width: '98.5%'}} onChange={updateLocation} value={location}/>
+                                <TextField error={error.locationError} helperText={error.locationError ? "*This field is required" : ""} required={true} placeholder="Add the job location" type="search" square={false} style={{width: '98.5%'}} onChange={(e) => {handleValues(e)}} id='location' value={val.location}/>
                             </div>
                             <div style={{paddingTop: '2.5%', display: 'flex'}}>
                                 <div style={{width: '35%', paddingRight: '2.5%'}}>
                                     <text className='pop-textfield-title'>
                                         Pay 
                                     </text> <br></br>
-                                    <TextField InputProps={{inputProps: {inputMode: 'numeric', pattern: '[0-9.]*'}}} error={payError} helperText={payError ? "*Invalid number" : ""} required={true} placeholder="$" type="search" square={false} className='pop-textfield-title' style={{width: '100%'}} onChange={updatePay} value={pay}/>
+                                    <TextField InputProps={{inputProps: {inputMode: 'numeric', pattern: '[0-9.]*'}}} error={error.payError} helperText={error.payError ? "*Invalid number" : ""} required={true} placeholder="$" type="search" square={false} className='pop-textfield-title' style={{width: '100%'}} onChange={(e) => {handleValues(e)}} id='pay' value={val.pay}/>
                                 </div>
                             </div>
                         </DialogContentText>
@@ -201,6 +357,7 @@ export function JobPosting() {
     const secondJobSlide = () => {
         return (
             <Dialog open={openSecondPop} onClose={closeNextPop} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
+                {}
                 <div className='popup-title'>
                     <DialogTitle style={{width: "90%"}}> 
                         Tell us more about the job!
@@ -212,45 +369,57 @@ export function JobPosting() {
             <Divider/>
                 <DialogContent>
                     <DialogContentText ref={descriptionElementRefNextPop} tabIndex={-1} style={{width: '1000px'}}>
-                        <div>
-                            <text className='pop-textfield-title'>
-                                Start date/time
-                            </text> <br></br>
-                            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DateTimePicker 
-                                    renderInput={(props) => <TextField {...props} />}
-                                    label=""
-                                    value={startTime}
-                                    onChange={updateStartTime}
-                                    // minDateTime={new Date()}
-                                />
-                            </LocalizationProvider>
-                        </div>
-                        <div style={{ flex: 1 }}>
-                            <text className='pop-textfield-title'>
-                                End date/time
-                            </text> <br></br>
-                            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DateTimePicker 
-                                    renderInput={(props) => <TextField {...props} />}
-                                    label=""
-                                    value={endTime}
-                                    onChange={updateEndTime}
-                                    // minDateTime={new Date()}
-                                />
-                            </LocalizationProvider>
+                        <div className='timeOuter' style={{width: '98.5%'}}>
+                            <div className='date'>
+                                <text className='pop-textfield-title'>
+                                    Date
+                                </text> <br></br>
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                    <DatePicker
+                                        format="MM/DD/YYYY"
+                                        value={dayjs(new Date(val.date.year, val.date.month-1, val.date.day))}
+                                        onChange={(e) => {handleDate(e)}}
+                                    />
+                                </LocalizationProvider>
+                            </div>
+                            <div className='startTime'>
+                                <text className='pop-textfield-title'>
+                                    Start Time
+                                </text> <br></br>
+                                <LocalizationProvider dateAdapter={AdapterDayjs} style={{float: 'right'}}>
+                                    <TimePicker 
+                                        defaultValue={dayjs("00:00:00", "HH:mm:ss")} 
+                                        ampm 
+                                        value={dayjs({hour: val.startTime.hour, minute: val.startTime.min})}
+                                        onChange={(e) => {handleStartTime(e)}}
+                                    />
+                                </LocalizationProvider>
+                            </div>
+                            <div>
+                                <text className='pop-textfield-title'>
+                                    End Time
+                                </text> <br></br>
+                                <LocalizationProvider dateAdapter={AdapterDayjs} style={{float: 'right'}}>
+                                    <TimePicker 
+                                        defaultValue={dayjs("00:00:00", "HH:mm:ss")} 
+                                        ampm 
+                                        value={dayjs({hour: val.endTime.hour, minute: val.endTime.min})}
+                                        onChange={(e) => {handleEndTime(e)}}
+                                    />
+                                </LocalizationProvider>
+                            </div>
                         </div>
                         <div style={{paddingTop: '2.5%'}}>
                             <text className='pop-textfield-title'>
                                 Description
                             </text> <br></br>
-                            <TextField error={descriptionError} helperText={descriptionError ? "*This field is required" : ""} required={true} placeholder="Add the job description" type="search" square={false} style={{width: '98.5%'}} onChange={updateDescription} value={description}/>
+                            <TextField error={error.descriptionError} helperText={error.descriptionError ? "*This field is required" : ""} required={true} placeholder="Add the job description" type="search" square={false} style={{width: '98.5%'}} onChange={(e) => {handleValues(e)}} id='description' value={val.description}/>
                         </div>
                         <div style={{paddingTop: '2.5%'}}>
                             <text className='pop-textfield-title'>
                                 Category
                             </text> <br></br>
-                            <TextField error={categoryError} helperText={categoryError ? "*This field is required" : ""} required={true} placeholder="" type="search" square={false} style={{width: '98.5%'}} onChange={updateCategory} value={category}/>
+                            <TextField error={error.categoryError} helperText={error.categoryError ? "*This field is required" : ""} required={true} placeholder="" type="search" square={false} style={{width: '98.5%'}} onChange={(e) => {handleValues(e)}} id='category' value={val.category}/>
                         </div>
                     </DialogContentText>
                 </DialogContent>
@@ -276,13 +445,13 @@ export function JobPosting() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                title: title,
-                job_poster: name,
-                description: description,
-                pay: pay,
-                location: location,
-                categories: category,
-                time: [startTime, endTime],
+                title: val.title,
+                job_poster: val.name,
+                description: val.description,
+                pay: val.pay,
+                location: val.location,
+                categories: val.category,
+                time: [new Date(val.date.year, val.date.month+1, val.date.day, val.startTime.hour, val.startTime.min), new Date(val.date.year, val.date.month+1, val.date.day, val.endTime.hour, val.endTime.min)],
                 job_type: "Quick Jobs",
                 date_posted: new Date()
             })
@@ -291,11 +460,7 @@ export function JobPosting() {
         fetch(route, requestOptions)
             .then((response) => {
                 response.json()
-                setTitle("")
-                setName("")
-                setPay(0)
-                setLocation("")
-                setDescription("")
+                empytyVals()
                 setOpenStartPop(false)
                 setOpenSecondPop(false)
             })
@@ -305,7 +470,7 @@ export function JobPosting() {
     }
 
     return (
-        <Grid item className='job-search-tab'> 
+        <div className='job-search-tab'> 
             <Card sx={{height: 200, width: '147.5%'}} elevation={8} style={{overflow: 'hidden', borderRadius: '15px', paddingTop: '3.5%'}}>
                 <text className='job-search-text'> 
                     Find jobs or hire college students starting now with {" "}
@@ -326,6 +491,6 @@ export function JobPosting() {
                     </Grid>
                 </Grid>
             </Card>
-        </Grid>
+        </div>
     )
 }
