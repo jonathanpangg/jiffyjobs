@@ -6,7 +6,6 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 
-
 export function Sort({ rawData, setRawData, setJobData }) {
     const [selectedSortBy, setSelectedSortBy] = useState('');
     const [anchorEl, setAnchorEl] = useState(null);

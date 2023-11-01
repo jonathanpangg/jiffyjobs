@@ -6,6 +6,7 @@ import { Divider } from '@mui/material';
 import { Filter } from '../components/Filter';
 import { Sort } from '../components/Sort';
 import { JobPosting } from '../components/JobPosting';
+import dayjs from 'dayjs';
 
 export function JobBoard() {
     const [jobData, setJobData] = useState([])
@@ -28,7 +29,8 @@ export function JobBoard() {
                 .then((data) => {
                     setRawData(data);
                     const newJobData = data.map(function(obj) {
-                        return [[0, obj.title], ["", "Job Provider: " + obj.job_poster], ["", "Location: " + obj.location], ["", "Pay: $" + obj.pay], ["", "Description: " + obj.description], ["", "Time: " + obj.time[0] + " - " + obj.time[1]], ["", "Categories: " + obj.categories.toString()]]
+                        console.log(obj.time)
+                        return [[0, obj.title], ["", "Job Provider: " + obj.job_poster], ["", "Location: " + obj.location], ["", "Pay: $" + obj.pay], ["", "Description: " + obj.description], ["", "Time: " + dayjs(new Date(obj.time[0])).format('DD/MM/YYYY')  + " " + " - " + new Date(obj.time[1])], ["", "Categories: " + obj.categories.toString()]]
                     });
                     setJobData(newJobData);
 

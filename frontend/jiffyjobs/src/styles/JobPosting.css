@@ -1,0 +1,49 @@
+.popup-title {
+  font-family: "Outfit";
+  font-size: medium;
+  justify-content: flex-start;
+  display: flex;
+  align-items: center;
+}
+
+.pop-textfield-title {
+  font-family: "Outfit";
+  font-size: medium;
+}
+
+.job-search-tab {
+  padding-top: 2.5%;
+  text-align: center;
+}
+
+.job-search-text {
+  font-family: "Outfit";
+  font-size: xx-large;
+}
+
+.job-search-logo {
+  font-family: "Righteous-Regular";
+  font-size: xx-large;
+}
+
+.job-button {
+  font-family: "Outfit";
+  padding-left: 2.5%;
+  text-align: center;
+  vertical-align: center;
+  align-items: center;
+}
+
+
+.timeOuter {
+  display: flex
+}
+
+.date {
+  flex: 1;
+  margin-right: 15%;
+}
+
+.startTime {
+  padding-right: 1%;
+}
