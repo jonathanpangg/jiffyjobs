@@ -2,6 +2,15 @@
   display: flex;
 }
 
+.logo-font {
+  font-family: "Righteous-Regular";
+  font-size: xx-large;
+  vertical-align: center;
+  align-items: center;
+  padding-left: 5%;
+  padding-bottom: 0.85%;
+}
+
 .first-tab {
   font-family: "Outfit";
   font-size: medium;

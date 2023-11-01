@@ -19,6 +19,8 @@ dayjs.extend(objectSupport);
 export function JobPosting() {
     const [openStartPop, setOpenStartPop] = useState(false)
     const [openSecondPop, setOpenSecondPop] = useState(false)
+
+    // useState for the data
     const [val, setVal] = useState({
         title: '',
         name: '',
@@ -41,6 +43,7 @@ export function JobPosting() {
         }
     })
 
+    // useState for errors
     const [error, setError] = useState({
         titleError: false,
         nameError: false,
@@ -50,23 +53,25 @@ export function JobPosting() {
         categoryError: false,
     })
 
+    // handles the error of the input boxes
     function handleError() {
         setError({
             titleError: val.title === '',
             nameError: val.name === '',
             locationError: val.location === '',
-            payError: val.pay === '',
+            payError: val.pay === '' || val.pay === 0,
             descriptionError: val.description === '',
             categoryError: val.category.length === 0
         })
     }
 
+    // resets the data 
     function empytyVals() {
         setVal({
             title: '',
             name: '',
             location: '',
-            pay: '',
+            pay: 0,
             description: '',
             category: [],
             date: {
@@ -85,6 +90,7 @@ export function JobPosting() {
         })
     }
 
+    // changes the vals for all except date and time
     function handleValues(event) {
         if (event.target.id === 'title') {
             setVal({
@@ -251,6 +257,7 @@ export function JobPosting() {
 
     const closePop = () => {
         empytyVals()
+        handleError()
         setOpenStartPop(false)
     }
 
@@ -258,11 +265,16 @@ export function JobPosting() {
         if (val.title === '' || val.name === '' || val.location === '' || val.pay === 0) {
             handleError()
         } else {
-            handleError()
-            if (error.titleError === false && error.nameError === false && error.locationError === false && error.payError === false) {
-                setOpenStartPop(false)
-                setOpenSecondPop(true)
-            }   
+            setError({
+                titleError: val.title === '',
+                nameError: val.name === '',
+                locationError: val.location === '',
+                valError: val.pay === '' || val.pay === 0,
+                descriptionError: false,
+                categoryError: false,
+            })
+            setOpenStartPop(false)
+            setOpenSecondPop(true)
         }    
     }
 
@@ -413,7 +425,7 @@ export function JobPosting() {
                             <text className='pop-textfield-title'>
                                 Description
                             </text> <br></br>
-                            <TextField error={error.descriptionError} helperText={error.descriptionError ? "*This field is required" : ""} required={true} placeholder="Add the job description" type="search" square={false} style={{width: '98.5%'}} onChange={(e) => {handleValues(e)}} id='description' value={val.description}/>
+                            <TextField error={error.descriptionError} helperText={error.descriptionError ? "*This field is required" : ""} required={true} multiline rows={8} placeholder="Add the job description" type="search" square={false} style={{width: '98.5%'}} onChange={(e) => {handleValues(e)}} id='description' value={val.description}/>
                         </div>
                         <div style={{paddingTop: '2.5%'}}>
                             <text className='pop-textfield-title'>
@@ -441,32 +453,35 @@ export function JobPosting() {
     }
 
     async function PostJobs() {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                title: val.title,
-                job_poster: val.name,
-                description: val.description,
-                pay: val.pay,
-                location: val.location,
-                categories: val.category,
-                time: [new Date(val.date.year, val.date.month+1, val.date.day, val.startTime.hour, val.startTime.min), new Date(val.date.year, val.date.month+1, val.date.day, val.endTime.hour, val.endTime.min)],
-                job_type: "Quick Jobs",
-                date_posted: new Date()
+        handleError()
+        if (!(error.titleError === true || error.nameError === true || error.locationError === true || error.payError === true || error.descriptionError === true || error.categoryError === true)) {
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    title: val.title,
+                    job_poster: val.name,
+                    description: val.description,
+                    pay: val.pay,
+                    location: val.location,
+                    categories: val.category,
+                    time: [new Date(val.date.year, val.date.month+1, val.date.day, val.startTime.hour, val.startTime.min), new Date(val.date.year, val.date.month+1, val.date.day, val.endTime.hour, val.endTime.min)],
+                    job_type: "Quick Jobs",
+                    date_posted: new Date()
+                })
+            }
+            const route = "http://localhost:4000/api/jobs/create"
+            fetch(route, requestOptions)
+                .then((response) => {
+                    response.json()
+                    empytyVals()
+                    setOpenStartPop(false)
+                    setOpenSecondPop(false)
+                })
+                .catch((error) => {
+                    console.log(error)
             })
         }
-        const route = "http://localhost:4000/api/jobs/create"
-        fetch(route, requestOptions)
-            .then((response) => {
-                response.json()
-                empytyVals()
-                setOpenStartPop(false)
-                setOpenSecondPop(false)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
     }
 
     return (
