@@ -95,6 +95,10 @@ export function JobBoard() {
             FilterJobs()
         }
     }, [filterList])
+
+    function truncate(str) {
+        return str.length > 50 ? str.substring(0, 47) + "..." : str;
+    }
     
     return (
         <div className={'job-board-outer' + background}>
@@ -125,6 +129,18 @@ export function JobBoard() {
                                     <button onClick={() => console.log(key)}>hi</button>
                                     <Typography fontSize="20px">
                                         {key[0][1]}
+                                    </Typography>
+                                    <Typography fontSize="15px">
+                                        {key[3][1]}
+                                    </Typography>
+                                    <Typography fontSize="15px">
+                                        {key[2][1]}
+                                    </Typography>
+                                    <Typography fontSize="15px">
+                                        {key[5][1]}
+                                    </Typography>
+                                    <Typography fontSize="15px">
+                                        {truncate(key[4][1])}
                                     </Typography>
                                 </Card>
                             </Grid>
