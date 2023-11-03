@@ -13,8 +13,10 @@ import ClearIcon from '@mui/icons-material/Clear';
 export function Filter() {
     const [expandMap, setExpandMap] = useState(new Map(
       [["Category", false],
-      ["DateRange", false],
-      ["OnOffCampus", false]]
+      ["JobType", false],
+      ["DateRange", false]
+      // ["OnOffCampus", false]
+    ]
     )) 
     const [filterList, setFilterList] = useState(new Set())
     const filterOptions = {
@@ -22,8 +24,9 @@ export function Filter() {
                 //  'Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving',
                 //  'Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving',
                 //  'Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving'],
-      DateRange: ['Quick Jobs (1 day)', 'Short Term Jobs (1-7 days)', 'Part-Time Jobs (7+ Days)'],
-      OnOffCampus: ['On campus', 'Off campus'],
+      JobType: ['Quick Jobs (1 day)', 'Short Term Jobs (1-7 days)', 'Part-Time Jobs (7+ Days)'],
+      DateRange: [],
+      // OnOffCampus: ['On campus', 'Off campus'],
     };
 
     // handles the expanding of filters
