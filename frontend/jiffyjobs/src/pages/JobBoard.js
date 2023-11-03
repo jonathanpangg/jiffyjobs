@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
-import { Divider } from '@mui/material';
+import { Divider, Typography } from '@mui/material';
 import { Filter } from '../components/Filter';
 import { Sort } from '../components/Sort';
 import { JobPosting } from '../components/JobPosting';
@@ -122,11 +122,10 @@ export function JobBoard() {
                         {jobData.map((key) => (
                             <Grid key={key} item>
                                 <Card sx={{height: 300, width: 300}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px'}}>
-                                    {key.map((data) => (
-                                        <text className={'card-grid-' + data[0]}>
-                                            {data[1]} <br></br>
-                                        </text>
-                                    ))}
+                                    <button onClick={() => console.log(key)}>hi</button>
+                                    <Typography fontSize="20px">
+                                        {key[0][1]}
+                                    </Typography>
                                 </Card>
                             </Grid>
                         ))}
