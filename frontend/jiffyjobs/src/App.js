@@ -1,7 +1,8 @@
 import './App.css';
 import { NavBar } from './components/NavBar'
 import { JobBoard } from './pages/JobBoard'
-import Dashboard from './pages/Dashboard';
+import  Dashboard from './pages/Dashboard';
+import  Profile  from './pages/Profile';
 import { Routes, Route } from "react-router-dom";
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
         <Routes>      
           <Route path="/JobBoard"  element={<JobBoard/>} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </header>
     </div>

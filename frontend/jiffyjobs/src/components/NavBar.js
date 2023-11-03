@@ -12,9 +12,13 @@ export function NavBar() {
         navigate('/dashboard');
     };
 
+    const userProfile = () => {
+        navigate('/profile');
+    };
+
     return (
         <div className='nav-outer'> 
-             <h1 className='logo-font'>
+             <h1 className='logo-font' onClick={AllJobs}>
                 JIFFYJOBS
             </h1>
             <div className='tab-font'></div>
@@ -31,7 +35,7 @@ export function NavBar() {
                 Dashboard
             </div>
             
-            <div className='name-font' style={{ display: 'flex', alignItems: 'center' }}>
+            <div className='name-font' style={{ display: 'flex', alignItems: 'center' }}  onClick={userProfile}>
                 <div className='profile-picture'></div>
                 <span style={{ fontWeight: 'bold' }}>Lucas Yoon</span>
             </div>
