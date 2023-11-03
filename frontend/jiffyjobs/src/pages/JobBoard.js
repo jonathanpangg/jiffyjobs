@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
-import { Divider, Typography } from '@mui/material';
+import { Dialog, Divider, Typography, DialogContentText, DialogContent, DialogActions, DialogTitle  } from '@mui/material';
 import { Filter } from '../components/Filter';
 import { Sort } from '../components/Sort';
 import { JobPosting } from '../components/JobPosting';
 import dayjs from 'dayjs';
+import ClearIcon from '@mui/icons-material/Clear';
+import IconButton from '@mui/material/IconButton';
+
 
 export function JobBoard() {
     const [jobData, setJobData] = useState([])
@@ -14,6 +17,7 @@ export function JobBoard() {
     const [size, setSize] = useState(0)
     const [background, setBackground] = useState("")
     const { render, filterList } = Filter()
+    const [openPop, setOpenPop] = useState(false)
 
     // handles getting all jobs
     useEffect(() => {
@@ -99,9 +103,29 @@ export function JobBoard() {
     function truncate(str) {
         return str.length > 50 ? str.substring(0, 47) + "..." : str;
     }
+
+    const closePop = () => {
+        setOpenPop(false)
+    }
+    
+    const openPopUp = (key) => {
+        setOpenPop(true)
+    }
+
     
     return (
         <div className={'job-board-outer' + background}>
+            <Dialog open={openPop} onClose={closePop} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
+            <div className='popup-title'>
+                    <DialogTitle style={{width: "90%"}}> 
+                        Job title
+                    </DialogTitle>
+                    <IconButton onClick={closePop}>
+                        <ClearIcon/>
+                    </IconButton>
+                </div>
+                <Divider/>
+            </Dialog>
             <Box sx={{ flexGrow: 1 }}>
                 <Grid item xs={12}>
                     <Grid container className='job-table-grid' rowSpacing={2} columnSpacing={2}>
@@ -126,7 +150,7 @@ export function JobBoard() {
                         {jobData.map((key) => (
                             <Grid key={key} item>
                                 <Card sx={{height: 300, width: 300}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px'}}>
-                                    <button onClick={() => console.log(key)}>hi</button>
+                                    <button onClick={openPopUp}>hi</button>
                                     <Typography fontSize="20px">
                                         {key[0][1]}
                                     </Typography>
