@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
+import Pagination from '@mui/material/Pagination';
 import { Divider } from '@mui/material';
 import { Filter } from '../components/Filter';
 import { Sort } from '../components/Sort';
@@ -14,6 +15,11 @@ export function JobBoard() {
     const [size, setSize] = useState(0)
     const [background, setBackground] = useState("")
     const { render, filterList } = Filter()
+
+    const [page, setPage] = useState(1);
+    const cardsPerPage = 20;
+    const totalCards = jobData.length;
+    const totalPages = Math.ceil(totalCards / cardsPerPage);
 
     // handles getting all jobs
     useEffect(() => {
@@ -119,8 +125,8 @@ export function JobBoard() {
                         </text>
                         {/* <button onClick={handleLogJobData}>Log Job Data</button> */}
 
-                        {jobData.map((key) => (
-                            <Grid key={key} item>
+                        {jobData.slice((page - 1) * cardsPerPage, page * cardsPerPage).map((key) => (
+                            <Grid key={key.id} item>
                                 <Card sx={{height: 300, width: 300}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px'}}>
                                     {key.map((data) => (
                                         <text className={'card-grid-' + data[0]}>
@@ -133,6 +139,9 @@ export function JobBoard() {
                     </Grid>
                 </Grid>   
             </Box>
+            <div style={{ display: 'flex', justifyContent: 'center', padding: '1%' }}>
+                <Pagination count={totalPages} page={page} onChange={(event, value) => setPage(value)} />
+            </div>
         </div>
     )
 }
