@@ -8,6 +8,10 @@ export function NavBar() {
         navigate('/JobBoard')
     }
 
+    const Profile = () => {
+        navigate('/Profile')
+    }
+
     return (
         <div className='nav-outer'> 
              <h1 className='logo-font'>
@@ -17,17 +21,12 @@ export function NavBar() {
                 All Jobs 
             </div>
             <div className='tab-font'>
-                Recent Jobs
-            </div>
-            <div className='tab-font'>
-                Progress
-            </div>
-            <div className='tab-font'>
-                Notifications
+                Dashboard
             </div>
             {/* <Divider orientation="vertical" flexItem /> */}
-            <div className='name-font'>
+            <div className='name-font' onClick={Profile}>
                 Lucas Yoon
+                
             </div>
         </div>
     )

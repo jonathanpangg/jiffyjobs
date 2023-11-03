@@ -19,6 +19,7 @@ dayjs.extend(objectSupport);
 export function JobPosting() {
     const [openStartPop, setOpenStartPop] = useState(false)
     const [openSecondPop, setOpenSecondPop] = useState(false)
+    const [amount, setAmount] = useState(1)
 
     // useState for the data
     const [val, setVal] = useState({
@@ -381,45 +382,58 @@ export function JobPosting() {
             <Divider/>
                 <DialogContent>
                     <DialogContentText ref={descriptionElementRefNextPop} tabIndex={-1} style={{width: '1000px'}}>
-                        <div className='timeOuter' style={{width: '98.5%'}}>
-                            <div className='date'>
-                                <text className='pop-textfield-title'>
-                                    Date
-                                </text> <br></br>
-                                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                    <DatePicker
-                                        format="MM/DD/YYYY"
-                                        value={dayjs(new Date(val.date.year, val.date.month-1, val.date.day))}
-                                        onChange={(e) => {handleDate(e)}}
-                                    />
-                                </LocalizationProvider>
+                        {[...Array(amount)].map((key) =>
+                            <div className='timeOuter' style={{width: '98.5%'}}>
+                                <div className='date'>
+                                    <text className='pop-textfield-title'>
+                                        Date
+                                    </text> <br></br>
+                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                        <DatePicker
+                                            format="MM/DD/YYYY"
+                                            value={dayjs(new Date(val.date.year, val.date.month-1, val.date.day))}
+                                            onChange={(e) => {handleDate(e); console.log(e)}}
+                                            slotProps={{
+                                                textField: {
+                                                  required: true,
+                                                  id: 'ReportDate' + key,
+                                                },
+                                            }}
+                                        />
+                                    </LocalizationProvider>
+                                </div>
+                                <div className='startTime'>
+                                    <text className='pop-textfield-title'>
+                                        Start Time
+                                    </text> <br></br>
+                                    <LocalizationProvider dateAdapter={AdapterDayjs} style={{float: 'right'}}>
+                                        <TimePicker 
+                                            defaultValue={dayjs("00:00:00", "HH:mm:ss")} 
+                                            ampm 
+                                            value={dayjs({hour: val.startTime.hour, minute: val.startTime.min})}
+                                            onChange={(e) => {handleStartTime(e)}}
+                                        />
+                                    </LocalizationProvider>
+                                </div>
+                                <div>
+                                    <text className='pop-textfield-title'>
+                                        End Time
+                                    </text> <br></br>
+                                    <LocalizationProvider dateAdapter={AdapterDayjs} style={{float: 'right'}}>
+                                        <TimePicker 
+                                            defaultValue={dayjs("00:00:00", "HH:mm:ss")} 
+                                            ampm 
+                                            value={dayjs({hour: val.endTime.hour, minute: val.endTime.min})}
+                                            onChange={(e) => {handleEndTime(e)}}
+                                        />
+                                    </LocalizationProvider>
+                                </div>
                             </div>
-                            <div className='startTime'>
-                                <text className='pop-textfield-title'>
-                                    Start Time
-                                </text> <br></br>
-                                <LocalizationProvider dateAdapter={AdapterDayjs} style={{float: 'right'}}>
-                                    <TimePicker 
-                                        defaultValue={dayjs("00:00:00", "HH:mm:ss")} 
-                                        ampm 
-                                        value={dayjs({hour: val.startTime.hour, minute: val.startTime.min})}
-                                        onChange={(e) => {handleStartTime(e)}}
-                                    />
-                                </LocalizationProvider>
-                            </div>
-                            <div>
-                                <text className='pop-textfield-title'>
-                                    End Time
-                                </text> <br></br>
-                                <LocalizationProvider dateAdapter={AdapterDayjs} style={{float: 'right'}}>
-                                    <TimePicker 
-                                        defaultValue={dayjs("00:00:00", "HH:mm:ss")} 
-                                        ampm 
-                                        value={dayjs({hour: val.endTime.hour, minute: val.endTime.min})}
-                                        onChange={(e) => {handleEndTime(e)}}
-                                    />
-                                </LocalizationProvider>
-                            </div>
+                        )}
+                        <div>
+                            <text className='pop-textfield-title' onClick={() => {setAmount(amount+1)}}>
+                                + Add more dates
+                            </text>
                         </div>
                         <div style={{paddingTop: '2.5%'}}>
                             <text className='pop-textfield-title'>
