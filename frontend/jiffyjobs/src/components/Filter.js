@@ -9,6 +9,10 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import ClearIcon from '@mui/icons-material/Clear';
+import TextField from '@mui/material/TextField';
+import { DatePicker } from '@mui/x-date-pickers';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 export function Filter() {
     const [expandMap, setExpandMap] = useState(new Map(
@@ -29,6 +33,9 @@ export function Filter() {
       // OnOffCampus: ['On campus', 'Off campus'],
     };
 
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+
     // handles the expanding of filters
     function toggleFilter(type) { 
       setExpandMap(prevMap => {
@@ -36,6 +43,7 @@ export function Filter() {
         newMap.forEach((val, key) => {
           newMap.set(key, key === type ? !val : false);  
         });
+        console.log(newMap);
         return newMap;
       });
     }
@@ -83,6 +91,46 @@ export function Filter() {
 
     // renders filters
     const renderFilters = (filterCategory, bool) => {
+      console.log(filterCategory, bool);
+      if (filterCategory === "DateRange") {
+        return (
+          <div style={{width: '12.5%', display: 'flex', flexDirection: 'column'}} className='filters'>
+            <Grid item xs={1.5} onClick={() => toggleFilter(filterCategory)} className='filter-tab'>
+                { filterCategory } 
+                { bool ? <KeyboardArrowDownIcon className='arrow-pad'/> : <KeyboardArrowUpIcon className='arrow-pad'/> }
+            </Grid>
+            { bool && 
+              <div className='timeOuter' style={{display: 'flex', flexDirection: 'row', width: '100%', minWidth: '350%'}}>
+                <div className='date' style={{display: 'flex', flexDirection: 'column',  minWidth: '15%'}}>
+                  <text className='pop-textfield-title'>
+                    Start Date
+                  </text>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DatePicker
+                        value={startDate}
+                        onChange={(newValue) => setStartDate(newValue)}
+                        renderInput={(params) => <TextField {...params} helperText="Start date" variant="outlined" style={{ marginRight: '10%' }} />}
+                      />
+                  </LocalizationProvider>
+                </div>
+                <div style={{display: 'flex', flexDirection: 'column',  minWidth: '15%'}}>
+                  <text className='pop-textfield-title'>
+                    End Date
+                  </text>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DatePicker
+                        value={endDate}
+                        onChange={(newValue) => setEndDate(newValue)}
+                        renderInput={(params) => <TextField {...params} helperText="End date" variant="outlined" />}
+                      />
+                  </LocalizationProvider>
+                </div>
+              </div>
+            }
+          </div>
+        );
+      }
+      
     const options = filterOptions[filterCategory];
     const maxColumns = 5; 
     const columns = Math.ceil(options.length / maxColumns);
