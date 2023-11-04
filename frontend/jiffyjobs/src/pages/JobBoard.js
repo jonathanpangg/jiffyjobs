@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Grid from '@mui/material/Grid';
-import { Dialog, Divider, Typography, DialogContentText, DialogContent, DialogActions, DialogTitle  } from '@mui/material';
+import { Dialog, Divider, Typography, DialogContentText, DialogContent, DialogActions, DialogTitle, Link  } from '@mui/material';
 import { Filter } from '../components/Filter';
 import { Sort } from '../components/Sort';
 import { JobPosting } from '../components/JobPosting';
@@ -198,24 +198,25 @@ export function JobBoard() {
 
                         {jobData.map((key) => (
                             <Grid key={key} item>
-                                <Card sx={{height: 300, width: 300}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px'}}>
-                                    <button onClick={() => openPopUp(key)}>hi</button>
-                                    <Typography fontSize="20px">
-                                        {key[0][1]}
-                                    </Typography>
-                                    <Typography fontSize="15px">
-                                        {key[3][1]}
-                                    </Typography>
-                                    <Typography fontSize="15px">
-                                        {key[2][1]}
-                                    </Typography>
-                                    <Typography fontSize="15px">
-                                        {key[5][1]}
-                                    </Typography>
-                                    <Typography fontSize="15px">
-                                        {truncate(key[4][1])}
-                                    </Typography>
-                                </Card>
+                                <Link overlay underline="none" sx={{ color: 'text.tertiary', cursor: 'pointer' }} onClick={() => openPopUp(key)}>
+                                    <Card sx={{height: 300, width: 300, '&:hover': { boxShadow: 'md', borderColor: 'neutral.outlinedHoverBorder' }}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px'}}>
+                                        <Typography fontSize="20px" paddingLeft={1}>
+                                            {key[0][1]}
+                                        </Typography>
+                                        <Typography fontSize="15px" paddingLeft={1}>
+                                            {key[3][1]}
+                                        </Typography>
+                                        <Typography fontSize="15px" paddingLeft={1}>
+                                            {key[2][1]}
+                                        </Typography>
+                                        <Typography fontSize="15px" paddingLeft={1}>
+                                            {key[5][1]}
+                                        </Typography>
+                                        <Typography fontSize="15px" paddingLeft={1}>
+                                            {truncate(key[4][1])}
+                                        </Typography>
+                                    </Card>
+                                </Link>
                             </Grid>
                         ))}
                     </Grid>
