@@ -28,6 +28,27 @@ const SeekerSchema = mongoose.Schema({
             required: true
         },
         major: {
+            type: [String],
+            required: false
+        },
+        minor: {
+            type: [String],
+            required: false
+        },
+        grade: {
+            type: String,
+            required: false
+        },
+        school_date: {
+            // adds the date attended (expected) for the school
+            type: [String],
+            required: false
+        },
+        gender: {
+            type: String,
+            required: false
+        },
+        pronouns: {
             type: String,
             required: false
         },
@@ -37,6 +58,14 @@ const SeekerSchema = mongoose.Schema({
         },
         has_resume: {
             type: Boolean,
+            required: false
+        },
+        phone_num: {
+            type: Number,
+            required: false
+        },
+        preffered_categories: {
+            type: [String],
             required: false
         }
     },
