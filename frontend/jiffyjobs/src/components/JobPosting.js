@@ -8,13 +8,14 @@ import CardContent from '@mui/material/CardContent';
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
 import Chip from '@mui/material/Chip';
-import { Divider } from '@mui/material';
+import { Divider, MenuItem } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import InputAdornment from '@mui/material/InputAdornment';
 import dayjs from 'dayjs';
+import { CalendarIcon } from '@mui/x-date-pickers';
 var objectSupport = require("dayjs/plugin/objectSupport");
 dayjs.extend(objectSupport);
 
@@ -22,6 +23,7 @@ export function JobPosting() {
     const [openStartPop, setOpenStartPop] = useState(false)
     const [openSecondPop, setOpenSecondPop] = useState(false)
     const categories = ['Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving']
+    const [expand, setExpand] = useState(false)
 
     // useState for the data
     const [val, setVal] = useState({
@@ -193,21 +195,7 @@ export function JobPosting() {
                 endTime: val.endTime,
                 times: val.times
             })
-        } else if (event.target.id === 'category') {
-            val.category.push(event.target.value)
-            setVal({
-                title: val.title,
-                name: val.name,
-                location: val.location,
-                pay: val.pay,
-                description: val.description,
-                category: val.category,
-                date: val.date,
-                startTime: val.startTime,
-                endTime: val.endTime,
-                times: val.times
-            })
-        }
+        } 
     }
 
     // handles the date calendar data
@@ -378,20 +366,51 @@ export function JobPosting() {
         }
     }, [openSecondPop])
 
-    function handleDelete(event) {
+    function handleAddingCategories(event) {
+        val.category.add(event)
+        console.log(event)
+            
+        setVal({
+            title: val.title,
+            name: val.name,
+            location: val.location,
+            pay: val.pay,
+            description: val.description,
+            category: val.category,
+            date: val.date,
+            startTime: val.startTime,
+            endTime: val.endTime,
+            times: val.times
+        })
+        setExpand(!expand)
+    }
 
+    function handleDelete(event) {
+        val.category.delete(event)
+        setVal({
+            title: val.title,
+            name: val.name,
+            location: val.location,
+            pay: val.pay,
+            description: val.description,
+            category: val.category,
+            date: val.date,
+            startTime: val.startTime,
+            endTime: val.endTime,
+            times: val.times
+        })
     }
     
     const renderSelectedOptions = (selected) => {
-        return Array.from(selected, option => (
-            <Chip
-                key={option}
-                label={option}
-                onDelete={() => handleDelete(option)}
-                style={{ margin: '4px', background: 'transparent', border: 'none', paddingLeft: '4px', paddingRight: '4px', display: 'flex', alignItems: 'center', fontFamily: 'Outfit', fontSize: 'medium'}}
-                deleteIcon={<ClearIcon className='filter-delete'></ClearIcon>}
-              />
-        ));
+        return Array.from(selected).map((data) => {
+            return (<Chip
+                key={data}
+                label={data}
+                onDelete={() => handleDelete(data)}
+                style={{ margin: '4px', paddingLeft: '4px', paddingRight: '4px', display: 'flex', alignItems: 'center', fontFamily: 'Outfit', fontSize: 'medium'}}
+                deleteIcon={<ClearIcon></ClearIcon>}
+              />)
+        })
       }
 
     const firstJobSlide = () => {
@@ -431,7 +450,7 @@ export function JobPosting() {
                                     <text className='pop-textfield-title'>
                                         Pay 
                                     </text> <br></br>
-                                    <TextField InputProps={{inputProps: {inputMode: 'numeric', pattern: '[0-9.]*'}, startAdornment: <InputAdornment position="start">$</InputAdornment>}} error={error.payError} helperText={error.payError ? "*Invalid number" : ""} required={true} placeholder="$" type="search" square={false} className='pop-textfield-title' style={{width: '100%'}} onChange={(e) => {handleValues(e)}} id='pay' value={val.pay}/>
+                                    <TextField InputProps={{inputProps: {inputMode: 'numeric', pattern: '[0-9.]*'}, startAdornment: <InputAdornment position="start">$</InputAdornment>}} error={error.payError} helperText={error.payError ? "*Invalid number" : ""} required={true} placeholder="" type="search" square={false} className='pop-textfield-title' style={{width: '100%'}} onChange={(e) => {handleValues(e)}} id='pay' value={val.pay}/>
                                 </div>
                             </div>
                         </DialogContentText>
@@ -456,7 +475,6 @@ export function JobPosting() {
     const secondJobSlide = () => {
         return (
             <Dialog open={openSecondPop} onClose={closeNextPop} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
-                {}
                 <div className='popup-title'>
                     <DialogTitle style={{width: "90%"}}> 
                         Tell us more about the job!
@@ -477,7 +495,7 @@ export function JobPosting() {
                                     <DatePicker
                                         format="MM/DD/YYYY"
                                         value={dayjs(new Date(val.date.year, val.date.month-1, val.date.day))}
-                                        onChange={(e) => {handleDate(e); console.log(e)}}
+                                        onChange={(e) => {handleDate(e)}}
                                     />
                                 </LocalizationProvider>
                             </div>
@@ -517,17 +535,27 @@ export function JobPosting() {
                             </text>
                         </div> <br></br>
                         <div>
-                            <text className='pop-textfield-title'>
-                                Current Times:
-                            </text> <br></br>
-                            { val.times.map((subList) => {
-                                return <div>
-                                    <text>
-                                        {dayjs(subList[0]).format('MM/DD/YY h:mm A') + " - " + dayjs(subList[1]).format('h:mm A')}
-                                    </text>
-                                    <br></br>
+                            { val.times.length !== 0 ? 
+                                <div> 
+                                    <text className='pop-textfield-title'>
+                                        Current Times:
+                                    </text> <br></br>
+                                    { val.times.map((subList) => {
+                                        return <div>
+                                        <text>
+                                            {dayjs(subList[0]).format('MM/DD/YY h:mm A') + " - " + dayjs(subList[1]).format('h:mm A')}
+                                        </text>
+                                        <br></br>
+                                    </div>
+                                    })}
+                                </div>:
+                                <div>
+                                    <text className='pop-textfield-title'>
+                                        No Times Selected
+                                    </text> <br></br>
                                 </div>
-                            })}
+                            }
+                            
                         </div>
                         <div>
                             <text className='pop-textfield-title'>
@@ -539,8 +567,19 @@ export function JobPosting() {
                             <text className='pop-textfield-title'>
                                 Category
                             </text> <br></br>
-                            <TextField error={error.categoryError} helperText={error.categoryError ? "*This field is required" : ""} required={true} type="search" square={false} style={{width: '98.5%'}} disabled={true} onChange={(e) => {handleValues(e)}} id='category' placeholder={"+ Add Category"}></TextField>
-                            {renderSelectedOptions(val.category)}
+                            
+                            <TextField error={error.categoryError} helperText={error.categoryError ? "*This field is required" : ""} required={true} type="search" square={false} style={{width: '98.5%'}} disabled={true} onClick={() => {setExpand(!expand)}} onChange={(e) => {handleValues(e)}} id='category' placeholder={"+ Add Category"}>
+                            </TextField>
+                            { expand && categories.map((name) => {
+                                return (
+                                    <MenuItem sx={{ border: 1}} style={{width: '15%'}} onClick={() => {handleAddingCategories(name)}} key={name} value={name}> 
+                                        {name}
+                                    </MenuItem>
+                                )
+                            })}
+                            <Grid container columnSpacing={2} className='category-tab'>
+                                {renderSelectedOptions(val.category)}
+                            </Grid>
                         </div>
                     </DialogContentText>
                 </DialogContent>
@@ -570,6 +609,11 @@ export function JobPosting() {
                     timeIns.push(val.times[i][j])
                 }
             }
+
+            var categoryList = []
+            for (const v of val.category) {
+                categoryList.push(v)
+            }
             const requestOptions = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -579,7 +623,7 @@ export function JobPosting() {
                     description: val.description,
                     pay: val.pay,
                     location: val.location,
-                    categories: val.category,
+                    categories: categoryList,
                     time: timeIns,
                     job_type: "Quick Jobs",
                     date_posted: new Date()
