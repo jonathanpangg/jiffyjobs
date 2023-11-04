@@ -10,14 +10,14 @@ import { getSeekers, getSeekerByEmail, deleteSeeker, updateSeeker } from "./seek
 
 // get user information when called
 export const getUserinfo = async(req, res) => {
-    isjobseeker = false
-    isjobprovider = false
+    const isjobseeker = false
+    const isjobprovider = true
     // isjobseeker = boolean from the login database, get the user information.
     try {
         if (isjobseeker) {
             const user = await getSeekerByEmail(req, res);
             return handleSuccess(res, user);
-        } else if (!isjobprovider){
+        } else if (isjobprovider){
             const user = await getProviderByEmail(req, res);
             return handleSuccess(res, user);
         } else {

@@ -102,3 +102,8 @@
   max-height: 80px; /* Limit the maximum height of the display */
   overflow-y: auto; /* Add a scrollbar when content overflows */
 }
+
+.profile-background {
+  background-color: #f3f3f3;
+  height: 100vh;
+}
