@@ -13,6 +13,7 @@ import TextField from '@mui/material/TextField';
 import { DatePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from 'dayjs';
 
 export function Filter() {
     const [expandMap, setExpandMap] = useState(new Map(
@@ -36,6 +37,7 @@ export function Filter() {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [dateRangeSelected, setDateRangeSelected] = useState(false);
+    const [dateAdded, setDateAdded] = useState(false);
 
     // handles the expanding of filters
     function toggleFilter(type) { 
@@ -53,31 +55,61 @@ export function Filter() {
     function handleFilterList(event) {
       const val = event.target.value;
       setFilterList((prevFilterList) => {
-        const newFilterList = new Set(prevFilterList);
-        if (newFilterList.has(val)) {
-          newFilterList.delete(val);
-        } else {
-          newFilterList.add(val);
-        }
-        return newFilterList;
+          const newFilterList = new Set(prevFilterList);
+          if (val === "DateRange") {
+              if (dateRangeSelected) { 
+                newFilterList.add(val);
+              } else {
+                  newFilterList.delete(val);
+              }
+          } else {
+              if (newFilterList.has(val)) {
+                  newFilterList.delete(val);
+              } else {
+                  newFilterList.add(val);
+              }
+          }
+          return newFilterList;
       });
     }
+  
     
     // handles deleting selected filters
     function handleDelete(option) {
-      if (option === "DateRange") {
-        setStartDate(null);
-        setEndDate(null);
-        setDateRangeSelected(false);
-      } else {
-        setFilterList((prevFilterList) => { 
+      if (isDateRangeString(option)) {
+          setStartDate(null);
+          setEndDate(null);
+          setDateRangeSelected(false);
+          setDateAdded(false); 
+      }
+      setFilterList((prevFilterList) => { 
           const newFilterList = new Set(prevFilterList);
           newFilterList.delete(option);
           return newFilterList;
-        });
-      }
+      });
     }
-    
+  
+
+    // checks if string is a date range
+    function isDateRangeString(str) {
+      return str.startsWith('[') && str.endsWith(']');
+    }
+
+
+    // updates filter list with date range
+    function updateFilterListWithDateRange(dateRangeString) {
+      setFilterList(prevFilterList => {
+          const newFilterList = new Set(prevFilterList);
+          Array.from(newFilterList).forEach(item => {
+              if (isDateRangeString(item)) {
+                  newFilterList.delete(item);
+              }
+          });
+          newFilterList.add(dateRangeString);
+          return newFilterList;
+      });
+    }
+
 
     // clears all current filters
     function clearAllFilters() {
@@ -85,35 +117,45 @@ export function Filter() {
       setStartDate(null);
       setEndDate(null);
       setDateRangeSelected(false);
-    }
+      setDateAdded(false); 
+  }
+  
     
-
     // renders chips for display and delete filters
     const renderSelectedOptions = (selected) => {
-      const chips = Array.from(selected).map(option => (
-        <Chip
-            key={option}
-            label={option}
-            onDelete={() => handleDelete(option)}
-            style={{ margin: '4px', background: 'transparent', border: 'none', paddingLeft: '4px', paddingRight: '4px', display: 'flex', alignItems: 'center', fontFamily: 'Outfit', fontSize: 'medium'}}
-            deleteIcon={<ClearIcon className='filter-delete'></ClearIcon>}
-        />
-      ));
-      if (dateRangeSelected) {
-        chips.push(
-          <Chip
-            key="DateRange"
-            label={`${startDate.format('MM/DD/YYYY')} - ${endDate.format('MM/DD/YYYY')}`}
-            onDelete={() => handleDelete("DateRange")}
-            style={{ margin: '4px', background: 'transparent', border: 'none', paddingLeft: '4px', paddingRight: '4px', display: 'flex', alignItems: 'center', fontFamily: 'Outfit', fontSize: 'medium'}}
-            deleteIcon={<ClearIcon className='filter-delete'></ClearIcon>}
-          />
+      const chips = Array.from(selected).map(option => {
+          if (isDateRangeString(option)) {
+              const matches = option.match(/(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z)/g);
+              if (matches && matches.length === 2) {
+                  const startDateStr = dayjs(matches[0]).format('MM/DD/YYYY');
+                  const endDateStr = dayjs(matches[1]).format('MM/DD/YYYY');
+                  return (
+                    <Chip
+                      key={option}
+                      label={`${startDateStr} - ${endDateStr}`}
+                      onDelete={() => handleDelete(option)}
+                      style={{ margin: '4px', background: 'transparent', border: 'none', paddingLeft: '4px', paddingRight: '4px', display: 'flex', alignItems: 'center', fontFamily: 'Outfit', fontSize: 'medium'}}
+                      deleteIcon={<ClearIcon className='filter-delete'></ClearIcon>}
+                    />
+                  );
+              } else {
+                  return (
+                    <Chip
+                      key={option}
+                      label={option}
+                      onDelete={() => handleDelete(option)}
+                      style={{ margin: '4px', background: 'transparent', border: 'none', paddingLeft: '4px', paddingRight: '4px', display: 'flex', alignItems: 'center', fontFamily: 'Outfit', fontSize: 'medium'}}
+                      deleteIcon={<ClearIcon className='filter-delete'></ClearIcon>}
+                    />
+                  );
+              }
+            }
+          }
         );
-      }    
       return chips;
     }
     
-
+    
     // renders filters
     const renderFilters = (filterCategory, bool) => {
       console.log(filterCategory, bool);
@@ -133,7 +175,10 @@ export function Filter() {
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DatePicker
                         value={startDate}
-                        onChange={(newValue) => { setStartDate(newValue); if (endDate) { setDateRangeSelected(true);}}}
+                        onChange={(newValue) => { 
+                          setStartDate(newValue); 
+                          if (endDate && !dateAdded) { setDateAdded(true); const dateRangeString = `[${newValue.toISOString()}, ${endDate.toISOString()}]`; updateFilterListWithDateRange(dateRangeString);}
+                        }}
                         shouldDisableDate={date => endDate && date.isAfter(endDate)}
                         renderInput={(params) => <TextField {...params} helperText="Start date" variant="outlined" style={{ marginRight: '10%' }} />}
                       />
@@ -146,7 +191,10 @@ export function Filter() {
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DatePicker
                         value={endDate}
-                        onChange={(newValue) => { setEndDate(newValue); if (startDate) { setDateRangeSelected(true);}}}
+                        onChange={(newValue) => { 
+                          setEndDate(newValue); 
+                          if (startDate && !dateAdded) { setDateAdded(true); const dateRangeString = `[${startDate.toISOString()}, ${newValue.toISOString()}]`; updateFilterListWithDateRange(dateRangeString);}
+                        }}
                         shouldDisableDate={date => startDate && date.isBefore(startDate)}
                         renderInput={(params) => <TextField {...params} helperText="End date" variant="outlined" style={{ marginRight: '10%' }}/>}
                       />
