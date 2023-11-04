@@ -36,7 +36,7 @@ export function JobBoard() {
                     setRawData(data);
                     const newJobData = data.map(function(obj) {
                         console.log(obj.time)
-                        return [[0, obj.title], ["", "Job Provider: " + obj.job_poster], ["", "Location: " + obj.location], ["", "Pay: $" + obj.pay], ["", "Description: " + obj.description], ["", "Time: " + dayjs(new Date(obj.time[0])).format('DD/MM/YYYY')  + " " + " - " + new Date(obj.time[1])], ["", "Categories: " + obj.categories.toString()]]
+                        return [[0, obj.title], ["", "Job Provider: " + obj.job_poster], ["", "Location: " + obj.location], ["", "Pay: $" + obj.pay], ["", "Description: " + obj.description], ["", "Time: " + dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", "Categories: " + obj.categories.toString()]]
                     });
                     setJobData(newJobData);
 
@@ -79,7 +79,7 @@ export function JobBoard() {
                 .then((data) => {
                     setRawData(data);
                     const newJobData = data.map(function(obj) {
-                        return [[0, obj.title], ["", "Job Provider: " + obj.job_poster], ["", "Location: " + obj.location], ["", "Pay: $" + obj.pay], ["", "Description: " + obj.description], ["", "Time: " + obj.time[0] + " - " + obj.time[1]], ["", "Categories: " + obj.categories.toString()]]
+                        return [[0, obj.title], ["", "Job Provider: " + obj.job_poster], ["", "Location: " + obj.location], ["", "Pay: $" + obj.pay], ["", "Description: " + obj.description], ["", "Time: " + dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", "Categories: " + obj.categories.toString()]]
                     });
                     setJobData(newJobData);
                     setSize(jobData.length)
