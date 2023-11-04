@@ -18,6 +18,7 @@ export function JobBoard() {
     const [background, setBackground] = useState("")
     const { render, filterList } = Filter()
     const [openPop, setOpenPop] = useState(false)
+    const [currentPop, setCurrentPop] = useState([])
 
     // handles getting all jobs
     useEffect(() => {
@@ -105,11 +106,13 @@ export function JobBoard() {
     }
 
     const closePop = () => {
-        setOpenPop(false)
+        setOpenPop(false);
     }
     
     const openPopUp = (key) => {
-        setOpenPop(true)
+        setCurrentPop(key);
+        console.log(currentPop);
+        setOpenPop(true);
     }
 
     
@@ -118,7 +121,7 @@ export function JobBoard() {
             <Dialog open={openPop} onClose={closePop} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
             <div className='popup-title'>
                     <DialogTitle style={{width: "90%"}}> 
-                        Job title
+                    {currentPop[0] && currentPop[0].length > 1 && currentPop[0][1]}
                     </DialogTitle>
                     <IconButton onClick={closePop}>
                         <ClearIcon/>
@@ -150,7 +153,7 @@ export function JobBoard() {
                         {jobData.map((key) => (
                             <Grid key={key} item>
                                 <Card sx={{height: 300, width: 300}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px'}}>
-                                    <button onClick={openPopUp}>hi</button>
+                                    <button onClick={() => openPopUp(key)}>hi</button>
                                     <Typography fontSize="20px">
                                         {key[0][1]}
                                     </Typography>
