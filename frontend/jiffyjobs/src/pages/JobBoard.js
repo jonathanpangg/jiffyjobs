@@ -57,9 +57,11 @@ export function JobBoard() {
             GetAllJobs()
         }
     }, [filterList]);
+    
 
     // handles filtering job
     useEffect(() => {
+        console.log("filterList")
         async function FilterJobs() {
             const requestOptions = {
                 method: 'GET',
@@ -101,6 +103,11 @@ export function JobBoard() {
             FilterJobs()
         }
     }, [filterList])
+
+    // console log for job data button
+    // function handleLogJobData() {
+    //     console.log(typeof jobData);
+    // }
     
     return (
         <div className={'job-board-outer' + background}>

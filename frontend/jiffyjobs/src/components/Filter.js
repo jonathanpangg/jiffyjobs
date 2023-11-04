@@ -149,7 +149,17 @@ export function Filter() {
                     />
                   );
               }
-            }
+            } else {
+              return (
+                <Chip
+                  key={option}
+                  label={option}
+                  onDelete={() => handleDelete(option)}
+                  style={{ margin: '4px', background: 'transparent', border: 'none', paddingLeft: '4px', paddingRight: '4px', display: 'flex', alignItems: 'center', fontFamily: 'Outfit', fontSize: 'medium'}}
+                  deleteIcon={<ClearIcon className='filter-delete'></ClearIcon>}
+                />
+              );
+          }
           }
         );
       return chips;
