@@ -14,6 +14,9 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+
+dayjs.extend(utc);
 
 export function Filter() {
     const [expandMap, setExpandMap] = useState(new Map(
@@ -92,9 +95,10 @@ export function Filter() {
 
     // checks if string is a date range
     function isDateRangeString(str) {
-      return str;
-    }
-
+      const pattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}\+\d{2}:\d{2},\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}\+\d{2}:\d{2}$/;
+      return pattern.test(str);
+  }
+  
 
     // updates filter list with date range
     function updateFilterListWithDateRange(dateRangeString) {
@@ -125,7 +129,7 @@ export function Filter() {
     const renderSelectedOptions = (selected) => {
       const chips = Array.from(selected).map(option => {
           if (isDateRangeString(option)) {
-              const matches = option.match(/(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z)/g);
+              const matches = option.match(/(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}\+\d{2}:\d{2})/g);
               if (matches && matches.length === 2) {
                   const startDateStr = dayjs(matches[0]).format('MM/DD/YYYY');
                   const endDateStr = dayjs(matches[1]).format('MM/DD/YYYY');
@@ -186,8 +190,11 @@ export function Filter() {
                       <DatePicker
                         value={startDate}
                         onChange={(newValue) => { 
-                          setStartDate(newValue); 
-                          if (endDate && !dateAdded) { setDateAdded(true); const dateRangeString = `${newValue.toISOString()},${endDate.toISOString()}`; updateFilterListWithDateRange(dateRangeString);}
+                          setStartDate(newValue);
+                          if (endDate && !dateAdded) {
+                              setDateAdded(true);
+                              const dateRangeString = `${dayjs.utc(newValue).format('YYYY-MM-DDTHH:mm:ss.SSSZ')},${dayjs.utc(endDate).format('YYYY-MM-DDTHH:mm:ss.SSSZ')}`;
+                              updateFilterListWithDateRange(dateRangeString);}
                         }}
                         shouldDisableDate={date => endDate && date.isAfter(endDate)}
                         renderInput={(params) => <TextField {...params} helperText="Start date" variant="outlined" style={{ marginRight: '10%' }} />}
@@ -202,8 +209,11 @@ export function Filter() {
                       <DatePicker
                         value={endDate}
                         onChange={(newValue) => { 
-                          setEndDate(newValue); 
-                          if (startDate && !dateAdded) { setDateAdded(true); const dateRangeString = `${startDate.toISOString()},${newValue.toISOString()}`; updateFilterListWithDateRange(dateRangeString);}
+                          setEndDate(newValue);
+                          if (startDate && !dateAdded) {
+                              setDateAdded(true);
+                              const dateRangeString = `${dayjs.utc(startDate).format('YYYY-MM-DDTHH:mm:ss.SSSZ')},${dayjs.utc(newValue).format('YYYY-MM-DDTHH:mm:ss.SSSZ')}`;
+                              updateFilterListWithDateRange(dateRangeString);}
                         }}
                         shouldDisableDate={date => startDate && date.isBefore(startDate)}
                         renderInput={(params) => <TextField {...params} helperText="End date" variant="outlined" style={{ marginRight: '10%' }}/>}
