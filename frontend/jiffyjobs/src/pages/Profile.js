@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 
 export function Profile() {
 
-    const userEmail = "useremail";
+    const userEmail = "Hello_world@bu.edu";
     // change this when we implement login
     useEffect(() => {
         async function getprofile(userID) {
@@ -28,7 +28,6 @@ export function Profile() {
         if (userEmail) {
             getprofile(userEmail)
         }
-
     })
 
     return (
