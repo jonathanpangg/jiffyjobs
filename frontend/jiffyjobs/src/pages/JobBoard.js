@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 import Grid from '@mui/material/Grid';
 import { Dialog, Divider, Typography, DialogContentText, DialogContent, DialogActions, DialogTitle  } from '@mui/material';
 import { Filter } from '../components/Filter';
@@ -115,11 +116,21 @@ export function JobBoard() {
         setOpenPop(true);
     }
 
+    const descriptionElementRefStartPop = React.useRef(null)
+    useEffect(() => {
+        if (openPopUp) {
+            const { current: descriptionElement } = descriptionElementRefStartPop
+            if (descriptionElement !== null) {
+                descriptionElement.focus();
+            }
+        }
+    }, [openPopUp])
+
     
     return (
         <div className={'job-board-outer' + background}>
             <Dialog open={openPop} onClose={closePop} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
-            <div className='popup-title'>
+                <div className='popup-title'>
                     <DialogTitle style={{width: "90%"}}> 
                     {currentPop[0] && currentPop[0].length > 1 && currentPop[0][1]}
                     </DialogTitle>
@@ -128,6 +139,41 @@ export function JobBoard() {
                     </IconButton>
                 </div>
                 <Divider/>
+                <DialogContent>
+                    <DialogContentText ref={descriptionElementRefStartPop} tabIndex={-1} style={{width: '1000px'}}>
+                        <div>
+                            <text>{currentPop[1] && currentPop[1].length > 1 && currentPop[1][1]}</text>
+                        </div>
+                        <div style={{paddingTop: '2.5%'}}>
+                            <text>{currentPop[2] && currentPop[2].length > 1 && currentPop[2][1]}</text>
+                        </div>
+                        <div style={{paddingTop: '2.5%'}}>
+                            <text>{currentPop[3] && currentPop[3].length > 1 && currentPop[3][1]}</text>
+                        </div>
+                        <div style={{paddingTop: '2.5%'}}>
+                            <text>{currentPop[4] && currentPop[4].length > 1 && currentPop[4][1]}</text>
+                        </div>
+                        <div style={{paddingTop: '2.5%'}}>
+                            <text>{currentPop[5] && currentPop[5].length > 1 && currentPop[5][1]}</text>
+                        </div>
+                        <div style={{paddingTop: '2.5%'}}>
+                            <text>{currentPop[6] && currentPop[6].length > 1 && currentPop[6][1]}</text>
+                        </div>
+                    </DialogContentText>
+                </DialogContent>
+                <Divider/>
+                    <DialogActions>
+                        <Card sx={{height: 50, width: '10%'}} style={{overflow:'hidden', borderRadius: '15px', color: 'black', border: "1px solid black"}}>
+                            <CardContent style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} onClick={closePop}> 
+                                Cancel
+                            </CardContent>
+                        </Card>
+                        <Card sx={{height: 50, width: '10%'}} style={{overflow:'hidden', borderRadius: '15px', background: "#4169E1", color: 'white'}}>
+                            <CardContent style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} onClick={() => console.log("applied")}> 
+                                Apply
+                            </CardContent>
+                        </Card>
+                    </DialogActions>
             </Dialog>
             <Box sx={{ flexGrow: 1 }}>
                 <Grid item xs={12}>
