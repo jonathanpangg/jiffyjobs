@@ -35,6 +35,7 @@ export function Filter() {
 
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
+    const [dateRangeSelected, setDateRangeSelected] = useState(false);
 
     // handles the expanding of filters
     function toggleFilter(type) { 
@@ -64,30 +65,54 @@ export function Filter() {
     
     // handles deleting selected filters
     function handleDelete(option) {
-      setFilterList((prevFilterList) => {
-        const newFilterList = new Set(prevFilterList);
-        newFilterList.delete(option);
-        return newFilterList;
-      });
+      if (option === "DateRange") {
+        setStartDate(null);
+        setEndDate(null);
+        setDateRangeSelected(false);
+      } else {
+        setFilterList((prevFilterList) => { 
+          const newFilterList = new Set(prevFilterList);
+          newFilterList.delete(option);
+          return newFilterList;
+        });
+      }
     }
+    
 
     // clears all current filters
     function clearAllFilters() {
       setFilterList(new Set());
+      setStartDate(null);
+      setEndDate(null);
+      setDateRangeSelected(false);
     }
-  
+    
+
     // renders chips for display and delete filters
     const renderSelectedOptions = (selected) => {
-      return Array.from(selected, option => (
-          <Chip
-              key={option}
-              label={option}
-              onDelete={() => handleDelete(option)}
-              style={{ margin: '4px', background: 'transparent', border: 'none', paddingLeft: '4px', paddingRight: '4px', display: 'flex', alignItems: 'center', fontFamily: 'Outfit', fontSize: 'medium'}}
-              deleteIcon={<ClearIcon className='filter-delete'></ClearIcon>}
-            />
+      const chips = Array.from(selected).map(option => (
+        <Chip
+            key={option}
+            label={option}
+            onDelete={() => handleDelete(option)}
+            style={{ margin: '4px', background: 'transparent', border: 'none', paddingLeft: '4px', paddingRight: '4px', display: 'flex', alignItems: 'center', fontFamily: 'Outfit', fontSize: 'medium'}}
+            deleteIcon={<ClearIcon className='filter-delete'></ClearIcon>}
+        />
       ));
+      if (dateRangeSelected) {
+        chips.push(
+          <Chip
+            key="DateRange"
+            label={`${startDate.format('MM/DD/YYYY')} - ${endDate.format('MM/DD/YYYY')}`}
+            onDelete={() => handleDelete("DateRange")}
+            style={{ margin: '4px', background: 'transparent', border: 'none', paddingLeft: '4px', paddingRight: '4px', display: 'flex', alignItems: 'center', fontFamily: 'Outfit', fontSize: 'medium'}}
+            deleteIcon={<ClearIcon className='filter-delete'></ClearIcon>}
+          />
+        );
+      }    
+      return chips;
     }
+    
 
     // renders filters
     const renderFilters = (filterCategory, bool) => {
@@ -100,28 +125,30 @@ export function Filter() {
                 { bool ? <KeyboardArrowDownIcon className='arrow-pad'/> : <KeyboardArrowUpIcon className='arrow-pad'/> }
             </Grid>
             { bool && 
-              <div className='timeOuter' style={{display: 'flex', flexDirection: 'row', width: '100%', minWidth: '350%'}}>
-                <div className='date' style={{display: 'flex', flexDirection: 'column',  minWidth: '15%'}}>
+              <div className='timeOuter' style={{display: 'flex', flexDirection: 'row', width: '100%', minWidth: '350%', marginTop: '10px'}}>
+                <div className='date' style={{display: 'flex', flexDirection: 'column',  minWidth: '10%'}}>
                   <text className='pop-textfield-title'>
                     Start Date
                   </text>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DatePicker
                         value={startDate}
-                        onChange={(newValue) => setStartDate(newValue)}
+                        onChange={(newValue) => { setStartDate(newValue); if (endDate) { setDateRangeSelected(true);}}}
+                        shouldDisableDate={date => endDate && date.isAfter(endDate)}
                         renderInput={(params) => <TextField {...params} helperText="Start date" variant="outlined" style={{ marginRight: '10%' }} />}
                       />
                   </LocalizationProvider>
                 </div>
-                <div style={{display: 'flex', flexDirection: 'column',  minWidth: '15%'}}>
+                <div className='date' style={{display: 'flex', flexDirection: 'column',  minWidth: '10%'}}>
                   <text className='pop-textfield-title'>
                     End Date
                   </text>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DatePicker
                         value={endDate}
-                        onChange={(newValue) => setEndDate(newValue)}
-                        renderInput={(params) => <TextField {...params} helperText="End date" variant="outlined" />}
+                        onChange={(newValue) => { setEndDate(newValue); if (startDate) { setDateRangeSelected(true);}}}
+                        shouldDisableDate={date => startDate && date.isBefore(startDate)}
+                        renderInput={(params) => <TextField {...params} helperText="End date" variant="outlined" style={{ marginRight: '10%' }}/>}
                       />
                   </LocalizationProvider>
                 </div>
@@ -142,9 +169,9 @@ export function Filter() {
             { bool ? <KeyboardArrowDownIcon className='arrow-pad'/> : <KeyboardArrowUpIcon className='arrow-pad'/> }
         </Grid>
         { bool && 
-          <div style={{ display: 'flex', whiteSpace: 'nowrap', minWidth: '250%' }}>
+          <div style={{ display: 'flex', whiteSpace: 'nowrap', minWidth: '250%', marginTop: '10px'}}>
           {Array.from({ length: columns }, (_, columnIndex) => (
-            <div key={columnIndex} style={{ display: 'flex', flexDirection: 'column', marginRight: '16px' }}>
+            <div key={columnIndex} style={{ display: 'flex', flexDirection: 'column', marginRight: '16px'}}>
               {options
                 .slice(columnIndex * maxColumns, (columnIndex + 1) * maxColumns)
                 .map((option) => (
@@ -191,11 +218,11 @@ export function Filter() {
               renderFilters(filterCategory, expandMap.get(filterCategory))
             ))}   
         </Grid>
-        <Grid container columnSpacing={2}>
-          { filterList.size > 0 && <text className='filterby-tag'> Filtered By: </text>}
-          { renderSelectedOptions(filterList, setFilterList) } 
-          { filterList.size > 0 && 
-            <text className='filter-clearall' onClick={clearAllFilters} >
+        <Grid container columnSpacing={2} style = {{marginTop: '10px'}}>
+          { (filterList.size > 0 || dateRangeSelected) && <text className='filterby-tag'> Filtered By: </text>}
+          { renderSelectedOptions(filterList) } 
+          { (filterList.size > 0 || dateRangeSelected) && 
+            <text className='filter-clearall' onClick={clearAllFilters}>
                 CLEAR ALL
             </text>
           }
