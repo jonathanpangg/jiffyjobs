@@ -92,7 +92,7 @@ export function Filter() {
 
     // checks if string is a date range
     function isDateRangeString(str) {
-      return str.startsWith('[') && str.endsWith(']');
+      return str;
     }
 
 
@@ -187,7 +187,7 @@ export function Filter() {
                         value={startDate}
                         onChange={(newValue) => { 
                           setStartDate(newValue); 
-                          if (endDate && !dateAdded) { setDateAdded(true); const dateRangeString = `[${newValue.toISOString()}, ${endDate.toISOString()}]`; updateFilterListWithDateRange(dateRangeString);}
+                          if (endDate && !dateAdded) { setDateAdded(true); const dateRangeString = `${newValue.toISOString()},${endDate.toISOString()}`; updateFilterListWithDateRange(dateRangeString);}
                         }}
                         shouldDisableDate={date => endDate && date.isAfter(endDate)}
                         renderInput={(params) => <TextField {...params} helperText="Start date" variant="outlined" style={{ marginRight: '10%' }} />}
@@ -203,7 +203,7 @@ export function Filter() {
                         value={endDate}
                         onChange={(newValue) => { 
                           setEndDate(newValue); 
-                          if (startDate && !dateAdded) { setDateAdded(true); const dateRangeString = `[${startDate.toISOString()}, ${newValue.toISOString()}]`; updateFilterListWithDateRange(dateRangeString);}
+                          if (startDate && !dateAdded) { setDateAdded(true); const dateRangeString = `${startDate.toISOString()},${newValue.toISOString()}`; updateFilterListWithDateRange(dateRangeString);}
                         }}
                         shouldDisableDate={date => startDate && date.isBefore(startDate)}
                         renderInput={(params) => <TextField {...params} helperText="End date" variant="outlined" style={{ marginRight: '10%' }}/>}

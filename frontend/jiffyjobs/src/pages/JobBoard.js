@@ -61,7 +61,7 @@ export function JobBoard() {
 
     // handles filtering job
     useEffect(() => {
-        console.log("filterList")
+        console.log(filterList)
         async function FilterJobs() {
             const requestOptions = {
                 method: 'GET',
@@ -69,6 +69,7 @@ export function JobBoard() {
             }
             var route = "http://localhost:4000/api/jobs/filter"
             var query = "/*/*/" + Array.from(filterList) + "/*/*"
+            console.log(query)
             route = route + query
             console.log(route)
             fetch(route, requestOptions)
