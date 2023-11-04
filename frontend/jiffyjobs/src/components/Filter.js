@@ -11,75 +11,75 @@ import Checkbox from '@mui/material/Checkbox';
 import ClearIcon from '@mui/icons-material/Clear';
 
 export function Filter() {
-    const [expandMap, setExpandMap] = useState(new Map(
-      [["Category", false],
-      ["DateRange", false],
-      ["OnOffCampus", false]]
-    )) 
-    const [filterList, setFilterList] = useState(new Set())
-    const filterOptions = {
-      Category: ['Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving'], 
-                //  'Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving',
-                //  'Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving',
-                //  'Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving'],
-      DateRange: ['Quick Jobs (1 day)', 'Short Term Jobs (1-7 days)', 'Part-Time Jobs (7+ Days)'],
-      OnOffCampus: ['On campus', 'Off campus'],
-    };
+  const [expandMap, setExpandMap] = useState(new Map(
+    [["Category", false],
+    ["DateRange", false],
+    ["OnOffCampus", false]]
+  )) 
+  const [filterList, setFilterList] = useState(new Set())
+  const filterOptions = {
+    Category: ['Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving'], 
+              //  'Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving',
+              //  'Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving',
+              //  'Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving'],
+    DateRange: ['Quick Jobs (1 day)', 'Short Term Jobs (1-7 days)', 'Part-Time Jobs (7+ Days)'],
+    OnOffCampus: ['On campus', 'Off campus'],
+  };
 
-    // handles the expanding of filters
-    function toggleFilter(type) { 
-      setExpandMap(prevMap => {
-        const newMap = new Map(prevMap);  
-        newMap.forEach((val, key) => {
-          newMap.set(key, key === type ? !val : false);  
-        });
-        return newMap;
+  // handles the expanding of filters
+  function toggleFilter(type) { 
+    setExpandMap(prevMap => {
+      const newMap = new Map(prevMap);  
+      newMap.forEach((val, key) => {
+        newMap.set(key, key === type ? !val : false);  
       });
-    }
-    
-    // handles functionality of filtering
-    function handleFilterList(event) {
-      const val = event.target.value;
-      setFilterList((prevFilterList) => {
-        const newFilterList = new Set(prevFilterList);
-        if (newFilterList.has(val)) {
-          newFilterList.delete(val);
-        } else {
-          newFilterList.add(val);
-        }
-        return newFilterList;
-      });
-    }
-    
-    // handles deleting selected filters
-    function handleDelete(option) {
-      setFilterList((prevFilterList) => {
-        const newFilterList = new Set(prevFilterList);
-        newFilterList.delete(option);
-        return newFilterList;
-      });
-    }
-
-    // clears all current filters
-    function clearAllFilters() {
-      setFilterList(new Set());
-    }
+      return newMap;
+    });
+  }
   
-    // renders chips for display and delete filters
-    const renderSelectedOptions = (selected) => {
-      return Array.from(selected, option => (
-          <Chip
-              key={option}
-              label={option}
-              onDelete={() => handleDelete(option)}
-              style={{ margin: '4px', background: 'transparent', border: 'none', paddingLeft: '4px', paddingRight: '4px', display: 'flex', alignItems: 'center', fontFamily: 'Outfit', fontSize: 'medium'}}
-              deleteIcon={<ClearIcon className='filter-delete'></ClearIcon>}
-            />
-      ));
-    }
+  // handles functionality of filtering
+  function handleFilterList(event) {
+    const val = event.target.value;
+    setFilterList((prevFilterList) => {
+      const newFilterList = new Set(prevFilterList);
+      if (newFilterList.has(val)) {
+        newFilterList.delete(val);
+      } else {
+        newFilterList.add(val);
+      }
+      return newFilterList;
+    });
+  }
+  
+  // handles deleting selected filters
+  function handleDelete(option) {
+    setFilterList((prevFilterList) => {
+      const newFilterList = new Set(prevFilterList);
+      newFilterList.delete(option);
+      return newFilterList;
+    });
+  }
 
-    // renders filters
-    const renderFilters = (filterCategory, bool) => {
+  // clears all current filters
+  function clearAllFilters() {
+    setFilterList(new Set());
+  }
+
+  // renders chips for display and delete filters
+  const renderSelectedOptions = (selected) => {
+    return Array.from(selected, option => (
+        <Chip
+            key={option}
+            label={option}
+            onDelete={() => handleDelete(option)}
+            style={{ margin: '4px', background: 'transparent', border: 'none', paddingLeft: '4px', paddingRight: '4px', display: 'flex', alignItems: 'center', fontFamily: 'Outfit', fontSize: 'medium'}}
+            deleteIcon={<ClearIcon className='filter-delete'></ClearIcon>}
+          />
+    ));
+  }
+
+  // renders filters
+  const renderFilters = (filterCategory, bool) => {
     const options = filterOptions[filterCategory];
     const maxColumns = 5; 
     const columns = Math.ceil(options.length / maxColumns);

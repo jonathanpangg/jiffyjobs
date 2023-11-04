@@ -15,6 +15,19 @@ export function JobBoard() {
     const [background, setBackground] = useState("")
     const { render, filterList } = Filter()
 
+    function processTime(time) {
+        var str = "Time: "
+        for (let i = 0; i < time.length; i++) {
+            if (i%2 === 0) {
+                str = str + dayjs(new Date(time[i])).format('MM/DD/YY h:mm A') + " - "
+            } else {
+                str = str + dayjs(new Date(time[i])).format('h:mm A') + "\n"
+            }
+        }
+
+        return str
+    }
+
     // handles getting all jobs
     useEffect(() => {
         async function GetAllJobs() {
@@ -30,7 +43,7 @@ export function JobBoard() {
                     setRawData(data);
                     const newJobData = data.map(function(obj) {
                         console.log(obj.time)
-                        return [[0, obj.title], ["", "Job Provider: " + obj.job_poster], ["", "Location: " + obj.location], ["", "Pay: $" + obj.pay], ["", "Description: " + obj.description], ["", "Time: " + dayjs(new Date(obj.time[0])).format('DD/MM/YYYY')  + " " + " - " + new Date(obj.time[1])], ["", "Categories: " + obj.categories.toString()]]
+                        return [[0, obj.title], ["", "Job Provider: " + obj.job_poster], ["", "Location: " + obj.location], ["", "Pay: $" + obj.pay], ["", "Description: " + obj.description], ["", processTime(obj.time)], ["", "Categories: " + obj.categories.toString()]]
                     });
                     setJobData(newJobData);
 
@@ -94,7 +107,7 @@ export function JobBoard() {
             setJobData([])
             FilterJobs()
         }
-    }, [filterList])
+    }, [filterList, jobData.length, size])
     
     return (
         <div className={'job-board-outer' + background}>

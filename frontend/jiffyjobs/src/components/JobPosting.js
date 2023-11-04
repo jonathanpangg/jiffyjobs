@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import '../styles/JobPosting.css';
 import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from '@mui/material/IconButton';
@@ -7,11 +7,13 @@ import TextField from '@mui/material/TextField';
 import CardContent from '@mui/material/CardContent';
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
+import Chip from '@mui/material/Chip';
 import { Divider } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import InputAdornment from '@mui/material/InputAdornment';
 import dayjs from 'dayjs';
 var objectSupport = require("dayjs/plugin/objectSupport");
 dayjs.extend(objectSupport);
@@ -19,7 +21,7 @@ dayjs.extend(objectSupport);
 export function JobPosting() {
     const [openStartPop, setOpenStartPop] = useState(false)
     const [openSecondPop, setOpenSecondPop] = useState(false)
-    const [amount, setAmount] = useState(1)
+    const categories = ['Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving']
 
     // useState for the data
     const [val, setVal] = useState({
@@ -28,7 +30,7 @@ export function JobPosting() {
         location: '',
         pay: '',
         description: '',
-        category: [],
+        category: new Set(),
         date: {
             month: new Date().getMonth()+1,
             day: new Date().getDate(),
@@ -41,7 +43,8 @@ export function JobPosting() {
         endTime: {
             hour: '0',
             min: '0'
-        }
+        },
+        times: []
     })
 
     // useState for errors
@@ -74,7 +77,7 @@ export function JobPosting() {
             location: '',
             pay: 0,
             description: '',
-            category: [],
+            category: new Set(),
             date: {
                 month: new Date().getMonth()+1,
                 day: new Date().getDate(),
@@ -87,7 +90,8 @@ export function JobPosting() {
             endTime: {
                 hour: '0',
                 min: '0'
-            }
+            }, 
+            times: []
         })
     }
 
@@ -103,7 +107,8 @@ export function JobPosting() {
                 category: val.category,
                 date: val.date,
                 startTime: val.startTime,
-                endTime: val.endTime
+                endTime: val.endTime,
+                times: val.times
             })
         } else if (event.target.id === 'name') {
             setVal({
@@ -115,7 +120,8 @@ export function JobPosting() {
                 category: val.category,
                 date: val.date,
                 startTime: val.startTime,
-                endTime: val.endTime
+                endTime: val.endTime,
+                times: val.times
             })
         } else if (event.target.id === 'location') {
             setVal({
@@ -127,7 +133,8 @@ export function JobPosting() {
                 category: val.category,
                 date: val.date,
                 startTime: val.startTime,
-                endTime: val.endTime
+                endTime: val.endTime,
+                times: val.times
             })
         } else if (event.target.id === 'pay') {
             if (event.target.value === "") {
@@ -140,7 +147,8 @@ export function JobPosting() {
                     category: val.category,
                     date: val.date,
                     startTime: val.startTime,
-                    endTime: val.endTime
+                    endTime: val.endTime,
+                    times: val.times
                 })
             } else {
                 const re = /^[0-9]*(\.[0-9]{0,2})?$/; 
@@ -154,7 +162,8 @@ export function JobPosting() {
                         category: val.category,
                         date: val.date,
                         startTime: val.startTime,
-                        endTime: val.endTime
+                        endTime: val.endTime,
+                        times: val.times
                     })
                 } else {
                     setVal({
@@ -166,7 +175,8 @@ export function JobPosting() {
                         category: val.category,
                         date: val.date,
                         startTime: val.startTime,
-                        endTime: val.endTime
+                        endTime: val.endTime,
+                        times: val.times
                     })
                 }
             }
@@ -180,19 +190,22 @@ export function JobPosting() {
                 category: val.category,
                 date: val.date,
                 startTime: val.startTime,
-                endTime: val.endTime
+                endTime: val.endTime,
+                times: val.times
             })
         } else if (event.target.id === 'category') {
+            val.category.push(event.target.value)
             setVal({
                 title: val.title,
                 name: val.name,
                 location: val.location,
                 pay: val.pay,
                 description: val.description,
-                category: event.target.value,
+                category: val.category,
                 date: val.date,
                 startTime: val.startTime,
-                endTime: val.endTime
+                endTime: val.endTime,
+                times: val.times
             })
         }
     }
@@ -212,7 +225,8 @@ export function JobPosting() {
                 year: event.$y
             },
             startTime: val.startTime,
-            endTime: val.endTime
+            endTime: val.endTime,
+            times: val.times
         })
     }
 
@@ -230,7 +244,8 @@ export function JobPosting() {
                 hour: event.$H+1,
                 min: event.$m
             },
-            endTime: val.endTime
+            endTime: val.endTime,
+            times: val.times
         })
     }
 
@@ -248,7 +263,62 @@ export function JobPosting() {
             endTime: {
                 hour: event.$H+1,
                 min: event.$m
-            }
+            },
+            times: val.times
+        })
+    }
+    
+    // handles adding times
+    function handleAddTime() {
+        val.times.push([new Date(val.date.year, val.date.month-1, val.date.day, val.startTime.hour, val.startTime.min), new Date(val.date.year, val.date.month-1, val.date.day, val.endTime.hour, val.endTime.min)])
+        setVal({
+            title: val.title,
+            name: val.name,
+            location: val.location,
+            pay: val.pay,
+            description: val.description,
+            category: val.category, 
+            date: {
+                month: new Date().getMonth()+1,
+                day: new Date().getDate(),
+                year: new Date().getFullYear()
+            },
+            startTime: {
+                hour: '0',
+                min: '0'
+            },
+            endTime: {
+                hour: '0',
+                min: '0'
+            }, 
+            times: val.times
+        })
+    }
+
+    // handles removal of previous time
+    function handleRemoveTime() {
+        val.times.pop()
+        setVal({
+            title: val.title,
+            name: val.name,
+            location: val.location,
+            pay: val.pay,
+            description: val.description,
+            category: val.category, 
+            date: {
+                month: new Date().getMonth()+1,
+                day: new Date().getDate(),
+                year: new Date().getFullYear()
+            },
+            startTime: {
+                hour: '0',
+                min: '0'
+            },
+            endTime: {
+                hour: '0',
+                min: '0'
+            }, 
+            times: val.times
         })
     }
 
@@ -308,6 +378,22 @@ export function JobPosting() {
         }
     }, [openSecondPop])
 
+    function handleDelete(event) {
+
+    }
+    
+    const renderSelectedOptions = (selected) => {
+        return Array.from(selected, option => (
+            <Chip
+                key={option}
+                label={option}
+                onDelete={() => handleDelete(option)}
+                style={{ margin: '4px', background: 'transparent', border: 'none', paddingLeft: '4px', paddingRight: '4px', display: 'flex', alignItems: 'center', fontFamily: 'Outfit', fontSize: 'medium'}}
+                deleteIcon={<ClearIcon className='filter-delete'></ClearIcon>}
+              />
+        ));
+      }
+
     const firstJobSlide = () => {
         return (
             <Dialog open={openStartPop} onClose={closePop} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
@@ -345,7 +431,7 @@ export function JobPosting() {
                                     <text className='pop-textfield-title'>
                                         Pay 
                                     </text> <br></br>
-                                    <TextField InputProps={{inputProps: {inputMode: 'numeric', pattern: '[0-9.]*'}}} error={error.payError} helperText={error.payError ? "*Invalid number" : ""} required={true} placeholder="$" type="search" square={false} className='pop-textfield-title' style={{width: '100%'}} onChange={(e) => {handleValues(e)}} id='pay' value={val.pay}/>
+                                    <TextField InputProps={{inputProps: {inputMode: 'numeric', pattern: '[0-9.]*'}, startAdornment: <InputAdornment position="start">$</InputAdornment>}} error={error.payError} helperText={error.payError ? "*Invalid number" : ""} required={true} placeholder="$" type="search" square={false} className='pop-textfield-title' style={{width: '100%'}} onChange={(e) => {handleValues(e)}} id='pay' value={val.pay}/>
                                 </div>
                             </div>
                         </DialogContentText>
@@ -382,60 +468,68 @@ export function JobPosting() {
             <Divider/>
                 <DialogContent>
                     <DialogContentText ref={descriptionElementRefNextPop} tabIndex={-1} style={{width: '1000px'}}>
-                        {[...Array(amount)].map((key) =>
-                            <div className='timeOuter' style={{width: '98.5%'}}>
-                                <div className='date'>
-                                    <text className='pop-textfield-title'>
-                                        Date
-                                    </text> <br></br>
-                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                        <DatePicker
-                                            format="MM/DD/YYYY"
-                                            value={dayjs(new Date(val.date.year, val.date.month-1, val.date.day))}
-                                            onChange={(e) => {handleDate(e); console.log(e)}}
-                                            slotProps={{
-                                                textField: {
-                                                  required: true,
-                                                  id: 'ReportDate' + key,
-                                                },
-                                            }}
-                                        />
-                                    </LocalizationProvider>
-                                </div>
-                                <div className='startTime'>
-                                    <text className='pop-textfield-title'>
-                                        Start Time
-                                    </text> <br></br>
-                                    <LocalizationProvider dateAdapter={AdapterDayjs} style={{float: 'right'}}>
-                                        <TimePicker 
-                                            defaultValue={dayjs("00:00:00", "HH:mm:ss")} 
-                                            ampm 
-                                            value={dayjs({hour: val.startTime.hour, minute: val.startTime.min})}
-                                            onChange={(e) => {handleStartTime(e)}}
-                                        />
-                                    </LocalizationProvider>
-                                </div>
-                                <div>
-                                    <text className='pop-textfield-title'>
-                                        End Time
-                                    </text> <br></br>
-                                    <LocalizationProvider dateAdapter={AdapterDayjs} style={{float: 'right'}}>
-                                        <TimePicker 
-                                            defaultValue={dayjs("00:00:00", "HH:mm:ss")} 
-                                            ampm 
-                                            value={dayjs({hour: val.endTime.hour, minute: val.endTime.min})}
-                                            onChange={(e) => {handleEndTime(e)}}
-                                        />
-                                    </LocalizationProvider>
-                                </div>
+                        <div className='time-outer' style={{width: '98.5%'}}> 
+                            <div className='date'>
+                                <text className='pop-textfield-title'>
+                                    Date
+                                </text> <br></br>
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                    <DatePicker
+                                        format="MM/DD/YYYY"
+                                        value={dayjs(new Date(val.date.year, val.date.month-1, val.date.day))}
+                                        onChange={(e) => {handleDate(e); console.log(e)}}
+                                    />
+                                </LocalizationProvider>
                             </div>
-                        )}
-                        <div>
-                            <text className='pop-textfield-title' onClick={() => {setAmount(amount+1)}}>
-                                + Add more dates
-                            </text>
+                            <div className='start-time'>
+                                <text className='pop-textfield-title'>
+                                    Start Time
+                                </text> <br></br>
+                                <LocalizationProvider dateAdapter={AdapterDayjs} style={{float: 'right'}}>
+                                    <TimePicker 
+                                        defaultValue={dayjs("00:00:00", "HH:mm:ss")} 
+                                        ampm 
+                                        value={dayjs({hour: val.startTime.hour, minute: val.startTime.min})}
+                                        onChange={(e) => {handleStartTime(e)}}
+                                    />
+                                </LocalizationProvider>
+                            </div>
+                            <div>
+                                <text className='pop-textfield-title'>
+                                    End Time
+                                </text> <br></br>
+                                <LocalizationProvider dateAdapter={AdapterDayjs} style={{float: 'right'}}>
+                                    <TimePicker 
+                                        defaultValue={dayjs("00:00:00", "HH:mm:ss")} 
+                                        ampm 
+                                        value={dayjs({hour: val.endTime.hour, minute: val.endTime.min})}
+                                        onChange={(e) => {handleEndTime(e)}}
+                                    />
+                                </LocalizationProvider>
+                            </div>
                         </div>
-                        <div style={{paddingTop: '2.5%'}}>
+                        <div className='time-outer' style={{width: '98.5%'}}> 
+                            <text className='remove-time' onClick={() => {handleRemoveTime()}}>
+                                - Remove previous date
+                            </text>
+                            <text className='pop-textfield-title' onClick={() => {handleAddTime()}}>
+                                + Add date
+                            </text>
+                        </div> <br></br>
+                        <div>
+                            <text className='pop-textfield-title'>
+                                Current Times:
+                            </text> <br></br>
+                            { val.times.map((subList) => {
+                                return <div>
+                                    <text>
+                                        {dayjs(subList[0]).format('MM/DD/YY h:mm A') + " - " + dayjs(subList[1]).format('h:mm A')}
+                                    </text>
+                                    <br></br>
+                                </div>
+                            })}
+                        </div>
+                        <div>
                             <text className='pop-textfield-title'>
                                 Description
                             </text> <br></br>
@@ -445,7 +539,8 @@ export function JobPosting() {
                             <text className='pop-textfield-title'>
                                 Category
                             </text> <br></br>
-                            <TextField error={error.categoryError} helperText={error.categoryError ? "*This field is required" : ""} required={true} placeholder="" type="search" square={false} style={{width: '98.5%'}} onChange={(e) => {handleValues(e)}} id='category' value={val.category}/>
+                            <TextField error={error.categoryError} helperText={error.categoryError ? "*This field is required" : ""} required={true} type="search" square={false} style={{width: '98.5%'}} disabled={true} onChange={(e) => {handleValues(e)}} id='category' placeholder={"+ Add Category"}></TextField>
+                            {renderSelectedOptions(val.category)}
                         </div>
                     </DialogContentText>
                 </DialogContent>
@@ -469,6 +564,12 @@ export function JobPosting() {
     async function PostJobs() {
         handleError()
         if (!(error.titleError === true || error.nameError === true || error.locationError === true || error.payError === true || error.descriptionError === true || error.categoryError === true)) {
+            var timeIns = []
+            for (let i = 0; i < val.times.length; i++) {
+                for (let j = 0; j < val.times[i].length; j++) {
+                    timeIns.push(val.times[i][j])
+                }
+            }
             const requestOptions = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -479,7 +580,7 @@ export function JobPosting() {
                     pay: val.pay,
                     location: val.location,
                     categories: val.category,
-                    time: [new Date(val.date.year, val.date.month+1, val.date.day, val.startTime.hour, val.startTime.min), new Date(val.date.year, val.date.month+1, val.date.day, val.endTime.hour, val.endTime.min)],
+                    time: timeIns,
                     job_type: "Quick Jobs",
                     date_posted: new Date()
                 })
@@ -511,8 +612,8 @@ export function JobPosting() {
                 <Grid container className='job-table-grid' columnSpacing={2} style={{paddingLeft: '30%', paddingTop: '1.5%'}}> 
                     <TextField placeholder="Find Jobs..." type="search" style={{width: '45%'}}/>
                     <Grid className='job-button'>
-                        <Card sx={{height: 55, width: '110%'}} elevation={8} style={{overflow:'hidden', borderRadius: '15px', background: "#8253E7", color: 'white'}}>
-                            <CardContent style={{ alignItems: 'center' }} onClick={openPop}> 
+                        <Card sx={{height: 55, width: '115%'}} elevation={8} style={{overflow:'hidden', borderRadius: '15px', background: "#8253E7", color: 'white'}}>
+                            <CardContent onClick={openPop}> 
                                 Post a Job
                             </CardContent>
                         </Card>
