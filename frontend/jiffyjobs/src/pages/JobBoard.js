@@ -11,7 +11,7 @@ import { JobPosting } from '../components/JobPosting';
 import dayjs from 'dayjs';
 import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from '@mui/material/IconButton';
-
+import Chip from '@mui/material/Chip';
 
 
 export function JobBoard() {
@@ -193,8 +193,21 @@ export function JobBoard() {
                                 {currentPop[4] && currentPop[4].length > 1 && currentPop[4][1]}
                             </Typography>
                         </div>
-                        <div style={{paddingTop: '2.5%'}}>
-                            <text>{currentPop[6] && currentPop[6].length > 1 && currentPop[6][1]}</text>
+                        <div>
+                            {currentPop[6] && currentPop[6].length > 1 && currentPop[6][1].split(",").map((item, index) => (
+                                <Chip
+                                    key={index}
+                                    label={item.trim()}
+                                    variant="outlined"
+                                    style={{
+                                        margin: "5px",
+                                        fontFamily: "outline",
+                                        fontSize: "18px",
+                                        color: '#5B5B5B',
+                                        fontWeight: "400",
+                                    }}
+                                />
+                            ))}
                         </div>
                     </DialogContentText>
                 </DialogContent>
