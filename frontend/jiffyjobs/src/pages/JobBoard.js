@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
 import { Dialog, Divider, Typography, DialogContentText, DialogContent, DialogActions, DialogTitle, Link  } from '@mui/material';
 import { Filter } from '../components/Filter';
@@ -36,7 +37,7 @@ export function JobBoard() {
                     setRawData(data);
                     const newJobData = data.map(function(obj) {
                         console.log(obj.time)
-                        return [[0, obj.title], ["", "Job Provider: " + obj.job_poster], ["", "Location: " + obj.location], ["", "Pay: $" + obj.pay], ["", "Description: " + obj.description], ["", "Time: " + dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", "Categories: " + obj.categories.toString()]]
+                        return [[0, obj.title], ["", "Job Provider: " + obj.job_poster], ["", obj.location], ["", "Pay: $" + obj.pay], ["", "Description: " + obj.description], ["", "Time: " + dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", "Categories: " + obj.categories.toString()]]
                     });
                     setJobData(newJobData);
 
@@ -79,7 +80,7 @@ export function JobBoard() {
                 .then((data) => {
                     setRawData(data);
                     const newJobData = data.map(function(obj) {
-                        return [[0, obj.title], ["", "Job Provider: " + obj.job_poster], ["", "Location: " + obj.location], ["", "Pay: $" + obj.pay], ["", "Description: " + obj.description], ["", "Time: " + dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", "Categories: " + obj.categories.toString()]]
+                        return [[0, obj.title], ["", "Job Provider: " + obj.job_poster], ["", obj.location], ["", "Pay: $" + obj.pay], ["", "Description: " + obj.description], ["", "Time: " + dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", "Categories: " + obj.categories.toString()]]
                     });
                     setJobData(newJobData);
                     setSize(jobData.length)
@@ -103,7 +104,7 @@ export function JobBoard() {
     }, [filterList])
 
     function truncate(str) {
-        return str.length > 50 ? str.substring(0, 47) + "..." : str;
+        return str.length > 80 ? str.substring(0, 77) + "..." : str;
     }
 
     const closePop = () => {
@@ -163,11 +164,6 @@ export function JobBoard() {
                 </DialogContent>
                 <Divider/>
                     <DialogActions>
-                        <Card sx={{height: 50, width: '10%'}} style={{overflow:'hidden', borderRadius: '15px', color: 'black', border: "1px solid black"}}>
-                            <CardContent style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} onClick={closePop}> 
-                                Cancel
-                            </CardContent>
-                        </Card>
                         <Card sx={{height: 50, width: '10%'}} style={{overflow:'hidden', borderRadius: '15px', background: "#4169E1", color: 'white'}}>
                             <CardContent style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} onClick={() => console.log("applied")}> 
                                 Apply
@@ -200,19 +196,26 @@ export function JobBoard() {
                             <Grid key={key} item>
                                 <Link overlay underline="none" sx={{ color: 'text.tertiary', cursor: 'pointer' }} onClick={() => openPopUp(key)}>
                                     <Card sx={{height: 300, width: 300, '&:hover': { boxShadow: 'md', borderColor: 'neutral.outlinedHoverBorder' }}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px'}}>
-                                        <Typography fontSize="20px" paddingLeft={1}>
-                                            {key[0][1]}
+                                        <CardMedia
+                                            component="img"
+                                            alt="placeholder"
+                                            height="120"
+                                            image="https://source.unsplash.com/random"
+                                            
+                                        />
+                                        <Typography style={{fontFamily: 'Outfit'}} fontSize="14px" paddingLeft='10px' paddingRight='10px' paddingTop='10px'>
+                                            <u>{key[0][1]}</u>
                                         </Typography>
-                                        <Typography fontSize="15px" paddingLeft={1}>
+                                        <Typography style={{fontFamily: 'Outfit'}} fontSize="12px" paddingLeft='10px' paddingTop='15px'>
                                             {key[3][1]}
                                         </Typography>
-                                        <Typography fontSize="15px" paddingLeft={1}>
-                                            {key[2][1]}
+                                        <Typography style={{fontFamily: 'Outfit'}} fontSize="12px" paddingLeft='10px' paddingRight='10px'>
+                                            Location: <u>{key[2][1]}</u>
                                         </Typography>
-                                        <Typography fontSize="15px" paddingLeft={1}>
+                                        <Typography style={{fontFamily: 'Outfit'}} fontSize="12px" paddingLeft='10px' paddingRight='10px'>
                                             {key[5][1]}
                                         </Typography>
-                                        <Typography fontSize="15px" paddingLeft={1}>
+                                        <Typography style={{fontFamily: 'Outfit'}} fontSize="12px" paddingLeft='10px' paddingRight='10px' paddingTop='10px' paddingBottom='10px'>
                                             {truncate(key[4][1])}
                                         </Typography>
                                     </Card>
