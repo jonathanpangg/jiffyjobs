@@ -14,7 +14,7 @@ import {
             if (!seekers) {
                 return handleNotFound(res, "No Seekers");
             }
-    
+            
             return handleSuccess(res, seeker);
         } catch (error) {
             return handleServerError(res, error);
@@ -22,14 +22,14 @@ import {
     }
 
     // This gets a seeker by email
+    // this function is called by a function in userController
     export const getSeekerByEmail = async (req, res) => {
         try {
             const seeker = await Seeker.findOne({ email: req.params.email });
             if (!seeker) {
                 return handleNotFound(res, "Seeker not found");
             }
-
-            return handleSuccess(res, seeker);
+            return seeker
         } catch (error) {
             return handleServerError(res, error);
         }

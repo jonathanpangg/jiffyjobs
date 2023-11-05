@@ -19,6 +19,10 @@ const SeekerSchema = mongoose.Schema({
             type: String,
             required: true
         },
+        degree: {
+            type: String,
+            required: false
+        },
         personal_statement: {
             type: [String],
             required: false

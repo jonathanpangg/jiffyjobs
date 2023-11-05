@@ -1,0 +1,79 @@
+.namelogo
+{
+    color:#000000;
+    text-align:left;
+    vertical-align:text-top;
+    font-size:26.23112678527832px;
+    font-family:Outfit;
+    line-height:auto;
+    border-style:hidden;
+    outline:none;
+    left:11.81px;
+    top:16.56px;
+    position:absolute;
+    width:30px;
+}
+
+
+.profile-background {
+    background-color: #f3f3f3;
+    height: 100vh;
+  }
+  
+  .basicinformation
+  {
+    color:#5b5b5b;
+    text-align:left;
+    vertical-align:text-top;
+    font-size:medium;
+    font-family:Outfit;
+    line-height:auto;
+    border-style:hidden;
+    outline:none;
+    width:111px;
+    margin-left: 50px;
+  
+  }
+  
+  .profile
+  {
+    background-color:#ffffff;
+    height:758px;
+    text-align: "left";
+    font-size: large;
+    margin-left: 50px;
+  }
+  
+.profile-components
+{
+  text-align:right;
+  font-size:14px;
+  outline:none;
+  width:49px;
+
+}
+
+.profile-box-fixed
+{
+  color:#5b5b5b;
+  background-color: lightgray;
+  vertical-align:text-top;
+  font-size:12px;
+  font-family:Outfit;
+
+}
+
+.profile-box
+{
+  color:#5b5b5b;
+  vertical-align:text-top;
+  font-size:12px;
+  font-family:Outfit;
+  line-height:auto;
+
+  outline:none;
+  top:10px;
+  left:10px;
+  position:absolute;
+  width:93px;
+}
