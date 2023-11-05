@@ -213,22 +213,24 @@ export function JobBoard() {
                 </DialogContent>
                 <Divider style={{borderBottomWidth: '2px'}}/>
                     <DialogActions style={{ justifyContent: 'center' }}>
-                        <Card sx={{height: 50, width: '30%'}} style={{overflow:'hidden', borderRadius: '15px', background: "#D9D9D9", color: 'white'}}>
-                            <CardContent style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} onClick={() => console.log("applied")}> 
-                                <div>
-                                    <div style={{display:'inline-block'}}>
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:'19.2px', color:'#5B5B5B', fontWeight:'400'}}>
-                                        Easy Apply with 
-                                    </Typography>
+                        <Link style={{cursor:'pointer'}} onClick={() => console.log("applied")}>
+                            <Card sx={{height: 50, width: '100%'}} style={{overflow:'hidden', borderRadius: '15px', background: "#D9D9D9", color: 'white'}}>
+                                <CardContent style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}> 
+                                    <div>
+                                        <div style={{display:'inline-block'}}>
+                                        <Typography style={{fontFamily: 'Outfit', fontSize:'19.2px', color:'#5B5B5B', fontWeight:'400'}}>
+                                            Easy Apply with 
+                                        </Typography>
+                                        </div>
+                                        <div style={{display:'inline-block', paddingLeft: '5px'}}>
+                                        <Typography style={{fontFamily: 'Righteous-Regular', fontSize:'19.2px', color:'#141414', fontWeight:'400'}}>
+                                            JIFFYJOBS
+                                        </Typography>
+                                        </div>
                                     </div>
-                                    <div style={{display:'inline-block', paddingLeft: '5px'}}>
-                                    <Typography style={{fontFamily: 'Righteous-Regular', fontSize:'19.2px', color:'#141414', fontWeight:'400'}}>
-                                         JIFFYJOBS
-                                    </Typography>
-                                    </div>
-                                </div>
-                            </CardContent>
-                        </Card>
+                                </CardContent>
+                            </Card>
+                        </Link>
                     </DialogActions>
             </Dialog>
             <Box sx={{ flexGrow: 1 }}>
