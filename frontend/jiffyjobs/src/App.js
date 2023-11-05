@@ -3,17 +3,21 @@ import { NavBar } from './components/NavBar'
 import { JobBoard } from './pages/JobBoard'
 import  Dashboard from './pages/Dashboard';
 import  Profile  from './pages/Profile';
+import  Signup  from './pages/Signup';
+import  Login from './pages/Login';
 import { Routes, Route } from "react-router-dom";
+import React from 'react';
 
 function App() {
   return (
     <div>
       <header>
-        <NavBar/>
-        <Routes>      
-          <Route path="/JobBoard"  element={<JobBoard/>} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/profile" element={<Profile />} />
+        <Routes>  
+          <Route path="/login" element={<Login />} /> 
+          <Route path="/signup" element={<Signup />} />    
+          <Route path="/JobBoard"  element={<> <NavBar /> <JobBoard /> </>} />
+          <Route path="/dashboard" element={<> <NavBar /> <Dashboard /> </>} />
+          <Route path="/profile" element={<> <NavBar /> <Profile /> </> } />
         </Routes>
       </header>
     </div>
