@@ -1,8 +1,20 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
+import Popover from '@mui/material/Popover';
+import MenuItem from '@mui/material/MenuItem';
 
 export function NavBar() {
     const navigate = useNavigate()
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+
+    const handlePopoverOpen = (event) => {
+        setAnchorEl(event.currentTarget);
+      };
+    
+      const handlePopoverClose = () => {
+        setAnchorEl(null);
+      };
 
     const AllJobs = () => {
         navigate('/JobBoard')
@@ -15,6 +27,14 @@ export function NavBar() {
     const userProfile = () => {
         navigate('/profile');
     };
+
+    const handleSettings = () => {
+        navigate('/setting');
+    }
+
+    const handleLogout = () => {
+        navigate('/login');
+    }
 
     return (
         <div className='nav-outer'> 
@@ -34,11 +54,26 @@ export function NavBar() {
             <div className='tab-font' onClick={goToDashboard}>
                 Dashboard
             </div>
+
             
-            <div className='name-font' style={{ display: 'flex', alignItems: 'center' }}  onClick={userProfile}>
+            <div className='name-font' style={{ display: 'flex', alignItems: 'center' }} aria-owns={open ? 'mouse-over-popover' : undefined} aria-haspopup="true" onMouseEnter={handlePopoverOpen} onMouseLeave={handlePopoverClose}>
                 <div className='profile-picture'></div>
                 <span style={{ fontWeight: 'bold' }}>Lucas Yoon</span>
+                <Popover
+                     open={Boolean(anchorEl)}
+                     anchorEl={anchorEl}
+                     onClose={handlePopoverClose}
+                     anchorOrigin={{
+                       vertical: 'bottom',
+                       horizontal: 'right',
+                     }}
+                    >
+                    <MenuItem onClick={userProfile}>Profile</MenuItem>
+                    <MenuItem onClick={handleSettings}>Settings</MenuItem>
+                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                </Popover>
             </div>
+
             {/* <div className='tab-font'>
                 Recent Jobs
             </div> */}
