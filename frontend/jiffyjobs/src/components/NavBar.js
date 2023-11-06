@@ -22,6 +22,7 @@ export function NavBar() {
     }
 
 
+
     const Profile = () => {
         navigate('/Profile')
     };
@@ -53,6 +54,7 @@ export function NavBar() {
             <div className='first-tab' onClick={AllJobs}>
                 All Jobs 
             </div>
+
 
             <div className='tab-font' onClick={goToDashboard}>
                 Dashboard

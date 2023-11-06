@@ -22,6 +22,7 @@ dayjs.extend(objectSupport);
 export function JobPosting() {
     const [openStartPop, setOpenStartPop] = useState(false)
     const [openSecondPop, setOpenSecondPop] = useState(false)
+
     const categories = ['Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving']
     const [expand, setExpand] = useState(false)
 
@@ -486,6 +487,7 @@ export function JobPosting() {
             <Divider/>
                 <DialogContent>
                     <DialogContentText ref={descriptionElementRefNextPop} tabIndex={-1} style={{width: '1000px'}}>
+
                         <div className='time-outer' style={{width: '98.5%'}}> 
                             <div className='date'>
                                 <text className='pop-textfield-title'>
@@ -524,7 +526,13 @@ export function JobPosting() {
                                         onChange={(e) => {handleEndTime(e)}}
                                     />
                                 </LocalizationProvider>
+                                      
                             </div>
+                        )}
+                        <div>
+                            <text className='pop-textfield-title' onClick={() => {setAmount(amount+1)}}>
+                                + Add more dates
+                            </text>
                         </div>
                         <div className='time-outer' style={{width: '98.5%'}}> 
                             <text className='remove-time' onClick={() => {handleRemoveTime()}}>

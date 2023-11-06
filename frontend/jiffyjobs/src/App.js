@@ -1,6 +1,7 @@
 import './App.css';
 import { NavBar } from './components/NavBar'
 import { JobBoard } from './pages/JobBoard'
+
 import  Dashboard from './pages/Dashboard';
 import  { Profile }  from './pages/Profile';
 import  Signup  from './pages/Signup';
@@ -13,6 +14,7 @@ function App() {
   return (
     <div>
       <header>
+
         <Routes>  
           <Route path="/login" element={<Login />} /> 
           <Route path="/signup" element={<Signup />} />    
