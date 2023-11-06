@@ -1,0 +1,106 @@
+.namelogo
+{
+    color:#000000;
+    text-align:left;
+    vertical-align:text-top;
+    font-size:26.23112678527832px;
+    font-family:Outfit;
+    line-height:auto;
+    border-style:hidden;
+    outline:none;
+    left:11.81px;
+    top:16.56px;
+    /* position:absolute; */
+    width:30px;
+}
+
+
+.profile-background {
+    background-color: #f3f3f3;
+    height: 100vh;
+  }
+  
+  .basicinformation
+  {
+    color:#5b5b5b;
+    text-align:left;
+    vertical-align:text-top;
+    font-size:medium;
+    font-family:Outfit;
+    line-height:auto;
+    border-style:hidden;
+    outline:none;
+    width:111px;
+    margin-left: 50px;
+  
+  }
+  
+  .profile
+  {
+    background-color:#ffffff;
+    height:758px;
+    text-align: "left";
+    font-size: large;
+    margin-left: 50px;
+  }
+  
+.profile-components
+{
+  width: 50px;
+  color: #5b5b5b;
+  font-family: Outfit;
+  position: 'fixed';
+
+}
+
+.profile-box-fixed .MuiInputBase-input
+{
+  color:black;
+  background-color: lightgray;
+  font-size:16px;  
+  font-family:Outfit;
+  width: 290px;
+  height: 8px;
+  position:relative;
+  border-radius:6px;
+
+}
+
+.profile-box .MuiInputBase-input
+{
+  color:black;
+  font-size:16px;  
+  font-family:Outfit;
+  width: 290px;
+  height: 8px;
+  position:relative;
+  border-radius:6px;
+}
+
+.label-input-pair {
+  display: flex;
+  flex-direction: row;
+  gap: 50px; 
+  padding-left: 35px;
+  margin-top: 20px;
+  margin-left: 55px;
+
+  /* justify-content: flex-start;  */
+}
+
+.name-box-pair {
+  display:flex;
+  flex-direction: row;
+  text-align: left;
+  align-items: center;
+}
+
+.dropdown-box .MuiInputBase-input{
+  color:black;
+  font-size:16px;  
+  font-family:Outfit;
+  width: 250px;
+  padding-left: 15px;
+  position:flex;
+  border-radius:6px;
+}
