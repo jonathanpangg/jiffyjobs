@@ -24,6 +24,7 @@ export function NavBar() {
 
     const Profile = () => {
         navigate('/Profile')
+    };
 
     const goToDashboard = () => {
         navigate('/dashboard');
@@ -45,10 +46,9 @@ export function NavBar() {
             </h1>
             <div className='tab-font'></div>
             <div className='tab-font'></div>
-            <div className='tab-font'></div>
-            <div className='tab-font'></div>
-            <div className='tab-font'></div>
-            <div className='tab-font'></div>
+
+
+            
 
             <div className='first-tab' onClick={AllJobs}>
                 All Jobs 

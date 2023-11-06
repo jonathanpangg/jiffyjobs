@@ -2,7 +2,7 @@ import './App.css';
 import { NavBar } from './components/NavBar'
 import { JobBoard } from './pages/JobBoard'
 import  Dashboard from './pages/Dashboard';
-import  Profile  from './pages/Profile';
+import  { Profile }  from './pages/Profile';
 import  Signup  from './pages/Signup';
 import  Login from './pages/Login';
 import Setting from './pages/Settings';
