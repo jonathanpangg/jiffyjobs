@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Card, Grid, Container, Typography, TextField, Button, FormControlLabel, Checkbox, Avatar, FormControl, InputLabel, OutlinedInput } from '@mui/material';
+import { Box, Card, Grid, Container, Typography, TextField, Button, FormControlLabel, Checkbox, Avatar, FormControl, InputLabel, OutlinedInput, Select, MenuItem } from '@mui/material';
 import '../styles/profile.css'
 import { deepOrange } from '@mui/material/colors';
 
@@ -7,11 +7,50 @@ import { deepOrange } from '@mui/material/colors';
 export function Profile() {
     const [UserEmailstate, setuserEmail] = useState("");
     const [userPassword, setuserPassword] = useState("");
+    const [degree, setDegree] = useState('');
+    const [minor, setMinor] = useState('');
+    const [major, setMajor] = useState('');
+    const [GPA, setGPA] = useState('');
+    const [gender, setGender] = useState('');
+    const [pronouns, setPronouns] = useState('');
 
 
     const [personalInfo, setpersonalInfo] = useState({});
 
-    const userEmail = "Hello_world@bu.edu"; // This will eventually come from user login state
+    const userEmail = "example_email@bu.edu"; // This will eventually come from user login state
+
+
+    useEffect(() => {
+        if (personalInfo.minor) {
+            setMinor(personalInfo.minor);
+        }
+    }, [personalInfo.minor]); 
+
+
+    useEffect(() => {
+        if (personalInfo.major) {
+            setMajor(personalInfo.major);
+        }
+    }, [personalInfo.major]); 
+
+
+    useEffect(() => {
+        if (personalInfo.gpa) {
+            setMajor(personalInfo.gpa);
+        }
+    }, [personalInfo.gpa]); 
+
+    useEffect(() => {
+        if (personalInfo.gender) {
+            setGender(personalInfo.gender);
+        }
+    }, [personalInfo.gender]); 
+
+    useEffect(() => {
+        if (personalInfo.pronouns) {
+            setPronouns(personalInfo.pronouns);
+        }
+    }, [personalInfo.pronouns]); 
 
     useEffect(() => {
         // Fetch user profile data from the API and set it to state
@@ -26,9 +65,16 @@ export function Profile() {
                 const data = await response.json();
                 // Set the data to the state here
 
-                setuserEmail(data.email)
-                setuserPassword(data.password)
-                setpersonalInfo(data.personal_info)
+                // when the user is not found
+                if (data.err) {
+                    setuserEmail("user not found")
+                    setuserPassword("user not found")
+                    setpersonalInfo("user not found")
+                } else {
+                    setuserEmail(data.email)
+                    setuserPassword(data.password)
+                    setpersonalInfo(data.personal_info)
+                }
             } catch (error) {
                 console.error("Error fetching profile data:", error);
             }
@@ -41,13 +87,22 @@ export function Profile() {
 
 
 
-    //   const handleChange = (event) => {
-    //     const { name, value } = event.target;
-    //     setProfileData(prevData => ({
-    //         ...prevData,
-    //         [name]: value,
-    //     }));
-    // };
+    const handleMinorChange = (event) => {
+        setMinor(event.target.value);
+    };
+    const handleMajorChange = (event) => {
+        setMajor(event.target.value);
+    };
+    const handleGPAChange = (event) => {
+        setGPA(event.target.value);
+    };
+    const handleGenderChange = (event) => {
+        setGender(event.target.value);
+    };
+    const handlePronounsChange = (event) => {
+        setPronouns(event.target.value);
+    };
+
 
     // Handle form submission
     const handleSubmit = (event) => {
@@ -84,48 +139,170 @@ export function Profile() {
                             
 
                             <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch', alignContent: 'center', paddingLeft: '10px' } }} noValidate autoComplete="off">
-                                <Grid container spacing={1} alignItems="flex-end">
-                                <div>
-                                <Grid item >
-                                    <text className='profile-components'>
-                                        School
-                                    </text>
-                                    <TextField
-                                        disabled
-                                        id="school"
-                                        InputLabelProps={{
-                                        shrink: true,
-                                        }}
-                                        variant="outlined"
-                                        margin="normal"
-                                        value={personalInfo.school}
-                                        className='profile-box-fixed'
-                                        fullWidth
-                                    />
-                                </Grid>
+                                <Grid container spacing={1} >
+                               
+                                <div className='label-input-pair'>
+
+                                    <Grid item xs={6} sm={3} className='name-box-pair' >
+                                        <Typography className='profile-components'  gutterBottom>
+                                            School<span style={{"color": "red"}}>*</span>
+                                        </Typography>
+
+                                        <TextField
+                                            disabled
+                                            id="school"
+                                            sx={{ fontSize:"16px" }}
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            value={personalInfo.school}
+                                            className='profile-box-fixed'
+                                        />
+                                
+                                    </Grid>
 
 
-                                <Grid item >
-                                <text className='profile-components'>
-                                        degree
-                                    </text>
+                                    <Grid item xs={6} sm={3} className='name-box-pair'>
+                                        <Typography className='profile-components' gutterBottom>
+                                            Degree
+                                        </Typography>
+                                        <FormControl fullWidth variant="outlined" className='profile-box' sx={{ m: 2, minWidth: 10 }}>
+
+                                            <Select
+                                            id="degree"
+                                            value={personalInfo.degree}
+                                            onChange={(e) => setDegree(e.target.value)}
+                                            sx={{height:"41px"}}
+                                            className='dropdown-box'
+                                            >
+                                            <MenuItem value="">
+                                                <em>Delete Option</em>
+                                            </MenuItem>
+                                            <MenuItem value="Bachelor of Arts">Bachelor of Arts</MenuItem>
+                                            <MenuItem value="Bachelor of Science">Bachelor of Science</MenuItem>
+                                            <MenuItem value="Master of Arts">Master of Arts</MenuItem>
+                                            <MenuItem value="Master of Arts">Master of Science</MenuItem>
+                                            <MenuItem value="Other">Other</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                    </Grid>
+
+
+                                <Grid item xs={6} sm={3} className='name-box-pair'>
+                                <Typography className='profile-components' gutterBottom>
+                                    &nbsp; GPA
+                                </Typography>
                                     <TextField
                                         required
-                                        id="degree"
-                                        value={personalInfo.degree}
+                                        sx={{ fontSize:"14px" }}
+                                        id="GPA"
+                                        value={GPA}
+                                        onChange={handleGPAChange}
                                         fullWidth
                                         className='profile-box'
-                                        // You can handle the Degree value similar to School and Email if needed
                                     />
                                 </Grid>
-                                    <TextField
-                                        required
-                                        id="major"
-                                        label="Major(s)"
-                                        // Handle the Major(s) similarly if needed
-                                    />
-                                    {/* Add more TextFields for other fields like Minor, Grade, Date, etc. */}
                                 </div>
+
+                                            
+                                <div className='label-input-pair'> 
+                                    <Grid item xs={6} sm={3} className='name-box-pair'>
+                                    <Typography className='profile-components' gutterBottom>
+                                        Major&nbsp;
+                                    </Typography>
+                                        <TextField
+                                            required
+                                            sx={{ fontSize:"27.5px" }}
+                                            id="major"
+                                            value={major}
+                                            fullWidth
+                                            onChange={handleMajorChange}
+                                            className='profile-box'
+                                        />
+                                    </Grid>
+                               
+                                    
+                                    <Grid item xs={6} sm={3} className='name-box-pair'>
+                                    <Typography className='profile-components' gutterBottom>
+                                    &nbsp;Minor&nbsp;
+                                    </Typography>
+                                        <TextField
+                                            required
+                                            sx={{ fontSize:"27.5px" }}
+                                            id="minor"
+                                            value={minor}
+                                            fullWidth
+                                            onChange={handleMinorChange}
+                                            className='profile-box'
+                                        />
+                                    </Grid>
+                                 </div>               
+
+
+                                <div className='label-input-pair'>
+                                {/* <Grid item xs={6} sm={3} className='name-box-pair'>
+                                        <Typography className='profile-components' gutterBottom>
+                                            Grade
+                                        </Typography>
+                                        <FormControl fullWidth variant="outlined" className='profile-box' sx={{ m: 2, minWidth: 10 }}>
+
+                                            <Select
+                                            id="degree"
+                                            value={personalInfo.degree}
+                                            onChange={(e) => setDegree(e.target.value)}
+                                            sx={{height:"41px"}}
+                                            className='dropdown-box'
+                                            >
+                                            <MenuItem value="">
+                                                <em>Delete Option</em>
+                                            </MenuItem>
+                                            <MenuItem value="Bachelor of Arts">Bachelor of Arts</MenuItem>
+                                            <MenuItem value="Bachelor of Science">Bachelor of Science</MenuItem>
+                                            <MenuItem value="Master of Arts">Master of Arts</MenuItem>
+                                            <MenuItem value="Master of Arts">Master of Science</MenuItem>
+                                            <MenuItem value="Other">Other</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                    </Grid> */}
+
+                                </div>            
+
+                                
+                                 <div className='label-input-pair'> 
+                                    <Grid item xs={6} sm={3} className='name-box-pair'>
+                                    <Typography className='profile-components' gutterBottom>
+                                        Gender&nbsp;
+                                    </Typography>
+                                        <TextField
+                                            required
+                                            sx={{ fontSize:"27.5px" }}
+                                            id="gender"
+                                            value={gender}
+                                            fullWidth
+                                            onChange={handleGenderChange}
+                                            className='profile-box'
+                                        />
+                                    </Grid>
+                               
+                                    
+                                    <Grid item xs={6} sm={3} className='name-box-pair'>
+                                    <Typography className='profile-components' gutterBottom style={{fontSize: "15px"}}>
+                                        Pronouns
+                                    </Typography>
+                                        <TextField
+                                            required
+                                            sx={{ fontSize:"27.5px" }}
+                                            id="pronouns"
+                                            value={pronouns}
+                                            fullWidth
+                                            onChange={handlePronounsChange}
+                                            className='profile-box'
+                                        />
+                                    </Grid>
+                                 </div>  
+
+
+
                                 <div>
                                     <TextField
                                         disabled
@@ -160,7 +337,7 @@ export function Profile() {
                                 />
 
                                 {/* ... rest of the form */}
-                                </Grid>
+                            </Grid>
 
                                 {/* For the submit button */}
                                 <Button variant="contained" color="primary" sx={{ mt: 3, mb: 2 }}>

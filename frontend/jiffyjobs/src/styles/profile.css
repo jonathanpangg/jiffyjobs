@@ -10,7 +10,7 @@
     outline:none;
     left:11.81px;
     top:16.56px;
-    position:absolute;
+    /* position:absolute; */
     width:30px;
 }
 
@@ -46,34 +46,61 @@
   
 .profile-components
 {
-  text-align:right;
-  font-size:14px;
-  outline:none;
-  width:49px;
+  width: 50px;
+  color: #5b5b5b;
+  font-family: Outfit;
+  position: 'fixed';
 
 }
 
-.profile-box-fixed
+.profile-box-fixed .MuiInputBase-input
 {
-  color:#5b5b5b;
+  color:black;
   background-color: lightgray;
-  vertical-align:text-top;
-  font-size:12px;
+  font-size:16px;  
   font-family:Outfit;
+  width: 290px;
+  height: 8px;
+  position:relative;
+  border-radius:6px;
 
 }
 
-.profile-box
+.profile-box .MuiInputBase-input
 {
-  color:#5b5b5b;
-  vertical-align:text-top;
-  font-size:12px;
+  color:black;
+  font-size:16px;  
   font-family:Outfit;
-  line-height:auto;
+  width: 290px;
+  height: 8px;
+  position:relative;
+  border-radius:6px;
+}
 
-  outline:none;
-  top:10px;
-  left:10px;
-  position:absolute;
-  width:93px;
+.label-input-pair {
+  display: flex;
+  flex-direction: row;
+  gap: 50px; 
+  padding-left: 35px;
+  margin-top: 20px;
+  margin-left: 55px;
+
+  /* justify-content: flex-start;  */
+}
+
+.name-box-pair {
+  display:flex;
+  flex-direction: row;
+  text-align: left;
+  align-items: center;
+}
+
+.dropdown-box .MuiInputBase-input{
+  color:black;
+  font-size:16px;  
+  font-family:Outfit;
+  width: 250px;
+  padding-left: 15px;
+  position:flex;
+  border-radius:6px;
 }

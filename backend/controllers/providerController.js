@@ -27,7 +27,8 @@ import {
         try {
             const provider = await Provider.findOne({ email: req.params.email });
             if (!provider) {
-                return handleNotFound(res, "Provider not found");
+                // return handleNotFound(res, "Provider not found");
+                return {"err": "provider not found"};
             }
             return provider
         } catch (error) {

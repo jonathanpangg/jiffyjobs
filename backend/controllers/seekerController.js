@@ -27,7 +27,8 @@ import {
         try {
             const seeker = await Seeker.findOne({ email: req.params.email });
             if (!seeker) {
-                return handleNotFound(res, "Seeker not found");
+                // return handleNotFound(res, "Seeker not found");
+                return {"err": "seeker not found"};
             }
             return seeker
         } catch (error) {
