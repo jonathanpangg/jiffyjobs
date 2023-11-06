@@ -125,7 +125,7 @@ export function JobBoard() {
             FilterJobs()
         }
 
-    }, [filterList, jobData.length, size])
+    }, [filterList])
 
     function truncate(str) {
         return str.length > 80 ? str.substring(0, 77) + "..." : str;
