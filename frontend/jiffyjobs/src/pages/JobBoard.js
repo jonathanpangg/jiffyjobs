@@ -4,6 +4,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
+import Pagination from '@mui/material/Pagination';
 import { Dialog, Divider, Typography, DialogContentText, DialogContent, DialogActions, DialogTitle, Link  } from '@mui/material';
 import { Filter } from '../components/Filter';
 import { Sort } from '../components/Sort';
@@ -22,6 +23,11 @@ export function JobBoard() {
     const { render, filterList } = Filter()
     const [openPop, setOpenPop] = useState(false)
     const [currentPop, setCurrentPop] = useState([])
+
+    const [page, setPage] = useState(1);
+    const cardsPerPage = 20;
+    const totalCards = jobData.length;
+    const totalPages = Math.ceil(totalCards / cardsPerPage);
 
     // handles getting all jobs
     useEffect(() => {
@@ -59,9 +65,11 @@ export function JobBoard() {
             GetAllJobs()
         }
     }, [filterList]);
+    
 
     // handles filtering job
     useEffect(() => {
+        console.log(filterList)
         async function FilterJobs() {
             const requestOptions = {
                 method: 'GET',
@@ -69,6 +77,7 @@ export function JobBoard() {
             }
             var route = "http://localhost:4000/api/jobs/filter"
             var query = "/*/*/" + Array.from(filterList) + "/*/*"
+            console.log(query)
             route = route + query
             console.log(route)
             fetch(route, requestOptions)
@@ -254,7 +263,7 @@ export function JobBoard() {
                         </text>
                         {/* <button onClick={handleLogJobData}>Log Job Data</button> */}
 
-                        {jobData.map((key) => (
+                        {jobData.slice((page - 1) * cardsPerPage, page * cardsPerPage).map((key) => (
                             <Grid key={key} item>
                                 <Link overlay underline="none" sx={{ color: 'text.tertiary', cursor: 'pointer' }} onClick={() => openPopUp(key)}>
                                     <Card sx={{height: 300, width: 300, '&:hover': { boxShadow: 'md', borderColor: 'neutral.outlinedHoverBorder' }}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px'}}>
@@ -287,6 +296,9 @@ export function JobBoard() {
                     </Grid>
                 </Grid>   
             </Box>
+            <div style={{ display: 'flex', justifyContent: 'center', padding: '1%' }}>
+                <Pagination count={totalPages} page={page} onChange={(event, value) => setPage(value)} />
+            </div>
         </div>
     )
 }
