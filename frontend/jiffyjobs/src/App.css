@@ -19,7 +19,7 @@
   padding: 0.75%;
   padding-top: 2.25%;
   padding-bottom: 0.875%;
-  padding-left: 35%;
+  padding-left: 50%;
 }
 
 .tab-font {
@@ -34,11 +34,27 @@
 }
 
 .name-font {
+  align-items: center;
   font-family: "Outfit";
-  font-size: medium;
-  padding-top: 2.25%;
-  padding-left: 10%;
+  font-size: small;
+  padding-top: 0.35%;
+  padding-left: 5%;
   padding-bottom: 0.875%;
+}
+
+.divider {
+  height: 50%;  
+  border-left: 1px solid black; 
+  margin: 0 10px; 
+}
+
+.profile-picture {
+  width: 30px; 
+  height: 30px;
+  background-color: #cccccc; 
+  border-radius: 50%; 
+  display: inline-block;
+  margin-right: 10px; 
 }
 
 .job-board-outer {
