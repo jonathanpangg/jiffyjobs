@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { Profiler, useEffect, useState } from 'react';
 
-function Profile() {
+export function Profile() {
     return (
-        <div>
-            Profile Page
+        <div style={{display: 'flex'}}> 
+            <div> 
+                Profile Page
+            </div>
         </div>
-    );
+    )
 }
 
-export default Profile;

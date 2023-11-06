@@ -19,6 +19,7 @@ import utc from 'dayjs/plugin/utc';
 dayjs.extend(utc);
 
 export function Filter() {
+
     const [expandMap, setExpandMap] = useState(new Map(
       [["Category", false],
       ["JobType", false],
@@ -225,7 +226,7 @@ export function Filter() {
           </div>
         );
       }
-      
+
     const options = filterOptions[filterCategory];
     const maxColumns = 5; 
     const columns = Math.ceil(options.length / maxColumns);

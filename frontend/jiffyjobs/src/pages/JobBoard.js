@@ -29,6 +29,19 @@ export function JobBoard() {
     const totalCards = jobData.length;
     const totalPages = Math.ceil(totalCards / cardsPerPage);
 
+    function processTime(time) {
+        var str = "Time: "
+        for (let i = 0; i < time.length; i++) {
+            if (i%2 === 0) {
+                str = str + dayjs(new Date(time[i])).format('MM/DD/YY h:mm A') + " - "
+            } else {
+                str = str + dayjs(new Date(time[i])).format('h:mm A') + "\n"
+            }
+        }
+
+        return str
+    }
+
     // handles getting all jobs
     useEffect(() => {
         async function GetAllJobs() {
@@ -111,7 +124,8 @@ export function JobBoard() {
             setJobData([])
             FilterJobs()
         }
-    }, [filterList])
+
+    }, [filterList, jobData.length, size])
 
     function truncate(str) {
         return str.length > 80 ? str.substring(0, 77) + "..." : str;

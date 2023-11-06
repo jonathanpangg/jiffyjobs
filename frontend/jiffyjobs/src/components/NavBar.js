@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
+// import { Divider } from '@mui/material';
 import Popover from '@mui/material/Popover';
 import MenuItem from '@mui/material/MenuItem';
 
@@ -20,12 +21,12 @@ export function NavBar() {
         navigate('/JobBoard')
     }
 
+
+    const Profile = () => {
+        navigate('/Profile')
+
     const goToDashboard = () => {
         navigate('/dashboard');
-    };
-
-    const userProfile = () => {
-        navigate('/profile');
     };
 
     const handleSettings = () => {
@@ -34,6 +35,7 @@ export function NavBar() {
 
     const handleLogout = () => {
         navigate('/login');
+
     }
 
     return (
@@ -51,6 +53,7 @@ export function NavBar() {
             <div className='first-tab' onClick={AllJobs}>
                 All Jobs 
             </div>
+
             <div className='tab-font' onClick={goToDashboard}>
                 Dashboard
             </div>
@@ -68,7 +71,7 @@ export function NavBar() {
                        horizontal: 'right',
                      }}
                     >
-                    <MenuItem onClick={userProfile}>Profile</MenuItem>
+                    <MenuItem onClick={Profile}>Profile</MenuItem>
                     <MenuItem onClick={handleSettings}>Settings</MenuItem>
                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </Popover>
@@ -84,6 +87,7 @@ export function NavBar() {
                 Notifications
             </div> */}
             {/* <Divider orientation="vertical" flexItem /> */}
+
         </div>
     )
 }
