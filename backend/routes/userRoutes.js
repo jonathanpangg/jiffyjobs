@@ -9,6 +9,10 @@ router.get("/getinfo/:email", getUserinfo);
 // deleteuser
 // router.delete("/deleteuser/:id", deleteUser);
 
+// update user
+
+
+
 
 
 export default router;

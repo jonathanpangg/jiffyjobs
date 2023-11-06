@@ -32,10 +32,10 @@
   text-align: center;
   vertical-align: center;
   align-items: center;
+  font-size: medium;
 }
 
-
-.timeOuter {
+.time-outer {
   display: flex
 }
 
@@ -44,6 +44,17 @@
   margin-right: 15%;
 }
 
-.startTime {
+.start-time {
   padding-right: 1%;
+}
+
+.remove-time {
+  font-family: "Outfit";
+  font-size: medium;
+  flex: 1;
+  margin-right: 25%;
+}
+
+.category-tab {
+  padding-left: 1.5%;
 }

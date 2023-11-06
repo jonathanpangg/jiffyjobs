@@ -41,6 +41,10 @@ const JobsSchema = new mongoose.Schema(
             type: Date,
             required: true
         },
+        hired: {
+            type: Boolean,
+            required: true
+        },
         applicants: [{
             _id: {
                 type: String,

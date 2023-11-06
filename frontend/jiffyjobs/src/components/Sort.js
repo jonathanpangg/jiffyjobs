@@ -5,6 +5,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
+import dayjs from 'dayjs';
 
 export function Sort({ rawData, setRawData, setJobData }) {
     const [selectedSortBy, setSelectedSortBy] = useState('');
@@ -27,7 +28,7 @@ export function Sort({ rawData, setRawData, setJobData }) {
         
         setRawData(sortedData);
         setJobData(sortedData.map(obj => {
-            return [[0, obj.title], ["", "Job Provider: " + obj.job_poster], ["", "Location: " + obj.location], ["", "Pay: $" + obj.pay], ["", "Description: " + obj.description], ["", "Time: " + obj.time[0] + " - " + obj.time[1]], ["", "Categories: " + obj.categories.toString()]];
+            return [[0, obj.title], ["", obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]];
         }));
     };
     
