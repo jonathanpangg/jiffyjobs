@@ -25,6 +25,7 @@ export function JobPosting() {
 
     const categories = ['Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving']
     const [expand, setExpand] = useState(false)
+    const [amount, setAmount] = useState("")
 
     // useState for the data
     const [val, setVal] = useState({
@@ -528,11 +529,8 @@ export function JobPosting() {
                                 </LocalizationProvider>
                                       
                             </div>
-                        )}
-                        <div>
-                            <text className='pop-textfield-title' onClick={() => {setAmount(amount+1)}}>
-                                + Add more dates
-                            </text>
+                  
+                    
                         </div>
                         <div className='time-outer' style={{width: '98.5%'}}> 
                             <text className='remove-time' onClick={() => {handleRemoveTime()}}>
