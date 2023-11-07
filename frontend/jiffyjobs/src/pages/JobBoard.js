@@ -300,8 +300,8 @@ export function JobBoard() {
                                         <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px'}}>
                                             Time: {key[5][1]}
                                         </Typography>
-                                        <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px', paddingTop:'10px', paddingBottom:'10px'}}>
-                                            Description: {truncate(key[4][1])}
+                                        <Typography style={{fontFamily: 'Outfit', fontSize:"12px", padding:'10px', position:'relative', overflow:'hidden', textOverflow:'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 3, maxHeight:'44px'}}>
+                                            Description: {key[4][1]}
                                         </Typography>
                                     </Card>
                                 </Link>
