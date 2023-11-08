@@ -156,15 +156,16 @@ export function JobBoard() {
     return (
         <div className={'job-board-outer' + background}>
             <Dialog open={openPop} onClose={closePop} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
-                <img
-                    style={{ maxWidth: '100%', maxHeight: '30vh', position: 'relative'}}
-                    src="https://source.unsplash.com/random"
-                    alt="placeholder"
-                />
-                    <IconButton onClick={closePop} style={{position: 'absolute', paddingLeft: '97%'}}>
-                        <ClearIcon/>
-                    </IconButton>
-                
+                <div style={{ position: 'relative'}}>
+                    <img
+                        style={{ width: '100%', maxHeight: '30vh'}}
+                        src="https://source.unsplash.com/random"
+                        alt="placeholder"
+                    />
+                </div>
+                <IconButton onClick={closePop} style={{position: 'absolute', right:'0', top:'0'}}>
+                    <ClearIcon/>
+                </IconButton>        
                 <DialogContent style={{paddingTop:'0.5%', paddingBottom: '1%'}}>
                     <DialogContentText ref={descriptionElementRefStartPop} tabIndex={-1} style={{width: '750px'}}>
                         <div>
