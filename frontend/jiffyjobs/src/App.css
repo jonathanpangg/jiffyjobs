@@ -22,6 +22,15 @@
   padding-left: 50%;
 }
 
+.first-font {
+  align-items: center;
+  font-family: "Outfit";
+  font-size: medium;
+  padding-top: 0.35%;
+  padding-left: 5%;
+  padding-bottom: 0.875%;
+}
+
 .tab-font {
   font-family: "Outfit";
   font-size: medium;
