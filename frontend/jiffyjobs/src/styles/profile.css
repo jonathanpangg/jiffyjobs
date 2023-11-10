@@ -32,7 +32,19 @@
     outline:none;
     width:111px;
     margin-left: 50px;
-  
+  }
+  .otherinformation
+  {
+    color:#5b5b5b;
+    text-align:left;
+    vertical-align:text-top;
+    font-size:medium;
+    font-family:Outfit;
+    /* line-height:auto; */
+    border-style:hidden;
+    outline:none;
+    width:111px;
+    margin-left: 50px;
   }
   
   .profile
@@ -50,6 +62,14 @@
   color: #5b5b5b;
   font-family: Outfit;
   position: 'fixed';
+
+}
+.profile-components-cetegories
+{
+  width: 20px;
+  color: #5b5b5b;
+  font-family: Outfit;
+  position: 'center';
 
 }
 
@@ -83,6 +103,17 @@
   gap: 50px; 
   padding-left: 35px;
   margin-top: 20px;
+  margin-left: 55px;
+
+  /* justify-content: flex-start;  */
+}
+
+.label-input-pair-beg {
+  display: flex;
+  flex-direction: row;
+  gap: 50px; 
+  padding-left: 35px;
+  margin-top: 5px;
   margin-left: 55px;
 
   /* justify-content: flex-start;  */
