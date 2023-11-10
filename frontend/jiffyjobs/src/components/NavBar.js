@@ -64,7 +64,7 @@ export function NavBar() {
                 JIFFYJOBS
             </h1>
             
-            <div className='first-font' onClick={AllJobs} style={{ display: 'flex', alignItems: 'center',  whiteSpace: 'nowrap', marginLeft: '30%'}} >
+            <div className='first-font' onClick={AllJobs} style={{ display: 'flex', alignItems: 'center',  whiteSpace: 'nowrap', marginLeft: '30%'}}  >
                 All Jobs 
             </div>
 

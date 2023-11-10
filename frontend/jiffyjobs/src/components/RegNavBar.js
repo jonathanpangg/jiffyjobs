@@ -9,27 +9,6 @@ import Button from '@mui/material/Button';
 
 export function RegNavBar() {
     const navigate = useNavigate()
-    const [anchorEl, setAnchorEl] = React.useState(null);
-
-    const settings = ['Profile', 'Dashboard', 'Setting', 'Logout'];
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
-
-    const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-    };
-
-    const handleOpenUserMenu = (event) => {
-        setAnchorElUser(event.currentTarget);
-    };
-
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
-
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-    };
 
     const AllJobs = () => {
         navigate('/JobBoard')
@@ -50,6 +29,7 @@ export function RegNavBar() {
                 JIFFYJOBS
             </h1>
 
+            <Button color='inherit' onClick={AllJobs}> Temporary Button</Button>
             <Button color='inherit'  onClick={handleSignUp}>Join Now</Button>
             <Button color='inherit'  onClick={handleLogout}>Log In</Button>
 
