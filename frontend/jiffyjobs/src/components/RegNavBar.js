@@ -53,6 +53,8 @@ export function RegNavBar() {
             <Button color='inherit'  onClick={handleSignUp}>Join Now</Button>
             <Button color='inherit'  onClick={handleLogout}>Log In</Button>
 
+            <div className='tab-font'></div>
+
                 {/* <div className='tab-font'></div>
                 <div className='tab-font'></div>
                 <div className='tab-font'></div>

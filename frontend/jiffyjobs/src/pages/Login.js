@@ -22,7 +22,7 @@ export function Login() {
     return (
         <> 
         <RegNavBar/> 
-        <div>
+        <div className={ 'outerCard' }>
         <h2>Login</h2>
         <form>
             <input

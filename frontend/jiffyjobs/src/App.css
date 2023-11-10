@@ -8,7 +8,7 @@
   vertical-align: center;
   align-items: center;
   padding-left: 5%;
-  padding-bottom: 0.85%;
+  /* padding-bottom: 0.85%; */
 }
 
 .first-tab {
@@ -133,4 +133,11 @@
   font-size: "1px";
   padding-left: '10px';
   padding-right:'10px';
+}
+
+.outerCard {
+  background-color: #f3f3f3;
+  height: 70vh;
+  justify-content: 'center';
+  padding: 5%;
 }
