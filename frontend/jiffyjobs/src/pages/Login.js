@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { RegNavBar } from '../components/RegNavBar';
 
 export function Login() {
+
     const navigate = useNavigate()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -18,6 +20,8 @@ export function Login() {
     };
 
     return (
+        <> 
+        <RegNavBar/> 
         <div>
         <h2>Login</h2>
         <form>
@@ -44,6 +48,7 @@ export function Login() {
             </button>
         </form>
         </div>
+        </>
     )
 }
 
