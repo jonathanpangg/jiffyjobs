@@ -1,6 +1,7 @@
 import Seeker from '../models/SeekerSchema.js';
 import Provider from '../models/ProviderSchema.js'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 import {
     handleNotFound,
 	handleSuccess,
@@ -11,20 +12,33 @@ import {
 //This is a function to call when seekers want to sign up
 export const seekerSignUp = async (req, res) => {
     try {
-        const { email, password, name, school } = req.body;
+        const { email, name, school, password } = req.body;
         const salt = await bcrypt.genSalt(10);
         const passwordHash = await bcrypt.hash(password, salt);
 
+        const seekerExist = await Seeker.findOne({email});
+        if (seekerExist) {
+            return handleBadRequest(res, "Seeker already registered with this email")
+        }
+
         const newSeeker = new Seeker({
-            email,
-            name,
-            school,
-            password: passwordHash
+            email: email,
+            personal_info: {
+                name: name,
+                school: school
+            },
+            password: passwordHash,
         });
 
         const savedSeeker = newSeeker.save();
         
-        return handleSuccess(res, savedSeeker);
+        return handleSuccess(res,{
+            _id: savedSeeker.id,
+            email: savedSeeker.email,
+            name: savedSeeker.name,
+            school: savedSeeker.school,
+            token: generateToken(savedSeeker._id)
+        });
     } catch (error) {
         return handleServerError(res, error);
     }
@@ -45,8 +59,19 @@ export const seekerLogin = async (req, res) => {
         }
 
         delete seeker.password;
-        return handleSuccess(res, seeker);
+        return handleSuccess(res, {
+            _id: seeker.id,
+            email: seeker.email,
+            password: seeker.password,
+            token: generateToken(seeker._id)
+        });
     } catch (error) {
         return handleServerError(res, error)  ;
     }
+}
+
+const generateToken = (id) => {
+    return jwt.sign({ id }, process.env.JWT_SECRET, {
+        expiresIn: '1d',
+    }) 
 }
