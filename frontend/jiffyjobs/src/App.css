@@ -8,7 +8,7 @@
   vertical-align: center;
   align-items: center;
   padding-left: 5%;
-  padding-bottom: 0.85%;
+  /* padding-bottom: 0.85%; */
 }
 
 .first-tab {
@@ -134,3 +134,42 @@
   padding-left: '10px';
   padding-right:'10px';
 }
+
+.outerCard {
+  background-color: #f3f3f3;
+  height: 100vh;
+  padding: 1%;
+  align-items: center;
+}
+
+.outerCard1 {
+  background-color: #f3f3f3;
+  height: 100vh;
+  padding: 1%;
+  align-items: center;
+}
+
+.orLine-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 68.5%; 
+  margin-left: auto;
+  margin-right: auto; 
+}
+
+.orLine-container::before,
+.orLine-container::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background-color: black;
+  margin: 0 10px; 
+}
+
+.orText {
+  padding: 0 5px; 
+  white-space: nowrap;
+}
+
+
