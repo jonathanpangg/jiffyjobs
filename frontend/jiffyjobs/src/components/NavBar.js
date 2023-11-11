@@ -60,26 +60,32 @@ export function NavBar() {
 
     return (
         <Grid container className="nav-outer">
-             <h1 className='logo-font' onClick={AllJobs}>
+             <h1 className='logo-font' onClick={AllJobs} style={{ display: 'flex', alignItems: 'center', marginRight: 'auto'}} >
                 JIFFYJOBS
             </h1>
-            <div className='tab-font'></div>
-            <div className='tab-font'></div>
-            <div className='tab-font'></div>
-        
-
-            <div className='first-tab' onClick={AllJobs}>
+            
+            <div className='first-font' onClick={AllJobs} style={{ display: 'flex', alignItems: 'center',  whiteSpace: 'nowrap', marginLeft: '30%'}} >
                 All Jobs 
             </div>
 
+            <div className='name-font' style={{ display: 'flex', alignItems: 'center',  whiteSpace: 'nowrap', marginLeft: 'auto'}} >
             
-            <div className='name-font' style={{ display: 'flex', alignItems: 'center' }}   >
+        
+
+                {/* <div className='tab-font'></div>
+                <div className='tab-font'></div>
+                <div className='tab-font'></div>
+                <div className='tab-font'></div>
+                <div className='tab-font'></div>
+                <div className='tab-font'></div>
+                <div className='tab-font'></div>
+                <div className='tab-font'></div> */}
 
                 <Tooltip style={{ display: 'flex', alignItems: 'center'}} onClick={handleOpenUserMenu}>
                     <div className='profile-picture'></div>
                     <span style={{ fontWeight: 'bold' }} >Lucas Yoon</span>
                 </Tooltip>
-            
+                
                 <Menu
                     sx={{ mt: '45px' }}
                     id="menu-appbar"
@@ -108,6 +114,12 @@ export function NavBar() {
                     ))}
                 </Menu>
             </div>
+            
+            <div className='tab-font'></div>
+            <div className='tab-font'></div>
+            <div className='tab-font'></div>
+            <div className='tab-font'></div>
+
         </Grid>
     )
 }
