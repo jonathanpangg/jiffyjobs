@@ -18,7 +18,8 @@ export function Login() {
         navigate('/JobBoard')
     }
 
-    const handleLogin = () => {
+    const handleForgotPassword = () => {
+        navigate('/ForgotPass');
     };
 
     const handleSignUp = () => {
@@ -113,7 +114,7 @@ export function Login() {
                                 
                     <div style={{ display: 'flex',  justifyContent: 'space-between',  alignItems: 'center', width: '68.5%', margin: '0 auto', }}>
                         <FormControlLabel control={<Checkbox name="remember" color="primary" />} label={ <span style={{ fontFamily: 'Outfit', color: '#5B5B5B', fontSize: '0.9rem'  }}>Remember me</span> } style={{ marginRight: 'auto',}} />
-                        <Link component="button" variant="body2" style={{ fontFamily: 'Outfit', color: '#5B5B5B', textDecorationColor: '#5B5B5B', fontSize: '0.85rem' }} > Forgot Password?</Link>
+                        <Link onClick={handleForgotPassword} variant="body2" style={{ fontFamily: 'Outfit', color: '#5B5B5B', textDecorationColor: '#5B5B5B', fontSize: '0.85rem' }} > Forgot Password?</Link>
                     </div>
                     <div style={{ }}>
                         <Button type="submit" sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#A4A4A4', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit', border: '1px solid #5B5B5B' }} >
