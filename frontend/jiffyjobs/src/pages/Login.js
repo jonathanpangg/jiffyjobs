@@ -63,23 +63,25 @@ export function Login() {
     const validateEmail = (email) => {
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(String(email).toLowerCase());
-      }
+    }
 
     return (
         <> 
         <RegNavBar/> 
-            <div className={ 'outerCard1' }>
+            <div className={ 'outerCard' }>
             <Card sx={{ maxWidth: 700, maxHeight: 685, mx: 'auto', borderRadius: '20px'}}>
                 <CardContent style={{ textAlign: 'center' }}>
                     <h2 style={{ fontFamily: 'Outfit', textAlign: 'center', margin: '16px 0' }}>Welcome to JIFFYJOBS!</h2>
-                        
+                    
+                    <form onSubmit={handleSubmit} noValidate autoComplete="off" style={{ alignItems: 'center' }}>
+
                     <div style={{paddingTop: '1.5%'}}>
                         <div style={{ textAlign: 'left', width: '68.5%', margin: '0 auto' }}>
                             <text className='pop-textfield-title' style={{ fontFamily: 'Outfit'}}>
                                 Email
                             </text> <br></br>
                         </div>
-                        <TextField error={error.emailError} helperText={error.emailError ? "*This field is required" : ""} required={true} placeholder={"Enter Email"}  type="email" square={false} style={{width: '68.5%', fontFamily: 'Outfit'}} onChange={handleValues} id="email" value={val.email}
+                        <TextField error={error.emailError} helperText={error.emailError ? (val.email === '' ? "*This field is required" : "*Please enter a valid email address") : ""} required={true} placeholder={"Enter Email"}  type="email" square={false} style={{width: '68.5%', fontFamily: 'Outfit'}} onChange={handleValues} id="email" value={val.email}
                             InputProps={{
                                 style: {  borderRadius: '10px' }
                             }}
@@ -108,9 +110,8 @@ export function Login() {
                             }}
                         />
                     </div>
-                    
+                                
                     <div style={{ display: 'flex',  justifyContent: 'space-between',  alignItems: 'center', width: '68.5%', margin: '0 auto', }}>
-                        
                         <FormControlLabel control={<Checkbox name="remember" color="primary" />} label={ <span style={{ fontFamily: 'Outfit', color: '#5B5B5B', fontSize: '0.9rem'  }}>Remember me</span> } style={{ marginRight: 'auto',}} />
                         <Link component="button" variant="body2" style={{ fontFamily: 'Outfit', color: '#5B5B5B', textDecorationColor: '#5B5B5B', fontSize: '0.85rem' }} > Forgot Password?</Link>
                     </div>
@@ -125,16 +126,16 @@ export function Login() {
                         <div class="orLine "></div>
                     </div>
                     <div style={{ }}>
-                        <Button type="submit"  startIcon={<GoogleIcon/>} sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#white', '&:hover': { backgroundColor: '#f5f5f5' }, borderRadius: '30px', textTransform: 'none', color: '#5B5B5B', fontFamily: 'Outfit', border: '1px solid #5B5B5B'}} >
+                        <Button startIcon={<GoogleIcon/>} sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#white', '&:hover': { backgroundColor: '#f5f5f5' }, borderRadius: '30px', textTransform: 'none', color: '#5B5B5B', fontFamily: 'Outfit', border: '1px solid #5B5B5B'}} >
                             Continue with Google
                         </Button>
                     </div>
                     <div style={{ }}>
-                        <Button type="submit" onClick={handleSignUp} sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#5B5B5B', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit'}} >
+                        <Button onClick={handleSignUp} sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#5B5B5B', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit'}} >
                             Don’t have an account? Join now!
                         </Button>
                     </div>
-
+                    </form>
                     </CardContent>
                 </Card>
             </div>
