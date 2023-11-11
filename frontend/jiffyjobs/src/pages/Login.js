@@ -12,7 +12,6 @@ export function Login() {
 
     const navigate = useNavigate()
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
     const AllJobs = () => {
@@ -28,7 +27,7 @@ export function Login() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        handleError();
+        handleError(); 
     };
 
     // useState for the data
@@ -45,12 +44,13 @@ export function Login() {
 
     // handles the error of the input boxes
     function handleError() {
-        setError({
-            emailError: val.email === '',
-            passwordError: val.password === '',
-        })
-    }
+        let isEmailError = !val.email || !validateEmail(val.email); 
 
+        setError({
+            emailError: isEmailError,
+            passwordError: val.password === '',
+        });
+    }
 
     function handleValues(event) {
         setVal({ ...val, [event.target.id]: event.target.value });
@@ -59,6 +59,11 @@ export function Login() {
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
+
+    const validateEmail = (email) => {
+        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+      }
 
     return (
         <> 
@@ -74,7 +79,7 @@ export function Login() {
                                 Email
                             </text> <br></br>
                         </div>
-                        <TextField error={error.emailError} helperText={error.emailError ? "*This field is required" : ""} required={true} placeholder={"Enter Email"}  type="email" square={false} style={{width: '68.5%', fontFamily: 'Outfit'}} onChange={(e) => {handleValues(e)}} id='email' value={val.email}
+                        <TextField error={error.emailError} helperText={error.emailError ? "*This field is required" : ""} required={true} placeholder={"Enter Email"}  type="email" square={false} style={{width: '68.5%', fontFamily: 'Outfit'}} onChange={handleValues} id="email" value={val.email}
                             InputProps={{
                                 style: {  borderRadius: '10px' }
                             }}
@@ -86,7 +91,7 @@ export function Login() {
                                 Password
                             </text> <br></br>
                         </div>
-                        <TextField error={error.passwordError} helperText={error.passwordError ? "*This field is required" : ""} required={true} placeholder="Enter Password" type={showPassword ? "text" : "password"}  square={false} style={{width: '68.5%', fontFamily: 'Outfit'}} onChange={(e) => {handleValues(e)}} id='password' value={val.password}
+                        <TextField error={error.passwordError} helperText={error.passwordError ? "*This field is required" : ""} required={true} placeholder="Enter Password" type={showPassword ? "text" : "password"}  square={false} style={{width: '68.5%', fontFamily: 'Outfit'}} onChange={handleValues} id="password" value={val.password}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
@@ -104,15 +109,13 @@ export function Login() {
                         />
                     </div>
                     
-                        <FormControlLabel
-                            control={<Checkbox name="remember" color="primary" />}
-                            label="Remember me"
-                        />
-                        <Link component="button" variant="body2">
-                            Forgot Password?
-                        </Link>
+                    <div style={{ display: 'flex',  justifyContent: 'space-between',  alignItems: 'center', width: '68.5%', margin: '0 auto', }}>
+                        
+                        <FormControlLabel control={<Checkbox name="remember" color="primary" />} label={ <span style={{ fontFamily: 'Outfit', color: '#5B5B5B', fontSize: '0.9rem'  }}>Remember me</span> } style={{ marginRight: 'auto',}} />
+                        <Link component="button" variant="body2" style={{ fontFamily: 'Outfit', color: '#5B5B5B', textDecorationColor: '#5B5B5B', fontSize: '0.85rem' }} > Forgot Password?</Link>
+                    </div>
                     <div style={{ }}>
-                        <Button type="submit" sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#333', '&:hover': { backgroundColor: '#555' }, borderRadius: '30px', textTransform: 'none', color: 'white' }} >
+                        <Button type="submit" sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#A4A4A4', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit', border: '1px solid #5B5B5B' }} >
                             Log in
                         </Button>
                     </div>
@@ -122,12 +125,12 @@ export function Login() {
                         <div class="orLine "></div>
                     </div>
                     <div style={{ }}>
-                        <Button type="submit"  startIcon={<GoogleIcon/>} sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#333', '&:hover': { backgroundColor: '#555' }, borderRadius: '30px', textTransform: 'none', color: 'white'}} >
+                        <Button type="submit"  startIcon={<GoogleIcon/>} sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#white', '&:hover': { backgroundColor: '#f5f5f5' }, borderRadius: '30px', textTransform: 'none', color: '#5B5B5B', fontFamily: 'Outfit', border: '1px solid #5B5B5B'}} >
                             Continue with Google
                         </Button>
                     </div>
                     <div style={{ }}>
-                        <Button type="submit" onClick={handleSignUp} sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#333', '&:hover': { backgroundColor: '#555', }, borderRadius: '30px', textTransform: 'none', color: 'white'}} >
+                        <Button type="submit" onClick={handleSignUp} sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#5B5B5B', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit'}} >
                             Don’t have an account? Join now!
                         </Button>
                     </div>

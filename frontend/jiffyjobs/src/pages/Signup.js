@@ -161,7 +161,7 @@ export function Signup() {
                     </div>
 
                     <div style={{paddingTop: '1.5%'}}>
-                        <Button type="submit" fullWidth sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#333', '&:hover': { backgroundColor: '#555' }, borderRadius: '30px', textTransform: 'none', color: 'white'  }} >
+                        <Button type="submit" fullWidth sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#5B5B5B', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit'  }} >
                             Sign up as a {role === 'jobSeeker' ? 'Job Seeker' : 'Job Provider'}
                         </Button>
                     </div>
