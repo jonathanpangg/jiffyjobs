@@ -10,20 +10,6 @@ const ProviderSchema = new mongoose.Schema({
       type: String,
       required: true
   },
-  personal_info: {
-      first_name: {
-          type: String,
-          required: true
-      },
-      last_name: {
-          type: String,
-          required: true
-      },
-      organization: {
-          type: String,
-          required: false
-      }
-  },
   jobs_uploaded: [{
       _id: {
           type: String,
@@ -37,5 +23,5 @@ const ProviderSchema = new mongoose.Schema({
 });
 
 // Create model for providers
-const Providers = mongoose.model('Providers', ProviderSchema);
-export default Providers;
+const Provider = mongoose.model('Providers', ProviderSchema);
+export default Provider;
