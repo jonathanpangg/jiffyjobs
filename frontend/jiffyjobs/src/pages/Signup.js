@@ -24,7 +24,6 @@ export function Signup() {
 
     // useState for the data
     const [val, setVal] = useState({
-        school: '',
         name: '',
         email: '',
         password: '',
@@ -32,7 +31,6 @@ export function Signup() {
 
     // useState for errors
     const [error, setError] = useState({
-        schoolError: false,
         nameError: false,
         emailError: false,
         passwordError: false,
@@ -52,7 +50,6 @@ export function Signup() {
         }
 
         setError({
-            schoolError: val.school === '',
             nameError: val.name === '',
             emailError: isEmailError,
             passwordError: val.password === '',

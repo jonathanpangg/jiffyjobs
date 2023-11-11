@@ -141,3 +141,29 @@
   justify-content: 'center';
   padding: 1%;
 }
+
+.outerCard1 {
+  background-color: #f3f3f3;
+  height: 100vh;
+  justify-content: 'center';
+  padding: 1%;
+}
+
+.orLine-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.orLine {
+  flex: 1 1 50%; 
+  height: 1px;
+  background-color: black;
+  margin: 0 40px; 
+}
+
+.orText {
+  padding: 0 5px;
+  white-space: nowrap;
+}
+

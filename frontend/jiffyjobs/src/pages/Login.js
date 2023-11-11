@@ -33,16 +33,12 @@ export function Login() {
 
     // useState for the data
     const [val, setVal] = useState({
-        school: '',
-        name: '',
         email: '',
         password: '',
     })
 
     // useState for errors
     const [error, setError] = useState({
-        schoolError: false,
-        nameError: false,
         emailError: false,
         passwordError: false,
     })
@@ -50,8 +46,6 @@ export function Login() {
     // handles the error of the input boxes
     function handleError() {
         setError({
-            schoolError: val.school === '',
-            nameError: val.name === '',
             emailError: val.email === '',
             passwordError: val.password === '',
         })
@@ -69,33 +63,43 @@ export function Login() {
     return (
         <> 
         <RegNavBar/> 
-            <div className={ 'outerCard' }>
-                <Card sx={{ maxWidth: 700, maxHeight: 600, mx: 'auto'}}>
-                    <CardContent>
+            <div className={ 'outerCard1' }>
+            <Card sx={{ maxWidth: 700, maxHeight: 685, mx: 'auto', borderRadius: '20px'}}>
+                <CardContent style={{ textAlign: 'center' }}>
                     <h2 style={{ fontFamily: 'Outfit', textAlign: 'center', margin: '16px 0' }}>Welcome to JIFFYJOBS!</h2>
                         
-                    <div style={{paddingTop: '2.5%'}}>
-                        <text className='pop-textfield-title' style={{ fontFamily: 'Outfit'}}>
-                            Email Address
-                        </text> <br></br>
-                        <TextField error={error.emailError} helperText={error.emailError ? "*This field is required" : ""} required={true} placeholder={"example@email.edu"}  type="email" square={false} style={{width: '98.5%', fontFamily: 'Outfit'}} onChange={(e) => {handleValues(e)}} id='email' value={val.email}/>
+                    <div style={{paddingTop: '1.5%'}}>
+                        <div style={{ textAlign: 'left', width: '68.5%', margin: '0 auto' }}>
+                            <text className='pop-textfield-title' style={{ fontFamily: 'Outfit'}}>
+                                Email
+                            </text> <br></br>
+                        </div>
+                        <TextField error={error.emailError} helperText={error.emailError ? "*This field is required" : ""} required={true} placeholder={"Enter Email"}  type="email" square={false} style={{width: '68.5%', fontFamily: 'Outfit'}} onChange={(e) => {handleValues(e)}} id='email' value={val.email}
+                            InputProps={{
+                                style: {  borderRadius: '10px' }
+                            }}
+                        />
                     </div>
-                    <div style={{paddingTop: '2.5%'}}>
-                        <text className='pop-textfield-title' style={{ fontFamily: 'Outfit'}}>
-                            Password
-                        </text> <br></br>
-                        <TextField error={error.passwordError} helperText={error.passwordError ? "*This field is required" : ""} required={true} placeholder="Your Password" type={showPassword ? "text" : "password"}  square={false} style={{width: '98.5%', fontFamily: 'Outfit'}} onChange={(e) => {handleValues(e)}} id='password' value={val.password}
+                    <div style={{paddingTop: '1.5%'}}>
+                        <div style={{ textAlign: 'left', width: '68.5%', margin: '0 auto' }}>
+                            <text className='pop-textfield-title' style={{ fontFamily: 'Outfit'}}>
+                                Password
+                            </text> <br></br>
+                        </div>
+                        <TextField error={error.passwordError} helperText={error.passwordError ? "*This field is required" : ""} required={true} placeholder="Enter Password" type={showPassword ? "text" : "password"}  square={false} style={{width: '68.5%', fontFamily: 'Outfit'}} onChange={(e) => {handleValues(e)}} id='password' value={val.password}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
                                         <IconButton
                                             onClick={togglePasswordVisibility}
                                             edge="end"
+                                            style={{ fontFamily: 'Outfit', textTransform: 'none', fontSize: '0.8rem'}} 
                                         >
-                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                            {showPassword ? 'Hide' : 'Show'}
                                         </IconButton>
                                     </InputAdornment>
                                 ),
+                                style: {  borderRadius: '10px' }
                             }}
                         />
                     </div>
@@ -107,18 +111,23 @@ export function Login() {
                         <Link component="button" variant="body2">
                             Forgot Password?
                         </Link>
-                    <div style={{paddingTop: '2.5%'}}>
-                        <Button type="submit" fullWidth variant="contained" sx={{ mt: 1, mb: 2, py: 1.5, backgroundColor: '#333', '&:hover': { backgroundColor: '#555' } }} >
+                    <div style={{ }}>
+                        <Button type="submit" sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#333', '&:hover': { backgroundColor: '#555' }, borderRadius: '30px', textTransform: 'none', color: 'white' }} >
                             Log in
                         </Button>
                     </div>
-                    <div style={{paddingTop: '1%'}}>
-                        <Button type="submit" fullWidth variant="contained" startIcon={<GoogleIcon/>} sx={{ mt: 1, mb: 2, py: 1.5, backgroundColor: '#333', '&:hover': { backgroundColor: '#555' } }} >
+                    <div class="orLine-container">
+                        <div class="orLine "></div>
+                        <span class="orText">or</span>
+                        <div class="orLine "></div>
+                    </div>
+                    <div style={{ }}>
+                        <Button type="submit"  startIcon={<GoogleIcon/>} sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#333', '&:hover': { backgroundColor: '#555' }, borderRadius: '30px', textTransform: 'none', color: 'white'}} >
                             Continue with Google
                         </Button>
                     </div>
-                    <div style={{paddingTop: '1%'}}>
-                        <Button type="submit" fullWidth variant="contained" startIcon={<GoogleIcon/>} onClick={handleSignUp} sx={{ mt: 1, mb: 2, py: 1.5, backgroundColor: '#333', '&:hover': { backgroundColor: '#555' } }} >
+                    <div style={{ }}>
+                        <Button type="submit" onClick={handleSignUp} sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#333', '&:hover': { backgroundColor: '#555', }, borderRadius: '30px', textTransform: 'none', color: 'white'}} >
                             Don’t have an account? Join now!
                         </Button>
                     </div>
