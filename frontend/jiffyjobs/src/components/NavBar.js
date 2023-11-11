@@ -7,15 +7,14 @@ import Tooltip from '@mui/material/Tooltip';
 import Grid from '@mui/material/Grid';
 
 export function NavBar() {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = React.useState(null);
-
-    const settings = ['Profile', 'Dashboard', 'Setting', 'Logout'];
+    const settings = ['Profile', 'Setting', 'Logout'];
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
     const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
+        setAnchorElNav(event.currentTarget);
     };
 
     const handleOpenUserMenu = (event) => {
@@ -48,44 +47,39 @@ export function NavBar() {
 
     const handleLogout = () => {
         navigate('/login');
-
     }
 
     const settingsActions = {
         'Profile': Profile,
-        'Dashboard': goToDashboard,
         'Setting': handleSettings,
         'Logout': handleLogout
     };
 
     return (
-        <Grid container className="nav-outer">
-             <h1 className='logo-font' onClick={AllJobs} style={{ display: 'flex', alignItems: 'center', marginRight: 'auto'}} >
+        <Grid container className="nav-outer" style={{ display: 'flex', alignItems: 'center' }}>
+            <h1 className='logo-font' onClick={AllJobs} style={{ marginRight: 'auto' }}>
                 JIFFYJOBS
             </h1>
             
-            <div className='first-font' onClick={AllJobs} style={{ display: 'flex', alignItems: 'center',  whiteSpace: 'nowrap', marginLeft: '30%'}}  >
-                All Jobs 
-            </div>
+            <div style={{ flexGrow: 1 }}></div>
 
-            <div className='name-font' style={{ display: 'flex', alignItems: 'center',  whiteSpace: 'nowrap', marginLeft: 'auto'}} >
-            
-        
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+                <div className='first-font' onClick={AllJobs} style={{ cursor: 'pointer', marginRight: '10px', whiteSpace: 'nowrap', }}>
+                    All Jobs 
+                </div>
+                <div className='first-font' onClick={goToDashboard} style={{ cursor: 'pointer', marginRight: '10px', whiteSpace: 'nowrap' }}>
+                    Dashboard
+                </div>
 
-                {/* <div className='tab-font'></div>
-                <div className='tab-font'></div>
-                <div className='tab-font'></div>
-                <div className='tab-font'></div>
-                <div className='tab-font'></div>
-                <div className='tab-font'></div>
-                <div className='tab-font'></div>
-                <div className='tab-font'></div> */}
+                <div style={{ width: '80px' }}></div>
 
-                <Tooltip style={{ display: 'flex', alignItems: 'center'}} onClick={handleOpenUserMenu}>
+                <Tooltip onClick={handleOpenUserMenu} style={{ display: 'flex', alignItems: 'center', marginRight: '10px' }}>
                     <div className='profile-picture'></div>
-                    <span style={{ fontWeight: 'bold' }} >Lucas Yoon</span>
+                    <span style={{ fontWeight: 'bold', whiteSpace: 'nowrap' }}>Lucas Yoon</span>
                 </Tooltip>
-                
+
+                <div style={{ width: '3px', backgroundColor: 'black', height: '100%', marginRight: '10px' }}></div>
+
                 <Menu
                     sx={{ mt: '45px' }}
                     id="menu-appbar"
@@ -103,23 +97,14 @@ export function NavBar() {
                     onClose={handleCloseUserMenu}
                 >
                     {settings.map((setting) => (
-                        <MenuItem 
-                            key={setting} 
-                            onClick={() => {
-                                handleCloseUserMenu(); 
-                                settingsActions[setting](); 
-                            }}>
+                        <MenuItem key={setting} onClick={() => { handleCloseUserMenu(); settingsActions[setting](); }}>
                             <Typography textAlign="center">{setting}</Typography>
                         </MenuItem>
                     ))}
                 </Menu>
             </div>
-            
-            <div className='tab-font'></div>
-            <div className='tab-font'></div>
-            <div className='tab-font'></div>
-            <div className='tab-font'></div>
-
+         
+            <div style={{ width: '20px' }}></div>
         </Grid>
-    )
+    );
 }

@@ -24,25 +24,24 @@ export function RegNavBar() {
 
 
     return (
-        <Grid container className="nav-outer">
-             <h1 className='logo-font' onClick={handleLogout} style={{ display: 'flex', alignItems: 'center', marginRight: 'auto'}} >
+        <Grid container className="nav-outer" style={{ display: 'flex', alignItems: 'center' }}>
+             <h1 className='logo-font' onClick={handleLogout} style={{ marginRight: 'auto'}} >
                 JIFFYJOBS
             </h1>
 
-            <Button color='inherit' onClick={AllJobs}> Temporary Button</Button>
-            <Button color='inherit'  onClick={handleSignUp}>Join Now</Button>
-            <Button color='inherit'  onClick={handleLogout}>Log In</Button>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+                <div className='first-font' onClick={AllJobs} style={{ cursor: 'pointer', marginRight: '10px', whiteSpace: 'nowrap', }}>
+                    Temporary Button
+                </div>
+                <div className='first-font' onClick={handleSignUp} style={{ cursor: 'pointer', marginRight: '10px', whiteSpace: 'nowrap', }}>
+                    Join Now
+                </div>
+                <div className='first-font' onClick={handleLogout} style={{ cursor: 'pointer', marginRight: '10px', whiteSpace: 'nowrap', }}>
+                    Log In
+                </div>
+            </div>
 
-            <div className='tab-font'></div>
-
-                {/* <div className='tab-font'></div>
-                <div className='tab-font'></div>
-                <div className='tab-font'></div>
-                <div className='tab-font'></div>
-                <div className='tab-font'></div>
-                <div className='tab-font'></div>
-                <div className='tab-font'></div>
-                <div className='tab-font'></div> */}
+            <div style={{ width: '20px' }}></div>
 
         </Grid>
     )

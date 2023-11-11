@@ -154,7 +154,7 @@ export function JobBoard() {
 
     
     return (
-        <div className={'job-board-outer' + background}>
+        <div className={ 'outerCard' } style={{ backgroundColor: '#f3f3f3', height: '100vh', width: '100vw' }}>
             <Dialog open={openPop} onClose={closePop} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
                 <div style={{ position: 'relative'}}>
                     <img
@@ -247,7 +247,7 @@ export function JobBoard() {
                         </Link>
                     </DialogActions>
             </Dialog>
-            <Box sx={{ flexGrow: 1 }}>
+            <Box sx={{ flexGrow: 1 }} style={{ backgroundColor: '#f3f3f3' }}>
                 <Grid item xs={12}>
                     <Grid container className='job-table-grid' rowSpacing={2} columnSpacing={2}>
                         <JobPosting> </JobPosting>
@@ -271,7 +271,7 @@ export function JobBoard() {
                         {jobData.slice((page - 1) * cardsPerPage, page * cardsPerPage).map((key) => (
                             <Grid key={key} item>
                                 <Link overlay underline="none" sx={{ color: 'text.tertiary', cursor: 'pointer' }} onClick={() => openPopUp(key)}>
-                                    <Card sx={{height: 300, width: 300, '&:hover': { boxShadow: 'md', borderColor: 'neutral.outlinedHoverBorder' }}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px'}}>
+                                    <Card sx={{height: 300, width: 300, '&:hover': { boxShadow: 'md', borderColor: 'neutral.outlinedHoverBorder' }}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px', }}>
                                         <CardMedia
                                             component="img"
                                             alt="placeholder"
@@ -301,7 +301,7 @@ export function JobBoard() {
                     </Grid>
                 </Grid>   
             </Box>
-            <div style={{ display: 'flex', justifyContent: 'center', padding: '1%' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', padding: '1%', background: '#f3f3f3' }}>
                 <Pagination count={totalPages} page={page} onChange={(event, value) => setPage(value)} />
             </div>
         </div>
