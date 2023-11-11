@@ -33,8 +33,8 @@ export function Filter() {
                 //  'Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving',
                 //  'Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving',
                 //  'Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving'],
-      JobType: ['Quick Jobs (1 day)', 'Short Term Jobs (1-7 days)', 'Part-Time Jobs (7+ Days)'],
-      DateRange: [],
+      // JobType: ['Quick Jobs (1 day)', 'Short Term Jobs (1-7 days)', 'Part-Time Jobs (7+ Days)'],
+      // DateRange: [],
       // OnOffCampus: ['On campus', 'Off campus'],
     };
 

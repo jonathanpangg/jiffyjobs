@@ -12,7 +12,7 @@ export function Sort({ rawData, setRawData, setJobData }) {
     const [anchorEl, setAnchorEl] = useState(null);
 
     const filterOptions = {
-        SortBy: ['Pay: High to Low', 'Pay: Low to High', 'Date: New to Old', 'Date: Old to New']
+        SortBy: ['Date Deadline', 'Pay: Low to High', 'Pay: High to Low']
     };
 
     const handleClick = (event) => {
