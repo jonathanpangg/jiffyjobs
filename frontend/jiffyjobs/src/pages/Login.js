@@ -78,7 +78,7 @@ export function Login() {
                         <text className='pop-textfield-title' style={{ fontFamily: 'Outfit'}}>
                             Email Address
                         </text> <br></br>
-                        <TextField error={error.emailError} helperText={error.emailError ? "*This field is required" : ""} required={true} placeholder={"example@example.edu"}  type="email" square={false} style={{width: '98.5%', fontFamily: 'Outfit'}} onChange={(e) => {handleValues(e)}} id='email' value={val.email}/>
+                        <TextField error={error.emailError} helperText={error.emailError ? "*This field is required" : ""} required={true} placeholder={"example@email.edu"}  type="email" square={false} style={{width: '98.5%', fontFamily: 'Outfit'}} onChange={(e) => {handleValues(e)}} id='email' value={val.email}/>
                     </div>
                     <div style={{paddingTop: '2.5%'}}>
                         <text className='pop-textfield-title' style={{ fontFamily: 'Outfit'}}>
