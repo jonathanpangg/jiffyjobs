@@ -55,6 +55,16 @@ export function JobBoard() {
                     return response.json();
                 })
                 .then((data) => {
+                    const sortedData = data.sort((a, b) => {
+                        const startTimeA = dayjs(a.time[0]);
+                        const startTimeB = dayjs(b.time[0]);
+                        
+                        if (!startTimeA.isValid()) return 1;
+                        if (!startTimeB.isValid()) return -1;
+                        
+                        return startTimeA.isAfter(startTimeB) ? 1 : -1;
+                    });
+                    
                     setRawData(data);
                     const newJobData = data.map(function(obj) {
                         console.log(obj.time)
