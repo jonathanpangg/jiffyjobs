@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../styles/JobPosting.css';
 import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from '@mui/material/IconButton';
-import { Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, Typography } from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, Typography, Box } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import CardContent from '@mui/material/CardContent';
 import Card from '@mui/material/Card';
@@ -646,9 +646,9 @@ export function JobPosting() {
     }
 
     return (
-        <div className='job-search-tab'> 
+        <Box className='job-search-tab'> 
             <div className='inner-div'>
-                <Card sx={{height: 200, width: '100%'}} elevation={8} style={{overflow: 'hidden', borderRadius: '15px', paddingTop: '3.5%'}}>
+                <Card sx={{ height: '75%'}}elevation={8} style={{overflow: 'hidden', borderRadius: '15px', paddingTop: '3.5%', textAlign: 'center'}}>
                     <text className='job-search-text'> 
                         Find jobs or hire college students starting now with {" "}
                     </text>
@@ -656,19 +656,17 @@ export function JobPosting() {
                         JiffyJobs
                     </text>
                     <br></br>
-                    <Grid container className='job-table-grid' columnSpacing={2} style={{paddingLeft: '30%', paddingTop: '1.5%'}}> 
-                        <TextField placeholder="Find Jobs..." type="search" style={{width: '45%'}}/>
-                        <Grid className='job-button'>
-                            <Card sx={{height: 55, width: '115%'}} elevation={8} style={{overflow:'hidden', borderRadius: '15px', background: "#8253E7", color: 'white'}}>
-                                <CardContent onClick={openPop}> 
-                                    Post a Job
-                                </CardContent>
-                            </Card>
-                            { openSecondPop ? secondJobSlide(): firstJobSlide()}
-                        </Grid>
-                    </Grid>
+                    <div>
+                        <TextField placeholder="Find Jobs..." type="search" style={{width: '35vw', height: '1vh', paddingRight: '2.5%'}}/>
+                        <Card sx={{width: '8vw'}} elevation={8} style={{overflow:'hidden', borderRadius: '15px', background: "#8253E7", color: 'white', display: 'inline-block', verticalAlign: 'center', alignItems: 'center', justifyContent: 'center'}}>
+                            <CardContent onClick={openPop}> 
+                                Post a Job
+                            </CardContent>
+                        </Card>
+                    </div>
+                    { openSecondPop ? secondJobSlide(): firstJobSlide()}
                 </Card>
             </div>
-        </div>
+        </Box>
     )
 }

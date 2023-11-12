@@ -14,8 +14,6 @@ import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from '@mui/material/IconButton';
 import Chip from '@mui/material/Chip';
 
-
-
 export function JobBoard() {
     const [jobData, setJobData] = useState([])
     const [rawData, setRawData] = useState([]);
@@ -151,7 +149,6 @@ export function JobBoard() {
             }
         }
     }, [openPopUp])
-
     
     return (
         <div className={ 'outerCard' } style={{ backgroundColor: '#f3f3f3', height: '100vh', width: '100vw' }}>
@@ -247,59 +244,55 @@ export function JobBoard() {
                         </Link>
                     </DialogActions>
             </Dialog>
+            <JobPosting/> 
             <Box sx={{ flexGrow: 1 }} style={{ backgroundColor: '#f3f3f3' }}>
-                <Grid item xs={12}>
-                    <Grid container className='job-table-grid' rowSpacing={2} columnSpacing={2}>
-                        <JobPosting> </JobPosting>
-                        
-                        <text style={{width: "100%"}} className='recently-posted-jobs'> 
-                            Job Board
-                        </text>
-                        
-                        <text style={{width: "100%"}} className='recently-posted-jobs'>
-                            <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>
-                                { render }
-                                { console.log (filterList)}
-                                <div style={{ marginLeft: 'auto', marginRight: '8%' }}>
-                                <Sort rawData={rawData} setRawData={setRawData} setJobData={setJobData} />
-                                </div>
+                <Grid container className='job-table-grid' rowSpacing={2} columnSpacing={2}>
+                    <text style={{width: "100%"}} className='recently-posted-jobs'> 
+                        Job Board
+                    </text>
+                    <text style={{width: "100%"}} className='recently-posted-jobs'>
+                        <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>
+                            { render }
+                            { console.log (filterList)}
+                            <div style={{ marginLeft: 'auto', marginRight: '8%' }}>
+                            <Sort rawData={rawData} setRawData={setRawData} setJobData={setJobData} />
                             </div>
-                            <Divider style={{ paddingTop: '1%', width: '92.5%'}}/>
-                        </text>
-                        {/* <button onClick={handleLogJobData}>Log Job Data</button> */}
+                        </div>
+                        <Divider style={{ paddingTop: '1%', width: '92.5%'}}/>
+                    </text>
+                    {/* <button onClick={handleLogJobData}>Log Job Data</button> */}
 
-                        {jobData.slice((page - 1) * cardsPerPage, page * cardsPerPage).map((key) => (
-                            <Grid key={key} item>
-                                <Link overlay underline="none" sx={{ color: 'text.tertiary', cursor: 'pointer' }} onClick={() => openPopUp(key)}>
-                                    <Card sx={{height: 300, width: 300, '&:hover': { boxShadow: 'md', borderColor: 'neutral.outlinedHoverBorder' }}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px', }}>
-                                        <CardMedia
-                                            component="img"
-                                            alt="placeholder"
-                                            height="120"
-                                            image="https://source.unsplash.com/random"
-                                            
-                                        />
-                                        <Typography style={{fontFamily: 'Outfit', fontSize:"14px", paddingLeft:'10px', paddingRight:'10px', paddingTop:'10px'}}>
-                                            <u>{key[0][1]}</u>
-                                        </Typography>
-                                        <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px', paddingTop:'15px'}}>
-                                            Pay: ${key[3][1]}
-                                        </Typography>
-                                        <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px'}}>
-                                            Location: <u>{key[2][1]}</u>
-                                        </Typography>
-                                        <Typography className='job-posting'>
-                                            Time: {key[5][1]}
-                                        </Typography>
-                                        <Typography style={{fontFamily: 'Outfit', fontSize:"12px", padding:'10px', position:'relative', overflow:'hidden', textOverflow:'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 3, maxHeight:'44px'}}>
-                                            Description: {key[4][1]}
-                                        </Typography>
-                                    </Card>
-                                </Link>
-                            </Grid>
-                        ))}
-                    </Grid>
-                </Grid>   
+                    {jobData.slice((page - 1) * cardsPerPage, page * cardsPerPage).map((key) => (
+                        <Grid key={key} item>
+                            <Link overlay underline="none" sx={{ color: 'text.tertiary', cursor: 'pointer' }} onClick={() => openPopUp(key)}>
+                                <Card sx={{height: 300, width: 300, '&:hover': { boxShadow: 'md', borderColor: 'neutral.outlinedHoverBorder' }}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px', }}>
+                                    <CardMedia
+                                        component="img"
+                                        alt="placeholder"
+                                        height="120"
+                                        image="https://source.unsplash.com/random"
+                                        
+                                    />
+                                    <Typography style={{fontFamily: 'Outfit', fontSize:"14px", paddingLeft:'10px', paddingRight:'10px', paddingTop:'10px'}}>
+                                        <u>{key[0][1]}</u>
+                                    </Typography>
+                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px', paddingTop:'15px'}}>
+                                        Pay: ${key[3][1]}
+                                    </Typography>
+                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px'}}>
+                                        Location: <u>{key[2][1]}</u>
+                                    </Typography>
+                                    <Typography className='job-posting'>
+                                        Time: {key[5][1]}
+                                    </Typography>
+                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", padding:'10px', position:'relative', overflow:'hidden', textOverflow:'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 3, maxHeight:'44px'}}>
+                                        Description: {key[4][1]}
+                                    </Typography>
+                                </Card>
+                            </Link>
+                        </Grid>
+                    ))}
+                </Grid>
             </Box>
             <div style={{ display: 'flex', justifyContent: 'center', padding: '1%', background: '#f3f3f3' }}>
                 <Pagination count={totalPages} page={page} onChange={(event, value) => setPage(value)} />
