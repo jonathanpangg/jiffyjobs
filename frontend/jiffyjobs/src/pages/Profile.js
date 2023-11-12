@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Card, Grid, Container, Typography, FormGroup, TextField, Button, FormControlLabel, Checkbox, Avatar, FormControl, InputLabel, OutlinedInput, Select, MenuItem } from '@mui/material';
-import '../styles/Profile.css'
+
 
 
 
