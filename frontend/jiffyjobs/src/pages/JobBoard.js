@@ -55,6 +55,16 @@ export function JobBoard() {
                     return response.json();
                 })
                 .then((data) => {
+                    const sortedData = data.sort((a, b) => {
+                        const startTimeA = dayjs(a.time[0]);
+                        const startTimeB = dayjs(b.time[0]);
+                        
+                        if (!startTimeA.isValid()) return 1;
+                        if (!startTimeB.isValid()) return -1;
+                        
+                        return startTimeA.isAfter(startTimeB) ? 1 : -1;
+                    });
+                    
                     setRawData(data);
                     const newJobData = data.map(function(obj) {
                         console.log(obj.time)
@@ -152,6 +162,10 @@ export function JobBoard() {
         }
     }, [openPopUp])
 
+    function handleLogJobData() {
+        console.log(jobData)
+        console.log(rawData)
+    }
     
     return (
         <div className={ 'outerCard' } style={{ backgroundColor: '#f3f3f3', height: '100vh', width: '100vw' }}>
@@ -288,7 +302,7 @@ export function JobBoard() {
                                         <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px'}}>
                                             Location: <u>{key[2][1]}</u>
                                         </Typography>
-                                        <Typography className='job-posting'>
+                                        <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px'}}>
                                             Time: {key[5][1]}
                                         </Typography>
                                         <Typography style={{fontFamily: 'Outfit', fontSize:"12px", padding:'10px', position:'relative', overflow:'hidden', textOverflow:'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 3, maxHeight:'44px'}}>
