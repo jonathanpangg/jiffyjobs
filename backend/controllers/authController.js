@@ -17,8 +17,12 @@ export const seekerSignUp = async (req, res) => {
         const passwordHash = await bcrypt.hash(password, salt);
 
         const seekerExist = await Seeker.findOne({email});
+        const providerExist = await Provider.findOne({email});
         if (seekerExist) {
             return handleBadRequest(res, "Seeker already registered with this email")
+        }
+        if (providerExist) {
+            return handleBadRequest(res, "Already registered as a provider")
         }
 
         const newSeeker = new Seeker({
@@ -44,31 +48,48 @@ export const seekerSignUp = async (req, res) => {
     }
 }
 
-export const seekerLogin = async (req, res) => {
+//this is to log in
+export const Login = async (req, res) => {
     try {
         const {email, password } = req.body;
-        const seeker = await Seeker.findOne({email: email})
+        const seeker = await Seeker.findOne({ email: email });
+        const provider = await Provider.findOne({ email: email });
         
-        if (!seeker) {
-            return handleNotFound(res, "Seeker not found");
+        if (!seeker && !provider) {
+            return handleNotFound(res, "User not found");
+        } else if (!provider) {
+            const match = await bcrypt.compare(password, seeker.password);
+            if (!match) {
+                return handleBadRequest(res, "Password/Email is incorrect. Please try again.");
+            }
+    
+            delete seeker.password;
+            return handleSuccess(res, {
+                _id: seeker.id,
+                email: seeker.email,
+                token: generateToken(seeker._id)
+            });
+        } else {
+            const match = await bcrypt.compare(password, provider.password);
+
+            if (!match) {
+                return handleBadRequest(res, "Password/Email is incorrect. Please try again.");
+            };
+
+            delete provider.password;
+            return handleSuccess(res, {
+                _id: provider.id,
+                email: provider.email,
+                token: generateToken(provider._id)
+            });
         }
 
-        const match = await bcrypt.compare(password, seeker.password);
-        if (!match) {
-            return handleBadRequest(res, "Password/Email is incorrect. Please try again.");
-        }
-
-        delete seeker.password;
-        return handleSuccess(res, {
-            _id: seeker.id,
-            email: seeker.email,
-            token: generateToken(seeker._id)
-        });
     } catch (error) {
         return handleServerError(res, error)  ;
     }
 }
 
+//this is for providers to sign up
 export const providerSignUp = async(req, res) => {
     try {
         const { email, name, password } = req.body;
@@ -76,8 +97,12 @@ export const providerSignUp = async(req, res) => {
         const passwordHash = await bcrypt.hash(password, salt);
 
         const providerExist = await Provider.findOne({ email });
+        const seekerExist = await Seeker.findOne({ email });
         if (providerExist) {
             return handleBadRequest(res, "Provider already registered with this email");
+        };
+        if (seekerExist) {
+            return handleBadRequest(res, "Already registered as a seeker");
         };
 
         const newProvider = new Provider({
@@ -94,31 +119,6 @@ export const providerSignUp = async(req, res) => {
             email: (await savedProvider).email,
             name: (await savedProvider).personal_info.name,
             token: generateToken(savedProvider._id)
-        })
-    } catch (error) {
-        return handleServerError(res, error);
-    }
-}
-
-export const providerLogin = async (req, res) => {
-    try {
-        const { email, password } = req.body;
-        const provider = await Provider.findOne({ email: email });
-        if (!provider) {
-            return handleNotFound(res, "Provider not found");
-        }
-
-        const match = await bcrypt.compare(password, provider.password);
-
-        if (!match) {
-            return handleBadRequest(res, "Password/Email is incorrect. Please try again.");
-        }
-
-        delete provider.password;
-        return handleSuccess(res, {
-            _id: provider.id,
-            email: provider.email,
-            token: generateToken(provider._id)
         })
     } catch (error) {
         return handleServerError(res, error);
