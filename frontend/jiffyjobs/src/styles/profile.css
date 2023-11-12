@@ -64,13 +64,13 @@
   position: 'fixed';
 
 }
-.profile-components-cetegories
+.profile-components-bio
 {
-  width: 20px;
+  width: 50px;
   color: #5b5b5b;
   font-family: Outfit;
-  position: 'center';
-
+  position: relative;
+  top: -20px; 
 }
 
 .profile-box-fixed .MuiInputBase-input
@@ -95,6 +95,16 @@
   height: 8px;
   position:relative;
   border-radius:6px;
+}
+
+.profile-box-bio .MuiInputBase-input
+{
+  color:black;
+  font-size:16px;  
+  font-family:Outfit;
+  width: 29000px;
+  /* position:relative; */
+  /* border-radius:6px; */
 }
 
 .label-input-pair {
