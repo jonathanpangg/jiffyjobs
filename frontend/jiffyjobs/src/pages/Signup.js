@@ -4,6 +4,7 @@ import { InputAdornment, IconButton } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { RegNavBar } from '../components/RegNavBar';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 export function Signup() {
     const [role, setRole] = React.useState('jobSeeker');
@@ -74,7 +75,9 @@ export function Signup() {
         return re.test(email.toLowerCase());
     }
 
-    async function signUp() {
+    const navigate = useNavigate()
+
+    const signUp = async () => {
         const register = {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
@@ -92,10 +95,21 @@ export function Signup() {
             route = "http://localhost:4000/api/auth/seekerSignUp";
         }
 
-        fetch(route, register).then((response) => {
-            console.log(response.json)
-        })
-        
+        try {
+            fetch(route, register)
+            .then(async (response) => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("user", JSON.stringify(data));
+            navigate("/JobBoard")
+            })
+        } catch (error) {
+            console.log(error);
+        }
     }
     
     return (

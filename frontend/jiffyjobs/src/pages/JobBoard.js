@@ -13,6 +13,7 @@ import dayjs from 'dayjs';
 import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from '@mui/material/IconButton';
 import Chip from '@mui/material/Chip';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -29,6 +30,17 @@ export function JobBoard() {
     const cardsPerPage = 20;
     const totalCards = jobData.length;
     const totalPages = Math.ceil(totalCards / cardsPerPage);
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const loggedin = localStorage.getItem("user");
+        const token = localStorage.getItem("token");
+        if (!loggedin) {
+            alert('Please login!');
+            navigate('/login');
+        }
+    },[]);
 
     function processTime(time) {
         var str = "Time: "

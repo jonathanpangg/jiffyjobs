@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Box, Card, Grid, Container, Typography, TextField, Button, FormControlLabel, Checkbox, Avatar, FormControl, InputLabel, OutlinedInput, Select, MenuItem } from '@mui/material';
 import '../styles/profile.css'
 import { deepOrange } from '@mui/material/colors';
+import { useNavigate } from 'react-router-dom';
 
 
 export function Profile() {
@@ -19,6 +20,16 @@ export function Profile() {
 
     const userEmail = "example_email@bu.edu"; // This will eventually come from user login state
 
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const loggedin = localStorage.getItem("user");
+        const token = localStorage.getItem("token");
+        if (!loggedin) {
+            alert('Please login!');
+            navigate('/login')
+        }
+    },[])
 
     useEffect(() => {
         if (personalInfo.minor) {

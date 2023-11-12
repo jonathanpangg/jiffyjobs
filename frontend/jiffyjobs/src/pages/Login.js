@@ -66,6 +66,8 @@ export function Login() {
         return re.test(String(email).toLowerCase());
     }
 
+    
+
     return (
         <> 
         <RegNavBar/> 
