@@ -96,10 +96,10 @@ export function Signup() {
         }
 
         try {
-            fetch(route, register)
+            await fetch(route, register)
             .then(async (response) => {
             if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+                throw new Error(`${response.status}`);
             }
 
             const data = await response.json();
