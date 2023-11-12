@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Button, TextField, ToggleButton, ToggleButtonGroup, Card, CardContent } from '@mui/material';
 import { InputAdornment, IconButton } from '@mui/material';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { RegNavBar } from '../components/RegNavBar';
 
 export function Signup() {

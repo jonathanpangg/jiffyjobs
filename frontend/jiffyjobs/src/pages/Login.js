@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Button, TextField, ToggleButton, ToggleButtonGroup, Card, CardContent } from '@mui/material';
 import { Checkbox, FormControlLabel, Link } from '@mui/material';
 import { InputAdornment, IconButton } from '@mui/material';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import GoogleIcon from '@mui/icons-material/Google';
 import { RegNavBar } from '../components/RegNavBar';
 
