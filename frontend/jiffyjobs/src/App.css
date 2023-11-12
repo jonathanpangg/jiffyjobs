@@ -91,19 +91,29 @@
 .recently-posted-jobs {
   font-family: "Outfit";
   font-size: xx-large;
-  padding-left: 1.5%;
   padding-top: 2.5%;
+}
+
+.job-table-box {
+  background-color: #f3f3f3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.job-table-inner {
+  width: 90vw;
 }
 
 .job-table-grid {
   font-family: "Outfit";
   font-size: medium;
-  justify-content: start;
-  padding-left: 6.5%;
-  padding-bottom: 1%;
-  text-align: start;
-  align-content: center;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1%;
+  width: 95vw
 }
+
 
 .card-grid-0 {
   font-family: "Outfit";
@@ -138,14 +148,13 @@
 .outerCard {
   background-color: #f3f3f3;
   height: 100vh;
-  padding: 1%;
   align-items: center;
 }
 
 .outerCard1 {
   background-color: #f3f3f3;
+  width: 100vw;
   height: 100vh;
-  padding: 1%;
   align-items: center;
 }
 
