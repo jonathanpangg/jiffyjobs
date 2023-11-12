@@ -1,0 +1,22 @@
+.outer-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+}
+
+.inner-div {
+    width: 85vw;
+}
+
+.progress-tab {
+    text-align: left;
+}
+
+.progress-grid {
+    font-family: "Outfit";
+    font-size: medium;
+    justify-content: start;
+    text-align: start;
+    align-content: center;
+    padding-top: 2.5%;
+}
