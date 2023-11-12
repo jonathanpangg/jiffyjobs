@@ -31,21 +31,23 @@ export function Dashboard() {
     const { renderVerticalDashBoard, value } = VerticalDashboardBar()
 
     return (
-        <Box className='outer-box'>
-            <div className='inner-div'>
-                <Card elevation='4' style={{display: 'flex', overflow: 'hidden', borderRadius: '15px'}}> 
-                    { renderVerticalDashBoard }
-                    <TabPanel value={value} index={4} className='progress-tab'>
-                        <StatusDashboard/>
-                    </TabPanel>
-                    <TabPanel value={value} index={6}>
-                        Item Two
-                    </TabPanel>
-                    <TabPanel value={value} index={8} className='progress-tab'>
-                        <SavedJobDashboard/>
-                    </TabPanel>
-                </Card>
-            </div>
-        </Box> 
+        <div className={ 'outerCard' }>
+            <Box className='outer-box'>
+                <div className='inner-div'>
+                    <Card elevation='4' style={{display: 'flex', overflow: 'hidden', borderRadius: '15px'}}> 
+                        { renderVerticalDashBoard }
+                        <TabPanel value={value} index={4} className='progress-tab'>
+                            <StatusDashboard/>
+                        </TabPanel>
+                        <TabPanel value={value} index={6}>
+                            Item Two
+                        </TabPanel>
+                        <TabPanel value={value} index={8} className='progress-tab'>
+                            <SavedJobDashboard/>
+                        </TabPanel>
+                    </Card>
+                </div>
+            </Box> 
+        </div>
     );
 }
