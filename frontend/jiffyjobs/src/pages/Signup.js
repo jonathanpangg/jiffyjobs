@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, TextField, ToggleButton, ToggleButtonGroup, Card, CardContent } from '@mui/material';
 import { InputAdornment, IconButton } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
@@ -11,6 +11,16 @@ export function Signup() {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState('');
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        const loggedin = localStorage.getItem("user");
+        const token = localStorage.getItem("token");
+        if (loggedin) {
+            alert('Already logged in!');
+            navigate('/JobBoard');
+        }
+    },[]);
 
     const handleRole = (event, newRole) => {
         if (newRole !== null) {
@@ -74,8 +84,6 @@ export function Signup() {
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email.toLowerCase());
     }
-
-    const navigate = useNavigate()
 
     const signUp = async () => {
         const register = {

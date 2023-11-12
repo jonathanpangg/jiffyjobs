@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, TextField, ToggleButton, ToggleButtonGroup, Card, CardContent } from '@mui/material';
 import { Checkbox, FormControlLabel, Link } from '@mui/material';
@@ -13,6 +13,15 @@ export function Login() {
     const navigate = useNavigate()
     const [email, setEmail] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+
+    useEffect(() => {
+        const loggedin = localStorage.getItem("user");
+        const token = localStorage.getItem("token");
+        if (loggedin) {
+            alert('Already logged in!');
+            navigate('/JobBoard');
+        }
+    },[]);
 
     const AllJobs = () => {
         navigate('/JobBoard')
