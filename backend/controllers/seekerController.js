@@ -15,7 +15,7 @@ import {
                 return handleNotFound(res, "No Seekers");
             }
             
-            return handleSuccess(res, seeker);
+            return handleSuccess(res, seekers);
         } catch (error) {
             return handleServerError(res, error);
         }
@@ -28,9 +28,9 @@ import {
             const seeker = await Seeker.findOne({ email: req.params.email });
             if (!seeker) {
                 // return handleNotFound(res, "Seeker not found");
-                return {"err": "seeker not found"};
+                return handleNotFound(res, "Seeker not found");
             }
-            return seeker
+            return handleSuccess(res, seeker);
         } catch (error) {
             return handleServerError(res, error);
         }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, TextField, ToggleButton, ToggleButtonGroup, Card, CardContent } from '@mui/material';
 import { Checkbox, FormControlLabel, Link } from '@mui/material';
@@ -9,6 +9,15 @@ import { RegNavBar } from '../components/RegNavBar';
 export function Login() {
     const navigate = useNavigate()
     const [showPassword, setShowPassword] = useState(false);
+
+    useEffect(() => {
+        const loggedin = localStorage.getItem("user");
+        const token = localStorage.getItem("token");
+        if (loggedin) {
+            alert('Already logged in!');
+            navigate('/JobBoard');
+        }
+    },[]);
 
     const AllJobs = () => {
         navigate('/JobBoard')
@@ -62,6 +71,36 @@ export function Login() {
         return re.test(String(email).toLowerCase());
     }
 
+    const login = async () => {
+        const Login = {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                email: val.email,
+                password: val.password
+            })
+        }
+
+        const route = "http://localhost:4000/api/auth/Login";
+
+        try {
+            await fetch(route, Login)
+            .then(async (response) => {
+            if (!response.ok) {
+                throw new Error(`${response.status}`);
+            }
+
+            const data = await response.json();
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("user", JSON.stringify(data));
+            navigate("/JobBoard");
+            })
+        } catch (error) {
+            alert("Password/Email is incorrect");
+        }
+
+    }
+
     return (
         <> 
         <RegNavBar/> 
@@ -113,7 +152,7 @@ export function Login() {
                         <Link component = 'button' onClick={handleForgotPassword} variant="body2" style={{ fontFamily: 'Outfit', color: '#5B5B5B', textDecorationColor: '#5B5B5B', fontSize: '0.85rem' }} > Forgot Password?</Link>
                     </div>
                     <div style={{ }}>
-                        <Button type="submit" sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#A4A4A4', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit', border: '1px solid #5B5B5B' }} >
+                        <Button type="submit" onClick={login} sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#A4A4A4', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit', border: '1px solid #5B5B5B' }} >
                             Log in
                         </Button>
                     </div>

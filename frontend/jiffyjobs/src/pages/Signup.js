@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, TextField, ToggleButton, ToggleButtonGroup, Card, CardContent } from '@mui/material';
 import { InputAdornment, IconButton } from '@mui/material';
 import { RegNavBar } from '../components/RegNavBar';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 export function Signup() {
     const [role, setRole] = React.useState('jobSeeker');
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState('');
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        const loggedin = localStorage.getItem("user");
+        const token = localStorage.getItem("token");
+        if (loggedin) {
+            alert('Already logged in!');
+            navigate('/JobBoard');
+        }
+    },[]);
 
     const handleRole = (event, newRole) => {
         if (newRole !== null) {
@@ -70,6 +81,41 @@ export function Signup() {
     const validateEmail = (email) => {
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email.toLowerCase());
+    }
+
+    const signUp = async () => {
+        const register = {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                email: val.email,
+                name: val.name,
+                school: "Boston University",
+                password: val.password
+            })
+        }
+        
+        console.log(role);
+        let route = "http://localhost:4000/api/auth/providerSignUp";
+        if (role === 'jobSeeker') {
+            route = "http://localhost:4000/api/auth/seekerSignUp";
+        }
+
+        try {
+            await fetch(route, register)
+            .then(async (response) => {
+            if (!response.ok) {
+                throw new Error(`${response.status}`);
+            }
+
+            const data = await response.json();
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("user", JSON.stringify(data));
+            navigate("/JobBoard")
+            })
+        } catch (error) {
+            console.log(error);
+        }
     }
     
     return (
@@ -159,7 +205,7 @@ export function Signup() {
                     </div>
 
                     <div style={{paddingTop: '1.5%'}}>
-                        <Button type="submit" fullWidth sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#5B5B5B', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit'  }} >
+                        <Button type="submit" fullWidth onClick={signUp} sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#5B5B5B', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit'  }}>
                             Sign up as a {role === 'jobSeeker' ? 'Job Seeker' : 'Job Provider'}
                         </Button>
                     </div>

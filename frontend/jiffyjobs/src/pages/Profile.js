@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Card, Grid, Container, Typography, FormGroup, TextField, Button, FormControlLabel, Checkbox, Avatar, FormControl, InputLabel, OutlinedInput, Select, MenuItem } from '@mui/material';
-import '../styles/Profile.css'
+import { Box, Card, Grid, Container, Typography, TextField, Button, FormControlLabel, Checkbox, Avatar, FormControl, InputLabel, OutlinedInput, Select, MenuItem } from '@mui/material';
+import '../styles/profile.css'
+import { deepOrange } from '@mui/material/colors';
+import { useNavigate } from 'react-router-dom';
 
 export function Profile() {
     const [UserEmailstate, setuserEmail] = useState("");
@@ -21,9 +23,23 @@ export function Profile() {
 
     const [personalInfo, setpersonalInfo] = useState({});
 
+    const userEmail = "example_email@bu.edu"; // This will eventually come from user login state
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const loggedin = localStorage.getItem("user");
+        const token = localStorage.getItem("token");
+        if (!loggedin) {
+            alert('Please login!');
+            navigate('/login')
+        }
+    },[])
+
     const userEmail = "pangj@bu.edu"; // This will eventually come from user login state
     // const userEmail = "example_email@bu.edu"
     const wordLimit = 50;
+
 
     useEffect(() => {
         if (personalInfo.minor) {

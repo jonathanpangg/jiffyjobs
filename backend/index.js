@@ -5,6 +5,7 @@ import cors from "cors"
 
 import jobRoutes from "./routes/jobRoutes.js"
 import userRoutes from "./routes/userRoutes.js"
+import authRoutes from "./routes/authRoutes.js"
 dotenv.config();
 
 
@@ -28,6 +29,7 @@ app.use((req, res, next) => {
 // routes
 app.use('/api/jobs', jobRoutes)
 app.use('/api/users', userRoutes)
+app.use('/api/auth', authRoutes)
 
 
 // connect to db

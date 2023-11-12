@@ -11,11 +11,7 @@ const SeekerSchema = mongoose.Schema({
         required: true
     },
     personal_info: {
-        first_name: {
-            type: String,
-            required: true
-        },
-        last_name: {
+        name: {
             type: String,
             required: true
         },
@@ -29,7 +25,8 @@ const SeekerSchema = mongoose.Schema({
         },
         school: {
             type: String,
-            required: true
+            required: true,
+            default: "Boston University"
         },
         major: {
             type: [String],
@@ -91,7 +88,5 @@ const SeekerSchema = mongoose.Schema({
     }]
 });
 
-
-
-const Seekers = mongoose.model("Seekers", SeekerSchema);
-export default Seekers;
+const Seeker = mongoose.model("Seekers", SeekerSchema);
+export default Seeker;
