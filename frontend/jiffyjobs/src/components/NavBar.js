@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
@@ -15,7 +15,10 @@ export function NavBar() {
     const settings = ['Profile', 'Setting', 'Logout'];
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
-    const [value, setValue] = useState(0);
+    const location = useLocation();
+    const [value, setValue] = useState(location.pathname.toLowerCase() === '/jobboard' ? 0 : 1);
+
+    console.log('Current route:', );
 
     const handleChange = (_, newValue) => {
         setValue(newValue);
