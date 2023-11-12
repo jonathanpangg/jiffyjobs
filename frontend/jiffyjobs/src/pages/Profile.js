@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Card, Grid, Container, Typography, FormGroup, TextField, Button, FormControlLabel, Checkbox, Avatar, FormControl, InputLabel, OutlinedInput, Select, MenuItem } from '@mui/material';
-import '../styles/profile.css'
-
-
+import '../styles/Profile.css'
 
 export function Profile() {
     const [UserEmailstate, setuserEmail] = useState("");
