@@ -73,6 +73,30 @@ export function Signup() {
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email.toLowerCase());
     }
+
+    async function signUp() {
+        const register = {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                email: val.email,
+                name: val.name,
+                school: "Boston University",
+                password: val.password
+            })
+        }
+        
+        console.log(role);
+        let route = "http://localhost:4000/api/auth/providerSignUp";
+        if (role === 'jobSeeker') {
+            route = "http://localhost:4000/api/auth/seekerSignUp";
+        }
+
+        fetch(route, register).then((response) => {
+            console.log(response.json)
+        })
+        
+    }
     
     return (
         <>
@@ -161,7 +185,7 @@ export function Signup() {
                     </div>
 
                     <div style={{paddingTop: '1.5%'}}>
-                        <Button type="submit" fullWidth sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#5B5B5B', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit'  }} >
+                        <Button type="submit" fullWidth onClick={signUp} sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#5B5B5B', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit'  }}>
                             Sign up as a {role === 'jobSeeker' ? 'Job Seeker' : 'Job Provider'}
                         </Button>
                     </div>
