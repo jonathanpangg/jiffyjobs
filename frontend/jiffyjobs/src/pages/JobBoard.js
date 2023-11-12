@@ -151,7 +151,7 @@ export function JobBoard() {
     }, [openPopUp])
     
     return (
-        <div className={ 'outerCard' } style={{ backgroundColor: '#f3f3f3', height: '100vh', width: '100vw' }}>
+        <div className='outerCard'>
             <Dialog open={openPop} onClose={closePop} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
                 <div style={{ position: 'relative'}}>
                     <img
@@ -166,50 +166,50 @@ export function JobBoard() {
                 <DialogContent style={{paddingTop:'0.5%', paddingBottom: '1%'}}>
                     <DialogContentText ref={descriptionElementRefStartPop} tabIndex={-1} style={{width: '750px'}}>
                         <div>
-                            <Typography style={{fontFamily: 'outfit', fontSize:'24px', color:'#000', fontWeight:'600', paddingLeft:'1%'}}>
+                            <Typography style={{fontFamily: 'Outfit', fontSize:'24px', color:'#000', fontWeight:'600', paddingLeft:'1%'}}>
                                 {currentPop[0] && currentPop[0].length > 1 && currentPop[0][1]}
                             </Typography>
-                            <Typography style={{fontFamily: 'outfit', fontSize:'20px', color:'#141414', fontWeight: '500', paddingLeft:'1%'}}>
+                            <Typography style={{fontFamily: 'Outfit', fontSize:'20px', color:'#141414', fontWeight: '500', paddingLeft:'1%'}}>
                                 {currentPop[1] && currentPop[1].length > 1 && currentPop[1][1]}
                             </Typography>
                         </div>
                         <div style={{paddingTop: '0.75%'}}>
-                            <Typography style={{fontFamily: 'outfit', fontSize: '18px', color: '#141414', fontWeight: '600', paddingLeft:'1%'}}>
+                            <Typography style={{fontFamily: 'Outfit', fontSize: '18px', color: '#141414', fontWeight: '600', paddingLeft:'1%'}}>
                                 Job Information
                             </Typography>
                         </div>
                         <div style={{paddingTop: '1%', paddingLeft:'3%', paddingBottom: '1%'}}>
                             <div style={{display: 'inline-block', width: '98px'}}>
-                                <Typography style={{fontFamily: 'outfit', fontSize:'14px', color:'#5B5B5B', fontWeight:'400'}}>
+                                <Typography style={{fontFamily: 'Outfit', fontSize:'14px', color:'#5B5B5B', fontWeight:'400'}}>
                                     Pay
                                 </Typography>
-                                <Typography style={{fontFamily: 'outfit', fontSize:'14px', color:'#5B5B5B', fontWeight:'400'}}>
+                                <Typography style={{fontFamily: 'Outfit', fontSize:'14px', color:'#5B5B5B', fontWeight:'400'}}>
                                     Location
                                 </Typography>
-                                <Typography style={{fontFamily: 'outfit', fontSize:'14px', color:'#5B5B5B', fontWeight:'400'}}>
+                                <Typography style={{fontFamily: 'Outfit', fontSize:'14px', color:'#5B5B5B', fontWeight:'400'}}>
                                     Time
                                 </Typography>
                             </div>
                             <div style={{display: 'inline-block'}}>
-                                <Typography style={{fontFamily:'outfit', fontSize: '14px', color:'#141414', fontWeight: '600'}}>
+                                <Typography style={{fontFamily:'Outfit', fontSize: '14px', color:'#141414', fontWeight: '600'}}>
                                     ${currentPop[3] && currentPop[3].length > 1 && currentPop[3][1]}
                                 </Typography>
-                                <Typography style={{fontFamily:'outfit', fontSize: '14px', color:'#141414', fontWeight: '600'}}>
+                                <Typography style={{fontFamily:'Outfit', fontSize: '14px', color:'#141414', fontWeight: '600'}}>
                                     <u>{currentPop[2] && currentPop[2].length > 1 && currentPop[2][1]}</u>
                                 </Typography>
-                                <Typography style={{fontFamily:'outfit', fontSize: '14px', color:'#141414', fontWeight: '600'}}>
+                                <Typography style={{fontFamily:'Outfit', fontSize: '14px', color:'#141414', fontWeight: '600'}}>
                                     {currentPop[5] && currentPop[5].length > 1 && currentPop[5][1]}
                                 </Typography>
                             </div>
                         </div>
                         <Divider style={{width: '100%', borderBottomWidth: '2px'}}/>
                         <div style={{paddingTop: '1%', paddingLeft: '1%'}}>
-                            <Typography style={{fontFamily: 'outfit', fontSize: '18px', color:'#141414', fontWeight: '600'}}>
+                            <Typography style={{fontFamily: 'Outfit', fontSize: '18px', color:'#141414', fontWeight: '600'}}>
                                 Job Description
                             </Typography>
                         </div>
                         <div style={{padding: '1%', paddingLeft: '3%'}}>
-                            <Typography style={{fontFamily: 'outfit', fontSize: '14px', color:'#5B5B5B', fontWeight: '400'}}>
+                            <Typography style={{fontFamily: 'Outfit', fontSize: '14px', color:'#5B5B5B', fontWeight: '400'}}>
                                 {currentPop[4] && currentPop[4].length > 1 && currentPop[4][1]}
                             </Typography>
                         </div>
@@ -221,7 +221,7 @@ export function JobBoard() {
                                     variant="outline"
                                     style={{
                                         margin: "5px",
-                                        fontFamily: "outfit",
+                                        fontFamily: "Outfit",
                                         fontSize: "18px",
                                         color: '#5B5B5B',
                                         fontWeight: "400",
@@ -245,27 +245,31 @@ export function JobBoard() {
                     </DialogActions>
             </Dialog>
             <JobPosting/> 
-            <Box sx={{ flexGrow: 1 }} style={{ backgroundColor: '#f3f3f3' }}>
-                <Grid container className='job-table-grid' rowSpacing={2} columnSpacing={2}>
-                    <text style={{width: "100%"}} className='recently-posted-jobs'> 
+            <Box className='job-table-box'>
+                <div className='job-table-inner'>
+                    <Typography style={{fontFamily: 'Outfit', fontSize: 'xx-large', justifyContent: 'center', alignItems: 'center', textAlign: 'start'}}>
                         Job Board
-                    </text>
-                    <text style={{width: "100%"}} className='recently-posted-jobs'>
-                        <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>
-                            { render }
-                            { console.log (filterList)}
-                            <div style={{ marginLeft: 'auto', marginRight: '8%' }}>
+                    </Typography>
+                </div>
+            </Box>
+            <Box className='job-table-box'>
+                <div className='job-table-inner'>
+                    <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>
+                        { render }
+                        <div>
                             <Sort rawData={rawData} setRawData={setRawData} setJobData={setJobData} />
-                            </div>
                         </div>
-                        <Divider style={{ paddingTop: '1%', width: '92.5%'}}/>
-                    </text>
-                    {/* <button onClick={handleLogJobData}>Log Job Data</button> */}
-
+                    </div>
+                    <Divider width='100%'/>
+                </div>
+                {/* <button onClick={handleLogJobData}>Log Job Data</button> */}
+            </Box>
+            <Box>
+                <Grid container className='job-table-grid' rowSpacing={2} columnSpacing={2}>
                     {jobData.slice((page - 1) * cardsPerPage, page * cardsPerPage).map((key) => (
                         <Grid key={key} item>
                             <Link overlay underline="none" sx={{ color: 'text.tertiary', cursor: 'pointer' }} onClick={() => openPopUp(key)}>
-                                <Card sx={{height: 300, width: 300, '&:hover': { boxShadow: 'md', borderColor: 'neutral.outlinedHoverBorder' }}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px', }}>
+                                <Card sx={{width: '17.5vw', height: '17.5vw', '&:hover': { boxShadow: 'md', borderColor: 'neutral.outlinedHoverBorder' }}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px', }}>
                                     <CardMedia
                                         component="img"
                                         alt="placeholder"
@@ -282,7 +286,7 @@ export function JobBoard() {
                                     <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px'}}>
                                         Location: <u>{key[2][1]}</u>
                                     </Typography>
-                                    <Typography className='job-posting'>
+                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px'}}>
                                         Time: {key[5][1]}
                                     </Typography>
                                     <Typography style={{fontFamily: 'Outfit', fontSize:"12px", padding:'10px', position:'relative', overflow:'hidden', textOverflow:'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 3, maxHeight:'44px'}}>

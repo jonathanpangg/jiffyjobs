@@ -648,7 +648,7 @@ export function JobPosting() {
     return (
         <Box className='job-search-tab'> 
             <div className='inner-div'>
-                <Card sx={{ height: '75%'}}elevation={8} style={{overflow: 'hidden', borderRadius: '15px', paddingTop: '3.5%', textAlign: 'center'}}>
+                <Card sx={{ height: '10vw'}}elevation={8} style={{overflow: 'hidden', borderRadius: '15px', paddingTop: '3.5%', textAlign: 'center'}}>
                     <text className='job-search-text'> 
                         Find jobs or hire college students starting now with {" "}
                     </text>
@@ -657,7 +657,7 @@ export function JobPosting() {
                     </text>
                     <br></br>
                     <div>
-                        <TextField placeholder="Find Jobs..." type="search" style={{width: '35vw', height: '1vh', paddingRight: '2.5%'}}/>
+                        <TextField placeholder="Find Jobs..." type="search" style={{width: '35vw', paddingRight: '2.5%'}}/>
                         <Card sx={{width: '8vw'}} elevation={8} style={{overflow:'hidden', borderRadius: '15px', background: "#8253E7", color: 'white', display: 'inline-block', verticalAlign: 'center', alignItems: 'center', justifyContent: 'center'}}>
                             <CardContent onClick={openPop}> 
                                 Post a Job
