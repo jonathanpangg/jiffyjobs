@@ -67,7 +67,8 @@ export const Login = async (req, res) => {
             return handleSuccess(res, {
                 _id: seeker.id,
                 email: seeker.email,
-                token: generateToken(seeker._id)
+                token: generateToken(seeker._id),
+                seeker: "seeker"
             });
         } else {
             const match = await bcrypt.compare(password, provider.password);
@@ -80,7 +81,8 @@ export const Login = async (req, res) => {
             return handleSuccess(res, {
                 _id: provider.id,
                 email: provider.email,
-                token: generateToken(provider._id)
+                token: generateToken(provider._id),
+                provider: "provider"
             });
         }
 
