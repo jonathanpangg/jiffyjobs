@@ -75,6 +75,7 @@ import {
             if (Object.keys(updateFields).length === 0) {
                 return handleBadRequest(res, "Nothing to update");
             }
+            console.log(updateFields)
     
             updateFields.updatedAt = Date.now();
     
@@ -85,6 +86,7 @@ import {
                 {
                     new: true
                 });
+
 
             if (!seeker) {
                 return handleNotFound(res, "Seeker not found");

@@ -5,7 +5,9 @@ export function ForgotPass() {
     return (
         <div>
             <RegNavBar />
-            <h1>Forgot Password</h1>
+            <div className={ 'outerCard' } style={{ backgroundColor: '#f3f3f3', height: '100vh', width: '100vw' }}>
+                <h1>Forgot Password</h1>
+            </div>
         </div>
     )
 }

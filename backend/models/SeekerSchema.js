@@ -68,9 +68,19 @@ const SeekerSchema = mongoose.Schema({
         preffered_categories: {
             type: [String],
             required: false
+        },
+        profile_public: {
+            type: Boolean,
+            required: false
         }
     },
     jobs_completed: [{
+        _id: {
+            type: String,
+            required: true
+        }
+    }],
+    jobs_applied: [{
         _id: {
             type: String,
             required: true

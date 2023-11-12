@@ -32,7 +32,19 @@
     outline:none;
     width:111px;
     margin-left: 50px;
-  
+  }
+  .otherinformation
+  {
+    color:#5b5b5b;
+    text-align:left;
+    vertical-align:text-top;
+    font-size:medium;
+    font-family:Outfit;
+    /* line-height:auto; */
+    border-style:hidden;
+    outline:none;
+    width:111px;
+    margin-left: 50px;
   }
   
   .profile
@@ -51,6 +63,14 @@
   font-family: Outfit;
   position: 'fixed';
 
+}
+.profile-components-bio
+{
+  width: 50px;
+  color: #5b5b5b;
+  font-family: Outfit;
+  position: relative;
+  top: -20px; 
 }
 
 .profile-box-fixed .MuiInputBase-input
@@ -77,12 +97,33 @@
   border-radius:6px;
 }
 
+.profile-box-bio .MuiInputBase-input
+{
+  color:black;
+  font-size:16px;  
+  font-family:Outfit;
+  width: 29000px;
+  /* position:relative; */
+  /* border-radius:6px; */
+}
+
 .label-input-pair {
   display: flex;
   flex-direction: row;
   gap: 50px; 
   padding-left: 35px;
   margin-top: 20px;
+  margin-left: 55px;
+
+  /* justify-content: flex-start;  */
+}
+
+.label-input-pair-beg {
+  display: flex;
+  flex-direction: row;
+  gap: 50px; 
+  padding-left: 35px;
+  margin-top: 5px;
   margin-left: 55px;
 
   /* justify-content: flex-start;  */

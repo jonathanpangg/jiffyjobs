@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../styles/JobPosting.css';
 import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from '@mui/material/IconButton';
-import { Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText } from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, Typography, Box } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import CardContent from '@mui/material/CardContent';
 import Card from '@mui/material/Card';
@@ -48,7 +48,7 @@ export function JobPosting() {
             hour: '0',
             min: '0'
         },
-        times: []
+        // times: []
     })
 
     // useState for errors
@@ -95,222 +95,105 @@ export function JobPosting() {
                 hour: '0',
                 min: '0'
             }, 
-            times: []
+            // times: []
         })
     }
 
     // changes the vals for all except date and time
     function handleValues(event) {
-        if (event.target.id === 'title') {
-            setVal({
-                title: event.target.value,
-                name: val.name,
-                location: val.location,
-                pay: val.pay,
-                description: val.description,
-                category: val.category,
-                date: val.date,
-                startTime: val.startTime,
-                endTime: val.endTime,
-                times: val.times
-            })
-        } else if (event.target.id === 'name') {
-            setVal({
-                title: val.title,
-                name: event.target.value,
-                location: val.location,
-                pay: val.pay,
-                description: val.description,
-                category: val.category,
-                date: val.date,
-                startTime: val.startTime,
-                endTime: val.endTime,
-                times: val.times
-            })
-        } else if (event.target.id === 'location') {
-            setVal({
-                title: val.title,
-                name: val.name,
-                location: event.target.value,
-                pay: val.pay,
-                description: val.description,
-                category: val.category,
-                date: val.date,
-                startTime: val.startTime,
-                endTime: val.endTime,
-                times: val.times
-            })
-        } else if (event.target.id === 'pay') {
-            if (event.target.value === "") {
-                setVal({
-                    title: val.title,
-                    name: val.name,
-                    location: val.location,
-                    pay: val.pay,
-                    description: val.description,
-                    category: val.category,
-                    date: val.date,
-                    startTime: val.startTime,
-                    endTime: val.endTime,
-                    times: val.times
-                })
-            } else {
-                const re = /^[0-9]*(\.[0-9]{0,2})?$/; 
-                if (re.test(event.target.value) && parseFloat(event.target.value) > 0) {
-                    setVal({
-                        title: val.title,
-                        name: val.name,
-                        location: val.location,
-                        pay: event.target.value,
-                        description: val.description,
-                        category: val.category,
-                        date: val.date,
-                        startTime: val.startTime,
-                        endTime: val.endTime,
-                        times: val.times
-                    })
-                } else {
-                    setVal({
-                        title: val.title,
-                        name: val.name,
-                        location: val.location,
-                        pay: val.pay,
-                        description: val.description,
-                        category: val.category,
-                        date: val.date,
-                        startTime: val.startTime,
-                        endTime: val.endTime,
-                        times: val.times
-                    })
-                }
-            }
-        } else if (event.target.id === 'description') {
-            setVal({
-                title: val.title,
-                name: val.name,
-                location: val.location,
-                pay: val.pay,
-                description: event.target.value,
-                category: val.category,
-                date: val.date,
-                startTime: val.startTime,
-                endTime: val.endTime,
-                times: val.times
-            })
-        } 
+        setVal(prevVal => ({
+            ...prevVal,
+            [event.target.id]: event.target.value
+        }));
     }
 
     // handles the date calendar data
-    function handleDate(event) {
-        setVal({
-            title: val.title,
-            name: val.name,
-            location: val.location,
-            pay: val.pay,
-            description: val.description,
-            category: val.category, 
+    function handleDate(date) {
+        setVal(prevVal => ({
+            ...prevVal,
             date: {
-                month: event.$M+1,
-                day: event.$D,
-                year: event.$y
-            },
-            startTime: val.startTime,
-            endTime: val.endTime,
-            times: val.times
-        })
+                month: date.month() + 1,
+                day: date.date(),
+                year: date.year()
+            }
+        }));
     }
 
     // handles the start time 
-    function handleStartTime(event) {
-        setVal({
-            title: val.title,
-            name: val.name,
-            location: val.location,
-            pay: val.pay,
-            description: val.description,
-            category: val.category, 
-            date: val.date,
+    function handleStartTime(time) {
+        setVal(prevVal => ({
+            ...prevVal,
             startTime: {
-                hour: event.$H+1,
-                min: event.$m
-            },
-            endTime: val.endTime,
-            times: val.times
-        })
+                hour: time.hour(),
+                min: time.minute()
+            }
+        }));
     }
-
+    
     // handles the end time
-    function handleEndTime(event) {
-        setVal({
-            title: val.title,
-            name: val.name,
-            location: val.location,
-            pay: val.pay,
-            description: val.description,
-            category: val.category, 
-            date: val.date,
-            startTime: val.startTime,
+    function handleEndTime(time) {
+        setVal(prevVal => ({
+            ...prevVal,
             endTime: {
-                hour: event.$H+1,
-                min: event.$m
-            },
-            times: val.times
-        })
+                hour: time.hour(),
+                min: time.minute()
+            }
+        }));
     }
     
     // handles adding times
-    function handleAddTime() {
-        val.times.push([new Date(val.date.year, val.date.month-1, val.date.day, val.startTime.hour, val.startTime.min), new Date(val.date.year, val.date.month-1, val.date.day, val.endTime.hour, val.endTime.min)])
-        setVal({
-            title: val.title,
-            name: val.name,
-            location: val.location,
-            pay: val.pay,
-            description: val.description,
-            category: val.category, 
-            date: {
-                month: new Date().getMonth()+1,
-                day: new Date().getDate(),
-                year: new Date().getFullYear()
-            },
-            startTime: {
-                hour: '0',
-                min: '0'
-            },
-            endTime: {
-                hour: '0',
-                min: '0'
-            }, 
-            times: val.times
-        })
-    }
+    // function handleAddTime() {
+    //     val.times.push([new Date(val.date.year, val.date.month-1, val.date.day, val.startTime.hour, val.startTime.min), new Date(val.date.year, val.date.month-1, val.date.day, val.endTime.hour, val.endTime.min)])
+    //     setVal({
+    //         title: val.title,
+    //         name: val.name,
+    //         location: val.location,
+    //         pay: val.pay,
+    //         description: val.description,
+    //         category: val.category, 
+    //         date: {
+    //             month: new Date().getMonth()+1,
+    //             day: new Date().getDate(),
+    //             year: new Date().getFullYear()
+    //         },
+    //         startTime: {
+    //             hour: '0',
+    //             min: '0'
+    //         },
+    //         endTime: {
+    //             hour: '0',
+    //             min: '0'
+    //         }, 
+    //         times: val.times
+    //     })
+    // }
 
     // handles removal of previous time
-    function handleRemoveTime() {
-        val.times.pop()
-        setVal({
-            title: val.title,
-            name: val.name,
-            location: val.location,
-            pay: val.pay,
-            description: val.description,
-            category: val.category, 
-            date: {
-                month: new Date().getMonth()+1,
-                day: new Date().getDate(),
-                year: new Date().getFullYear()
-            },
-            startTime: {
-                hour: '0',
-                min: '0'
-            },
-            endTime: {
-                hour: '0',
-                min: '0'
-            }, 
-            times: val.times
-        })
-    }
+    // function handleRemoveTime() {
+    //     val.times.pop()
+    //     setVal({
+    //         title: val.title,
+    //         name: val.name,
+    //         location: val.location,
+    //         pay: val.pay,
+    //         description: val.description,
+    //         category: val.category, 
+    //         date: {
+    //             month: new Date().getMonth()+1,
+    //             day: new Date().getDate(),
+    //             year: new Date().getFullYear()
+    //         },
+    //         startTime: {
+    //             hour: '0',
+    //             min: '0'
+    //         },
+    //         endTime: {
+    //             hour: '0',
+    //             min: '0'
+    //         }, 
+    //         times: val.times
+    //     })
+    // }
 
     const openPop = () => {
         setOpenStartPop(true)
@@ -382,7 +265,7 @@ export function JobPosting() {
             date: val.date,
             startTime: val.startTime,
             endTime: val.endTime,
-            times: val.times
+            // times: val.times
         })
         setExpand(!expand)
     }
@@ -399,7 +282,7 @@ export function JobPosting() {
             date: val.date,
             startTime: val.startTime,
             endTime: val.endTime,
-            times: val.times
+            // times: val.times
         })
     }
     
@@ -488,7 +371,6 @@ export function JobPosting() {
             <Divider/>
                 <DialogContent>
                     <DialogContentText ref={descriptionElementRefNextPop} tabIndex={-1} style={{width: '1000px'}}>
-
                         <div className='time-outer' style={{width: '98.5%'}}> 
                             <div className='date'>
                                 <text className='pop-textfield-title'>
@@ -526,13 +408,11 @@ export function JobPosting() {
                                         value={dayjs({hour: val.endTime.hour, minute: val.endTime.min})}
                                         onChange={(e) => {handleEndTime(e)}}
                                     />
-                                </LocalizationProvider>
-                                      
+                                </LocalizationProvider>    
                             </div>
-                  
-                    
+
                         </div>
-                        <div className='time-outer' style={{width: '98.5%'}}> 
+                        {/* <div className='time-outer' style={{width: '98.5%'}}> 
                             <text className='remove-time' onClick={() => {handleRemoveTime()}}>
                                 - Remove previous date
                             </text>
@@ -562,7 +442,7 @@ export function JobPosting() {
                                 </div>
                             }
                             
-                        </div>
+                        </div> */}
                         <div>
                             <text className='pop-textfield-title'>
                                 Description
@@ -608,69 +488,66 @@ export function JobPosting() {
 
     async function PostJobs() {
         handleError()
-        if (!(error.titleError === true || error.nameError === true || error.locationError === true || error.payError === true || error.descriptionError === true || error.categoryError === true)) {
-            var timeIns = []
-            for (let i = 0; i < val.times.length; i++) {
-                for (let j = 0; j < val.times[i].length; j++) {
-                    timeIns.push(val.times[i][j])
+        const hasError = Object.values(error).some(e => e);
+        if (!hasError) {
+            const jobData = {
+                title: val.title,
+                job_poster: val.name,
+                description: val.description,
+                pay: val.pay,
+                location: val.location,
+                categories: Array.from(val.category),
+                time: [new Date(val.date.year, val.date.month-1, val.date.day, val.startTime.hour, val.startTime.min), new Date(val.date.year, val.date.month-1, val.date.day, val.endTime.hour, val.endTime.min)],
+                job_type: "Quick Jobs",
+                date_posted: new Date()
+            };
+            try {
+                const route = "https://jiffyjobs-api-production.up.railway.app/api/jobs/create";
+                const response = await fetch(route, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(jobData)
+                });
+    
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
                 }
+    
+                const responseData = await response.json();
+                console.log(responseData);
+    
+                empytyVals();
+                setOpenStartPop(false);
+                setOpenSecondPop(false);
+    
+            } catch (error) {
+                console.error('There was an error!', error);
             }
-
-            var categoryList = []
-            for (const v of val.category) {
-                categoryList.push(v)
-            }
-            const requestOptions = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    title: val.title,
-                    job_poster: val.name,
-                    description: val.description,
-                    pay: val.pay,
-                    location: val.location,
-                    categories: categoryList,
-                    time: timeIns,
-                    job_type: "Quick Jobs",
-                    date_posted: new Date()
-                })
-            }
-            const route = "http://localhost:4000/api/jobs/create"
-            fetch(route, requestOptions)
-                .then((response) => {
-                    response.json()
-                    empytyVals()
-                    setOpenStartPop(false)
-                    setOpenSecondPop(false)
-                })
-                .catch((error) => {
-                    console.log(error)
-            })
         }
     }
 
     return (
-        <div className='job-search-tab'> 
-            <Card sx={{height: 200, width: '147.5%'}} elevation={8} style={{overflow: 'hidden', borderRadius: '15px', paddingTop: '3.5%'}}>
-                <text className='job-search-text'> 
-                    Find jobs or hire college students starting now with {" "}
-                </text>
-                <text className='job-search-logo'>
-                    JiffyJobs
-                </text>
-                <br></br>
-                <Grid container className='job-table-grid' columnSpacing={2} style={{paddingLeft: '30%', paddingTop: '1.5%'}}> 
-                    <TextField placeholder="Find Jobs..." type="search" style={{width: '45%'}}/>
-                    <Grid className='job-button'>
-                        <Card sx={{height: 55, width: '115%'}} elevation={8} style={{overflow:'hidden', borderRadius: '15px', background: "#8253E7", color: 'white'}}>
+        <Box className='job-search-tab'> 
+            <div className='inner-div'>
+                <Card sx={{ height: '10vw'}}elevation={8} style={{overflow: 'hidden', borderRadius: '15px', paddingTop: '3.5%', textAlign: 'center'}}>
+                    <text className='job-search-text'> 
+                        Find jobs or hire college students starting now with {" "}
+                    </text>
+                    <text className='job-search-logo'>
+                        JiffyJobs
+                    </text>
+                    <br></br>
+                    <div>
+                        <TextField placeholder="Find Jobs..." type="search" style={{width: '35vw', paddingRight: '2.5%'}}/>
+                        <Card sx={{width: '8vw'}} elevation={8} style={{overflow:'hidden', borderRadius: '15px', background: "#8253E7", color: 'white', display: 'inline-block', verticalAlign: 'center', alignItems: 'center', justifyContent: 'center'}}>
                             <CardContent onClick={openPop}> 
                                 Post a Job
                             </CardContent>
                         </Card>
-                        { openSecondPop ? secondJobSlide(): firstJobSlide()}
-                    </Grid>
-                </Grid>
-            </Card>
-        </div>
+                    </div>
+                    { openSecondPop ? secondJobSlide(): firstJobSlide()}
+                </Card>
+            </div>
+        </Box>
     )
 }
