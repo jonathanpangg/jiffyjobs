@@ -7,9 +7,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 import { RegNavBar } from '../components/RegNavBar';
 
 export function Login() {
-
     const navigate = useNavigate()
-    const [email, setEmail] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
     const AllJobs = () => {
