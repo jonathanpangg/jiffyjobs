@@ -91,7 +91,7 @@ export function Profile() {
         // Fetch user profile data from the API and set it to state
         // Replace with your actual API request
         const getProfile = async (userID) => {
-            const route = `http://localhost:4000/api/users/getinfo/${userID}`;
+            const route = `https://jiffyjobs-api-production.up.railway.app/api/users/getinfo/${userID}`;
             try {
                 const response = await fetch(route);
                 if (!response.ok) {
