@@ -33,6 +33,7 @@ export function Profile() {
             navigate('/login')
         }
     },[])
+    
 
     const userEmail = "pangj@bu.edu"; // This will eventually come from user login state
     // const userEmail = "example_email@bu.edu"
