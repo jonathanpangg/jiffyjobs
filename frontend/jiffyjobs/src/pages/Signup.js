@@ -137,8 +137,8 @@ export function Signup() {
 
                     <form onSubmit={handleSubmit} noValidate autoComplete="off" style={{ alignItems: 'center' }}> 
 
-                    <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', margin: '0 auto' }}>
-                    <div>
+                    <div  style={{ display: 'flex', justifyContent: 'center', mb: 2, }}>
+                    <div style={{ width: '28%' }}>
                         <div style={{ textAlign: 'left', width: '68.5%', margin: '0 auto' }}>
                             <text className='pop-textfield-title' style={{ fontFamily: 'Outfit', }}>
                                 First Name
@@ -150,7 +150,7 @@ export function Signup() {
                             }}
                         />
                     </div>
-                    <div>
+                    <div style={{ width: '28%' }}>
                         <div style={{ textAlign: 'left', width: '68.5%', margin: '0 auto' }}>
                             <text className='pop-textfield-title' style={{ fontFamily: 'Outfit', }}>
                                 Last Name
