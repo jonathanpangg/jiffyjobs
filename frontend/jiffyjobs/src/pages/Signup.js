@@ -33,14 +33,16 @@ export function Signup() {
 
     // useState for the data
     const [val, setVal] = useState({
-        name: '',
+        firstName: '',
+        lastName: '',
         email: '',
         password: '',
     })
 
     // useState for errors
     const [error, setError] = useState({
-        nameError: false,
+        firstNameError: false,
+        lastNameError: false,
         emailError: false,
         passwordError: false,
         confirmPasswordError: false, 
@@ -59,7 +61,8 @@ export function Signup() {
         }
 
         setError({
-            nameError: val.name === '',
+            firstNameError: val.firstName === '',
+            lastNameError: val.lastName === '',
             emailError: isEmailError,
             passwordError: val.password === '',
             confirmPasswordError: confirmPassword === '' || confirmPassword !== val.password,
@@ -89,7 +92,8 @@ export function Signup() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 email: val.email,
-                name: val.name,
+                firstName: val.firstName,
+                lastName: val.lastName,
                 school: "Boston University",
                 password: val.password
             })
@@ -133,17 +137,31 @@ export function Signup() {
 
                     <form onSubmit={handleSubmit} noValidate autoComplete="off" style={{ alignItems: 'center' }}> 
 
+                    <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', margin: '0 auto' }}>
                     <div>
                         <div style={{ textAlign: 'left', width: '68.5%', margin: '0 auto' }}>
                             <text className='pop-textfield-title' style={{ fontFamily: 'Outfit', }}>
-                                Name
+                                First Name
                             </text> <br></br>
                         </div>
-                        <TextField error={error.nameError} helperText={error.nameError ? "*This field is required" : ""} required={true} placeholder="Your Name" type="text" square={false} style={{width: '68.5%', fontFamily: 'Outfit', }} onChange={(e) => {handleValues(e)}} id='name' value={val.name}
+                        <TextField error={error.firstNameError} helperText={error.firstNameError ? "*This field is required" : ""} required={true} placeholder="First Name" type="text" square={false} style={{width: '68.5%', fontFamily: 'Outfit', }} onChange={(e) => {handleValues(e)}} id='name' value={val.firstName}
                             InputProps={{
                                 style: {  borderRadius: '10px' }
                             }}
                         />
+                    </div>
+                    <div>
+                        <div style={{ textAlign: 'left', width: '68.5%', margin: '0 auto' }}>
+                            <text className='pop-textfield-title' style={{ fontFamily: 'Outfit', }}>
+                                Last Name
+                            </text> <br></br>
+                        </div>
+                        <TextField error={error.lastNameError} helperText={error.lastNameError ? "*This field is required" : ""} required={true} placeholder="Last Name" type="text" square={false} style={{width: '68.5%', fontFamily: 'Outfit', }} onChange={(e) => {handleValues(e)}} id='name' value={val.lastName}
+                            InputProps={{
+                                style: {  borderRadius: '10px' }
+                            }}
+                        />
+                    </div>
                     </div>
                     <div style={{paddingTop: '1.5%'}}>
                         <div style={{ textAlign: 'left', width: '68.5%', margin: '0 auto' }}>
@@ -205,7 +223,7 @@ export function Signup() {
                     </div>
 
                     <div style={{paddingTop: '1.5%'}}>
-                        <Button type="submit" fullWidth onClick={signUp} sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#5B5B5B', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit'  }}>
+                        <Button fullWidth onClick={signUp} sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#5B5B5B', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit'  }}>
                             Sign up as a {role === 'jobSeeker' ? 'Job Seeker' : 'Job Provider'}
                         </Button>
                     </div>
