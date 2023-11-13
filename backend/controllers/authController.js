@@ -12,7 +12,7 @@ import {
 //This is a function to call when seekers want to sign up
 export const seekerSignUp = async (req, res) => {
     try {
-        const { email, name, school, password } = req.body;
+        const { email, first_name, last_name, school, password } = req.body;
         const salt = await bcrypt.genSalt(10);
         const passwordHash = await bcrypt.hash(password, salt);
 
@@ -28,7 +28,8 @@ export const seekerSignUp = async (req, res) => {
         const newSeeker = new Seeker({
             email: email,
             personal_info: {
-                name: name,
+                first_name: first_name,
+                last_name: last_name,
                 school: school
             },
             password: passwordHash,
@@ -92,7 +93,7 @@ export const Login = async (req, res) => {
 //this is for providers to sign up
 export const providerSignUp = async(req, res) => {
     try {
-        const { email, name, password } = req.body;
+        const { email, first_name, last_name, password } = req.body;
         const salt = await bcrypt.genSalt(10);
         const passwordHash = await bcrypt.hash(password, salt);
 
@@ -109,7 +110,8 @@ export const providerSignUp = async(req, res) => {
             email: email,
             password: passwordHash,
             personal_info: {
-                name: name
+                first_name: first_name,
+                last_name: last_name
             }
         });
     
