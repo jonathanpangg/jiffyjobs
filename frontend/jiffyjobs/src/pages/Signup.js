@@ -96,9 +96,9 @@ export function Signup() {
         }
         
         console.log(role);
-        let route = "http://localhost:4000/api/auth/providerSignUp";
+        let route = "https://jiffyjobs-api-production.up.railway.app/api/auth/providerSignUp";
         if (role === 'jobSeeker') {
-            route = "http://localhost:4000/api/auth/seekerSignUp";
+            route = "https://jiffyjobs-api-production.up.railway.app/api/auth/seekerSignUp";
         }
 
         try {
