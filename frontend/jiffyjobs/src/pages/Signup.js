@@ -144,7 +144,7 @@ export function Signup() {
                                     First Name
                                 </text> <br></br>
                             </div>
-                            <TextField error={error.firstNameError} helperText={error.firstNameError ? "*This field is required" : ""} required={true} placeholder="First Name" type="text" square={false} style={{width: '100%', fontFamily: 'Outfit', }} onChange={(e) => {handleValues(e)}} id='name' value={val.firstName}
+                            <TextField error={error.firstNameError} helperText={error.firstNameError ? "*This field is required" : ""} required={true} placeholder="First Name" type="text" square={false} style={{width: '100%', fontFamily: 'Outfit', }} onChange={(e) => {handleValues(e)}} id='firstName' value={val.firstName}
                                 InputProps={{
                                     style: {  borderRadius: '10px', }
                                 }}
@@ -156,7 +156,7 @@ export function Signup() {
                                     Last Name
                                 </text> <br></br>
                             </div>
-                            <TextField error={error.lastNameError} helperText={error.lastNameError ? "*This field is required" : ""} required={true} placeholder="Last Name" type="text" square={false} style={{width: '100%', fontFamily: 'Outfit', }} onChange={(e) => {handleValues(e)}} id='name' value={val.lastName}
+                            <TextField error={error.lastNameError} helperText={error.lastNameError ? "*This field is required" : ""} required={true} placeholder="Last Name" type="text" square={false} style={{width: '100%', fontFamily: 'Outfit', }} onChange={(e) => {handleValues(e)}} id='lastName' value={val.lastName}
                                 InputProps={{
                                     style: {  borderRadius: '10px' }
                                 }}
