@@ -21,7 +21,7 @@ export function Login() {
     useEffect(()=> {
         if (showToken) {
             console.log(showToken);
-            toast.error('Please Login!', {
+            toast.info('Already Logged In!', {
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -101,7 +101,7 @@ export function Login() {
             })
         }
 
-        const route = "https://jiffyjobs-api-production.up.railway.app/api/auth/Login";
+        const route = "http://localhost:4000/api/auth/Login";
 
         try {
             fetch(route, Login)
@@ -114,6 +114,8 @@ export function Login() {
             localStorage.setItem("token", data.token);
             localStorage.setItem("email", data.email);
             localStorage.setItem("user", data.role);
+            console.log(data.email);
+            console.log(data.role);
             navigate("/JobBoard");
             })
         } catch (error) {

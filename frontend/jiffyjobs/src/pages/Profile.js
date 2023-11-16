@@ -20,6 +20,10 @@ export function Profile() {
     const [isPublic, setIsPublic] = useState(false);
     const [fname, setFname] = useState("");
     const [lname, setLname] = useState("");
+    //tells you if its 'seeker' or 'provider'
+    const [ userRole, setUserRole ] = useState(localStorage.getItem("user"));
+    // user email
+    const [ email, setEmail ] = useState(localStorage.getItem("email"));
 
     const gradeList = ["Freshmen", "Sophomore", "Junior", "Senior", "Graduate Student", "Other"]
 

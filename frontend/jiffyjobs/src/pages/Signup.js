@@ -22,7 +22,7 @@ export function Signup() {
     useEffect(()=> {
         if (showToken) {
             console.log(showToken);
-            toast.error('Please Login!', {
+            toast.info('Already Logged In!', {
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,
