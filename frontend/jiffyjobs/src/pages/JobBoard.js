@@ -310,20 +310,37 @@ export function JobBoard() {
                             </Typography>
                         </div>
                         <div>
-                            {currentPop[6] && currentPop[6].length > 1 && currentPop[6][1].split(",").map((item, index) => (
-                                <Chip
-                                    key={index}
-                                    label={item.trim()}
-                                    variant="outline"
+                            {currentPop[6] && currentPop[6].length > 1 && currentPop[6][1] ? (
+                                currentPop[6][1].split(",").map((item, index) => (
+                                    <Chip
+                                        key={index}
+                                        label={item.trim()}
+                                        variant="outlined"
+                                        style={{
+                                            margin: "5px",
+                                            fontFamily: "Outfit",
+                                            fontSize: "14px", 
+                                            color: '#5B5B5B',
+                                            fontWeight: "400",
+                                            height: "28px", 
+                                        }}
+                                    />
+                                ))
+                            ) : (
+                                <div
                                     style={{
                                         margin: "5px",
                                         fontFamily: "Outfit",
-                                        fontSize: "18px",
+                                        fontSize: "14px", 
                                         color: '#5B5B5B',
                                         fontWeight: "400",
+                                        height: "28px",
+                                        backgroundColor: "transparent", 
+                                        border: "none", 
                                     }}
-                                />
-                            ))}
+                                >
+                                </div>
+                            )}
                         </div>
                     </DialogContentText>
                 </DialogContent>
@@ -331,13 +348,13 @@ export function JobBoard() {
                     <DialogActions style={{ justifyContent: 'center' }}>
                         <Link style={{cursor:'pointer'}} underline='none' onClick={() => console.log("applied")}>
                             <Card sx={{height: 40, width: '100%'}} style={{overflow:'hidden', borderRadius: '15px', background: "#D9D9D9", color: 'white'}}>
-                                <CardContent style={{justifyContent: 'center', alignItems: 'center', display: 'flex', paddingTop: '3%'}}> 
-                                    <Button onClick={handleOpenSubmitProfile} style={{ textTransform: 'none' }}>
-                                        <Typography style={{ fontFamily: 'Outfit', fontSize: '19.2px', color: '#5B5B5B', fontWeight: '400' }}>
-                                            Submit Profile
-                                        </Typography>
-                                    </Button>
-                                </CardContent>
+                            <CardContent style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingTop: '3%' }}>
+                                <Button onClick={handleOpenSubmitProfile} style={{ textTransform: 'none', width: '100%' }}>
+                                    <Typography style={{ fontFamily: 'Outfit', fontSize: '19.2px', color: '#5B5B5B', fontWeight: '400', marginTop: '-4px' }}>
+                                        Submit Profile
+                                    </Typography>
+                                </Button>
+                            </CardContent>
                             </Card>
                         </Link>
                     </DialogActions>
