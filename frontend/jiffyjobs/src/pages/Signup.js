@@ -3,21 +3,43 @@ import { Button, TextField, ToggleButton, ToggleButtonGroup, Card, CardContent }
 import { InputAdornment, IconButton } from '@mui/material';
 import { RegNavBar } from '../components/RegNavBar';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export function Signup() {
     const [role, setRole] = React.useState('jobSeeker');
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState('');
-    const navigate = useNavigate()
+    const [ token, setToken ] = useState(localStorage.getItem("token"));
+    const [showToken, setShowToken] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const token = localStorage.getItem("token");
-        if (token) {
-            alert('Already logged in!');
-            navigate('/JobBoard');
+        if (token) setShowToken(true);
+    },[token]);
+
+    useEffect(()=> {
+        if (showToken) {
+            console.log(showToken);
+            toast.error('Please Login!', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                onClose: () => {
+                    navigate('/JobBoard');
+                    setShowToken(false);
+                  }
+            });
+            setShowToken(false);
         }
-    },[]);
+
+    }, [showToken])
 
     const handleRole = (event, newRole) => {
         if (newRole !== null) {

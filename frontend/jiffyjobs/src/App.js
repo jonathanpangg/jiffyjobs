@@ -17,7 +17,7 @@ function App() {
     <div>
       <header>
         <Routes>  
-          <Route index element={<Login />} />
+          <Route index element={<JobBoard />} />
           <Route path="/login" element={<Login />} /> 
           <Route path="/signup" element={<Signup />} />   
           <Route path="/ForgotPass" element={<ForgotPass />} /> 

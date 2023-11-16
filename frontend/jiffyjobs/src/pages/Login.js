@@ -5,20 +5,40 @@ import { Checkbox, FormControlLabel, Link } from '@mui/material';
 import { InputAdornment, IconButton } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 import { RegNavBar } from '../components/RegNavBar';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export function Login() {
     const navigate = useNavigate()
     const [showPassword, setShowPassword] = useState(false);
+    const [ token, setToken ] = useState(localStorage.getItem("token"));
+    const [showToken, setShowToken] = useState(false);
 
     useEffect(() => {
-        const loggedin = localStorage.getItem("user");
-        const token = localStorage.getItem("token");
-        if (loggedin) {
-            alert('Already logged in!');
-            navigate('/JobBoard');
-        }
-    },[]);
+        if (token) setShowToken(true);
+    },[token]);
 
+    useEffect(()=> {
+        if (showToken) {
+            console.log(showToken);
+            toast.error('Please Login!', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                onClose: () => {
+                    navigate('/JobBoard');
+                    setShowToken(false);
+                  }
+            });
+            setShowToken(false);
+        }
+
+    }, [showToken])
     const AllJobs = () => {
         navigate('/JobBoard')
     }
@@ -161,11 +181,6 @@ export function Login() {
                         <div class="orLine "></div>
                         <span class="orText">or</span>
                         <div class="orLine "></div>
-                    </div>
-                    <div style={{ }}>
-                        <Button startIcon={<GoogleIcon/>} sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#white', '&:hover': { backgroundColor: '#f5f5f5' }, borderRadius: '30px', textTransform: 'none', color: '#5B5B5B', fontFamily: 'Outfit', border: '1px solid #5B5B5B'}} >
-                            Continue with Google
-                        </Button>
                     </div>
                     <div style={{ }}>
                         <Button onClick={handleSignUp} sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#5B5B5B', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit'}} >
