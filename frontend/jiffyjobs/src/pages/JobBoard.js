@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
-import { Dialog, Divider, Typography, DialogContentText, DialogContent, DialogActions, DialogTitle, Link  } from '@mui/material';
+import { Dialog, Divider, Typography, DialogContentText, DialogContent, DialogActions, DialogTitle, Link, Button  } from '@mui/material';
 import { Filter } from '../components/Filter';
 import { Sort } from '../components/Sort';
 import { JobPosting } from '../components/JobPosting';
@@ -29,7 +29,14 @@ export function JobBoard() {
     const totalCards = jobData.length;
     const totalPages = Math.ceil(totalCards / cardsPerPage);
 
+    const [openSubmitProfile, setOpenSubmitProfile] = useState(false);
+    const [openCongratsPopup, setOpenCongratsPopup] = useState(false);
+
     const navigate = useNavigate();
+
+    const handleToDashboard = () => {
+        navigate('/dashboard');
+    };
 
     useEffect(() => {
         const loggedin = localStorage.getItem("user");
@@ -56,7 +63,7 @@ export function JobBoard() {
     // handles getting all jobs
     useEffect(() => {
         async function GetAllJobs() {
-            const route = "https://jiffyjobs-api-production.up.railway.app/api/jobs/get"
+            const route = "http://localhost:4000/api/jobs/get"
             fetch(route)
                 .then((response) => {
                     if (!response.ok) {
@@ -109,7 +116,7 @@ export function JobBoard() {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' }
             }
-            var route = "https://jiffyjobs-api-production.up.railway.app/api/jobs/filter"
+            var route = "http://localhost:4000/api/jobs/filter"
             var query = "/*/*/" + Array.from(filterList) + "/*/*"
             console.log(query)
             route = route + query
@@ -176,6 +183,68 @@ export function JobBoard() {
         console.log(jobData)
         console.log(rawData)
     }
+
+    // open submit profile popup
+    const handleOpenSubmitProfile = () => {
+        setOpenSubmitProfile(true);
+    };
+
+    // close submit profile popup
+    const handleCloseSubmitProfile = () => {
+        setOpenSubmitProfile(false);
+    };
+
+    // submit profile popup
+    function SubmitProfilePopup({ open, onClose, onSubmit }) {
+        return (
+            <Dialog open={open} onClose={onClose} maxWidth="md">
+                <DialogTitle>Submit Profile</DialogTitle>
+                <DialogContent>
+                    profile content
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={onClose}>Close</Button>
+                    <Button onClick={onSubmit}>Submit</Button>
+                </DialogActions>
+            </Dialog>
+        );
+    }
+
+    const handleSubmitProfile = () => {
+        handleCloseSubmitProfile();
+        setOpenCongratsPopup(true);
+    };
+
+    function CongratsPopup({ open, onClose}) {
+        const handleClose = () => {
+            onClose(); // Close the congratulatory popup
+        };
+        return (
+            <Dialog open={open} onClose={onClose} maxWidth="sm">
+                <DialogTitle>Congratulations!</DialogTitle>
+                <DialogContent>
+                    <Typography>Your profile has been successfully submitted.</Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleApplyMore}>Apply More</Button>
+                    <Button onClick={handleToDashboard}>Go to Dashboard</Button>
+                </DialogActions>
+            </Dialog>
+        );
+    }
+
+    // open job listing popup
+    const openJobListingPopup = (key) => {
+        setCurrentPop(key);
+        setOpenPop(true); 
+        console.log(currentPop);
+    };
+
+    // close popups
+    const handleApplyMore = () => {
+        setOpenCongratsPopup(false); 
+        setOpenPop(false); 
+    };
     
     return (
         <div className='outerCard'>
@@ -263,9 +332,11 @@ export function JobBoard() {
                         <Link style={{cursor:'pointer'}} underline='none' onClick={() => console.log("applied")}>
                             <Card sx={{height: 40, width: '100%'}} style={{overflow:'hidden', borderRadius: '15px', background: "#D9D9D9", color: 'white'}}>
                                 <CardContent style={{justifyContent: 'center', alignItems: 'center', display: 'flex', paddingTop: '3%'}}> 
-                                        <Typography style={{fontFamily: 'Outfit', fontSize:'19.2px', color:'#5B5B5B', fontWeight:'400'}}>
-                                            Easy Submit
+                                    <Button onClick={handleOpenSubmitProfile} style={{ textTransform: 'none' }}>
+                                        <Typography style={{ fontFamily: 'Outfit', fontSize: '19.2px', color: '#5B5B5B', fontWeight: '400' }}>
+                                            Submit Profile
                                         </Typography>
+                                    </Button>
                                 </CardContent>
                             </Card>
                         </Link>
@@ -273,7 +344,7 @@ export function JobBoard() {
             </Dialog>
             <JobPosting/> 
             <Box className='job-table-box'>
-                <div className='job-table-inner'>
+                <div className='job-table-inner' style={{ paddingTop: '50px' }}>
                     <Typography style={{fontFamily: 'Outfit', fontSize: 'xx-large', justifyContent: 'center', alignItems: 'center', textAlign: 'start'}}>
                         Job Board
                     </Typography>
@@ -328,6 +399,8 @@ export function JobBoard() {
             <div style={{ display: 'flex', justifyContent: 'center', padding: '1%', background: '#f3f3f3' }}>
                 <Pagination count={totalPages} page={page} onChange={(event, value) => setPage(value)} />
             </div>
+            {openSubmitProfile && (<SubmitProfilePopup open={openSubmitProfile} onClose={handleCloseSubmitProfile} onSubmit={handleSubmitProfile}/>)}
+            {openCongratsPopup && (<CongratsPopup open={openCongratsPopup} onClose={() => setOpenCongratsPopup(false)} onDashboardRedirect={handleToDashboard}/>)}
         </div>
     )
 }
