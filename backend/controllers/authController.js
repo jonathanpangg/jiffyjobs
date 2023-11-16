@@ -40,9 +40,8 @@ export const seekerSignUp = async (req, res) => {
         return handleSuccess(res,{
             _id: (await savedSeeker).id,
             email: (await savedSeeker).email,
-            name: (await savedSeeker).personal_info.name,
-            school: (await savedSeeker).personal_info.school,
-            token: generateToken(savedSeeker._id)
+            token: generateToken(savedSeeker._id),
+            role: "seeker"
         });
     } catch (error) {
         return handleServerError(res, error);
@@ -69,6 +68,7 @@ export const Login = async (req, res) => {
                 _id: seeker.id,
                 email: seeker.email,
                 token: generateToken(seeker._id),
+                role: "seeker"
             });
         } else {
             const match = await bcrypt.compare(password, provider.password);
@@ -82,6 +82,7 @@ export const Login = async (req, res) => {
                 _id: provider.id,
                 email: provider.email,
                 token: generateToken(provider._id),
+                role: "provider"
             });
         }
 
@@ -120,7 +121,8 @@ export const providerSignUp = async(req, res) => {
             _id: (await savedProvider).id,
             email: (await savedProvider).email,
             name: (await savedProvider).personal_info.name,
-            token: generateToken(savedProvider._id)
+            token: generateToken(savedProvider._id),
+            role: "provider"
         })
     } catch (error) {
         return handleServerError(res, error);

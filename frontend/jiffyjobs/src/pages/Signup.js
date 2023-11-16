@@ -12,9 +12,8 @@ export function Signup() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        const loggedin = localStorage.getItem("user");
         const token = localStorage.getItem("token");
-        if (loggedin) {
+        if (token) {
             alert('Already logged in!');
             navigate('/JobBoard');
         }
@@ -100,26 +99,28 @@ export function Signup() {
         }
         
         console.log(role);
-        let route = "https://jiffyjobs-api-production.up.railway.app/api/auth/providerSignUp";
+        let route = "http://localhost:4000/api/auth/providerSignUp";
         if (role === 'jobSeeker') {
-            route = "https://jiffyjobs-api-production.up.railway.app/auth/seekerSignUp";
+            route = "http://localhost:4000/api/auth/seekerSignUp";
         }
-
-        try {
-            await fetch(route, register)
-            .then(async (response) => {
+        fetch(route, register)
+        .then(async (response) => {
             if (!response.ok) {
-                throw new Error(`${response.status}`);
-            }
+                throw new Error(`${JSON.stringify(response.error)}`)
+            } 
+            return response.json();
+        })
+        .then((data) => {
 
-            const data = await response.json();
+            console.log(data.stringify())
             localStorage.setItem("token", data.token);
-            localStorage.setItem("user", JSON.stringify(data));
-            navigate("/JobBoard")
-            })
-        } catch (error) {
-            console.log(error);
-        }
+            localStorage.setItem("email", data.email);
+            localStorage.setItem("user", data.role);
+            navigate("/JobBoard");
+        })
+        .catch((error) => {
+            alert(error);
+        });
     }
     
     return (
