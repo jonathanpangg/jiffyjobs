@@ -310,36 +310,34 @@ export function JobBoard() {
                             </Typography>
                         </div>
                         <div>
-                            {currentPop[6] && currentPop[6].length > 1 && currentPop[6][1] ? (
-                                currentPop[6][1].split(",").map((item, index) => (
-                                    <Chip
-                                        key={index}
-                                        label={item.trim()}
-                                        variant="outlined"
-                                        style={{
-                                            margin: "5px",
-                                            fontFamily: "Outfit",
-                                            fontSize: "14px", 
-                                            color: '#5B5B5B',
-                                            fontWeight: "400",
-                                            height: "28px", 
-                                        }}
-                                    />
-                                ))
+                            {currentPop[6] && currentPop[6].length > 1 && currentPop[6][1].split(",").filter((item) => item.trim() !== "").length > 0 ? (
+                                currentPop[6][1]
+                                    .split(",")
+                                    .filter((item) => item.trim() !== "")
+                                    .map((item, index) => (
+                                        <Chip
+                                            key={index}
+                                            label={item.trim()}
+                                            variant="outlined"
+                                            style={{
+                                                margin: "5px",
+                                                fontFamily: "Outfit",
+                                                fontSize: "14px",
+                                                color: '#5B5B5B',
+                                                fontWeight: "400",
+                                                height: "28px",
+                                            }}
+                                        />
+                                    ))
                             ) : (
-                                <div
+                                <Chip
+                                    label=""
+                                    variant="outlined"
                                     style={{
-                                        margin: "5px",
-                                        fontFamily: "Outfit",
-                                        fontSize: "14px", 
-                                        color: '#5B5B5B',
-                                        fontWeight: "400",
-                                        height: "28px",
-                                        backgroundColor: "transparent", 
-                                        border: "none", 
+                                        visibility: "hidden",
+                                        margin: "5px"
                                     }}
-                                >
-                                </div>
+                                />
                             )}
                         </div>
                     </DialogContentText>
