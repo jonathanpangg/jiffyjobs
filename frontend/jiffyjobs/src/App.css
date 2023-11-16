@@ -182,4 +182,10 @@
   white-space: nowrap;
 }
 
+.blur-background {
+  filter: blur(5px);
+}
 
+.blur-effect {
+  filter: blur(5px);
+}
