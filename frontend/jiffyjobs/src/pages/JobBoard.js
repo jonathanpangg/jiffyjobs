@@ -201,37 +201,37 @@ export function JobBoard() {
             <Dialog open={open} onClose={onClose} maxWidth={"xl"} PaperProps={{ sx: { borderRadius: "15px", margin: 'auto', width: '500px' } }}>
                 <DialogTitle sx={{ textAlign: 'center', fontFamily: 'Outfit' }}>Are you sure you want to submit?</DialogTitle>
                     <DialogContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '16px', margin: 'auto', border: '2px dashed #ccc', borderRadius: '5px', maxWidth: 'calc(100% - 150px)' }}>
-                        <form noValidate autoComplete="off">
-                            <Grid container alignItems="center" justifyContent="center">
-                                <Grid item xs={4} style={{ paddingRight: 8 }}>
+                        <form noValidate autoComplete="off" style={{ width: '100%' }}>
+                            <Grid container alignItems="center" justifyContent="center" style={{ width: '100%' }}>
+                                <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 8 }}>
                                     <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit' }}>School</Typography>
                                 </Grid>
                                 <Grid item xs={7} style={{ padding: 8 }}>
-                                    <TextField defaultValue="Boston University" variant="outlined" size="small" style={{ width: '200px', }}
+                                    <TextField defaultValue="Boston University" variant="outlined" size="small" style={{ width: '200px' }}
                                     InputProps={{ readOnly: true, style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}}/>
                                 </Grid>
-                                <Grid item xs={4} style={{ paddingRight: 8 }}>
+                                <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 8 }}>
                                     <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit' }}>Major</Typography>
                                 </Grid>
                                 <Grid item xs={7} style={{ padding: 8 }}>
                                     <TextField defaultValue="Computer Science" variant="outlined" size="small" style={{ width: '200px' }}
                                     InputProps={{ readOnly: true, style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}}/>
                                 </Grid>
-                                <Grid item xs={4} style={{ paddingRight: 8  }}>
+                                <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 8 }}>
                                     <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit' }}>Grade</Typography>
                                 </Grid>
                                 <Grid item xs={7} style={{ padding: 8 }}>
                                     <TextField defaultValue="Third-year" variant="outlined" size="small" style={{ width: '200px' }}
                                     InputProps={{ readOnly: true, style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}}/>
                                 </Grid>
-                                <Grid item xs={4} style={{ paddingRight: 8 }}>
+                                <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 8 }}>
                                     <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit' }}>Email</Typography>
                                 </Grid>
                                 <Grid item xs={7} style={{ padding: 8 }}>
                                     <TextField defaultValue=".edu" variant="outlined" size="small" style={{ width: '200px' }}
                                     InputProps={{ readOnly: true, style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}}/>
                                 </Grid>
-                                <Grid item xs={4} style={{ paddingRight: 8 }}> 
+                                <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 8 }}>
                                     <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit' }}>Bio</Typography>
                                 </Grid>
                                 <Grid item xs={7} style={{ paddingRight: 8, paddingTop: 8, paddingLeft: 8 }}>
@@ -239,8 +239,7 @@ export function JobBoard() {
                                     InputProps={{ readOnly: true, style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}} />
                                 </Grid>
                             </Grid>
-                        </form>
-                        
+                        </form>            
                     </DialogContent>
                     <Divider style={{ width: '100%', marginTop: '30px' }} />
                 <DialogActions sx={{ marginRight: '15px' }}>
