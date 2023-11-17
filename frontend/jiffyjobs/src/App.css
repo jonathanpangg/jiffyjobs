@@ -58,8 +58,8 @@
 }
 
 .profile-picture {
-  width: 30px; 
-  height: 30px;
+  width: 20px; 
+  height: 20px;
   background-color: #cccccc; 
   border-radius: 50%; 
   display: inline-block;
@@ -182,4 +182,17 @@
   white-space: nowrap;
 }
 
+.blur-background {
+  filter: blur(2px);
+}
 
+.blur-effect {
+  filter: blur(2px);
+}
+
+.inputSubmit .MuiInputBase-input
+{
+  color:black;
+  background-color: #D9D9D9;
+  border-radius: 5px;
+}
