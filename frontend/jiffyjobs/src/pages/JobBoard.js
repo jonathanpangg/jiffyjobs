@@ -15,6 +15,8 @@ import IconButton from '@mui/material/IconButton';
 import Chip from '@mui/material/Chip';
 import TextField from '@mui/material/TextField';
 import { useNavigate } from 'react-router-dom';
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
 
 export function JobBoard() {
     const [jobData, setJobData] = useState([])
@@ -201,6 +203,12 @@ export function JobBoard() {
             <Dialog open={open} onClose={onClose} maxWidth={"xl"} PaperProps={{ sx: { borderRadius: "15px", margin: 'auto', width: '500px' } }}>
                 <DialogTitle sx={{ textAlign: 'center', fontFamily: 'Outfit' }}>Are you sure you want to submit?</DialogTitle>
                     <DialogContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '16px', margin: 'auto', border: '2px dashed #ccc', borderRadius: '5px', maxWidth: 'calc(100% - 150px)' }}>
+                        <Stack direction="row" spacing={2} alignItems="center" justifyContent="center" style={{ paddingBottom: 4, paddingTop: 20, marginRight: '60px'}} >
+                            <Avatar sx={{ bgcolor: '#D9D9D9', width: 45, height: 45, color: 'black', fontSize: '25px'}}>LY</Avatar>
+                            <Typography variant="subtitle1" style={{ fontFamily: 'Outfit', fontSize: '20px', fontWeight: 'bold' }}>
+                                Lucas Yoon
+                            </Typography>
+                        </Stack>
                         <form noValidate autoComplete="off" style={{ width: '100%' }}>
                             <Grid container alignItems="center" justifyContent="center" style={{ width: '100%' }}>
                                 <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 8 }}>
