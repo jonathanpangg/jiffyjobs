@@ -17,6 +17,7 @@ import TextField from '@mui/material/TextField';
 import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
+import StarIcon from '@mui/icons-material/Star';
 
 export function JobBoard() {
     const [jobData, setJobData] = useState([])
@@ -306,9 +307,14 @@ export function JobBoard() {
                 <DialogContent style={{paddingTop:'0.5%', paddingBottom: '1%'}}>
                     <DialogContentText ref={descriptionElementRefStartPop} tabIndex={-1} style={{width: '750px'}}>
                         <div>
-                            <Typography style={{fontFamily: 'Outfit', fontSize:'24px', color:'#000', fontWeight:'600', paddingLeft:'1%'}}>
-                                {currentPop[0] && currentPop[0].length > 1 && currentPop[0][1]}
-                            </Typography>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                                <Typography style={{fontFamily: 'Outfit', fontSize:'24px', color:'#000', fontWeight:'600', paddingLeft:'1%'}}>
+                                    {currentPop[0] && currentPop[0].length > 1 && currentPop[0][1]}
+                                </Typography>
+                                <IconButton style={{ marginLeft: '8px', }}>
+                                    <StarIcon style={{ color: '#A4A4A4' }} />
+                                </IconButton>
+                            </div>
                             <Typography style={{fontFamily: 'Outfit', fontSize:'20px', color:'#141414', fontWeight: '500', paddingLeft:'1%'}}>
                                 {currentPop[1] && currentPop[1].length > 1 && currentPop[1][1]}
                             </Typography>
