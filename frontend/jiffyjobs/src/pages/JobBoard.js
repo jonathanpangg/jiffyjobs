@@ -198,58 +198,49 @@ export function JobBoard() {
     // submit profile popup
     function SubmitProfilePopup({ open, onClose, onSubmit }) {
         return (
-            <Dialog open={open} onClose={onClose} maxWidth={"sm"} PaperProps={{ sx: { borderRadius: "15px", margin: 'auto' } }}>
-                <DialogTitle>Are you sure you want to submit your profile?</DialogTitle>
-                    <DialogContent dividers sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <Dialog open={open} onClose={onClose} maxWidth={"xs"} PaperProps={{ sx: { borderRadius: "15px", margin: 'auto' } }}>
+                <DialogTitle sx={{ textAlign: 'center', fontFamily: 'Outfit' }}>Are you sure you want to submit?</DialogTitle>
+                    <DialogContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                         <form noValidate autoComplete="off">
                             <Grid container alignItems="center" justifyContent="center">
-                                <Grid item xs={5}>
-                                    <Typography variant="subtitle1" gutterBottom align="right">School</Typography>
+                                <Grid item xs={4} style={{ paddingRight: 8 }}>
+                                    <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit' }}>School</Typography>
                                 </Grid>
-                                <Grid item xs={7} style={{ paddingLeft: 8 }}>
-                                    <TextField defaultValue="Boston University" variant="outlined" size="small"
-                                    InputProps={{
-                                        readOnly: true,
-                                    }} />
+                                <Grid item xs={7} style={{ padding: 8 }}>
+                                    <TextField defaultValue="Boston University" variant="outlined" size="small" style={{ width: '200px', }}
+                                    InputProps={{ readOnly: true, style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}}/>
                                 </Grid>
-                                <Grid item xs={5}>
-                                    <Typography variant="subtitle1" gutterBottom align="right">Major</Typography>
+                                <Grid item xs={4} style={{ paddingRight: 8 }}>
+                                    <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit' }}>Major</Typography>
                                 </Grid>
-                                <Grid item xs={7} style={{ paddingLeft: 8 }}>
-                                    <TextField defaultValue="Computer Science" variant="outlined" size="small"
-                                    InputProps={{
-                                        readOnly: true,
-                                    }} />
+                                <Grid item xs={7} style={{ padding: 8 }}>
+                                    <TextField defaultValue="Computer Science" variant="outlined" size="small" style={{ width: '200px' }}
+                                    InputProps={{ readOnly: true, style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}}/>
                                 </Grid>
-                                <Grid item xs={5}>
-                                    <Typography variant="subtitle1" gutterBottom align="right">Grade</Typography>
+                                <Grid item xs={4} style={{ paddingRight: 8  }}>
+                                    <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit' }}>Grade</Typography>
                                 </Grid>
-                                <Grid item xs={7} style={{ paddingLeft: 8 }}>
-                                    <TextField defaultValue="Third-year" variant="outlined" size="small"
-                                    InputProps={{
-                                        readOnly: true,
-                                    }} />
+                                <Grid item xs={7} style={{ padding: 8 }}>
+                                    <TextField defaultValue="Third-year" variant="outlined" size="small" style={{ width: '200px' }}
+                                    InputProps={{ readOnly: true, style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}}/>
                                 </Grid>
-                                <Grid item xs={5}>
-                                    <Typography variant="subtitle1" gutterBottom align="right">Email</Typography>
+                                <Grid item xs={4} style={{ paddingRight: 8 }}>
+                                    <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit' }}>Email</Typography>
                                 </Grid>
-                                <Grid item xs={7} style={{ paddingLeft: 8 }}>
-                                    <TextField defaultValue=".edu" variant="outlined" size="small"
-                                    InputProps={{
-                                        readOnly: true,
-                                    }} />
+                                <Grid item xs={7} style={{ padding: 8 }}>
+                                    <TextField defaultValue=".edu" variant="outlined" size="small" style={{ width: '200px' }}
+                                    InputProps={{ readOnly: true, style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}}/>
                                 </Grid>
-                                <Grid item xs={5}> 
-                                    <Typography variant="subtitle1" gutterBottom align="right">Bio</Typography>
+                                <Grid item xs={4} style={{ paddingRight: 8 }}> 
+                                    <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit' }}>Bio</Typography>
                                 </Grid>
-                                <Grid item xs={7} style={{ paddingLeft: 8 }}>
-                                    <TextField defaultValue="I'm a third-year student at BU studying CS. I want money!" variant="outlined" multiline rows={4} size="small"
-                                    InputProps={{
-                                        readOnly: true,
-                                    }}/>
+                                <Grid item xs={7} style={{ padding: 8 }}>
+                                    <TextField defaultValue="I'm a third-year student at BU studying CS. I want money!" variant="outlined" multiline rows={6} size="small" style={{ width: '200px' }}
+                                    InputProps={{ readOnly: true, style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}} />
                                 </Grid>
                             </Grid>
                         </form>
+                        <Divider style={{ width: '100vh', marginTop: '8px' }} />
                     </DialogContent>
                 <DialogActions>
                     <Button onClick={onClose}>Close</Button>
