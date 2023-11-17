@@ -102,27 +102,49 @@ export function Login() {
         }
 
         const route = "http://localhost:4000/api/auth/Login";
-
-        try {
-            fetch(route, Login)
-            .then(async (response) => {
+        fetch(route, Login)
+        .then(async (response) => {
+            const res = await response.json()
             if (!response.ok) {
-                throw new Error(`${response.status}`);
+                throw new Error(res.message);
+            } 
+            return res.json();
+        })
+        .then((data) => {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("email", data.email);
+        localStorage.setItem("user", data.role);
+        navigate("/JobBoard");
+        })
+        .catch((error) => {
+            const err = error.message;
+            if (err.startsWith('Error: ')) {
+                alert(err.slice(7));
+                toast.error(err.slice(7), {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light"
+                });
+            } else {
+                toast.error(err, {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light"
+                });
             }
-
-            const data = await response.json();
-            localStorage.setItem("token", data.token);
-            localStorage.setItem("email", data.email);
-            localStorage.setItem("user", data.role);
-            console.log(data.email);
-            console.log(data.role);
-            navigate("/JobBoard");
-            })
-        } catch (error) {
-            alert("Password/Email is incorrect");
-        }
-
+        });
     }
+
 
     return (
         <> 

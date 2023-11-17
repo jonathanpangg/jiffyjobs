@@ -127,21 +127,45 @@ export function Signup() {
         }
         fetch(route, register)
         .then(async (response) => {
+            const res = await response.json()
             if (!response.ok) {
-                throw new Error(`${JSON.stringify(response.error)}`)
+                throw new Error(res.message);
             } 
-            return response.json();
+            return res.json();
         })
         .then((data) => {
 
-            console.log(data.stringify())
             localStorage.setItem("token", data.token);
             localStorage.setItem("email", data.email);
             localStorage.setItem("user", data.role);
             navigate("/JobBoard");
         })
         .catch((error) => {
-            alert(error);
+            const err = error.message;
+            if (err.startsWith('Error: ')) {
+                alert(err.slice(7));
+                toast.error(err.slice(7), {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light"
+                });
+            } else {
+                toast.error(err, {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light"
+                });
+            }
         });
     }
     

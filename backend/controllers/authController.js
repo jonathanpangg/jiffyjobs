@@ -19,10 +19,10 @@ export const seekerSignUp = async (req, res) => {
         const seekerExist = await Seeker.findOne({email});
         const providerExist = await Provider.findOne({email});
         if (seekerExist) {
-            return handleBadRequest(res, "Seeker already registered with this email")
+            return handleBadRequest(res, `${email} is already registered as a seeker`)
         }
         if (providerExist) {
-            return handleBadRequest(res, "Already registered as a provider")
+            return handleBadRequest(res, `${email} is already registered as a provider`)
         }
 
         const newSeeker = new Seeker({
@@ -56,7 +56,7 @@ export const Login = async (req, res) => {
         const provider = await Provider.findOne({ email: email });
         
         if (!seeker && !provider) {
-            return handleNotFound(res, "User not found");
+            return handleNotFound(res, `${email} has not been registered`);
         } else if (!provider) {
             const match = await bcrypt.compare(password, seeker.password);
             if (!match) {
@@ -101,10 +101,10 @@ export const providerSignUp = async(req, res) => {
         const providerExist = await Provider.findOne({ email });
         const seekerExist = await Seeker.findOne({ email });
         if (providerExist) {
-            return handleBadRequest(res, "Provider already registered with this email");
+            return handleBadRequest(res, `${email} is already registered as a provider`);
         };
         if (seekerExist) {
-            return handleBadRequest(res, "Already registered as a seeker");
+            return handleBadRequest(res, `${email} is already registered as a seeker`);
         };
 
         const newProvider = new Provider({
