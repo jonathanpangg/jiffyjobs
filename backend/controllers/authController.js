@@ -12,23 +12,24 @@ import {
 //This is a function to call when seekers want to sign up
 export const seekerSignUp = async (req, res) => {
     try {
-        const { email, name, school, password } = req.body;
+        const { email, first_name, last_name, school, password } = req.body;
         const salt = await bcrypt.genSalt(10);
         const passwordHash = await bcrypt.hash(password, salt);
 
         const seekerExist = await Seeker.findOne({email});
         const providerExist = await Provider.findOne({email});
         if (seekerExist) {
-            return handleBadRequest(res, "Seeker already registered with this email")
+            return handleBadRequest(res, `${email} is already registered as a seeker`)
         }
         if (providerExist) {
-            return handleBadRequest(res, "Already registered as a provider")
+            return handleBadRequest(res, `${email} is already registered as a provider`)
         }
 
         const newSeeker = new Seeker({
             email: email,
             personal_info: {
-                name: name,
+                first_name: first_name,
+                last_name: last_name,
                 school: school
             },
             password: passwordHash,
@@ -39,9 +40,8 @@ export const seekerSignUp = async (req, res) => {
         return handleSuccess(res,{
             _id: (await savedSeeker).id,
             email: (await savedSeeker).email,
-            name: (await savedSeeker).personal_info.name,
-            school: (await savedSeeker).personal_info.school,
-            token: generateToken(savedSeeker._id)
+            token: generateToken(savedSeeker._id),
+            role: "seeker"
         });
     } catch (error) {
         return handleServerError(res, error);
@@ -56,7 +56,7 @@ export const Login = async (req, res) => {
         const provider = await Provider.findOne({ email: email });
         
         if (!seeker && !provider) {
-            return handleNotFound(res, "User not found");
+            return handleNotFound(res, `${email} has not been registered`);
         } else if (!provider) {
             const match = await bcrypt.compare(password, seeker.password);
             if (!match) {
@@ -68,6 +68,7 @@ export const Login = async (req, res) => {
                 _id: seeker.id,
                 email: seeker.email,
                 token: generateToken(seeker._id),
+                role: "seeker"
             });
         } else {
             const match = await bcrypt.compare(password, provider.password);
@@ -81,6 +82,7 @@ export const Login = async (req, res) => {
                 _id: provider.id,
                 email: provider.email,
                 token: generateToken(provider._id),
+                role: "provider"
             });
         }
 
@@ -92,24 +94,25 @@ export const Login = async (req, res) => {
 //this is for providers to sign up
 export const providerSignUp = async(req, res) => {
     try {
-        const { email, name, password } = req.body;
+        const { email, first_name, last_name, password } = req.body;
         const salt = await bcrypt.genSalt(10);
         const passwordHash = await bcrypt.hash(password, salt);
 
         const providerExist = await Provider.findOne({ email });
         const seekerExist = await Seeker.findOne({ email });
         if (providerExist) {
-            return handleBadRequest(res, "Provider already registered with this email");
+            return handleBadRequest(res, `${email} is already registered as a provider`);
         };
         if (seekerExist) {
-            return handleBadRequest(res, "Already registered as a seeker");
+            return handleBadRequest(res, `${email} is already registered as a seeker`);
         };
 
         const newProvider = new Provider({
             email: email,
             password: passwordHash,
             personal_info: {
-                name: name
+                first_name: first_name,
+                last_name: last_name
             }
         });
     
@@ -118,7 +121,8 @@ export const providerSignUp = async(req, res) => {
             _id: (await savedProvider).id,
             email: (await savedProvider).email,
             name: (await savedProvider).personal_info.name,
-            token: generateToken(savedProvider._id)
+            token: generateToken(savedProvider._id),
+            role: "provider"
         })
     } catch (error) {
         return handleServerError(res, error);

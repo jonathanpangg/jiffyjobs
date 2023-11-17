@@ -37,19 +37,11 @@ export function JobBoard() {
 
     const navigate = useNavigate();
 
+
     const handleToDashboard = () => {
         navigate('/dashboard');
     };
-
-    // useEffect(() => {
-    //     const loggedin = localStorage.getItem("user");
-    //     const token = localStorage.getItem("token");
-    //     if (!loggedin) {
-    //         alert('Please login!');
-    //         navigate('/login');
-    //     }
-    // },[]);
-
+  
     function processTime(time) {
         var str = "Time: "
         for (let i = 0; i < time.length; i++) {
