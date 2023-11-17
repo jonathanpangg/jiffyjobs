@@ -5,20 +5,40 @@ import { Checkbox, FormControlLabel, Link } from '@mui/material';
 import { InputAdornment, IconButton } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 import { RegNavBar } from '../components/RegNavBar';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export function Login() {
     const navigate = useNavigate()
     const [showPassword, setShowPassword] = useState(false);
+    const [ token, setToken ] = useState(localStorage.getItem("token"));
+    const [showToken, setShowToken] = useState(false);
 
     useEffect(() => {
-        const loggedin = localStorage.getItem("user");
-        const token = localStorage.getItem("token");
-        if (loggedin) {
-            alert('Already logged in!');
-            navigate('/JobBoard');
-        }
-    },[]);
+        if (token) setShowToken(true);
+    },[token]);
 
+    useEffect(()=> {
+        if (showToken) {
+            console.log(showToken);
+            toast.info('Already Logged In!', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                onClose: () => {
+                    navigate('/JobBoard');
+                    setShowToken(false);
+                  }
+            });
+            setShowToken(false);
+        }
+
+    }, [showToken])
     const AllJobs = () => {
         navigate('/JobBoard')
     }
@@ -82,24 +102,49 @@ export function Login() {
         }
 
         const route = "https://jiffyjobs-api-production.up.railway.app/api/auth/Login";
-
-        try {
-            await fetch(route, Login)
-            .then(async (response) => {
+        fetch(route, Login)
+        .then(async (response) => {
+            const res = await response.json()
             if (!response.ok) {
-                throw new Error(`${response.status}`);
+                throw new Error(res.message);
+            } 
+            return res.json();
+        })
+        .then((data) => {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("email", data.email);
+        localStorage.setItem("user", data.role);
+        navigate("/JobBoard");
+        })
+        .catch((error) => {
+            const err = error.message;
+            if (err.startsWith('Error: ')) {
+                alert(err.slice(7));
+                toast.error(err.slice(7), {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light"
+                });
+            } else {
+                toast.error(err, {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light"
+                });
             }
-
-            const data = await response.json();
-            localStorage.setItem("token", data.token);
-            localStorage.setItem("user", JSON.stringify(data));
-            navigate("/JobBoard");
-            })
-        } catch (error) {
-            alert("Password/Email is incorrect");
-        }
-
+        });
     }
+
 
     return (
         <> 
@@ -149,7 +194,7 @@ export function Login() {
                                 
                     <div style={{ display: 'flex',  justifyContent: 'space-between',  alignItems: 'center', width: '68.5%', margin: '0 auto', }}>
                         <FormControlLabel control={<Checkbox name="remember" color="primary" />} label={ <span style={{ fontFamily: 'Outfit', color: '#5B5B5B', fontSize: '0.9rem'  }}>Remember me</span> } style={{ marginRight: 'auto',}} />
-                        <Link component = 'button' onClick={handleForgotPassword} variant="body2" style={{ fontFamily: 'Outfit', color: '#5B5B5B', textDecorationColor: '#5B5B5B', fontSize: '0.85rem' }} > Forgot Password?</Link>
+                        <Link onClick={handleForgotPassword} variant="body2" style={{ fontFamily: 'Outfit', color: '#5B5B5B', textDecorationColor: '#5B5B5B', fontSize: '0.85rem' }} > Forgot Password?</Link>
                     </div>
                     <div style={{ }}>
                         <Button type="submit" onClick={login} sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#A4A4A4', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit', border: '1px solid #5B5B5B' }} >
@@ -160,11 +205,6 @@ export function Login() {
                         <div class="orLine "></div>
                         <span class="orText">or</span>
                         <div class="orLine "></div>
-                    </div>
-                    <div style={{ }}>
-                        <Button startIcon={<GoogleIcon/>} sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#white', '&:hover': { backgroundColor: '#f5f5f5' }, borderRadius: '30px', textTransform: 'none', color: '#5B5B5B', fontFamily: 'Outfit', border: '1px solid #5B5B5B'}} >
-                            Continue with Google
-                        </Button>
                     </div>
                     <div style={{ }}>
                         <Button onClick={handleSignUp} sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#5B5B5B', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit'}} >

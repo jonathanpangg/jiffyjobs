@@ -7,19 +7,11 @@ import { VerticalDashboardBar } from '../components/VerticalDashboardBar';
 import { StatusDashboard } from '../components/StatusDashboard';
 import { SavedJobDashboard } from '../components/SavedJobDashboard';
 import '../styles/Dashboard.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        const loggedin = localStorage.getItem("user");
-        const token = localStorage.getItem("token");
-        if (!loggedin) {
-            alert('Please login!');
-            navigate('/login')
-        }
-    },[])
   
     return (
         <div role="tabpanel" hidden={value !== index} id={`vertical-tabpanel-${index}`} aria-labelledby={`vertical-tab-${index}`} {...other}>
@@ -40,6 +32,35 @@ TabPanel.propTypes = {
 
 export function Dashboard() {
     const { renderVerticalDashBoard, value } = VerticalDashboardBar()
+    const [ token, setToken ] = useState(localStorage.getItem("token"));
+    const [showToken, setShowToken] = useState(false);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!token) setShowToken(true);
+    },[token]);
+
+    useEffect(()=> {
+        if (showToken) {
+            console.log(showToken);
+            toast.error('Please Login!', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                onClose: () => {
+                    navigate('/login');
+                    setShowToken(false);
+                  }
+            });
+            setShowToken(false);
+        }
+
+    }, [showToken])
 
     return (
         <div className='outerCard' style={{paddingTop: '1%'}}>

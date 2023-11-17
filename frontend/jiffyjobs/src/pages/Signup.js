@@ -3,22 +3,43 @@ import { Button, TextField, ToggleButton, ToggleButtonGroup, Card, CardContent }
 import { InputAdornment, IconButton } from '@mui/material';
 import { RegNavBar } from '../components/RegNavBar';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export function Signup() {
     const [role, setRole] = React.useState('jobSeeker');
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState('');
-    const navigate = useNavigate()
+    const [ token, setToken ] = useState(localStorage.getItem("token"));
+    const [showToken, setShowToken] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const loggedin = localStorage.getItem("user");
-        const token = localStorage.getItem("token");
-        if (loggedin) {
-            alert('Already logged in!');
-            navigate('/JobBoard');
+        if (token) setShowToken(true);
+    },[token]);
+
+    useEffect(()=> {
+        if (showToken) {
+            console.log(showToken);
+            toast.info('Already Logged In!', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                onClose: () => {
+                    navigate('/JobBoard');
+                    setShowToken(false);
+                  }
+            });
+            setShowToken(false);
         }
-    },[]);
+
+    }, [showToken])
 
     const handleRole = (event, newRole) => {
         if (newRole !== null) {
@@ -33,14 +54,16 @@ export function Signup() {
 
     // useState for the data
     const [val, setVal] = useState({
-        name: '',
+        firstName: '',
+        lastName: '',
         email: '',
         password: '',
     })
 
     // useState for errors
     const [error, setError] = useState({
-        nameError: false,
+        firstNameError: false,
+        lastNameError: false,
         emailError: false,
         passwordError: false,
         confirmPasswordError: false, 
@@ -59,7 +82,8 @@ export function Signup() {
         }
 
         setError({
-            nameError: val.name === '',
+            firstNameError: val.firstName === '',
+            lastNameError: val.lastName === '',
             emailError: isEmailError,
             passwordError: val.password === '',
             confirmPasswordError: confirmPassword === '' || confirmPassword !== val.password,
@@ -89,7 +113,8 @@ export function Signup() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 email: val.email,
-                name: val.name,
+                firstName: val.firstName,
+                lastName: val.lastName,
                 school: "Boston University",
                 password: val.password
             })
@@ -100,22 +125,48 @@ export function Signup() {
         if (role === 'jobSeeker') {
             route = "https://jiffyjobs-api-production.up.railway.app/api/auth/seekerSignUp";
         }
-
-        try {
-            await fetch(route, register)
-            .then(async (response) => {
+        fetch(route, register)
+        .then(async (response) => {
+            const res = await response.json()
             if (!response.ok) {
-                throw new Error(`${response.status}`);
-            }
+                throw new Error(res.message);
+            } 
+            return res.json();
+        })
+        .then((data) => {
 
-            const data = await response.json();
             localStorage.setItem("token", data.token);
-            localStorage.setItem("user", JSON.stringify(data));
-            navigate("/JobBoard")
-            })
-        } catch (error) {
-            console.log(error);
-        }
+            localStorage.setItem("email", data.email);
+            localStorage.setItem("user", data.role);
+            navigate("/JobBoard");
+        })
+        .catch((error) => {
+            const err = error.message;
+            if (err.startsWith('Error: ')) {
+                alert(err.slice(7));
+                toast.error(err.slice(7), {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light"
+                });
+            } else {
+                toast.error(err, {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light"
+                });
+            }
+        });
     }
     
     return (
@@ -133,17 +184,31 @@ export function Signup() {
 
                     <form onSubmit={handleSubmit} noValidate autoComplete="off" style={{ alignItems: 'center' }}> 
 
-                    <div>
-                        <div style={{ textAlign: 'left', width: '68.5%', margin: '0 auto' }}>
-                            <text className='pop-textfield-title' style={{ fontFamily: 'Outfit', }}>
-                                Name
-                            </text> <br></br>
+                    <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5%' }}>
+                        <div style={{ width: '33.5%', }}>
+                            <div style={{ textAlign: 'left', width: '100%',  }}>
+                                <text className='pop-textfield-title' style={{ fontFamily: 'Outfit', }}>
+                                    First Name
+                                </text> <br></br>
+                            </div>
+                            <TextField error={error.firstNameError} helperText={error.firstNameError ? "*This field is required" : ""} required={true} placeholder="First Name" type="text" square={false} style={{width: '100%', fontFamily: 'Outfit', }} onChange={(e) => {handleValues(e)}} id='firstName' value={val.firstName}
+                                InputProps={{
+                                    style: {  borderRadius: '10px', }
+                                }}
+                            />
                         </div>
-                        <TextField error={error.nameError} helperText={error.nameError ? "*This field is required" : ""} required={true} placeholder="Your Name" type="text" square={false} style={{width: '68.5%', fontFamily: 'Outfit', }} onChange={(e) => {handleValues(e)}} id='name' value={val.name}
-                            InputProps={{
-                                style: {  borderRadius: '10px' }
-                            }}
-                        />
+                        <div style={{ width: '33.5%', }}>
+                            <div style={{ textAlign: 'left', width: '100%', }}>
+                                <text className='pop-textfield-title' style={{ fontFamily: 'Outfit', }}>
+                                    Last Name
+                                </text> <br></br>
+                            </div>
+                            <TextField error={error.lastNameError} helperText={error.lastNameError ? "*This field is required" : ""} required={true} placeholder="Last Name" type="text" square={false} style={{width: '100%', fontFamily: 'Outfit', }} onChange={(e) => {handleValues(e)}} id='lastName' value={val.lastName}
+                                InputProps={{
+                                    style: {  borderRadius: '10px' }
+                                }}
+                            />
+                        </div>
                     </div>
                     <div style={{paddingTop: '1.5%'}}>
                         <div style={{ textAlign: 'left', width: '68.5%', margin: '0 auto' }}>
@@ -205,7 +270,7 @@ export function Signup() {
                     </div>
 
                     <div style={{paddingTop: '1.5%'}}>
-                        <Button type="submit" fullWidth onClick={signUp} sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#5B5B5B', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit'  }}>
+                        <Button fullWidth onClick={signUp} sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#5B5B5B', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit'  }}>
                             Sign up as a {role === 'jobSeeker' ? 'Job Seeker' : 'Job Provider'}
                         </Button>
                     </div>
