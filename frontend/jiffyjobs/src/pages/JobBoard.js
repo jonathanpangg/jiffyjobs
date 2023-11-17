@@ -198,9 +198,9 @@ export function JobBoard() {
     // submit profile popup
     function SubmitProfilePopup({ open, onClose, onSubmit }) {
         return (
-            <Dialog open={open} onClose={onClose} maxWidth={"xs"} PaperProps={{ sx: { borderRadius: "15px", margin: 'auto' } }}>
+            <Dialog open={open} onClose={onClose} maxWidth={"xl"} PaperProps={{ sx: { borderRadius: "15px", margin: 'auto', width: '500px' } }}>
                 <DialogTitle sx={{ textAlign: 'center', fontFamily: 'Outfit' }}>Are you sure you want to submit?</DialogTitle>
-                    <DialogContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                    <DialogContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '16px', margin: 'auto', border: '2px dashed #ccc', borderRadius: '5px', maxWidth: 'calc(100% - 150px)' }}>
                         <form noValidate autoComplete="off">
                             <Grid container alignItems="center" justifyContent="center">
                                 <Grid item xs={4} style={{ paddingRight: 8 }}>
@@ -234,17 +234,22 @@ export function JobBoard() {
                                 <Grid item xs={4} style={{ paddingRight: 8 }}> 
                                     <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit' }}>Bio</Typography>
                                 </Grid>
-                                <Grid item xs={7} style={{ padding: 8 }}>
+                                <Grid item xs={7} style={{ paddingRight: 8, paddingTop: 8, paddingLeft: 8 }}>
                                     <TextField defaultValue="I'm a third-year student at BU studying CS. I want money!" variant="outlined" multiline rows={6} size="small" style={{ width: '200px' }}
                                     InputProps={{ readOnly: true, style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}} />
                                 </Grid>
                             </Grid>
                         </form>
-                        <Divider style={{ width: '100vh', marginTop: '8px' }} />
+                        
                     </DialogContent>
-                <DialogActions>
-                    <Button onClick={onClose}>Close</Button>
-                    <Button onClick={onSubmit}>Submit</Button>
+                    <Divider style={{ width: '100%', marginTop: '30px' }} />
+                <DialogActions sx={{ marginRight: '15px' }}>
+                    <Button onClick={onClose} sx={{ border: '1px solid #5B5B5B', borderRadius: '8px', padding: '6px 12px', fontFamily: 'Outfit', textTransform: 'none', color: '#5B5B5B' }}>
+                        Cancel
+                    </Button>
+                    <Button onClick={onSubmit} sx={{ border: '1px solid #D9D9D9', borderRadius: '8px', padding: '6px 12px', fontFamily: 'Outfit', textTransform: 'none', color: '#5B5B5B', backgroundColor: '#D9D9D9', '&:hover': {backgroundColor: '#D9D9D9'}}}>
+                        Submit Profile
+                    </Button>
                 </DialogActions>
             </Dialog>
         );
