@@ -31,14 +31,6 @@ export function JobBoard() {
 
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     const token = localStorage.getItem("token");
-    //     if (!token) {
-    //         alert('Please login!');
-    //         navigate('/login');
-    //     }
-    // },[]);
-
     function processTime(time) {
         var str = "Time: "
         for (let i = 0; i < time.length; i++) {

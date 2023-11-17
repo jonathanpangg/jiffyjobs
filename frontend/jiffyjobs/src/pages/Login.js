@@ -101,7 +101,7 @@ export function Login() {
             })
         }
 
-        const route = "http://localhost:4000/api/auth/Login";
+        const route = "https://jiffyjobs-api-production.up.railway.app/api/auth/Login";
         fetch(route, Login)
         .then(async (response) => {
             const res = await response.json()
