@@ -13,6 +13,7 @@ import dayjs from 'dayjs';
 import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from '@mui/material/IconButton';
 import Chip from '@mui/material/Chip';
+import TextField from '@mui/material/TextField';
 import { useNavigate } from 'react-router-dom';
 
 export function JobBoard() {
@@ -38,14 +39,14 @@ export function JobBoard() {
         navigate('/dashboard');
     };
 
-    useEffect(() => {
-        const loggedin = localStorage.getItem("user");
-        const token = localStorage.getItem("token");
-        if (!loggedin) {
-            alert('Please login!');
-            navigate('/login');
-        }
-    },[]);
+    // useEffect(() => {
+    //     const loggedin = localStorage.getItem("user");
+    //     const token = localStorage.getItem("token");
+    //     if (!loggedin) {
+    //         alert('Please login!');
+    //         navigate('/login');
+    //     }
+    // },[]);
 
     function processTime(time) {
         var str = "Time: "
@@ -197,11 +198,59 @@ export function JobBoard() {
     // submit profile popup
     function SubmitProfilePopup({ open, onClose, onSubmit }) {
         return (
-            <Dialog open={open} onClose={onClose} maxWidth="md">
-                <DialogTitle>Submit Profile</DialogTitle>
-                <DialogContent>
-                    profile content
-                </DialogContent>
+            <Dialog open={open} onClose={onClose} maxWidth={"sm"} PaperProps={{ sx: { borderRadius: "15px", margin: 'auto' } }}>
+                <DialogTitle>Are you sure you want to submit your profile?</DialogTitle>
+                    <DialogContent dividers sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                        <form noValidate autoComplete="off">
+                            <Grid container alignItems="center" justifyContent="center">
+                                <Grid item xs={5}>
+                                    <Typography variant="subtitle1" gutterBottom align="right">School</Typography>
+                                </Grid>
+                                <Grid item xs={7} style={{ paddingLeft: 8 }}>
+                                    <TextField defaultValue="Boston University" variant="outlined" size="small"
+                                    InputProps={{
+                                        readOnly: true,
+                                    }} />
+                                </Grid>
+                                <Grid item xs={5}>
+                                    <Typography variant="subtitle1" gutterBottom align="right">Major</Typography>
+                                </Grid>
+                                <Grid item xs={7} style={{ paddingLeft: 8 }}>
+                                    <TextField defaultValue="Computer Science" variant="outlined" size="small"
+                                    InputProps={{
+                                        readOnly: true,
+                                    }} />
+                                </Grid>
+                                <Grid item xs={5}>
+                                    <Typography variant="subtitle1" gutterBottom align="right">Grade</Typography>
+                                </Grid>
+                                <Grid item xs={7} style={{ paddingLeft: 8 }}>
+                                    <TextField defaultValue="Third-year" variant="outlined" size="small"
+                                    InputProps={{
+                                        readOnly: true,
+                                    }} />
+                                </Grid>
+                                <Grid item xs={5}>
+                                    <Typography variant="subtitle1" gutterBottom align="right">Email</Typography>
+                                </Grid>
+                                <Grid item xs={7} style={{ paddingLeft: 8 }}>
+                                    <TextField defaultValue=".edu" variant="outlined" size="small"
+                                    InputProps={{
+                                        readOnly: true,
+                                    }} />
+                                </Grid>
+                                <Grid item xs={5}> 
+                                    <Typography variant="subtitle1" gutterBottom align="right">Bio</Typography>
+                                </Grid>
+                                <Grid item xs={7} style={{ paddingLeft: 8 }}>
+                                    <TextField defaultValue="I'm a third-year student at BU studying CS. I want money!" variant="outlined" multiline rows={4} size="small"
+                                    InputProps={{
+                                        readOnly: true,
+                                    }}/>
+                                </Grid>
+                            </Grid>
+                        </form>
+                    </DialogContent>
                 <DialogActions>
                     <Button onClick={onClose}>Close</Button>
                     <Button onClick={onSubmit}>Submit</Button>
@@ -217,10 +266,10 @@ export function JobBoard() {
 
     function CongratsPopup({ open, onClose}) {
         const handleClose = () => {
-            onClose(); // Close the congratulatory popup
+            onClose(); 
         };
         return (
-            <Dialog open={open} onClose={onClose} maxWidth="sm">
+            <Dialog open={open} onClose={onClose} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
                 <DialogTitle>Congratulations!</DialogTitle>
                 <DialogContent>
                     <Typography>Your profile has been successfully submitted.</Typography>
@@ -378,7 +427,7 @@ export function JobBoard() {
                 {/* <button onClick={handleLogJobData}>Log Job Data</button> */}
             </Box>
             <Box>
-                <Grid container className='job-table-grid' rowSpacing={2} columnSpacing={2}>
+                <Grid container className= { 'job-table-grid' } style={{ backgroundColor: 'inherit' }}rowSpacing={2} columnSpacing={2}>
                     {jobData.slice((page - 1) * cardsPerPage, page * cardsPerPage).map((key) => (
                         <Grid key={key} item>
                             <Link overlay underline="none" sx={{ color: 'text.tertiary', cursor: 'pointer' }} onClick={() => openPopUp(key)}>
