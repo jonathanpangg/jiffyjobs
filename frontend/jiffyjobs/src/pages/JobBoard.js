@@ -299,7 +299,7 @@ export function JobBoard() {
     const toggleSaveJob = () => {
         setIsJobSaved(!isJobSaved);
         setShowSavedMessage(true);
-        setTimeout(() => setShowSavedMessage(false), 2000);
+        setTimeout(() => setShowSavedMessage(false), 1000);
     };
     
     return (
@@ -329,7 +329,7 @@ export function JobBoard() {
                                             <StarBorderIcon style={{ color: '#A4A4A4' }} />}
                                     </IconButton>
                                     {showSavedMessage && <div style={{ position: 'absolute', bottom: '-25px', left: '50%', transform: 'translateX(-50%)', fontSize: '12px', fontFamily: 'Outfit', textAlign: 'center' }}>
-                                        Job saved!
+                                    {isJobSaved ? 'Job Saved' : 'Job Unsaved'}
                                     </div>}
                                 </div>
                             </div>
