@@ -183,9 +183,9 @@
 }
 
 .blur-background {
-  filter: blur(5px);
+  filter: blur(2px);
 }
 
 .blur-effect {
-  filter: blur(5px);
+  filter: blur(2px);
 }
