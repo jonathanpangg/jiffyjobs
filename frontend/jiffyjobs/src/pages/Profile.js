@@ -3,6 +3,8 @@ import { Box, Card, Grid, Container, Typography, TextField, Button, FormControlL
 import '../styles/profile.css'
 import { deepOrange } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export function Profile() {
     const [UserEmailstate, setuserEmail] = useState("");
@@ -18,21 +20,44 @@ export function Profile() {
     const [isPublic, setIsPublic] = useState(false);
     const [fname, setFname] = useState("");
     const [lname, setLname] = useState("");
+    //tells you if its 'seeker' or 'provider'
+    const [ userRole, setUserRole ] = useState(localStorage.getItem("user"));
+    // user email
+    const [ email, setEmail ] = useState(localStorage.getItem("email"));
 
     const gradeList = ["Freshmen", "Sophomore", "Junior", "Senior", "Graduate Student", "Other"]
 
     const [personalInfo, setpersonalInfo] = useState({});
 
+    const [ token, setToken ] = useState(localStorage.getItem("token"));
+    const [showToken, setShowToken] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const loggedin = localStorage.getItem("user");
-        const token = localStorage.getItem("token");
-        if (!loggedin) {
-            alert('Please login!');
-            navigate('/login')
+        if (!token) setShowToken(true);
+    },[token]);
+
+    useEffect(()=> {
+        if (showToken) {
+            console.log(showToken);
+            toast.error('Please Login!', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                onClose: () => {
+                    navigate('/login');
+                    setShowToken(false);
+                  }
+            });
+            setShowToken(false);
         }
-    },[])
+
+    }, [showToken])
 
     const userEmail = "pangj@bu.edu"; // This will eventually come from user login state
     // const userEmail = "example_email@bu.edu"

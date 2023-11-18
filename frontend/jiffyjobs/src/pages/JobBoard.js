@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
-import { Dialog, Divider, Typography, DialogContentText, DialogContent, DialogActions, DialogTitle, Link  } from '@mui/material';
+import { Dialog, Divider, Typography, DialogContentText, DialogContent, DialogActions, DialogTitle, Link, Button  } from '@mui/material';
 import { Filter } from '../components/Filter';
 import { Sort } from '../components/Sort';
 import { JobPosting } from '../components/JobPosting';
@@ -13,7 +13,10 @@ import dayjs from 'dayjs';
 import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from '@mui/material/IconButton';
 import Chip from '@mui/material/Chip';
+import TextField from '@mui/material/TextField';
 import { useNavigate } from 'react-router-dom';
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
 
 export function JobBoard() {
     const [jobData, setJobData] = useState([])
@@ -29,17 +32,16 @@ export function JobBoard() {
     const totalCards = jobData.length;
     const totalPages = Math.ceil(totalCards / cardsPerPage);
 
+    const [openSubmitProfile, setOpenSubmitProfile] = useState(false);
+    const [openCongratsPopup, setOpenCongratsPopup] = useState(false);
+
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     const loggedin = localStorage.getItem("user");
-    //     const token = localStorage.getItem("token");
-    //     if (!loggedin) {
-    //         alert('Please login!');
-    //         navigate('/login');
-    //     }
-    // },[]);
 
+    const handleToDashboard = () => {
+        navigate('/dashboard');
+    };
+  
     function processTime(time) {
         var str = "Time: "
         for (let i = 0; i < time.length; i++) {
@@ -56,7 +58,7 @@ export function JobBoard() {
     // handles getting all jobs
     useEffect(() => {
         async function GetAllJobs() {
-            const route = "https://jiffyjobs-api-production.up.railway.app/api/jobs/get"
+            const route = "http://localhost:4000/api/jobs/get"
             fetch(route)
                 .then((response) => {
                     if (!response.ok) {
@@ -109,7 +111,7 @@ export function JobBoard() {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' }
             }
-            var route = "https://jiffyjobs-api-production.up.railway.app/api/jobs/filter"
+            var route = "http://localhost:4000/api/jobs/filter"
             var query = "/*/*/" + Array.from(filterList) + "/*/*"
             console.log(query)
             route = route + query
@@ -176,10 +178,121 @@ export function JobBoard() {
         console.log(jobData)
         console.log(rawData)
     }
+
+    // open submit profile popup
+    const handleOpenSubmitProfile = () => {
+        setOpenSubmitProfile(true);
+    };
+
+    // close submit profile popup
+    const handleCloseSubmitProfile = () => {
+        setOpenSubmitProfile(false);
+    };
+
+    // submit profile popup
+    function SubmitProfilePopup({ open, onClose, onSubmit }) {
+        return (
+            <Dialog open={open} onClose={onClose} maxWidth={"xl"} PaperProps={{ sx: { borderRadius: "15px", margin: 'auto', width: '500px' } }}>
+                <DialogTitle sx={{ textAlign: 'center', fontFamily: 'Outfit', marginTop: 2, }}>Are you sure you want to submit?</DialogTitle>
+                    <DialogContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '16px', margin: 'auto', border: '2px dashed #ccc', borderRadius: '5px', maxWidth: 'calc(100% - 150px)' }}>
+                        <Stack direction="row" spacing={2} alignItems="center" justifyContent="center" style={{ paddingBottom: 4, paddingTop: 20, marginRight: '60px'}} >
+                            <Avatar sx={{ bgcolor: '#D9D9D9', width: 45, height: 45, color: 'black', fontSize: '25px'}}>LY</Avatar>
+                            <Typography variant="subtitle1" style={{ fontFamily: 'Outfit', fontSize: '20px', fontWeight: 'bold' }}>
+                                Lucas Yoon
+                            </Typography>
+                        </Stack>
+                        <form noValidate autoComplete="off" style={{ width: '100%' }}>
+                            <Grid container alignItems="center" justifyContent="center" style={{ width: '100%' }}>
+                                <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 8 }}>
+                                    <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4'}}>School<span style={{"color": "red"}}>*</span></Typography>
+                                </Grid>
+                                <Grid item xs={7} style={{ padding: 8 }}>
+                                    <TextField disabled defaultValue="Boston University" variant="outlined" size="small" className="inputSubmit" style={{ width: '200px' }}
+                                    InputProps={{ style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}}/>
+                                </Grid>
+                                <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 8 }}>
+                                    <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4' }}>Major</Typography>
+                                </Grid>
+                                <Grid item xs={7} style={{ padding: 8 }}>
+                                    <TextField disabled defaultValue="Computer Science" variant="outlined" size="small" style={{ width: '200px' }}
+                                    InputProps={{ style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}}/>
+                                </Grid>
+                                <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 8 }}>
+                                    <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4' }}>Grade</Typography>
+                                </Grid>
+                                <Grid item xs={7} style={{ padding: 8 }}>
+                                    <TextField disabled defaultValue="Third-year" variant="outlined" size="small" style={{ width: '200px' }}
+                                    InputProps={{ style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}}/>
+                                </Grid>
+                                <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 8 }}>
+                                    <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4' }}>Email<span style={{"color": "red"}}>*</span></Typography>
+                                </Grid>
+                                <Grid item xs={7} style={{ padding: 8 }}>
+                                    <TextField disabled defaultValue=".edu" variant="outlined" size="small" className="inputSubmit" style={{ width: '200px' }}
+                                    InputProps={{style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}}/>
+                                </Grid>
+                                <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 8 }}>
+                                    <Typography diabled variant="subtitle1" align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4' }}>Bio</Typography>
+                                </Grid>
+                                <Grid item xs={7} style={{ paddingRight: 8, paddingTop: 8, paddingLeft: 8 }}>
+                                    <TextField disabled defaultValue="I'm a third-year student at BU studying CS. I want money!" variant="outlined" multiline rows={6} size="small" style={{ width: '200px' }}
+                                    InputProps={{style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px', }}} />
+                                </Grid>
+                            </Grid>
+                        </form>            
+                    </DialogContent>
+                    <Divider style={{ width: '100%', marginTop: '25px',  height: '4px' }} />
+                <DialogActions sx={{ marginRight: '15px' }}>
+                    <Button onClick={onClose} sx={{ border: '1px solid #5B5B5B', borderRadius: '8px', padding: '6px 12px', fontFamily: 'Outfit', textTransform: 'none', color: '#5B5B5B' }}>
+                        Cancel
+                    </Button>
+                    <Button onClick={onSubmit} sx={{ border: '1px solid #D9D9D9', borderRadius: '8px', padding: '6px 12px', fontFamily: 'Outfit', textTransform: 'none', color: '#5B5B5B', backgroundColor: '#D9D9D9', '&:hover': {backgroundColor: '#D9D9D9'}}}>
+                        Submit Profile
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        );
+    }
+
+    const handleSubmitProfile = () => {
+        handleCloseSubmitProfile();
+        setOpenCongratsPopup(true);
+    };
+
+    function CongratsPopup({ open, onClose}) {
+        const handleClose = () => {
+            onClose(); 
+        };
+        return (
+            <Dialog open={open} onClose={onClose} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
+                <DialogTitle>Congratulations!</DialogTitle>
+                <DialogContent>
+                    <Typography>Your profile has been successfully submitted.</Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleApplyMore}>Apply More</Button>
+                    <Button onClick={handleToDashboard}>Go to Dashboard</Button>
+                </DialogActions>
+            </Dialog>
+        );
+    }
+
+    // open job listing popup
+    const openJobListingPopup = (key) => {
+        setCurrentPop(key);
+        setOpenPop(true); 
+        console.log(currentPop);
+    };
+
+    // close popups
+    const handleApplyMore = () => {
+        setOpenCongratsPopup(false); 
+        setOpenPop(false); 
+    };
     
     return (
-        <div className='outerCard'>
-            <Dialog open={openPop} onClose={closePop} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
+        <div className={`outerCard ${openPop ? 'blur-background' : ''}`}>
+            <Dialog open={openPop} onClose={closePop} className={`${openSubmitProfile || openCongratsPopup ? 'blur-effect' : ''}`} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
                 <div style={{ position: 'relative'}}>
                     <img
                         style={{ width: '100%', maxHeight: '30vh'}}
@@ -241,20 +354,35 @@ export function JobBoard() {
                             </Typography>
                         </div>
                         <div>
-                            {currentPop[6] && currentPop[6].length > 1 && currentPop[6][1].split(",").map((item, index) => (
+                            {currentPop[6] && currentPop[6].length > 1 && currentPop[6][1].split(",").filter((item) => item.trim() !== "").length > 0 ? (
+                                currentPop[6][1]
+                                    .split(",")
+                                    .filter((item) => item.trim() !== "")
+                                    .map((item, index) => (
+                                        <Chip
+                                            key={index}
+                                            label={item.trim()}
+                                            variant="outlined"
+                                            style={{
+                                                margin: "5px",
+                                                fontFamily: "Outfit",
+                                                fontSize: "14px",
+                                                color: '#5B5B5B',
+                                                fontWeight: "400",
+                                                height: "28px",
+                                            }}
+                                        />
+                                    ))
+                            ) : (
                                 <Chip
-                                    key={index}
-                                    label={item.trim()}
-                                    variant="outline"
+                                    label=""
+                                    variant="outlined"
                                     style={{
-                                        margin: "5px",
-                                        fontFamily: "Outfit",
-                                        fontSize: "18px",
-                                        color: '#5B5B5B',
-                                        fontWeight: "400",
+                                        visibility: "hidden",
+                                        margin: "5px"
                                     }}
                                 />
-                            ))}
+                            )}
                         </div>
                     </DialogContentText>
                 </DialogContent>
@@ -262,18 +390,20 @@ export function JobBoard() {
                     <DialogActions style={{ justifyContent: 'center' }}>
                         <Link style={{cursor:'pointer'}} underline='none' onClick={() => console.log("applied")}>
                             <Card sx={{height: 40, width: '100%'}} style={{overflow:'hidden', borderRadius: '15px', background: "#D9D9D9", color: 'white'}}>
-                                <CardContent style={{justifyContent: 'center', alignItems: 'center', display: 'flex', paddingTop: '3%'}}> 
-                                        <Typography style={{fontFamily: 'Outfit', fontSize:'19.2px', color:'#5B5B5B', fontWeight:'400'}}>
-                                            Easy Submit
-                                        </Typography>
-                                </CardContent>
+                            <CardContent style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingTop: '3%' }}>
+                                <Button onClick={handleOpenSubmitProfile} style={{ textTransform: 'none', width: '100%' }}>
+                                    <Typography style={{ fontFamily: 'Outfit', fontSize: '19.2px', color: '#5B5B5B', fontWeight: '400', marginTop: '-4px' }}>
+                                        Submit Profile
+                                    </Typography>
+                                </Button>
+                            </CardContent>
                             </Card>
                         </Link>
                     </DialogActions>
             </Dialog>
             <JobPosting/> 
             <Box className='job-table-box'>
-                <div className='job-table-inner'>
+                <div className='job-table-inner' style={{ paddingTop: '50px' }}>
                     <Typography style={{fontFamily: 'Outfit', fontSize: 'xx-large', justifyContent: 'center', alignItems: 'center', textAlign: 'start'}}>
                         Job Board
                     </Typography>
@@ -292,11 +422,11 @@ export function JobBoard() {
                 {/* <button onClick={handleLogJobData}>Log Job Data</button> */}
             </Box>
             <Box>
-                <Grid container className='job-table-grid' rowSpacing={2} columnSpacing={2}>
+                <Grid container className= { 'job-table-grid' } style={{ backgroundColor: 'inherit' }}rowSpacing={2} columnSpacing={2}>
                     {jobData.slice((page - 1) * cardsPerPage, page * cardsPerPage).map((key) => (
                         <Grid key={key} item>
                             <Link overlay underline="none" sx={{ color: 'text.tertiary', cursor: 'pointer' }} onClick={() => openPopUp(key)}>
-                                <Card sx={{width: '17.5vw', height: '17.5vw', '&:hover': { boxShadow: 'md', borderColor: 'neutral.outlinedHoverBorder' }}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px', }}>
+                                <Card sx={{width: '21.5vw', height: '21.5vw', '&:hover': { boxShadow: 'md', borderColor: 'neutral.outlinedHoverBorder' }}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px', }}>
                                     <CardMedia
                                         component="img"
                                         alt="placeholder"
@@ -328,6 +458,8 @@ export function JobBoard() {
             <div style={{ display: 'flex', justifyContent: 'center', padding: '1%', background: '#f3f3f3' }}>
                 <Pagination count={totalPages} page={page} onChange={(event, value) => setPage(value)} />
             </div>
+            {openSubmitProfile && (<SubmitProfilePopup open={openSubmitProfile} onClose={handleCloseSubmitProfile} onSubmit={handleSubmitProfile}/>)}
+            {openCongratsPopup && (<CongratsPopup open={openCongratsPopup} onClose={() => setOpenCongratsPopup(false)} onDashboardRedirect={handleToDashboard}/>)}
         </div>
     )
 }

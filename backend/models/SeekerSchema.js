@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-
 // schema for job seekers
 const SeekerSchema = mongoose.Schema({
     email: {
@@ -29,8 +28,7 @@ const SeekerSchema = mongoose.Schema({
         },
         school: {
             type: String,
-            required: true,
-            default: "Boston University"
+            required: true
         },
         major: {
             type: [String],
@@ -92,5 +90,5 @@ const SeekerSchema = mongoose.Schema({
     }]
 });
 
-const Seeker = mongoose.model("Seekers", SeekerSchema);
-export default Seeker;
+const Seekers = mongoose.model("Seekers", SeekerSchema);
+export default Seekers;

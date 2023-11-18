@@ -82,14 +82,14 @@ export function NavBar() {
     }
 
     return (
-        <Grid container className="nav-outer" style={{ display: 'flex', alignItems: 'center' }}>
-            <h1 className='logo-font' onClick={AllJobs} style={{ marginRight: 'auto' }}>
+        <Grid container style={{ alignItems: 'center', height: '64px' }}>
+            <h1 className='logo-font' onClick={AllJobs} style={{ marginRight: 'auto',  height: '38px'}}>
                 JIFFYJOBS
             </h1>
             
             <div style={{ flexGrow: 1 }}></div>
 
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', }}>
                 {/* <div className='first-font' onClick={AllJobs} style={{ cursor: 'pointer', marginRight: '10px', whiteSpace: 'nowrap', }}>
                     All Jobs 
                 </div>
@@ -100,17 +100,17 @@ export function NavBar() {
                     <CustomTab label="All Job" {...allyProps(0)} onClick={AllJobs}/>
                     <CustomTab label="Dashboard" {...allyProps(1)} onClick={goToDashboard}/>
                 </Tabs>
-                <div style={{ width: '80px' }}></div>
+                <div style={{ width: '40px' }}></div>
 
                 <Tooltip onClick={handleOpenUserMenu} style={{ display: 'flex', alignItems: 'center', marginRight: '10px' }}>
                     <div className='profile-picture'></div>
-                    <span style={{ fontWeight: 'bold', whiteSpace: 'nowrap' }}>Lucas Yoon</span>
+                    <span style={{ fontWeight: 'bold', whiteSpace: 'nowrap', fontSize: '14px'}}>Lucas Yoon</span>
                 </Tooltip>
 
                 <div style={{ width: '3px', backgroundColor: 'black', height: '100%', marginRight: '10px' }}></div>
 
                 <Menu
-                    sx={{ mt: '45px' }}
+                    sx={{ mt: '26px', alignItems: 'center', }}
                     id="menu-appbar"
                     anchorEl={anchorElUser}
                     anchorOrigin={{
