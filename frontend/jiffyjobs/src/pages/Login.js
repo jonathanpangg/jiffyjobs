@@ -108,7 +108,7 @@ export function Login() {
             if (!response.ok) {
                 throw new Error(res.message);
             } 
-            return res.json();
+            return res;
         })
         .then((data) => {
         localStorage.setItem("token", data.token);

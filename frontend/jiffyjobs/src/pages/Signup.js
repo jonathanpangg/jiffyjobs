@@ -113,8 +113,8 @@ export function Signup() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 email: val.email,
-                firstName: val.firstName,
-                lastName: val.lastName,
+                first_name: val.firstName,
+                last_name: val.lastName,
                 school: "Boston University",
                 password: val.password
             })
@@ -131,7 +131,7 @@ export function Signup() {
             if (!response.ok) {
                 throw new Error(res.message);
             } 
-            return res.json();
+            return res;
         })
         .then((data) => {
 
