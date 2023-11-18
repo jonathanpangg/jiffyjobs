@@ -32,7 +32,7 @@ import {
             }
             return provider
         } catch (error) {
-            return handleServerError(res, error);
+            return{err: "err"};
         }
     }
 

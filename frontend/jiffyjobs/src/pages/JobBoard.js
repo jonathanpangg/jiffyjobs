@@ -31,14 +31,14 @@ export function JobBoard() {
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const loggedin = localStorage.getItem("user");
-        const token = localStorage.getItem("token");
-        if (!loggedin) {
-            alert('Please login!');
-            navigate('/login');
-        }
-    },[]);
+    // useEffect(() => {
+    //     const loggedin = localStorage.getItem("user");
+    //     const token = localStorage.getItem("token");
+    //     if (!loggedin) {
+    //         alert('Please login!');
+    //         navigate('/login');
+    //     }
+    // },[]);
 
     function processTime(time) {
         var str = "Time: "

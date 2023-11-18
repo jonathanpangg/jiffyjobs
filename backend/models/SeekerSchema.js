@@ -11,7 +11,11 @@ const SeekerSchema = mongoose.Schema({
         required: true
     },
     personal_info: {
-        name: {
+        first_name: {
+            type: String,
+            required: true
+        },
+        last_name: {
             type: String,
             required: true
         },

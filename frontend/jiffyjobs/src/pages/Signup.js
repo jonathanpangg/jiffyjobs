@@ -110,6 +110,7 @@ export function Signup() {
 
             const data = await response.json();
             localStorage.setItem("token", data.token);
+            localStorage.setItem("email", data.email);
             localStorage.setItem("user", JSON.stringify(data));
             navigate("/JobBoard")
             })

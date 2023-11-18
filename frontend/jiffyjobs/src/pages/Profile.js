@@ -33,7 +33,6 @@ export function Profile() {
             navigate('/login')
         }
     },[])
-    
 
     const userEmail = "pangj@bu.edu"; // This will eventually come from user login state
     // const userEmail = "example_email@bu.edu"
@@ -229,7 +228,7 @@ export function Profile() {
                             <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch', alignContent: 'center', paddingLeft: '10px' } }} noValidate autoComplete="off">
                                 <Grid container spacing={1} >
 
-                                <div className='label-input-pair'> 
+                                {/* <div className='label-input-pair'> 
                                 <Grid item xs={6} sm={3} className='name-box-pair' >
                                         <Typography className='profile-components'  gutterBottom>
                                             First Name<span style={{"color": "red"}}>*</span>
@@ -259,7 +258,7 @@ export function Profile() {
                                     
                                         </Grid>
 
-                                </div>
+                                </div> */}
                                
                                 <div className='label-input-pair'>
 

@@ -19,10 +19,10 @@ export const getUserinfo = async(req, res) => {
             return handleSuccess(res, user);
         } else if (isjobprovider === true){
             const user = await getProviderByEmail(req, res);
-            console.log("hello world")
+
             return handleSuccess(res, user);
         } else {
-            console.log("hello world")
+
             return handleNotFound(res, "user not found")
         }
     } catch(error) {
