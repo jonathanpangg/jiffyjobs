@@ -131,7 +131,7 @@ export function Signup() {
             if (!response.ok) {
                 throw new Error(res.message);
             } 
-            return res.json();
+            return res;
         })
         .then((data) => {
 
