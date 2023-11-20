@@ -63,7 +63,7 @@ export function JobBoard() {
     // handles getting all jobs
     useEffect(() => {
         async function GetAllJobs() {
-            const route = "http://localhost:4000/api/jobs/get"
+            const route = "https://jiffyjobs-api-production.up.railway.app/api/jobs/get"
             fetch(route)
                 .then((response) => {
                     if (!response.ok) {
@@ -116,7 +116,7 @@ export function JobBoard() {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' }
             }
-            var route = "http://localhost:4000/api/jobs/filter"
+            var route = "https://jiffyjobs-api-production.up.railway.app/api/jobs/filter"
             var query = "/*/*/" + Array.from(filterList) + "/*/*"
             console.log(query)
             route = route + query
