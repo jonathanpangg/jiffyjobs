@@ -1,5 +1,6 @@
 import { json } from "express";
 import Jobs from "../models/JobSchema.js";
+import Seekers from "../models/SeekerSchema.js"
 import {
     handleNotFound,
 	handleSuccess,
@@ -137,6 +138,9 @@ export const updateJobs = async (req, res) => {
             return handleBadRequest(res, "Nothing to update");
         }
 
+        // get all jobs applied to
+        // get all applicants applied to my job
+
 		updateFields.updatedAt = Date.now();
 
         // the $set allows us to set specific keys to a new value
@@ -173,8 +177,14 @@ export const applytoJobs = async (req, res) => {
         }
     
         job.applicants.push({ _id: seeker_id });
+
+        const applicant = await Seekers.findOne({ email: seeker_id })
+        applicant.jobs_applied.push({ _id: job_id });
+        
+        const a = await applicant.save();
     
         const updatedJob = await job.save();
+        
         return handleSuccess(res, updatedJob);
     } catch (error) {
         return handleServerError(res, error);

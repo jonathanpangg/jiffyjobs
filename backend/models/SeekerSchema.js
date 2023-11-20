@@ -87,6 +87,16 @@ const SeekerSchema = mongoose.Schema({
             type: String,
             required: true
         }
+    }],
+    jobs_uploaded: [{
+        _id: {
+            type: String,
+            required: true
+        },
+        completed: {
+            type: Boolean,
+            required: true
+        }
     }]
 });
 
