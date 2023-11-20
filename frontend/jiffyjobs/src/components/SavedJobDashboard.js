@@ -17,7 +17,7 @@ export function SavedJobDashboard() {
                 View all the jobs you applied for!
             </div>
             <Box className='progress-box'>
-                <Grid container className='progress-grid' rowSpacing={2} columnSpacing={2} width='65vw' style={{paddingBottom: '1%'}}>
+                <Grid container className='progress-grid' rowSpacing={2} columnSpacing={2} width='70vw' style={{paddingBottom: '1%'}}>
                     {jobData.map((key) => {
                         return ( 
                             <Grid key={key} item> 
