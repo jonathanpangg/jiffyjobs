@@ -1,5 +1,5 @@
 import express from "express";
-import {getUserinfo, updateUserInfo} from "../controllers/userController.js"
+import {getUserinfo, updateUserInfo, allPostedJobs, allApplicants, allAppliedJobs} from "../controllers/userController.js"
 const router = express.Router();
 
 
@@ -12,7 +12,8 @@ router.get("/getinfo/:email/:role", getUserinfo);
 // update user
 router.put("/getinfo/update", updateUserInfo);
 
-
+// get all the jobs applied by an user
+router.get("/jobsApplied/:email/:role", allAppliedJobs)
 
 
 
