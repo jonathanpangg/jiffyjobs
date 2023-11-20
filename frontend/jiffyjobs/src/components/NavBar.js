@@ -16,7 +16,7 @@ export function NavBar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const location = useLocation();
-    const [value, setValue] = useState(location.pathname.toLowerCase() === '/jobboard' ? 0 : 1);
+    const [value, setValue] = useState(location.pathname.toLowerCase() === '/jobboard' || location.pathname.toLowerCase() === '/' || location.pathname.toLowerCase() === '' ? 0 : 1);
 
     console.log('Current route:', );
 
