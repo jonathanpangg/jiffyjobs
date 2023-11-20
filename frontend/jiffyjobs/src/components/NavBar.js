@@ -16,7 +16,7 @@ export function NavBar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const location = useLocation();
-    const [value, setValue] = useState(location.pathname.toLowerCase() === '/jobboard' || location.pathname.toLowerCase() === '/' || location.pathname.toLowerCase() === '' ? 0 : 1);
+    const [value, setValue] = useState((location.pathname.toLowerCase() === '/jobboard' || location.pathname.toLowerCase() === '/' || location.pathname.toLowerCase() === '') ? 0 : (location.pathname.toLowerCase() === '/dashboard' ? 1 : -1));
 
     console.log('Current route:', );
 
@@ -45,6 +45,7 @@ export function NavBar() {
     }
 
     const Profile = () => {
+        setValue(-1)
         navigate('/Profile')
     };
 
