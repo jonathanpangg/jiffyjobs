@@ -4,22 +4,28 @@ import Tab from '@mui/material/Tab'
 import { styled } from '@mui/material/styles';
 import '../styles/Dashboard.css';
 import Divider from '@mui/material/Divider'
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import StarOutlineRoundedIcon from '@mui/icons-material/StarOutlineRounded';
 
 const CustomTab = styled((props) => <Tab {...props} />)(() => ({
     textTransform: 'none',
     fontFamily: 'Outfit',
-    fontSize: 'medium',
+    fontSize: 'large',
+    selected: {
+        backgroundColor: 'gray',
+    },
+    textAlign: 'start',
+    justifyContent: 'flex-start'
 }))
 
 function allyProps(index) {
     return {
         id: `vertical-tab-${index}`,
-        'aria-controls': `vertical-tabpanel-${index}`,
     };
 }
-
+  
 export function VerticalDashboardBar() {
-    const [value, setValue] = useState(4);
+    const [value, setValue] = useState(7);
 
     const handleChange = (_, newValue) => {
         setValue(newValue);
@@ -28,15 +34,23 @@ export function VerticalDashboardBar() {
     return {
         value,
         renderVerticalDashBoard:(
-            <Tabs orientation="vertical" value={value} onChange={handleChange} variant="scrollable" sx={{ borderRight: 1, borderColor: 'divider' }}>
-                {[...Array(4)].map((_) => 
+            <Tabs 
+                orientation="vertical" 
+                value={value} 
+                onChange={handleChange} 
+                variant="scrollable" 
+                sx={{ 
+                    borderRight: 1, 
+                    borderColor: 'divider', 
+                    width: "15vw"
+                }}
+            >
+                {[...Array(7)].map((_) => 
                     <br></br>                    
                 )}
-                <CustomTab label='Status' {...allyProps(4)}/> 
+                <CustomTab label='Status' icon={<TrendingUpIcon/>} iconPosition="start" {...allyProps(7)}/> 
                 <Divider/>
-                <CustomTab label='History' {...allyProps(6)}/> 
-                <Divider/>
-                <CustomTab label='Saved Jobs' {...allyProps(8)}/> 
+                <CustomTab label='Saved Jobs' icon={<StarOutlineRoundedIcon/>} iconPosition="start" {...allyProps(9)}/>      
             </Tabs>
         )
     }

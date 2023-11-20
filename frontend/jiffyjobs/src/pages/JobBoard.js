@@ -17,6 +17,8 @@ import TextField from '@mui/material/TextField';
 import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
+import StarIcon from '@mui/icons-material/Star';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
 
 export function JobBoard() {
     const [jobData, setJobData] = useState([])
@@ -34,6 +36,9 @@ export function JobBoard() {
 
     const [openSubmitProfile, setOpenSubmitProfile] = useState(false);
     const [openCongratsPopup, setOpenCongratsPopup] = useState(false);
+
+    const [isJobSaved, setIsJobSaved] = useState(false);
+    const [showSavedMessage, setShowSavedMessage] = useState(false);
 
     const navigate = useNavigate();
 
@@ -289,6 +294,13 @@ export function JobBoard() {
         setOpenCongratsPopup(false); 
         setOpenPop(false); 
     };
+
+    // toggle save job
+    const toggleSaveJob = () => {
+        setIsJobSaved(!isJobSaved);
+        setShowSavedMessage(true);
+        setTimeout(() => setShowSavedMessage(false), 1000);
+    };
     
     return (
         <div className={`outerCard ${openPop ? 'blur-background' : ''}`}>
@@ -306,9 +318,21 @@ export function JobBoard() {
                 <DialogContent style={{paddingTop:'0.5%', paddingBottom: '1%'}}>
                     <DialogContentText ref={descriptionElementRefStartPop} tabIndex={-1} style={{width: '750px'}}>
                         <div>
-                            <Typography style={{fontFamily: 'Outfit', fontSize:'24px', color:'#000', fontWeight:'600', paddingLeft:'1%'}}>
-                                {currentPop[0] && currentPop[0].length > 1 && currentPop[0][1]}
-                            </Typography>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                                <Typography style={{fontFamily: 'Outfit', fontSize:'24px', color:'#000', fontWeight:'600', paddingLeft:'1%'}}>
+                                    {currentPop[0] && currentPop[0].length > 1 && currentPop[0][1]}
+                                </Typography>
+                                <div style={{ display: 'inline-block', position: 'relative' }}>
+                                    <IconButton onClick={toggleSaveJob} style={{ borderRadius: '10px' }}>
+                                        {isJobSaved ? 
+                                            <StarIcon style={{ color: '#A4A4A4' }} /> : 
+                                            <StarBorderIcon style={{ color: '#A4A4A4' }} />}
+                                    </IconButton>
+                                    {showSavedMessage && <div style={{ position: 'absolute', bottom: '-25px', left: '50%', transform: 'translateX(-50%)', fontSize: '12px', fontFamily: 'Outfit', textAlign: 'center' }}>
+                                    {isJobSaved ? 'Job Saved' : 'Job Unsaved'}
+                                    </div>}
+                                </div>
+                            </div>
                             <Typography style={{fontFamily: 'Outfit', fontSize:'20px', color:'#141414', fontWeight: '500', paddingLeft:'1%'}}>
                                 {currentPop[1] && currentPop[1].length > 1 && currentPop[1][1]}
                             </Typography>

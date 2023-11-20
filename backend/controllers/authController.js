@@ -120,7 +120,6 @@ export const providerSignUp = async(req, res) => {
         return handleSuccess(res, {
             _id: (await savedProvider).id,
             email: (await savedProvider).email,
-            name: (await savedProvider).personal_info.name,
             token: generateToken(savedProvider._id),
             role: "provider"
         })

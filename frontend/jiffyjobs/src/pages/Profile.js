@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Card, Grid, Container, Typography, TextField, Button, FormControlLabel, Checkbox, Avatar, FormGroup, FormControl, InputLabel, OutlinedInput, Select, MenuItem } from '@mui/material';
-import '../styles/profile.css'
+import '../styles/Profile.css'
 import { deepOrange } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
@@ -227,8 +227,7 @@ export function Profile() {
     };
 
     return (
-
-        <div className={'profile-background'}>
+        <div className='outerCard'>
         <Box sx={{ flexGrow: 1 }}>
             <Grid item xs={12}>
                 <Grid container className='job-table-grid' rowSpacing={2} columnSpacing={2}>

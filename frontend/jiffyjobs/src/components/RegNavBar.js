@@ -20,7 +20,7 @@ export function RegNavBar() {
 
     return (
         <Grid container style={{ alignItems: 'center', height: '64px' }}>
-             <h1 className='logo-font' onClick={handleLogout} style={{ marginRight: 'auto'}} >
+             <h1 className='logo-font' onClick={AllJobs} style={{ marginRight: 'auto'}} >
                 JIFFYJOBS
             </h1>
 
