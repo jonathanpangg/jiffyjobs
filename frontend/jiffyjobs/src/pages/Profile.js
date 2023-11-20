@@ -39,27 +39,27 @@ export function Profile() {
         if (!token) setShowToken(true);
     },[token]);
 
-    // useEffect(()=> {
-    //     if (showToken) {
-    //         console.log(showToken);
-    //         toast.error('Please Login!', {
-    //             position: "top-center",
-    //             autoClose: 5000,
-    //             hideProgressBar: false,
-    //             closeOnClick: true,
-    //             pauseOnHover: true,
-    //             draggable: true,
-    //             progress: undefined,
-    //             theme: "light",
-    //             onClose: () => {
-    //                 navigate('/login');
-    //                 setShowToken(false);
-    //               }
-    //         });
-    //         setShowToken(false);
-    //     }
+    useEffect(()=> {
+        if (showToken) {
+            console.log(showToken);
+            toast.error('Please Login!', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                onClose: () => {
+                    navigate('/login');
+                    setShowToken(false);
+                  }
+            });
+            setShowToken(false);
+        }
 
-    // }, [showToken])
+    }, [showToken])
 
     // const userEmail = "pangj@bu.edu"; // This will eventually come from user login state
     // const userEmail = "example_email@bu.edu"
