@@ -221,7 +221,7 @@ export function Profile() {
         };
     
         try {
-            const response = await fetch('http://localhost:4000/api/users/getinfo/update', { // Replace '/api/endpoint' with your actual endpoint
+            const response = await fetch('https://jiffyjobs-api-production.up.railway.app/api/users/getinfo/update', { // Replace '/api/endpoint' with your actual endpoint
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
