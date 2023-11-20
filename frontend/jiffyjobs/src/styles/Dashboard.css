@@ -6,7 +6,7 @@
 }
 
 .inner-div {
-    width: 75vw;
+    width: 85vw;
 }
 
 .progress-tab {
@@ -19,5 +19,25 @@
     justify-content: start;
     text-align: start;
     align-content: center;
-    padding-top: 2.5%;
+}
+
+.progress-box {
+    max-height: 75vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-left: 5%
+}
+
+.header-one {
+    font-size: xx-large;
+    font-family: 'Outfit';
+    padding-top: 5%;
+    padding-left: 5%;
+}
+
+.header-two {
+    font-size: large;
+    font-family: 'Outfit';
+    padding-bottom: 5%;
+    padding-left: 5%;
 }
