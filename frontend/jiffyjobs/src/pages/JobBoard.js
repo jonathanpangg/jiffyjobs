@@ -63,7 +63,7 @@ export function JobBoard() {
     // handles getting all jobs
     useEffect(() => {
         async function GetAllJobs() {
-            const route = "https://jiffyjobs-api-production.up.railway.app/api/jobs/get"
+            const route = "http://localhost:4000/api/jobs/get"
             fetch(route)
                 .then((response) => {
                     if (!response.ok) {
@@ -116,7 +116,7 @@ export function JobBoard() {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' }
             }
-            var route = "https://jiffyjobs-api-production.up.railway.app/api/jobs/filter"
+            var route = "http://localhost:4000/api/jobs/filter"
             var query = "/*/*/" + Array.from(filterList) + "/*/*"
             console.log(query)
             route = route + query
@@ -458,20 +458,20 @@ export function JobBoard() {
                                         image="https://source.unsplash.com/random"
                                         
                                     />
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:"14px", paddingLeft:'10px', paddingRight:'10px', paddingTop:'10px'}}>
+                                    <Typography style={{fontFamily: 'Outfit', fontSize:"14px", marginLeft:'27.5px', marginRight:'28.5px', marginTop:'21px', fontWeight: 'bold'}}>
                                         <u>{key[0][1]}</u>
                                     </Typography>
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px', paddingTop:'15px'}}>
-                                        Pay: ${key[3][1]}
+                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", marginLeft:'27.5px', marginRight:'28.5px', marginTop:'14px'}}>
+                                        Pay: <strong>${key[3][1]}</strong>
                                     </Typography>
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px'}}>
-                                        Location: <u>{key[2][1]}</u>
+                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", marginLeft:'27.5px', marginRight:'28.5px', position:'relative', overflow:'hidden', textOverflow:'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 1, maxHeight:'22px'}}>
+                                        Location:  <strong><u>{key[2][1]}</u></strong>
                                     </Typography>
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px'}}>
-                                        Time: {key[5][1]}
+                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", marginLeft:'27.5px', marginRight:'28.5px'}}>
+                                        Time: <strong>{key[5][1]}</strong>
                                     </Typography>
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", padding:'10px', position:'relative', overflow:'hidden', textOverflow:'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 3, maxHeight:'44px'}}>
-                                        Description: {key[4][1]}
+                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", marginLeft:'27.5px', marginRight:'28.5px', marginTop:'14px', paddingBottom: '26.43px', position:'relative', overflow:'hidden', textOverflow:'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, maxHeight:'12px'}}>
+                                        Description: <strong>{key[4][1]}</strong>
                                     </Typography>
                                 </Card>
                             </Link>
