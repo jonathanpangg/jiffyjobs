@@ -20,6 +20,7 @@ import Stack from '@mui/material/Stack';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import SubmitProfilePopup from '../components/SubmitProfilePopup';
+import JobCards from '../components/JobCards';
 
 
 export function JobBoard() {
@@ -366,7 +367,7 @@ export function JobBoard() {
             <Box className='job-table-box'>
                 <div className='job-table-inner' style={{ paddingTop: '50px' }}>
                     <Typography style={{fontFamily: 'Outfit', fontSize: 'xx-large', justifyContent: 'center', alignItems: 'center', textAlign: 'start'}}>
-                        Job Board
+                        Job Board 
                     </Typography>
                 </div>
             </Box>
@@ -382,40 +383,7 @@ export function JobBoard() {
                 </div>
                 {/* <button onClick={handleLogJobData}>Log Job Data</button> */}
             </Box>
-            <Box>
-                <Grid container className= { 'job-table-grid' } style={{ backgroundColor: 'inherit' }}rowSpacing={2} columnSpacing={2}>
-                    {jobData.slice((page - 1) * cardsPerPage, page * cardsPerPage).map((key) => (
-                        <Grid key={key} item>
-                            <Link overlay underline="none" sx={{ color: 'text.tertiary', cursor: 'pointer' }} onClick={() => openPopUp(key)}>
-                                <Card sx={{width: '21.5vw', height: '21.5vw', '&:hover': { boxShadow: 'md', borderColor: 'neutral.outlinedHoverBorder' }}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px', }}>
-                                    <CardMedia
-                                        component="img"
-                                        alt="placeholder"
-                                        height="120"
-                                        image="https://source.unsplash.com/random"
-                                        
-                                    />
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:"14px", marginLeft:'27.5px', marginRight:'28.5px', marginTop:'21px', fontWeight: 'bold'}}>
-                                        <u>{key[0][1]}</u>
-                                    </Typography>
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", marginLeft:'27.5px', marginRight:'28.5px', marginTop:'14px'}}>
-                                        Pay: <strong>${key[3][1]}</strong>
-                                    </Typography>
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", marginLeft:'27.5px', marginRight:'28.5px', position:'relative', overflow:'hidden', textOverflow:'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 1, maxHeight:'22px'}}>
-                                        Location:  <strong><u>{key[2][1]}</u></strong>
-                                    </Typography>
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", marginLeft:'27.5px', marginRight:'28.5px'}}>
-                                        Time: <strong>{key[5][1]}</strong>
-                                    </Typography>
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", marginLeft:'27.5px', marginRight:'28.5px', marginTop:'14px', paddingBottom: '26.43px', position:'relative', overflow:'hidden', textOverflow:'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, maxHeight:'12px'}}>
-                                        Description: <strong>{key[4][1]}</strong>
-                                    </Typography>
-                                </Card>
-                            </Link>
-                        </Grid>
-                    ))}
-                </Grid>
-            </Box>
+            <JobCards jobData={jobData} page={page} cardsPerPage={cardsPerPage} openPopUp={openPopUp}/>
             <div style={{ display: 'flex', justifyContent: 'center', padding: '1%', background: '#f3f3f3' }}>
                 <Pagination count={totalPages} page={page} onChange={(event, value) => setPage(value)} />
             </div>
