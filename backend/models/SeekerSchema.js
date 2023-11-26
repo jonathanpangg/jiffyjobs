@@ -79,7 +79,8 @@ const SeekerSchema = mongoose.Schema({
     jobs_applied: [{
         _id: {
             type: String,
-            required: true
+            required: true,
+            default: "Boston University"
         }
     }],
     jobs_uploaded: [{
