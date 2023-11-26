@@ -25,11 +25,11 @@ const ProviderSchema = new mongoose.Schema({
       }
   },
   jobs_uploaded: [{
-      _id: {
+    _id: {
           type: String,
           required: true
       },
-      completed: {
+    completed: {
           type: Boolean,
           required: true
       }
