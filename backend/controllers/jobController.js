@@ -101,7 +101,9 @@ export const postJobs = async (req, res) => {
             job_type,
             time,
             date_posted,
-            hired: false
+            hired: false,
+            acceptedApplicant: "",
+            rejectedApplicants: []
         });
         console.log(title, job_poster, description)
 
@@ -163,36 +165,6 @@ export const updateJobs = async (req, res) => {
 };
 
 /*
-* Takes in seekerId and addes it to the jobs schema "applicants"
-*/
-export const applytoJobs = async (req, res) => {
-    const seeker_id = req.params.seeker_id
-    const job_id = req.params.job_id
-    // first, should check if they are the job seeker
-    try {
-        const job = await Jobs.findById(job_id);
-    
-        if (!job) {
-          return handleNotFound(res, 'Job not found');
-        }
-    
-        job.applicants.push({ _id: seeker_id });
-
-        const applicant = await Seekers.findOne({ email: seeker_id })
-        applicant.jobs_applied.push({ _id: job_id });
-        
-        const a = await applicant.save();
-    
-        const updatedJob = await job.save();
-        
-        return handleSuccess(res, updatedJob);
-    } catch (error) {
-        return handleServerError(res, error);
-    }
-}
-
-
-/*
 * find jobs by each filtering option.
 * filters include: location, job category. duration, pay, on/off campus
 */
@@ -233,6 +205,7 @@ export const filterJobs = async (req, res) => {
                 handleSuccess(res, jobs);
             }
 
+            // add to future iteration: filter by location
             // if (location != "*" && jobs) {
             //     const mylocation = JSON.stringify(location);
             //     try{
@@ -260,3 +233,5 @@ export const filterJobs = async (req, res) => {
         return handleServerError(res, error);
     }
 }
+
+
