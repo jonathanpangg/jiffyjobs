@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Card, Grid, Container, Typography, TextField, Button, FormControlLabel, Checkbox, Avatar, FormGroup, FormControl, InputLabel, OutlinedInput, Select, MenuItem } from '@mui/material';
-import '../styles/Profile.css'
+import '../styles/profile.css'
 import { deepOrange } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';

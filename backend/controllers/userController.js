@@ -55,9 +55,9 @@ export const updateUserInfo = async(req, res) => {
     try{
         if (role === "seeker") {
             const updateData = {
-                ...(major && { 'personal_info.major': major }), // only add major to update if provided
-                ...(grade && { 'personal_info.grade': grade }), // only add grade to update if provided
-                ...(bio && { 'personal_info.personal_statement': bio }), // only add bio to update if provided
+                ...(major && { 'personal_info.major': major || "" }), // only add major to update if provided
+                ...(grade && { 'personal_info.grade': grade || "" }), // only add grade to update if provided
+                ...(bio && { 'personal_info.personal_statement': bio || "" }), // only add bio to update if provided
               };
               
               const updatedSeeker = await Seeker.findOneAndUpdate(
@@ -81,37 +81,89 @@ export const updateUserInfo = async(req, res) => {
 }
 
 
+/*
+* Takes in seekerId and addes it to the jobs schema "applicants"
+*/
+export const applytoJobs = async (req, res) => {
+    const seeker_email = req.params.seekerId;
+    const job_id = req.params.jobId;
+
+    try {
+        // Find the job by ID
+        const job = await Jobs.findById(job_id);
+        // If the job does not exist, handle the error
+        if (!job) {
+          return handleNotFound(res, 'Job not found');
+        }
+        // Add the seeker to the job's applicants if they haven't applied already
+        if (!job.applicants.includes(seeker_email)) {
+            job.applicants.push(seeker_email);
+            await job.save();
+        }
+        // Find the seeker by email
+        const applicant = await Seeker.findOne({ email: seeker_email });
+        // If the seeker does not exist, handle the error
+        if (!applicant) {
+          return handleNotFound(res, 'Seeker not found');
+        }
+        // Check if the job_id already exists in the jobs_applied array
+        if (applicant.jobs_applied.some(jobApplied => jobApplied._id.toString() === job_id)) {
+          return res.status(400).json({ message: 'You have already applied to this job.' });
+        }
+        // Add the job to the seeker's jobs_applied
+        applicant.jobs_applied.push({ _id: job_id });
+        // Save the updated applicant
+        await applicant.save();
+        // Respond with success and the updated job
+        return handleSuccess(res, job);
+    } catch (error) {
+        // Handle any server errors
+        return handleServerError(res, error);
+    }
+};
+
+
+
+
+
 // get all jobs applied
 export const allAppliedJobs = async(req, res) => {
     const userEmail = req.params.email; // Assuming you're passing the user's email as a URL parameter
-    const role = req.params.role; // or req.body.role, depending on how you're passing it
-
+    
     try {
-        if (role === "seeker") {
-            // If the user is a seeker, find their applied jobs
-            const seeker = await Seeker.findOne({ email: userEmail });
-            if (!seeker) {
-                return handleNotFound(res, "Seeker not found");
-            }
-            console.log(seeker)
-            const appliedJobIds = seeker.jobs_applied.map(job => job._id);
-
-            // console.log(appliedJobIds)
-
-            const appliedJobs = await Jobs.find({ '_id': { $in: appliedJobIds } });
-            if (appliedJobs.length === 0) {
-                return handleNotFound(res, "No applied jobs found for the seeker");
-            }
-
-            return handleSuccess(res, appliedJobs);
-        } else if (role === "provider") {
-            // Handle the case for providers if necessary
-            // For example, you might want to return the jobs posted by the provider
-            return handleBadRequest(res, "Providers cannot have applied jobs");
-        } else {
-            // If the role is neither a seeker nor a provider
-            return handleBadRequest(res, "Invalid role specified");
+        
+        // If the user is a seeker, find their applied jobs
+        const seeker = await Seeker.findOne({ email: userEmail });
+        if (!seeker) {
+            return handleNotFound(res, "Seeker not found");
         }
+        const appliedJobIds = seeker.jobs_applied.map(job => job._id);
+
+        const appliedJobs = await Jobs.find({ '_id': { $in: appliedJobIds } });
+        if (appliedJobs.length === 0) {
+            return handleNotFound(res, "No applied jobs found for the seeker");
+        }
+
+         // Add the application status to each job
+         const currentDateTime = new Date();
+         const jobsWithStatus = appliedJobs.map(job => {
+             // Clone the job object
+             const jobWithStatus = {...job._doc};
+ 
+             // Determine the status based on the conditions provided
+             if (job.acceptedApplicant === userEmail) {
+                 jobWithStatus.status = 'accepted';
+             } else if (job.time[0] < currentDateTime && job.acceptedApplicant === "" && !jobs.rejectApplicant.includes(userEmail)) {
+                 jobWithStatus.status = 'submitted';
+             } else {
+                 jobWithStatus.status = 'rejected';
+             }
+             return jobWithStatus;
+         });
+
+
+        return handleSuccess(res, jobsWithStatus);
+
     } catch (error) {
         return handleServerError(res, error);
     }
@@ -122,10 +174,98 @@ export const allAppliedJobs = async(req, res) => {
 // get all jobs posted
 export const allPostedJobs = async(req, res) => {
 
+    try {
+    // Find all jobs posted by the user
+    const myPostedJobs = await Jobs.find({ job_poster_email: userEmail });
+    
+    if (myPostedJobs.length === 0) {
+        // Handle the case where no jobs are found
+        return handleNotFound(res, "No jobs found for the provided email.");
+    }
+    
+    // Return the jobs posted by the user
+    return handleSuccess(res, myPostedJobs);
+
+    } catch (error) {
+        // Handle any server errors
+        return handleServerError(res, error);
+    }
+
 }
 
+// accept an applicant
+export const acceptApplicant = async(req, res) => {
+    const jobId = req.params.jobId;
+    const applicantEmail = req.params.applicantEmail;
+
+    try {
+        const myPostedJob = await Jobs.findById(jobId);
+
+        // Check if the job already has an accepted applicant
+        if (myPostedJob.acceptedApplicant && myPostedJob.acceptedApplicant !== "") {
+            return res.status(400).json({ message: "This job has already been filled." });
+        }
+
+        // Update the job with the accepted applicant
+        myPostedJob.acceptedApplicant = applicantEmail;
+        myPostedJob.hired = true;
+        const updatedJob = await myPostedJob.save();
+
+        return handleSuccess(res, updatedJob);
+
+    } catch(error) {
+        return handleServerError(res, error);
+    }
+
+}
+
+// reject an applicant
+export const rejectApplicant = async(req, res) => {
+    const jobId = req.params.jobId;
+    const applicantEmail = req.params.applicantEmail;
+
+    try {
+        const myPostedJob = await Jobs.findById(jobId);
+
+        // Update the job with the accepted applicant
+        myPostedJob.rejectedApplicants.push(applicantEmail);
+        const updatedJob = await myPostedJob.save();
+
+        return handleSuccess(res, updatedJob);
+
+    } catch(error) {
+        return handleServerError(res, error);
+    }
+
+}
 
 // get all applicants applied
 export const allApplicants = async(req, res) => {
+    const jobId = req.params.jobId;
+    console.log(jobId)
+    try {
+        const jobs = await Jobs.findById(jobId)
+        const seekerEmailObjects = jobs.applicants
+
+        console.log(seekerEmailObjects)
+
+        const seekerEmails = seekerEmailObjects.map(obj => obj._id);
+        const seekers = await Seeker.find({ email: { $in: seekerEmails } });
+
+        if (!seekers || seekers.length === 0) {
+            // If no seekers are found, handle it accordingly
+            return handleNotFound(res, "Seekers not found");
+        }
+
+        // If seekers are found, return their information
+        return handleSuccess(res, seekers);
+
+
+        
+    } catch (error) {
+        return handleServerError(res, error)
+    }
 
 }
+
+
