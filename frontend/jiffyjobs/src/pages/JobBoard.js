@@ -189,8 +189,9 @@ export function JobBoard() {
     }, [openPopUp])
 
     function handleLogJobData() {
-        console.log(jobData)
-        console.log(rawData)
+        console.log('Data', jobData)
+        console.log('Raw', rawData)
+        console.log('Job Saved', isJobSaved)
     }
 
     // open submit profile popup
@@ -240,18 +241,20 @@ export function JobBoard() {
     };
 
     // toggle save job
-    const toggleSaveJob = (key) => {
+    const toggleSaveJob = (jobDetails) => {
         setIsJobSaved(prevState => {
-            const newSavedStatus = !prevState[key];
-            console.log(`Key: ${key} - Saved Status: ${newSavedStatus ? 'Saved' : 'Unsaved'}`);
+            const currentJobs = prevState[0] || [];
+            const updatedJobs = [...currentJobs, jobDetails];
             return {
                 ...prevState,
-                [key]: newSavedStatus
+                0: updatedJobs
             };
         });
+    
         setShowSavedMessage(true);
         setTimeout(() => setShowSavedMessage(false), 1000);
-    };    
+    };
+       
     
     
     return (
