@@ -28,7 +28,8 @@ const SeekerSchema = mongoose.Schema({
         },
         school: {
             type: String,
-            required: true
+            required: true,
+            default: "Boston University"
         },
         major: {
             type: [String],
@@ -79,7 +80,7 @@ const SeekerSchema = mongoose.Schema({
     jobs_applied: [{
         _id: {
             type: String,
-            required: true
+            required: true,
         }
     }],
     jobs_uploaded: [{
@@ -89,6 +90,12 @@ const SeekerSchema = mongoose.Schema({
         },
         completed: {
             type: Boolean,
+            required: true
+        }
+    }],
+    jobs_saved: [{
+        _id: {
+            type: String,
             required: true
         }
     }]

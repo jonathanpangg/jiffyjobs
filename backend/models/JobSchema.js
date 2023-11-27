@@ -62,7 +62,13 @@ const JobsSchema = new mongoose.Schema(
         job_poster_email: {
             type: String,
             required: true
-        }
+        },
+        saved_applicants: [{
+            _id: {
+                type: String,
+                required: true
+            }
+        }]
     }
 );
 
