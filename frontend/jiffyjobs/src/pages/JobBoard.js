@@ -304,14 +304,14 @@ export function JobBoard() {
                                     <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4' }}>Major</Typography>
                                 </Grid>
                                 <Grid item xs={7} style={{ padding: 8 }}>
-                                    <TextField disabled defaultValue={profile[3] && profile[3].length > 0 && profile[3][0]} variant="outlined" size="small" style={{ width: '200px' }}
+                                    <TextField disabled defaultValue={(profile[3] && profile[3].length > 0) ? profile[3][0] : ''} variant="outlined" size="small" style={{ width: '200px' }}
                                     InputProps={{ style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}}/>
                                 </Grid>
                                 <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 8 }}>
                                     <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4' }}>Grade</Typography>
                                 </Grid>
                                 <Grid item xs={7} style={{ padding: 8 }}>
-                                    <TextField disabled defaultValue={profile[4] && profile[4].length > 0 && profile[4]} variant="outlined" size="small" style={{ width: '200px' }}
+                                    <TextField disabled defaultValue={(profile[4] && profile[4].length > 0) ? profile[4] : ''} variant="outlined" size="small" style={{ width: '200px' }}
                                     InputProps={{ style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}}/>
                                 </Grid>
                                 <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 8 }}>
@@ -325,7 +325,7 @@ export function JobBoard() {
                                     <Typography diabled variant="subtitle1" align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4' }}>Bio</Typography>
                                 </Grid>
                                 <Grid item xs={7} style={{ paddingRight: 8, paddingTop: 8, paddingLeft: 8 }}>
-                                    <TextField disabled defaultValue={profile[5] && profile[5].length > 0 && profile[5]} variant="outlined" multiline rows={6} size="small" style={{ width: '200px' }}
+                                    <TextField disabled defaultValue={(profile[5] && profile[5].length > 5) ? profile[5] : ''} variant="outlined" multiline rows={6} size="small" style={{ width: '200px' }}
                                     InputProps={{style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px', }}} />
                                 </Grid>
                             </Grid>
