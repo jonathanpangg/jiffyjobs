@@ -12,13 +12,12 @@ import Jobs from "../models/JobSchema.js"
 
 // get user information when called
 export const getUserinfo = async(req, res) => {
-    const isjobseeker = true
-    const isjobprovider = false
     const mail = req.params.email;
     const role = req.params.role;
     // isjobseeker = boolean from the login database, get the user information.
+
     try {
-        if (isjobseeker === true) {
+        if (role === "seeker") {
             try {
                 const seeker = await Seeker.findOne({ email: mail });
                 if (!seeker) {
@@ -28,7 +27,7 @@ export const getUserinfo = async(req, res) => {
             } catch (error) {
                 return handleServerError(res, error);
             }
-        } else if (isjobprovider === true){
+        } else if (role === "provider"){
 
             try {
                 const provider = await Provider.findOne({ email: mail });
@@ -106,6 +105,7 @@ export const applytoJobs = async (req, res) => {
         if (!applicant) {
           return handleNotFound(res, 'Seeker not found');
         }
+
         // Check if the job_id already exists in the jobs_applied array
         if (applicant.jobs_applied.some(jobApplied => jobApplied._id.toString() === job_id)) {
           return res.status(400).json({ message: 'You have already applied to this job.' });
@@ -115,6 +115,8 @@ export const applytoJobs = async (req, res) => {
 
         // Add the job to the seeker's jobs_applied
         applicant.jobs_applied.push({ _id: job_id });
+
+
         // Save the updated applicant
         await applicant.save();
         // Respond with success and the updated job
@@ -134,7 +136,7 @@ export const allAppliedJobs = async(req, res) => {
     const userEmail = req.params.email; // Assuming you're passing the user's email as a URL parameter
     
     try {
-        
+    
         // If the user is a seeker, find their applied jobs
         const seeker = await Seeker.findOne({ email: userEmail });
         if (!seeker) {
@@ -143,9 +145,9 @@ export const allAppliedJobs = async(req, res) => {
         const appliedJobIds = seeker.jobs_applied.map(job => job._id);
 
         const appliedJobs = await Jobs.find({ '_id': { $in: appliedJobIds } });
-
         // Add the application status to each job
         const currentDateTime = new Date();
+
         const jobsWithStatus = appliedJobs.map(job => {
             // Clone the job object
             const jobWithStatus = {...job._doc};
@@ -153,7 +155,7 @@ export const allAppliedJobs = async(req, res) => {
             // Determine the status based on the conditions provided
             if (job.acceptedApplicant === userEmail) {
                 jobWithStatus.status = 'accepted';
-            } else if (job.time[0] < currentDateTime && job.acceptedApplicant === "" && !jobs.rejectApplicant.includes(userEmail)) {
+            } else if (job.time[0] < currentDateTime && job.acceptedApplicant === "" && !job.rejectedApplicants.includes(userEmail)) {
                 jobWithStatus.status = 'submitted';
             } else {
                 jobWithStatus.status = 'rejected';
