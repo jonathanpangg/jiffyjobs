@@ -61,29 +61,39 @@ export function StatusDashboard() {
                                         />
                                         <div style={{position: 'absolute', maxWidth: '100%', top: '50%', left: '50%', textAlign: 'center', transform: 'translate(-50%, -50%)', whiteSpace: 'nowrap'}}>
                                             <img
+                                                style={{ width: '12.5%'}}
                                                 src={ clock }
                                                 alt="placeholder"
                                             />
-                                            <Typography style={{fontFamily: 'Outfit', fontSize:"20px", paddingLeft:'10px', paddingRight:'10px'}}>
-                                                <u> {key[7][1] === "accepted" ? "Application Accepted": (key[7][1] === "submitted" ? "Application Submitted": "Application Rejected")} </u>
+                                            <Typography style={{fontFamily: 'Outfit', fontSize:"24px", paddingLeft:'10px', paddingRight:'10px'}}>
+                                                {key[7][1] === "accepted" ? "Application Accepted": (key[7][1] === "submitted" ? "Application Submitted": "Application Rejected")} 
                                             </Typography>
                                         </div>
                                     </div>
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:"14px", paddingLeft:'10px', paddingRight:'10px', paddingTop:'10px'}}>
-                                        <u>{key[0][1]}</u>
-                                    </Typography>
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px', paddingTop:'15px'}}>
-                                        Pay: ${key[3][1]}
-                                    </Typography>
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px'}}>
-                                        Location: <u>{key[2][1]}</u>
-                                    </Typography>
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px'}}>
-                                        Time: {key[5][1]}
-                                    </Typography>
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", padding:'10px', position:'relative', overflow:'hidden', textOverflow:'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 3, maxHeight:'44px'}}>
-                                        Description: {key[4][1]}
-                                    </Typography>
+                                    <div style={{ position: 'relative', maxWidth: '100%' }}>
+                                        <div style={{ filter: 'blur(2px)' }}>
+                                            <Typography style={{fontFamily: 'Outfit', fontSize:"14px", paddingLeft:'10px', paddingRight:'10px', paddingTop:'10px'}}>
+                                                <u>{key[0][1]}</u>
+                                            </Typography>
+                                            <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px', paddingTop:'15px'}}>
+                                                Pay: ${key[3][1]}
+                                            </Typography>
+                                            <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px'}}>
+                                                Location: <u>{key[2][1]}</u>
+                                            </Typography>
+                                            <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px'}}>
+                                                Time: {key[5][1]}
+                                            </Typography>
+                                            <Typography style={{fontFamily: 'Outfit', fontSize:"12px", padding:'10px', position:'relative', overflow:'hidden', textOverflow:'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 3, maxHeight:'44px'}}>
+                                                Description: {key[4][1]}
+                                            </Typography>
+                                        </div>
+                                        <div style={{position: 'absolute', maxWidth: '100%', bottom: '-50%', left: '50%', textAlign: 'center', transform: 'translate(-50%, -50%)', whiteSpace: 'nowrap'}}>
+                                            <Card sx={{width: '15vw', height: '2.5vw'}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px', fontFamily: 'Outfit', backgroundColor: '#A4A4A4', display: 'inline-flex', justifyContent: 'center', alignItems: 'center'}}>
+                                                Withdraw Application
+                                            </Card>
+                                        </div>
+                                    </div>
                                 </Card>
                             </Grid>
                         )
