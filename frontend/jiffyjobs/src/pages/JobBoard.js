@@ -40,6 +40,9 @@ export function JobBoard() {
     const [isJobSaved, setIsJobSaved] = useState(false);
     const [showSavedMessage, setShowSavedMessage] = useState(false);
 
+    const [ userEmail, setEmail ] = useState(localStorage.getItem("email"));
+    const [ userRole, setUserRole ] = useState(localStorage.getItem("user"));
+
     const navigate = useNavigate();
 
 
@@ -155,6 +158,10 @@ export function JobBoard() {
 
     }, [filterList])
 
+    async function getProfile() {
+
+    };
+
     function truncate(str) {
         return str.length > 80 ? str.substring(0, 77) + "..." : str;
     }
@@ -186,6 +193,9 @@ export function JobBoard() {
 
     // open submit profile popup
     const handleOpenSubmitProfile = () => {
+        if (!userEmail) {
+            
+        }
         setOpenSubmitProfile(true);
     };
 
@@ -412,7 +422,7 @@ export function JobBoard() {
                 </DialogContent>
                 <Divider style={{borderBottomWidth: '2px'}}/>
                     <DialogActions style={{ justifyContent: 'center' }}>
-                        <Link style={{cursor:'pointer'}} underline='none' onClick={() => console.log("applied")}>
+                        <Link style={{cursor:'pointer'}} underline='none' onClick={handleOpenSubmitProfile}>
                             <Card sx={{height: 40, width: '100%'}} style={{overflow:'hidden', borderRadius: '15px', background: "#D9D9D9", color: 'white'}}>
                             <CardContent style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingTop: '3%' }}>
                                 <Button onClick={handleOpenSubmitProfile} style={{ textTransform: 'none', width: '100%' }}>
