@@ -17,6 +17,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import dayjs from 'dayjs';
 import { Box } from '@mui/system';
 import { CalendarIcon } from '@mui/x-date-pickers';
+import Select from '@mui/material/Select';
 var objectSupport = require("dayjs/plugin/objectSupport");
 dayjs.extend(objectSupport);
 
@@ -27,6 +28,16 @@ export function JobPosting() {
     const categories = ['Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving']
     const [expand, setExpand] = useState(false)
     const [amount, setAmount] = useState("")
+
+
+    const [selectedCategory, setSelectedCategory] = useState(''); // Default value can be an empty string or any default category
+
+const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
+    // Additional logic for what happens when a category is selected can be added here
+};
+
+
 
     // useState for the data
     const [val, setVal] = useState({
@@ -179,32 +190,7 @@ export function JobPosting() {
     }
 
 
-    // handles removal of previous time
-    function handleRemoveTime() {
-        val.times.pop()
-        setVal({
-            title: val.title,
-            name: val.name,
-            location: val.location,
-            pay: val.pay,
-            description: val.description,
-            category: val.category, 
-            date: {
-                month: new Date().getMonth()+1,
-                day: new Date().getDate(),
-                year: new Date().getFullYear()
-            },
-            startTime: {
-                hour: '0',
-                min: '0'
-            },
-            endTime: {
-                hour: '0',
-                min: '0'
-            }, 
-            times: val.times
-        })
-    }
+
 
     const openPop = () => {
         setOpenStartPop(true)
@@ -426,61 +412,42 @@ export function JobPosting() {
                   
                     
                         </div>
-                        <div className='time-outer' style={{width: '98.5%'}}> 
-                            <text className='remove-time' onClick={() => {handleRemoveTime()}}>
-                                - Remove previous date
-                            </text>
-                            <text className='pop-textfield-title' onClick={() => {handleAddTime()}}>
-                                + Add date
-                            </text>
-                        </div> <br></br>
-                        <div>
-                            { val.times.length !== 0 ? 
-                                <div> 
-                                    <text className='pop-textfield-title'>
-                                        Current Times:
-                                    </text> <br></br>
-                                    { val.times.map((subList) => {
-                                        return <div>
-                                        <text>
-                                            {dayjs(subList[0]).format('MM/DD/YY h:mm A') + " - " + dayjs(subList[1]).format('h:mm A')}
-                                        </text>
-                                        <br></br>
-                                    </div>
-                                    })}
-                                </div>:
-                                <div>
-                                    <text className='pop-textfield-title'>
-                                        No Times Selected
-                                    </text> <br></br>
-                                </div>
-                            }
-                            
-                        </div>
+                      
                         <div>
                             <text className='pop-textfield-title'>
                                 Description
                             </text> <br></br>
                             <TextField error={error.descriptionError} helperText={error.descriptionError ? "*This field is required" : ""} required={true} multiline rows={8} placeholder="Add the job description" type="search" square={false} style={{width: '98.5%'}} onChange={(e) => {handleValues(e)}} id='description' value={val.description}/>
                         </div>
-                        <div style={{paddingTop: '2.5%'}}>
+                        <div style={{ paddingTop: '2.5%' }}>
                             <text className='pop-textfield-title'>
                                 Category
                             </text> <br></br>
                             
-                            <TextField error={error.categoryError} helperText={error.categoryError ? "*This field is required" : ""} required={true} type="search" square={false} style={{width: '98.5%'}} disabled={true} onClick={() => {setExpand(!expand)}} onChange={(e) => {handleValues(e)}} id='category' placeholder={"+ Add Category"}>
-                            </TextField>
-                            { expand && categories.map((name) => {
-                                return (
-                                    <MenuItem sx={{ border: 1}} style={{width: '15%'}} onClick={() => {handleAddingCategories(name)}} key={name} value={name}> 
+                            <Select
+                                displayEmpty
+                                open={expand}
+                                onOpen={() => setExpand(true)}
+                                onClose={() => setExpand(false)}
+                                value={selectedCategory}
+                                onChange={handleCategoryChange}
+                                renderValue={selected => selected.length === 0 ? "+ Add Category" : selected}
+                                error={error.categoryError}
+                                style={{ width: '98.5%' }}
+                            >
+                                {categories.map((name) => (
+                                    <MenuItem key={name} value={name}>
                                         {name}
                                     </MenuItem>
-                                )
-                            })}
+                                ))}
+                            </Select>
+
                             <Grid container columnSpacing={2} className='category-tab'>
                                 {renderSelectedOptions(val.category)}
                             </Grid>
                         </div>
+
+
                     </DialogContentText>
                 </DialogContent>
                 <Divider/>
@@ -524,7 +491,7 @@ export function JobPosting() {
                     pay: val.pay,
                     location: val.location,
                     categories: categoryList,
-                    time: timeIns,
+                    time: [val.date, val.startTime, val.endTime],
                     job_type: "Quick Jobs",
                     date_posted: new Date()
                 })
