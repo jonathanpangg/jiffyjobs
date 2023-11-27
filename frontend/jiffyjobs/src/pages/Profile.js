@@ -51,11 +51,8 @@ export function Profile() {
                 draggable: true,
                 progress: undefined,
                 theme: "light",
-                onClose: () => {
-                    navigate('/login');
-                    setShowToken(false);
-                  }
             });
+            navigate('/login');
             setShowToken(false);
         }
 

@@ -58,18 +58,15 @@ export function Dashboard() {
                 draggable: true,
                 progress: undefined,
                 theme: "light",
-                onClose: () => {
-                    navigate('/login');
-                    setShowToken(false);
-                  }
             });
+            navigate('/login');
             setShowToken(false);
         }
 
     }, [showToken])
 
     return (
-        <div className='outerCard' style={{paddingTop: '1%'}}>
+        <div className='outerCard1' style={{paddingTop: '1%'}}>
             <Box className='outer-box'>
                 <div className='inner-div'>
                     <Card elevation='4' style={{display: 'flex', overflow: 'hidden', borderRadius: '15px', width: "100%"}}> 

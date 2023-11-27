@@ -50,6 +50,24 @@ const JobsSchema = new mongoose.Schema(
                 type: String,
                 required: true
             }
+        }],
+        acceptedApplicant: {
+            type: String,
+            required: false
+        },
+        rejectedApplicants: {
+            type: [String],
+            required: false
+        },
+        job_poster_email: {
+            type: String,
+            required: true
+        },
+        saved_applicants: [{
+            _id: {
+                type: String,
+                required: true
+            }
         }]
     }
 );

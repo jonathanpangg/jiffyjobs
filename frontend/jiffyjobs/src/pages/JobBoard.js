@@ -19,6 +19,10 @@ import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+import { ToastContainer, toast } from 'react-toastify';
+import SubmitProfilePopup from '../components/SubmitProfilePopup';
+import JobCards from '../components/JobCards';
+
 
 export function JobBoard() {
     const [jobData, setJobData] = useState([])
@@ -28,6 +32,8 @@ export function JobBoard() {
     const { render, filterList } = Filter()
     const [openPop, setOpenPop] = useState(false)
     const [currentPop, setCurrentPop] = useState([])
+    const [profile, setProfile] = useState([])
+    const [gotProfile, setGotProfile] = useState(false);
 
     const [page, setPage] = useState(1);
     const cardsPerPage = 20;
@@ -37,8 +43,11 @@ export function JobBoard() {
     const [openSubmitProfile, setOpenSubmitProfile] = useState(false);
     const [openCongratsPopup, setOpenCongratsPopup] = useState(false);
 
-    const [isJobSaved, setIsJobSaved] = useState(false);
+    const [isJobSaved, setIsJobSaved] = useState({});
     const [showSavedMessage, setShowSavedMessage] = useState(false);
+
+    const [ userEmail, setEmail ] = useState(localStorage.getItem("email"));
+    const [ userRole, setUserRole ] = useState(localStorage.getItem("user"));
 
     const navigate = useNavigate();
 
@@ -85,7 +94,7 @@ export function JobBoard() {
                     setRawData(data);
                     const newJobData = data.map(function(obj) {
                         console.log(obj.time)
-                        return [[0, obj.title], ["", obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
+                        return [[obj._id, obj.title], ["", obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
                     });
                     setJobData(newJobData);
 
@@ -131,7 +140,7 @@ export function JobBoard() {
                 .then((data) => {
                     setRawData(data);
                     const newJobData = data.map(function(obj) {
-                        return [[0, obj.title], ["", obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
+                        return [[obj._id, obj.title], ["", obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
                     });
                     setJobData(newJobData);
                     setSize(jobData.length)
@@ -141,6 +150,12 @@ export function JobBoard() {
                     } else {
                         setBackground("")
                     }
+
+                    const savedStatus = {};
+                data.forEach(job => {
+                    savedStatus[job.id] = false; // Replace 'job.id' with your unique job identifier
+                });
+                setIsJobSaved(savedStatus);
                 })
                 .catch((error) => {
                     console.log(error)
@@ -180,19 +195,76 @@ export function JobBoard() {
     }, [openPopUp])
 
     function handleLogJobData() {
-        console.log(jobData)
-        console.log(rawData)
+        console.log('Data', jobData)
+        console.log('Raw', rawData)
+        console.log('Job Saved', isJobSaved)
     }
+
+    useEffect(()=> {
+        console.log(userEmail);
+        console.log(userRole);
+    })
 
     // open submit profile popup
     const handleOpenSubmitProfile = () => {
-        setOpenSubmitProfile(true);
+        if (!userEmail) {
+            toast.error('Please Login!', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            navigate('/login');
+        } else if (userRole === 'provider') {
+            toast.error('You can only apply as a Seeker!', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        } else if (!gotProfile) {
+            const requestedOptions = {
+                method: "GET",
+                headers: { 'Content-Type': 'application/json' },
+            }
+    
+            const route = `https://jiffyjobs-api-production.up.railway.app/api/users/getinfo/${userEmail}/${userRole}`;
+            fetch(route, requestedOptions)
+            .then(async (response) => {
+                const res = await response.json()
+                if (!response.ok) {
+                    throw new Error(res.message);
+                }
+                return res;
+            })
+            .then((data) => {
+                const user = [data.personal_info.first_name, data.personal_info.last_name, data.personal_info.school, data.personal_info.major, data.personal_info.grade, data.personal_info.personal_statement];
+                setProfile(user);
+                console.log(profile);
+            })
+            setOpenSubmitProfile(true);
+            setGotProfile(true);
+        } else {
+            setOpenSubmitProfile(true);
+        }
     };
 
     // close submit profile popup
     const handleCloseSubmitProfile = () => {
         setOpenSubmitProfile(false);
     };
+
+    // const handleOpeningSubmitProfile = () => {
+    //     setOpenSubmitProfile(true);
+    // };
 
     // submit profile popup
     function SubmitProfilePopup({ open, onClose, onSubmit }) {
@@ -201,9 +273,9 @@ export function JobBoard() {
                 <DialogTitle sx={{ textAlign: 'center', fontFamily: 'Outfit', marginTop: 2, }}>Are you sure you want to submit?</DialogTitle>
                     <DialogContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '16px', margin: 'auto', border: '2px dashed #ccc', borderRadius: '5px', maxWidth: 'calc(100% - 150px)' }}>
                         <Stack direction="row" spacing={2} alignItems="center" justifyContent="center" style={{ paddingBottom: 4, paddingTop: 20, marginRight: '60px'}} >
-                            <Avatar sx={{ bgcolor: '#D9D9D9', width: 45, height: 45, color: 'black', fontSize: '25px'}}>LY</Avatar>
+                            <Avatar sx={{ bgcolor: '#D9D9D9', width: 45, height: 45, color: 'black', fontSize: '25px'}}>{profile[0] && profile[0].length > 0 && profile[0][0]}{profile[1] && profile[1].length > 0 && profile[1][0]}</Avatar>
                             <Typography variant="subtitle1" style={{ fontFamily: 'Outfit', fontSize: '20px', fontWeight: 'bold' }}>
-                                Lucas Yoon
+                                {profile[0] && profile[0].length > 0 && profile[0]} {profile[1] && profile[1].length > 0 && profile[1]}
                             </Typography>
                         </Stack>
                         <form noValidate autoComplete="off" style={{ width: '100%' }}>
@@ -212,35 +284,35 @@ export function JobBoard() {
                                     <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4'}}>School<span style={{"color": "red"}}>*</span></Typography>
                                 </Grid>
                                 <Grid item xs={7} style={{ padding: 8 }}>
-                                    <TextField disabled defaultValue="Boston University" variant="outlined" size="small" className="inputSubmit" style={{ width: '200px' }}
+                                    <TextField disabled defaultValue={profile[2] && profile[2].length > 0 && profile[2]} variant="outlined" size="small" className="inputSubmit" style={{ width: '200px' }}
                                     InputProps={{ style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}}/>
                                 </Grid>
                                 <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 8 }}>
                                     <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4' }}>Major</Typography>
                                 </Grid>
                                 <Grid item xs={7} style={{ padding: 8 }}>
-                                    <TextField disabled defaultValue="Computer Science" variant="outlined" size="small" style={{ width: '200px' }}
+                                    <TextField disabled defaultValue={(profile[3] && profile[3].length > 0) ? profile[3][0] : ''} variant="outlined" size="small" style={{ width: '200px' }}
                                     InputProps={{ style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}}/>
                                 </Grid>
                                 <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 8 }}>
                                     <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4' }}>Grade</Typography>
                                 </Grid>
                                 <Grid item xs={7} style={{ padding: 8 }}>
-                                    <TextField disabled defaultValue="Third-year" variant="outlined" size="small" style={{ width: '200px' }}
+                                    <TextField disabled defaultValue={(profile[4] && profile[4].length > 0) ? profile[4] : ''} variant="outlined" size="small" style={{ width: '200px' }}
                                     InputProps={{ style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}}/>
                                 </Grid>
                                 <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 8 }}>
                                     <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4' }}>Email<span style={{"color": "red"}}>*</span></Typography>
                                 </Grid>
                                 <Grid item xs={7} style={{ padding: 8 }}>
-                                    <TextField disabled defaultValue=".edu" variant="outlined" size="small" className="inputSubmit" style={{ width: '200px' }}
+                                    <TextField disabled defaultValue={userEmail} variant="outlined" size="small" className="inputSubmit" style={{ width: '200px' }}
                                     InputProps={{style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}}/>
                                 </Grid>
                                 <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 8 }}>
                                     <Typography diabled variant="subtitle1" align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4' }}>Bio</Typography>
                                 </Grid>
                                 <Grid item xs={7} style={{ paddingRight: 8, paddingTop: 8, paddingLeft: 8 }}>
-                                    <TextField disabled defaultValue="I'm a third-year student at BU studying CS. I want money!" variant="outlined" multiline rows={6} size="small" style={{ width: '200px' }}
+                                    <TextField disabled defaultValue={(profile[5] && profile[5].length > 5) ? profile[5] : ''} variant="outlined" multiline rows={6} size="small" style={{ width: '200px' }}
                                     InputProps={{style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px', }}} />
                                 </Grid>
                             </Grid>
@@ -262,6 +334,55 @@ export function JobBoard() {
     const handleSubmitProfile = () => {
         handleCloseSubmitProfile();
         setOpenCongratsPopup(true);
+        const user = {
+            method: "PUT",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                seeker_email: userEmail,
+                job_id: currentPop[0][0]
+            })
+        }
+
+        const route = "https://jiffyjobs-api-production.up.railway.app/api/users/apply";
+        fetch(route, user)
+        .then(async (response) => {
+            const res = await response.json()
+            if (!response.ok) {
+                throw new Error(res.message);
+            } 
+            return res;
+        })
+        .then((data) => {
+            console.log(data);
+        })
+        .catch((error) => {
+            const err = error.message;
+            if (err.startsWith('Error: ')) {
+                alert(err.slice(7));
+                toast.error(err.slice(7), {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light"
+                });
+            } else {
+                toast.error(err, {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light"
+                });
+            }
+        });
+
     };
 
     function CongratsPopup({ open, onClose}) {
@@ -296,11 +417,21 @@ export function JobBoard() {
     };
 
     // toggle save job
-    const toggleSaveJob = () => {
-        setIsJobSaved(!isJobSaved);
+    const toggleSaveJob = (jobDetails) => {
+        setIsJobSaved(prevState => {
+            const currentJobs = prevState[0] || [];
+            const updatedJobs = [...currentJobs, jobDetails];
+            return {
+                ...prevState,
+                0: updatedJobs
+            };
+        });
+    
         setShowSavedMessage(true);
         setTimeout(() => setShowSavedMessage(false), 1000);
     };
+       
+    
     
     return (
         <div className={`outerCard ${openPop ? 'blur-background' : ''}`}>
@@ -323,8 +454,8 @@ export function JobBoard() {
                                     {currentPop[0] && currentPop[0].length > 1 && currentPop[0][1]}
                                 </Typography>
                                 <div style={{ display: 'inline-block', position: 'relative' }}>
-                                    <IconButton onClick={toggleSaveJob} style={{ borderRadius: '10px' }}>
-                                        {isJobSaved ? 
+                                    <IconButton onClick={() => toggleSaveJob(currentPop)} style={{ borderRadius: '10px' }}>
+                                        {isJobSaved[currentPop] ? 
                                             <StarIcon style={{ color: '#A4A4A4' }} /> : 
                                             <StarBorderIcon style={{ color: '#A4A4A4' }} />}
                                     </IconButton>
@@ -412,7 +543,7 @@ export function JobBoard() {
                 </DialogContent>
                 <Divider style={{borderBottomWidth: '2px'}}/>
                     <DialogActions style={{ justifyContent: 'center' }}>
-                        <Link style={{cursor:'pointer'}} underline='none' onClick={() => console.log("applied")}>
+                        <Link style={{cursor:'pointer'}} underline='none' onClick={handleOpenSubmitProfile}>
                             <Card sx={{height: 40, width: '100%'}} style={{overflow:'hidden', borderRadius: '15px', background: "#D9D9D9", color: 'white'}}>
                             <CardContent style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingTop: '3%' }}>
                                 <Button onClick={handleOpenSubmitProfile} style={{ textTransform: 'none', width: '100%' }}>
@@ -429,7 +560,7 @@ export function JobBoard() {
             <Box className='job-table-box'>
                 <div className='job-table-inner' style={{ paddingTop: '50px' }}>
                     <Typography style={{fontFamily: 'Outfit', fontSize: 'xx-large', justifyContent: 'center', alignItems: 'center', textAlign: 'start'}}>
-                        Job Board
+                        Job Board 
                     </Typography>
                 </div>
             </Box>
@@ -445,40 +576,7 @@ export function JobBoard() {
                 </div>
                 {/* <button onClick={handleLogJobData}>Log Job Data</button> */}
             </Box>
-            <Box>
-                <Grid container className= { 'job-table-grid' } style={{ backgroundColor: 'inherit' }}rowSpacing={2} columnSpacing={2}>
-                    {jobData.slice((page - 1) * cardsPerPage, page * cardsPerPage).map((key) => (
-                        <Grid key={key} item>
-                            <Link overlay underline="none" sx={{ color: 'text.tertiary', cursor: 'pointer' }} onClick={() => openPopUp(key)}>
-                                <Card sx={{width: '21.5vw', height: '21.5vw', '&:hover': { boxShadow: 'md', borderColor: 'neutral.outlinedHoverBorder' }}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px', }}>
-                                    <CardMedia
-                                        component="img"
-                                        alt="placeholder"
-                                        height="120"
-                                        image="https://source.unsplash.com/random"
-                                        
-                                    />
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:"14px", paddingLeft:'10px', paddingRight:'10px', paddingTop:'10px'}}>
-                                        <u>{key[0][1]}</u>
-                                    </Typography>
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px', paddingTop:'15px'}}>
-                                        Pay: ${key[3][1]}
-                                    </Typography>
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px'}}>
-                                        Location: <u>{key[2][1]}</u>
-                                    </Typography>
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px'}}>
-                                        Time: {key[5][1]}
-                                    </Typography>
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", padding:'10px', position:'relative', overflow:'hidden', textOverflow:'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 3, maxHeight:'44px'}}>
-                                        Description: {key[4][1]}
-                                    </Typography>
-                                </Card>
-                            </Link>
-                        </Grid>
-                    ))}
-                </Grid>
-            </Box>
+            <JobCards jobData={jobData} page={page} cardsPerPage={cardsPerPage} openPopUp={openPopUp}/>
             <div style={{ display: 'flex', justifyContent: 'center', padding: '1%', background: '#f3f3f3' }}>
                 <Pagination count={totalPages} page={page} onChange={(event, value) => setPage(value)} />
             </div>
