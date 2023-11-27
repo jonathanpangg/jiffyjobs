@@ -34,35 +34,19 @@ export function Sort({ rawData, setRawData, setJobData }) {
     
     const sortJobs = (criteria, data) => {
         console.log("Selected criteria: ", criteria);
-        let sorted = [...data];
-        if (criteria === 'Pay: High to Low') {
-            console.log("Sorting by Pay: High to Low");
-            sorted.sort((a, b) => b.pay - a.pay);
-        } else if (criteria === 'Pay: Low to High') {
-            console.log("Sorting by Pay: Low to High");
-            sorted.sort((a, b) => a.pay - b.pay);
-        } else if (criteria === 'Date Deadline') {
-            console.log("Sorting by Date Deadline");
-            sorted.sort((a, b) => {
-                const startTimeA = dayjs(a.time[0]);
-                const startTimeB = dayjs(b.time[0]);
-    
-                if (!startTimeA.isValid() && !startTimeB.isValid()) return 0; 
-                if (!startTimeA.isValid()) return 1; 
-                if (!startTimeB.isValid()) return -1; 
-    
-                return startTimeA.isBefore(startTimeB) ? -1 : 1;
-            });
+        const sortedData = [...data];
+        switch (criteria) {
+            case 'Pay: High to Low':
+            sortedData.sort((a, b) => parseFloat(b.pay) - parseFloat(a.pay));
+            break;
+            case 'Pay: Low to High':
+            sortedData.sort((a, b) => parseFloat(a.pay) - parseFloat(b.pay));
+            break;
+            case 'Date Deadline':
+            sortedData.sort((a, b) => new Date(a.time[0]) - new Date(b.time[0]));
+            break;
         }
-        
-        // else if (criteria === 'Date: New to Old') {
-        //     console.log("Sorting by Date: New to Old");
-        //     sorted.sort((a, b) => new Date(b.date_posted) - new Date(a.date_posted));
-        // } else if (criteria === 'Date: Old to New') {
-        //     console.log("Sorting by Date: Old to New");
-        //     sorted.sort((a, b) => new Date(a.date_posted) - new Date(b.date_posted));
-        // }
-        return sorted;
+        return sortedData;
     };
     
 

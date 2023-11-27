@@ -20,6 +20,9 @@ import Stack from '@mui/material/Stack';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { ToastContainer, toast } from 'react-toastify';
+import SubmitProfilePopup from '../components/SubmitProfilePopup';
+import JobCards from '../components/JobCards';
+
 
 export function JobBoard() {
     const [jobData, setJobData] = useState([])
@@ -40,7 +43,7 @@ export function JobBoard() {
     const [openSubmitProfile, setOpenSubmitProfile] = useState(false);
     const [openCongratsPopup, setOpenCongratsPopup] = useState(false);
 
-    const [isJobSaved, setIsJobSaved] = useState(false);
+    const [isJobSaved, setIsJobSaved] = useState({});
     const [showSavedMessage, setShowSavedMessage] = useState(false);
 
     const [ userEmail, setEmail ] = useState(localStorage.getItem("email"));
@@ -147,6 +150,12 @@ export function JobBoard() {
                     } else {
                         setBackground("")
                     }
+
+                    const savedStatus = {};
+                data.forEach(job => {
+                    savedStatus[job.id] = false; // Replace 'job.id' with your unique job identifier
+                });
+                setIsJobSaved(savedStatus);
                 })
                 .catch((error) => {
                     console.log(error)
@@ -186,8 +195,9 @@ export function JobBoard() {
     }, [openPopUp])
 
     function handleLogJobData() {
-        console.log(jobData)
-        console.log(rawData)
+        console.log('Data', jobData)
+        console.log('Raw', rawData)
+        console.log('Job Saved', isJobSaved)
     }
 
     // open submit profile popup
@@ -430,11 +440,21 @@ export function JobBoard() {
     };
 
     // toggle save job
-    const toggleSaveJob = () => {
-        setIsJobSaved(!isJobSaved);
+    const toggleSaveJob = (jobDetails) => {
+        setIsJobSaved(prevState => {
+            const currentJobs = prevState[0] || [];
+            const updatedJobs = [...currentJobs, jobDetails];
+            return {
+                ...prevState,
+                0: updatedJobs
+            };
+        });
+    
         setShowSavedMessage(true);
         setTimeout(() => setShowSavedMessage(false), 1000);
     };
+       
+    
     
     return (
         <div className={`outerCard ${openPop ? 'blur-background' : ''}`}>
@@ -457,8 +477,8 @@ export function JobBoard() {
                                     {currentPop[0] && currentPop[0].length > 1 && currentPop[0][1]}
                                 </Typography>
                                 <div style={{ display: 'inline-block', position: 'relative' }}>
-                                    <IconButton onClick={toggleSaveJob} style={{ borderRadius: '10px' }}>
-                                        {isJobSaved ? 
+                                    <IconButton onClick={() => toggleSaveJob(currentPop)} style={{ borderRadius: '10px' }}>
+                                        {isJobSaved[currentPop] ? 
                                             <StarIcon style={{ color: '#A4A4A4' }} /> : 
                                             <StarBorderIcon style={{ color: '#A4A4A4' }} />}
                                     </IconButton>
@@ -563,7 +583,7 @@ export function JobBoard() {
             <Box className='job-table-box'>
                 <div className='job-table-inner' style={{ paddingTop: '50px' }}>
                     <Typography style={{fontFamily: 'Outfit', fontSize: 'xx-large', justifyContent: 'center', alignItems: 'center', textAlign: 'start'}}>
-                        Job Board
+                        Job Board 
                     </Typography>
                 </div>
             </Box>
@@ -579,40 +599,7 @@ export function JobBoard() {
                 </div>
                 {/* <button onClick={handleLogJobData}>Log Job Data</button> */}
             </Box>
-            <Box>
-                <Grid container className= { 'job-table-grid' } style={{ backgroundColor: 'inherit' }}rowSpacing={2} columnSpacing={2}>
-                    {jobData.slice((page - 1) * cardsPerPage, page * cardsPerPage).map((key) => (
-                        <Grid key={key} item>
-                            <Link overlay underline="none" sx={{ color: 'text.tertiary', cursor: 'pointer' }} onClick={() => openPopUp(key)}>
-                                <Card sx={{width: '21.5vw', height: '21.5vw', '&:hover': { boxShadow: 'md', borderColor: 'neutral.outlinedHoverBorder' }}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px', }}>
-                                    <CardMedia
-                                        component="img"
-                                        alt="placeholder"
-                                        height="120"
-                                        image="https://source.unsplash.com/random"
-                                        
-                                    />
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:"14px", paddingLeft:'10px', paddingRight:'10px', paddingTop:'10px'}}>
-                                        <u>{key[0][1]}</u>
-                                    </Typography>
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px', paddingTop:'15px'}}>
-                                        Pay: ${key[3][1]}
-                                    </Typography>
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px'}}>
-                                        Location: <u>{key[2][1]}</u>
-                                    </Typography>
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px'}}>
-                                        Time: {key[5][1]}
-                                    </Typography>
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", padding:'10px', position:'relative', overflow:'hidden', textOverflow:'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 3, maxHeight:'44px'}}>
-                                        Description: {key[4][1]}
-                                    </Typography>
-                                </Card>
-                            </Link>
-                        </Grid>
-                    ))}
-                </Grid>
-            </Box>
+            <JobCards jobData={jobData} page={page} cardsPerPage={cardsPerPage} openPopUp={openPopUp}/>
             <div style={{ display: 'flex', justifyContent: 'center', padding: '1%', background: '#f3f3f3' }}>
                 <Pagination count={totalPages} page={page} onChange={(event, value) => setPage(value)} />
             </div>

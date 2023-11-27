@@ -25,7 +25,7 @@ router.put("/apply", applytoJobs)
 router.put("/hire/:jobId/:applicantEmail", acceptApplicant)
 
 // reject an applicant
-router.put("/reject/:jobId/:applicantEmail", rejectApplicant) // finish
+router.put("/reject/:jobId/:applicantEmail", rejectApplicant)
 
 // get all applicants for a job
 router.get("/applicants/:jobId", allApplicants) 

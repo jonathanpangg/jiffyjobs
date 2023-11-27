@@ -149,7 +149,7 @@ export function Login() {
     return (
         <> 
         <RegNavBar/> 
-            <div className={ 'outerCard' }>
+            <div className={ 'outerCard1' }>
             <Card sx={{ maxWidth: 700, maxHeight: 685, mx: 'auto', borderRadius: '20px'}}>
                 <CardContent style={{ textAlign: 'center' }}>
                     <h2 style={{ fontFamily: 'Outfit', textAlign: 'center', margin: '16px 0' }}>Welcome to JIFFYJOBS!</h2>

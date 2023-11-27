@@ -147,15 +147,15 @@
 
 .outerCard {
   background-color: #f3f3f3;
-  height: 100vh;
+  height: 100%;
   padding: 1%;
   align-items: center;
 }
 
 .outerCard1 {
   background-color: #f3f3f3;
-  width: 100vw;
   height: 100vh;
+  padding: 2%;
   align-items: center;
 }
 
