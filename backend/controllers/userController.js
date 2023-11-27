@@ -110,6 +110,9 @@ export const applytoJobs = async (req, res) => {
         if (applicant.jobs_applied.some(jobApplied => jobApplied._id.toString() === job_id)) {
           return res.status(400).json({ message: 'You have already applied to this job.' });
         }
+
+        // fix so that if there is someone already hired, throw error
+
         // Add the job to the seeker's jobs_applied
         applicant.jobs_applied.push({ _id: job_id });
         // Save the updated applicant
@@ -173,10 +176,10 @@ export const allAppliedJobs = async(req, res) => {
 
 // get all jobs posted
 export const allPostedJobs = async(req, res) => {
-
+    const userEmail = req.params.userEmail
     try {
     // Find all jobs posted by the user
-    const myPostedJobs = await Jobs.find({ job_poster_email: userEmail });
+    const myPostedJobs = await Jobs.find({ job_poster_email: userEmail });    
     
     if (myPostedJobs.length === 0) {
         // Handle the case where no jobs are found
@@ -247,25 +250,14 @@ export const allApplicants = async(req, res) => {
         const jobs = await Jobs.findById(jobId)
         const seekerEmailObjects = jobs.applicants
 
-        console.log(seekerEmailObjects)
-
         const seekerEmails = seekerEmailObjects.map(obj => obj._id);
         const seekers = await Seeker.find({ email: { $in: seekerEmails } });
 
-        if (!seekers || seekers.length === 0) {
-            // If no seekers are found, handle it accordingly
-            return handleNotFound(res, "Seekers not found");
-        }
-
-        // If seekers are found, return their information
         return handleSuccess(res, seekers);
 
-
-        
     } catch (error) {
         return handleServerError(res, error)
     }
-
 }
 
 

@@ -22,7 +22,7 @@ const router = express.Router();
     router.delete("/:id", deleteJobsByID);
 
     // post a new job
-    router.post("/create", postJobs);
+    router.post("/create", postJobs); // changed
 
     // update a job
     router.put("/:id", updateJobs);
