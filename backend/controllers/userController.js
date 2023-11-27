@@ -12,13 +12,11 @@ import Jobs from "../models/JobSchema.js"
 
 // get user information when called
 export const getUserinfo = async(req, res) => {
-    const isjobseeker = true
-    const isjobprovider = false
     const mail = req.params.email;
     const role = req.params.role;
     // isjobseeker = boolean from the login database, get the user information.
     try {
-        if (isjobseeker === true) {
+        if (role === 'seeker') {
             try {
                 const seeker = await Seeker.findOne({ email: mail });
                 if (!seeker) {
@@ -28,7 +26,7 @@ export const getUserinfo = async(req, res) => {
             } catch (error) {
                 return handleServerError(res, error);
             }
-        } else if (isjobprovider === true){
+        } else if (role === 'provider'){
 
             try {
                 const provider = await Provider.findOne({ email: mail });
@@ -85,8 +83,7 @@ export const updateUserInfo = async(req, res) => {
 * Takes in seekerId and addes it to the jobs schema "applicants"
 */
 export const applytoJobs = async (req, res) => {
-    const seeker_email = req.params.seekerId;
-    const job_id = req.params.jobId;
+    const { seeker_email, job_id } = req.body;
 
     try {
         // Find the job by ID
@@ -153,7 +150,7 @@ export const allAppliedJobs = async(req, res) => {
              // Determine the status based on the conditions provided
              if (job.acceptedApplicant === userEmail) {
                  jobWithStatus.status = 'accepted';
-             } else if (job.time[0] < currentDateTime && job.acceptedApplicant === "" && !jobs.rejectApplicant.includes(userEmail)) {
+             } else if (job.time[0] < currentDateTime && job.acceptedApplicant === "" && !jobs.rejectedApplicants.includes(userEmail)) {
                  jobWithStatus.status = 'submitted';
              } else {
                  jobWithStatus.status = 'rejected';
