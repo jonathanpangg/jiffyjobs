@@ -143,25 +143,22 @@ export const allAppliedJobs = async(req, res) => {
         const appliedJobIds = seeker.jobs_applied.map(job => job._id);
 
         const appliedJobs = await Jobs.find({ '_id': { $in: appliedJobIds } });
-        if (appliedJobs.length === 0) {
-            return handleNotFound(res, "No applied jobs found for the seeker");
-        }
 
-         // Add the application status to each job
-         const currentDateTime = new Date();
-         const jobsWithStatus = appliedJobs.map(job => {
-             // Clone the job object
-             const jobWithStatus = {...job._doc};
- 
-             // Determine the status based on the conditions provided
-             if (job.acceptedApplicant === userEmail) {
-                 jobWithStatus.status = 'accepted';
-             } else if (job.time[0] < currentDateTime && job.acceptedApplicant === "" && !jobs.rejectApplicant.includes(userEmail)) {
-                 jobWithStatus.status = 'submitted';
-             } else {
-                 jobWithStatus.status = 'rejected';
-             }
-             return jobWithStatus;
+        // Add the application status to each job
+        const currentDateTime = new Date();
+        const jobsWithStatus = appliedJobs.map(job => {
+            // Clone the job object
+            const jobWithStatus = {...job._doc};
+
+            // Determine the status based on the conditions provided
+            if (job.acceptedApplicant === userEmail) {
+                jobWithStatus.status = 'accepted';
+            } else if (job.time[0] < currentDateTime && job.acceptedApplicant === "" && !jobs.rejectApplicant.includes(userEmail)) {
+                jobWithStatus.status = 'submitted';
+            } else {
+                jobWithStatus.status = 'rejected';
+            }
+            return jobWithStatus;
          });
 
 
