@@ -194,14 +194,14 @@ export function JobPosting() {
     }
 
     const openNextPop = () => {
-        if (val.title === '' || val.name === '' || val.location === '' || val.pay === 0) {
-            handleError()
+        if (val.title === '' || val.name === '' || val.location === '' || val.pay === '' || parseFloat(val.pay) <= 0) {
+            handleError();
         } else {
             setError({
                 titleError: val.title === '',
                 nameError: val.name === '',
                 locationError: val.location === '',
-                valError: val.pay === '' || val.pay === 0,
+                valError: false,
                 descriptionError: false,
                 categoryError: false,
             })
