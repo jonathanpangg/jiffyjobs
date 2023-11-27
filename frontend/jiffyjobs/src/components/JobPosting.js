@@ -480,7 +480,7 @@ export function JobPosting() {
                     poster_email: localStorage.getItem("email")
                 })
             }
-            const route = "http://localhost:4000/api/jobs/create"
+            const route = "https://jiffyjobs-api-production.up.railway.app/api/jobs/create"
             fetch(route, requestOptions)
                 .then((response) => {
                     response.json()
