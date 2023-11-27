@@ -9,7 +9,9 @@ import { Typography } from '@mui/material';
 import acceptedPicture from '../images/Accepted.png'
 import submittedPicture from '../images/Submitted.png'
 import rejectedPicture from '../images/Rejected.png'
+import check from '../images/Check.png'
 import clock from '../images/Clock.png'
+import x from '../images/X.png'
 
 export function StatusDashboard() {
     const [statusData, setStatusData] = useState([]) 
@@ -62,7 +64,7 @@ export function StatusDashboard() {
                                         <div style={{position: 'absolute', maxWidth: '100%', top: '50%', left: '50%', textAlign: 'center', transform: 'translate(-50%, -50%)', whiteSpace: 'nowrap'}}>
                                             <img
                                                 style={{ width: '12.5%'}}
-                                                src={ clock }
+                                                src={ key[7][1] === "accepted" ? check: (key[7][1] === "submitted" ? clock: x)}
                                                 alt="placeholder"
                                             />
                                             <Typography style={{fontFamily: 'Outfit', fontSize:"24px", paddingLeft:'10px', paddingRight:'10px'}}>
