@@ -83,7 +83,7 @@ export const updateUserInfo = async(req, res) => {
 * Takes in seekerId and addes it to the jobs schema "applicants"
 */
 export const applytoJobs = async (req, res) => {
-    const { seeker_email, job_id } = req.body;
+    const { seeker_email, job_id } = req.body; 
 
     try {
         // Find the job by ID

@@ -347,6 +347,55 @@ export function JobBoard() {
     const handleSubmitProfile = () => {
         handleCloseSubmitProfile();
         setOpenCongratsPopup(true);
+        const user = {
+            method: "PUT",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                seeker_email: userEmail,
+                job_id: currentPop[0][0]
+            })
+        }
+
+        const route = "https://jiffyjobs-api-production.up.railway.app/api/users/apply";
+        fetch(route, user)
+        .then(async (response) => {
+            const res = await response.json()
+            if (!response.ok) {
+                throw new Error(res.message);
+            } 
+            return res;
+        })
+        .then((data) => {
+            console.log(data);
+        })
+        .catch((error) => {
+            const err = error.message;
+            if (err.startsWith('Error: ')) {
+                alert(err.slice(7));
+                toast.error(err.slice(7), {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light"
+                });
+            } else {
+                toast.error(err, {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light"
+                });
+            }
+        });
+
     };
 
     function CongratsPopup({ open, onClose}) {
