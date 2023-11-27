@@ -92,6 +92,12 @@ const SeekerSchema = mongoose.Schema({
             type: Boolean,
             required: true
         }
+    }],
+    jobs_saved: [{
+        _id: {
+            type: String,
+            required: true
+        }
     }]
 });
 

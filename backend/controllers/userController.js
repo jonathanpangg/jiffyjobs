@@ -265,4 +265,54 @@ export const allApplicants = async(req, res) => {
 
 }
 
+export const saveJobs = async(req, res) => {
+    const { job_id, email } = req.body;
+    try {
+        const seeker = await Seeker.findOne({email: email});
+        if (!seeker) {
+            return handleNotFound("Seeker not found");
+        }
+        const job = await Jobs.findById(job_id);
+        if (!job) {
+            return handleNotFound("Job not found");
+        }
+    
+        const jobString = job_id.toString(); 
+        const savedJobsIds = seeker.jobs_saved.map(savedJob => savedJob._id.toString());
 
+        if (savedJobsIds.includes(jobString)) {
+            const updateResult = await Seeker.updateOne(
+                { email },
+                { $pull: { jobs_saved: { _id: job_id } } }
+            );
+        } else {
+            console.log("here")
+            seeker.jobs_saved.push(job_id);
+        }
+
+        await seeker.save();
+        return handleSuccess(res, seeker);
+    } catch (error) {
+        return handleServerError(res, error);
+    }
+}
+
+export const getSavedJobs = async(req, res) => {
+    const email = req.params.email;
+    try {
+        const seeker = await Seeker.findOne({ email: email });
+        if (!seeker) {
+            return handleNotFound(res, "Seeker not found");
+        }
+        const savedJobsId = seeker.jobs_saved.map(job => job._id);
+
+        const savedJobs = await Jobs.find({ '_id': { $in: savedJobsId } });
+        if (savedJobs.length === 0) {
+            return handleNotFound(res, "No saved jobs found for the seeker");
+        }
+
+        return handleSuccess(res, savedJobs)
+    } catch (error) {
+        return handleServerError(res, error);
+    }
+}

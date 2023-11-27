@@ -216,58 +216,58 @@ export function JobBoard() {
                 theme: "light",
             });
         } else if (!gotProfile) {
-                const requestedOptions = {
-                    method: "GET",
-                    headers: { 'Content-Type': 'application/json' },
+            const requestedOptions = {
+                method: "GET",
+                headers: { 'Content-Type': 'application/json' },
+            }
+    
+            const route = `https://jiffyjobs-api-production.up.railway.app/api/users/getinfo/${userEmail}/${userRole}`;
+            fetch(route, requestedOptions)
+            .then(async (response) => {
+                const res = await response.json()
+                if (!response.ok) {
+                    throw new Error(res.message);
                 }
-        
-                const route = `https://jiffyjobs-api-production.up.railway.app/api/users/getinfo/${userEmail}/${userRole}`;
-                fetch(route, requestedOptions)
-                .then(async (response) => {
-                    const res = await response.json()
-                    if (!response.ok) {
-                        throw new Error(res.message);
-                    }
-                    return res;
-                })
-                .then((data) => {
+                return res;
+            })
+            .then((data) => {
                 const user = [data.personal_info.first_name, data.personal_info.last_name, data.personal_info.school, data.personal_info.major, data.personal_info.grade, data.personal_info.personal_statement];
                 setProfile(user);
                 console.log(profile);
-                })
-                .catch((error) => {
-                    const err = error.message;
-                    if (err.startsWith('Error: ')) {
-                        alert(err.slice(7));
-                        toast.error(err.slice(7), {
-                            position: "top-center",
-                            autoClose: 5000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                            theme: "light"
-                        });
-                    } else {
-                        toast.error(err, {
-                            position: "top-center",
-                            autoClose: 5000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                            theme: "light"
-                        });
-                    }
-                    console.log(err);
-                });
-                setOpenSubmitProfile(true);
-                setGotProfile(true);
-            } else {
-                setOpenSubmitProfile(true);
-            }
+            })
+            .catch((error) => {
+                const err = error.message;
+                if (err.startsWith('Error: ')) {
+                    alert(err.slice(7));
+                    toast.error(err.slice(7), {
+                        position: "top-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light"
+                    });
+                } else {
+                    toast.error(err, {
+                        position: "top-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light"
+                    });
+                }
+                console.log(err);
+            });
+            setOpenSubmitProfile(true);
+            setGotProfile(true);
+        } else {
+            setOpenSubmitProfile(true);
+        }
     };
 
     // close submit profile popup
