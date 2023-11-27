@@ -30,6 +30,7 @@ export function JobBoard() {
     const [openPop, setOpenPop] = useState(false)
     const [currentPop, setCurrentPop] = useState([])
     const [profile, setProfile] = useState([])
+    const [gotProfile, setGotProfile] = useState(false);
 
     const [page, setPage] = useState(1);
     const cardsPerPage = 20;
@@ -214,7 +215,7 @@ export function JobBoard() {
                 progress: undefined,
                 theme: "light",
             });
-        } else {
+        } else if (!gotProfile) {
                 const requestedOptions = {
                     method: "GET",
                     headers: { 'Content-Type': 'application/json' },
@@ -263,6 +264,9 @@ export function JobBoard() {
                     console.log(err);
                 });
                 setOpenSubmitProfile(true);
+                setGotProfile(true);
+            } else {
+                setOpenSubmitProfile(true);
             }
     };
 
@@ -271,6 +275,10 @@ export function JobBoard() {
         setOpenSubmitProfile(false);
     };
 
+    // const handleOpeningSubmitProfile = () => {
+    //     setOpenSubmitProfile(true);
+    // };
+
     // submit profile popup
     function SubmitProfilePopup({ open, onClose, onSubmit }) {
         return (
@@ -278,9 +286,9 @@ export function JobBoard() {
                 <DialogTitle sx={{ textAlign: 'center', fontFamily: 'Outfit', marginTop: 2, }}>Are you sure you want to submit?</DialogTitle>
                     <DialogContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '16px', margin: 'auto', border: '2px dashed #ccc', borderRadius: '5px', maxWidth: 'calc(100% - 150px)' }}>
                         <Stack direction="row" spacing={2} alignItems="center" justifyContent="center" style={{ paddingBottom: 4, paddingTop: 20, marginRight: '60px'}} >
-                            <Avatar sx={{ bgcolor: '#D9D9D9', width: 45, height: 45, color: 'black', fontSize: '25px'}}>{profile[0][0]}{profile[1][0]}</Avatar>
+                            <Avatar sx={{ bgcolor: '#D9D9D9', width: 45, height: 45, color: 'black', fontSize: '25px'}}>{profile[0] && profile[0].length > 0 && profile[0][0]}{profile[1] && profile[1].length > 0 && profile[1][0]}</Avatar>
                             <Typography variant="subtitle1" style={{ fontFamily: 'Outfit', fontSize: '20px', fontWeight: 'bold' }}>
-                                {profile[0]} {profile[1]}
+                                {profile[0] && profile[0].length > 0 && profile[0]} {profile[1] && profile[1].length > 0 && profile[1]}
                             </Typography>
                         </Stack>
                         <form noValidate autoComplete="off" style={{ width: '100%' }}>
@@ -289,21 +297,21 @@ export function JobBoard() {
                                     <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4'}}>School<span style={{"color": "red"}}>*</span></Typography>
                                 </Grid>
                                 <Grid item xs={7} style={{ padding: 8 }}>
-                                    <TextField disabled defaultValue={profile[2]} variant="outlined" size="small" className="inputSubmit" style={{ width: '200px' }}
+                                    <TextField disabled defaultValue={profile[2] && profile[2].length > 0 && profile[2]} variant="outlined" size="small" className="inputSubmit" style={{ width: '200px' }}
                                     InputProps={{ style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}}/>
                                 </Grid>
                                 <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 8 }}>
                                     <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4' }}>Major</Typography>
                                 </Grid>
                                 <Grid item xs={7} style={{ padding: 8 }}>
-                                    <TextField disabled defaultValue={profile[3][0]} variant="outlined" size="small" style={{ width: '200px' }}
+                                    <TextField disabled defaultValue={profile[3] && profile[3].length > 0 && profile[3][0]} variant="outlined" size="small" style={{ width: '200px' }}
                                     InputProps={{ style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}}/>
                                 </Grid>
                                 <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 8 }}>
                                     <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4' }}>Grade</Typography>
                                 </Grid>
                                 <Grid item xs={7} style={{ padding: 8 }}>
-                                    <TextField disabled defaultValue={profile[4]} variant="outlined" size="small" style={{ width: '200px' }}
+                                    <TextField disabled defaultValue={profile[4] && profile[4].length > 0 && profile[4]} variant="outlined" size="small" style={{ width: '200px' }}
                                     InputProps={{ style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}}/>
                                 </Grid>
                                 <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 8 }}>
@@ -317,7 +325,7 @@ export function JobBoard() {
                                     <Typography diabled variant="subtitle1" align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4' }}>Bio</Typography>
                                 </Grid>
                                 <Grid item xs={7} style={{ paddingRight: 8, paddingTop: 8, paddingLeft: 8 }}>
-                                    <TextField disabled defaultValue={profile[5]} variant="outlined" multiline rows={6} size="small" style={{ width: '200px' }}
+                                    <TextField disabled defaultValue={profile[5] && profile[5].length > 0 && profile[5]} variant="outlined" multiline rows={6} size="small" style={{ width: '200px' }}
                                     InputProps={{style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px', }}} />
                                 </Grid>
                             </Grid>
