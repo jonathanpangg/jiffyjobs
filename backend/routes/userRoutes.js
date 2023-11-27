@@ -19,13 +19,13 @@ router.get("/jobsApplied/:email", allAppliedJobs)
 router.get("/jobsPosted/:email", allPostedJobs)
 
 // submit a job application
-router.put("/apply/:seekerId/:jobId", applytoJobs)
+router.put("/apply/:seekerEmail/:jobId", applytoJobs)
 
 // hire an applicant to do a job
 router.put("/hire/:jobId/:applicantEmail", acceptApplicant)
 
 // reject an applicant
-router.put("/reject/:jobId/:applicantEmail", rejectApplicant) // finish
+router.put("/reject/:jobId/:applicantEmail", rejectApplicant)
 
 // get all applicants for a job
 router.get("/applicants/:jobId", allApplicants) 

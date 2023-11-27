@@ -463,13 +463,6 @@ export function JobPosting() {
     async function PostJobs() {
         handleError()
         if (!(error.titleError === true || error.nameError === true || error.locationError === true || error.payError === true || error.descriptionError === true || error.categoryError === true)) {
-            var timeIns = []
-            for (let i = 0; i < val.times.length; i++) {
-                for (let j = 0; j < val.times[i].length; j++) {
-                    timeIns.push(val.times[i][j])
-                }
-            }
-
             const categoryList = selectedCategories; 
             const requestOptions = {
                 method: 'POST',
