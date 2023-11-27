@@ -236,7 +236,7 @@ export function JobBoard() {
                 headers: { 'Content-Type': 'application/json' },
             }
     
-            const route = `https://jiffyjobs-api-production.up.railway.app/api/users/getinfo/${userEmail}/${userRole}`;
+            const route = `http://localhost:4000/api/users/getinfo/${userEmail}/${userRole}`;
             fetch(route, requestedOptions)
             .then(async (response) => {
                 const res = await response.json()
@@ -417,19 +417,18 @@ export function JobBoard() {
     };
 
     // toggle save job
-    const toggleSaveJob = (jobDetails) => {
+    const toggleSaveJob = (key) => {
         setIsJobSaved(prevState => {
-            const currentJobs = prevState[0] || [];
-            const updatedJobs = [...currentJobs, jobDetails];
+            const newSavedStatus = !prevState[key];
+            console.log(`Key: ${key} - Saved Status: ${newSavedStatus ? 'Saved' : 'Unsaved'}`);
             return {
                 ...prevState,
-                0: updatedJobs
+                [key]: newSavedStatus
             };
         });
-    
         setShowSavedMessage(true);
         setTimeout(() => setShowSavedMessage(false), 1000);
-    };
+    };  
        
     
     
@@ -454,8 +453,8 @@ export function JobBoard() {
                                     {currentPop[0] && currentPop[0].length > 1 && currentPop[0][1]}
                                 </Typography>
                                 <div style={{ display: 'inline-block', position: 'relative' }}>
-                                    <IconButton onClick={() => toggleSaveJob(currentPop)} style={{ borderRadius: '10px' }}>
-                                        {isJobSaved[currentPop] ? 
+                                    <IconButton onClick={() => toggleSaveJob(currentPop[0])} style={{ borderRadius: '10px' }}>
+                                        {isJobSaved[currentPop[0]] ? 
                                             <StarIcon style={{ color: '#A4A4A4' }} /> : 
                                             <StarBorderIcon style={{ color: '#A4A4A4' }} />}
                                     </IconButton>
@@ -574,7 +573,7 @@ export function JobBoard() {
                     </div>
                     <Divider width='100%'/>
                 </div>
-                {/* <button onClick={handleLogJobData}>Log Job Data</button> */}
+                <button onClick={handleLogJobData}>Log Job Data</button>
             </Box>
             <JobCards jobData={jobData} page={page} cardsPerPage={cardsPerPage} openPopUp={openPopUp}/>
             <div style={{ display: 'flex', justifyContent: 'center', padding: '1%', background: '#f3f3f3' }}>
