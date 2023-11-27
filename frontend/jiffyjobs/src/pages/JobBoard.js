@@ -19,6 +19,9 @@ import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+import SubmitProfilePopup from '../components/SubmitProfilePopup';
+import JobCards from '../components/JobCards';
+
 
 export function JobBoard() {
     const [jobData, setJobData] = useState([])
@@ -37,7 +40,7 @@ export function JobBoard() {
     const [openSubmitProfile, setOpenSubmitProfile] = useState(false);
     const [openCongratsPopup, setOpenCongratsPopup] = useState(false);
 
-    const [isJobSaved, setIsJobSaved] = useState(false);
+    const [isJobSaved, setIsJobSaved] = useState({});
     const [showSavedMessage, setShowSavedMessage] = useState(false);
 
     const navigate = useNavigate();
@@ -63,7 +66,7 @@ export function JobBoard() {
     // handles getting all jobs
     useEffect(() => {
         async function GetAllJobs() {
-            const route = "https://jiffyjobs-api-production.up.railway.app/api/jobs/get"
+            const route = "http://localhost:4000/api/jobs/get"
             fetch(route)
                 .then((response) => {
                     if (!response.ok) {
@@ -116,7 +119,7 @@ export function JobBoard() {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' }
             }
-            var route = "https://jiffyjobs-api-production.up.railway.app/api/jobs/filter"
+            var route = "http://localhost:4000/api/jobs/filter"
             var query = "/*/*/" + Array.from(filterList) + "/*/*"
             console.log(query)
             route = route + query
@@ -141,6 +144,12 @@ export function JobBoard() {
                     } else {
                         setBackground("")
                     }
+
+                    const savedStatus = {};
+                data.forEach(job => {
+                    savedStatus[job.id] = false; // Replace 'job.id' with your unique job identifier
+                });
+                setIsJobSaved(savedStatus);
                 })
                 .catch((error) => {
                     console.log(error)
@@ -180,8 +189,9 @@ export function JobBoard() {
     }, [openPopUp])
 
     function handleLogJobData() {
-        console.log(jobData)
-        console.log(rawData)
+        console.log('Data', jobData)
+        console.log('Raw', rawData)
+        console.log('Job Saved', isJobSaved)
     }
 
     // open submit profile popup
@@ -193,71 +203,6 @@ export function JobBoard() {
     const handleCloseSubmitProfile = () => {
         setOpenSubmitProfile(false);
     };
-
-    // submit profile popup
-    function SubmitProfilePopup({ open, onClose, onSubmit }) {
-        return (
-            <Dialog open={open} onClose={onClose} maxWidth={"xl"} PaperProps={{ sx: { borderRadius: "15px", margin: 'auto', width: '500px' } }}>
-                <DialogTitle sx={{ textAlign: 'center', fontFamily: 'Outfit', marginTop: 2, }}>Are you sure you want to submit?</DialogTitle>
-                    <DialogContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '16px', margin: 'auto', border: '2px dashed #ccc', borderRadius: '5px', maxWidth: 'calc(100% - 150px)' }}>
-                        <Stack direction="row" spacing={2} alignItems="center" justifyContent="center" style={{ paddingBottom: 4, paddingTop: 20, marginRight: '60px'}} >
-                            <Avatar sx={{ bgcolor: '#D9D9D9', width: 45, height: 45, color: 'black', fontSize: '25px'}}>LY</Avatar>
-                            <Typography variant="subtitle1" style={{ fontFamily: 'Outfit', fontSize: '20px', fontWeight: 'bold' }}>
-                                Lucas Yoon
-                            </Typography>
-                        </Stack>
-                        <form noValidate autoComplete="off" style={{ width: '100%' }}>
-                            <Grid container alignItems="center" justifyContent="center" style={{ width: '100%' }}>
-                                <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 8 }}>
-                                    <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4'}}>School<span style={{"color": "red"}}>*</span></Typography>
-                                </Grid>
-                                <Grid item xs={7} style={{ padding: 8 }}>
-                                    <TextField disabled defaultValue="Boston University" variant="outlined" size="small" className="inputSubmit" style={{ width: '200px' }}
-                                    InputProps={{ style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}}/>
-                                </Grid>
-                                <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 8 }}>
-                                    <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4' }}>Major</Typography>
-                                </Grid>
-                                <Grid item xs={7} style={{ padding: 8 }}>
-                                    <TextField disabled defaultValue="Computer Science" variant="outlined" size="small" style={{ width: '200px' }}
-                                    InputProps={{ style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}}/>
-                                </Grid>
-                                <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 8 }}>
-                                    <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4' }}>Grade</Typography>
-                                </Grid>
-                                <Grid item xs={7} style={{ padding: 8 }}>
-                                    <TextField disabled defaultValue="Third-year" variant="outlined" size="small" style={{ width: '200px' }}
-                                    InputProps={{ style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}}/>
-                                </Grid>
-                                <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 8 }}>
-                                    <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4' }}>Email<span style={{"color": "red"}}>*</span></Typography>
-                                </Grid>
-                                <Grid item xs={7} style={{ padding: 8 }}>
-                                    <TextField disabled defaultValue=".edu" variant="outlined" size="small" className="inputSubmit" style={{ width: '200px' }}
-                                    InputProps={{style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}}/>
-                                </Grid>
-                                <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 8 }}>
-                                    <Typography diabled variant="subtitle1" align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4' }}>Bio</Typography>
-                                </Grid>
-                                <Grid item xs={7} style={{ paddingRight: 8, paddingTop: 8, paddingLeft: 8 }}>
-                                    <TextField disabled defaultValue="I'm a third-year student at BU studying CS. I want money!" variant="outlined" multiline rows={6} size="small" style={{ width: '200px' }}
-                                    InputProps={{style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px', }}} />
-                                </Grid>
-                            </Grid>
-                        </form>            
-                    </DialogContent>
-                    <Divider style={{ width: '100%', marginTop: '25px',  height: '4px' }} />
-                <DialogActions sx={{ marginRight: '15px' }}>
-                    <Button onClick={onClose} sx={{ border: '1px solid #5B5B5B', borderRadius: '8px', padding: '6px 12px', fontFamily: 'Outfit', textTransform: 'none', color: '#5B5B5B' }}>
-                        Cancel
-                    </Button>
-                    <Button onClick={onSubmit} sx={{ border: '1px solid #D9D9D9', borderRadius: '8px', padding: '6px 12px', fontFamily: 'Outfit', textTransform: 'none', color: '#5B5B5B', backgroundColor: '#D9D9D9', '&:hover': {backgroundColor: '#D9D9D9'}}}>
-                        Submit Profile
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        );
-    }
 
     const handleSubmitProfile = () => {
         handleCloseSubmitProfile();
@@ -296,11 +241,21 @@ export function JobBoard() {
     };
 
     // toggle save job
-    const toggleSaveJob = () => {
-        setIsJobSaved(!isJobSaved);
+    const toggleSaveJob = (jobDetails) => {
+        setIsJobSaved(prevState => {
+            const currentJobs = prevState[0] || [];
+            const updatedJobs = [...currentJobs, jobDetails];
+            return {
+                ...prevState,
+                0: updatedJobs
+            };
+        });
+    
         setShowSavedMessage(true);
         setTimeout(() => setShowSavedMessage(false), 1000);
     };
+       
+    
     
     return (
         <div className={`outerCard ${openPop ? 'blur-background' : ''}`}>
@@ -323,8 +278,8 @@ export function JobBoard() {
                                     {currentPop[0] && currentPop[0].length > 1 && currentPop[0][1]}
                                 </Typography>
                                 <div style={{ display: 'inline-block', position: 'relative' }}>
-                                    <IconButton onClick={toggleSaveJob} style={{ borderRadius: '10px' }}>
-                                        {isJobSaved ? 
+                                    <IconButton onClick={() => toggleSaveJob(currentPop)} style={{ borderRadius: '10px' }}>
+                                        {isJobSaved[currentPop] ? 
                                             <StarIcon style={{ color: '#A4A4A4' }} /> : 
                                             <StarBorderIcon style={{ color: '#A4A4A4' }} />}
                                     </IconButton>
@@ -429,7 +384,7 @@ export function JobBoard() {
             <Box className='job-table-box'>
                 <div className='job-table-inner' style={{ paddingTop: '50px' }}>
                     <Typography style={{fontFamily: 'Outfit', fontSize: 'xx-large', justifyContent: 'center', alignItems: 'center', textAlign: 'start'}}>
-                        Job Board
+                        Job Board 
                     </Typography>
                 </div>
             </Box>
@@ -445,40 +400,7 @@ export function JobBoard() {
                 </div>
                 {/* <button onClick={handleLogJobData}>Log Job Data</button> */}
             </Box>
-            <Box>
-                <Grid container className= { 'job-table-grid' } style={{ backgroundColor: 'inherit' }}rowSpacing={2} columnSpacing={2}>
-                    {jobData.slice((page - 1) * cardsPerPage, page * cardsPerPage).map((key) => (
-                        <Grid key={key} item>
-                            <Link overlay underline="none" sx={{ color: 'text.tertiary', cursor: 'pointer' }} onClick={() => openPopUp(key)}>
-                                <Card sx={{width: '21.5vw', height: '21.5vw', '&:hover': { boxShadow: 'md', borderColor: 'neutral.outlinedHoverBorder' }}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px', }}>
-                                    <CardMedia
-                                        component="img"
-                                        alt="placeholder"
-                                        height="120"
-                                        image="https://source.unsplash.com/random"
-                                        
-                                    />
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:"14px", paddingLeft:'10px', paddingRight:'10px', paddingTop:'10px'}}>
-                                        <u>{key[0][1]}</u>
-                                    </Typography>
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px', paddingTop:'15px'}}>
-                                        Pay: ${key[3][1]}
-                                    </Typography>
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px'}}>
-                                        Location: <u>{key[2][1]}</u>
-                                    </Typography>
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px'}}>
-                                        Time: {key[5][1]}
-                                    </Typography>
-                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", padding:'10px', position:'relative', overflow:'hidden', textOverflow:'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 3, maxHeight:'44px'}}>
-                                        Description: {key[4][1]}
-                                    </Typography>
-                                </Card>
-                            </Link>
-                        </Grid>
-                    ))}
-                </Grid>
-            </Box>
+            <JobCards jobData={jobData} page={page} cardsPerPage={cardsPerPage} openPopUp={openPopUp}/>
             <div style={{ display: 'flex', justifyContent: 'center', padding: '1%', background: '#f3f3f3' }}>
                 <Pagination count={totalPages} page={page} onChange={(event, value) => setPage(value)} />
             </div>
