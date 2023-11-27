@@ -40,7 +40,7 @@ export function JobBoard() {
     const [openSubmitProfile, setOpenSubmitProfile] = useState(false);
     const [openCongratsPopup, setOpenCongratsPopup] = useState(false);
 
-    const [isJobSaved, setIsJobSaved] = useState(false);
+    const [isJobSaved, setIsJobSaved] = useState({});
     const [showSavedMessage, setShowSavedMessage] = useState(false);
 
     const navigate = useNavigate();
@@ -144,6 +144,12 @@ export function JobBoard() {
                     } else {
                         setBackground("")
                     }
+
+                    const savedStatus = {};
+                data.forEach(job => {
+                    savedStatus[job.id] = false; // Replace 'job.id' with your unique job identifier
+                });
+                setIsJobSaved(savedStatus);
                 })
                 .catch((error) => {
                     console.log(error)
@@ -234,11 +240,19 @@ export function JobBoard() {
     };
 
     // toggle save job
-    const toggleSaveJob = () => {
-        setIsJobSaved(!isJobSaved);
+    const toggleSaveJob = (key) => {
+        setIsJobSaved(prevState => {
+            const newSavedStatus = !prevState[key];
+            console.log(`Key: ${key} - Saved Status: ${newSavedStatus ? 'Saved' : 'Unsaved'}`);
+            return {
+                ...prevState,
+                [key]: newSavedStatus
+            };
+        });
         setShowSavedMessage(true);
         setTimeout(() => setShowSavedMessage(false), 1000);
-    };
+    };    
+    
     
     return (
         <div className={`outerCard ${openPop ? 'blur-background' : ''}`}>
@@ -261,8 +275,8 @@ export function JobBoard() {
                                     {currentPop[0] && currentPop[0].length > 1 && currentPop[0][1]}
                                 </Typography>
                                 <div style={{ display: 'inline-block', position: 'relative' }}>
-                                    <IconButton onClick={toggleSaveJob} style={{ borderRadius: '10px' }}>
-                                        {isJobSaved ? 
+                                    <IconButton onClick={() => toggleSaveJob(currentPop)} style={{ borderRadius: '10px' }}>
+                                        {isJobSaved[currentPop] ? 
                                             <StarIcon style={{ color: '#A4A4A4' }} /> : 
                                             <StarBorderIcon style={{ color: '#A4A4A4' }} />}
                                     </IconButton>
