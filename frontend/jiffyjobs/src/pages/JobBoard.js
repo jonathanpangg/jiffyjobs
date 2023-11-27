@@ -200,6 +200,11 @@ export function JobBoard() {
         console.log('Job Saved', isJobSaved)
     }
 
+    useEffect(()=> {
+        console.log(userEmail);
+        console.log(userRole);
+    })
+
     // open submit profile popup
     const handleOpenSubmitProfile = () => {
         if (!userEmail) {
@@ -245,34 +250,6 @@ export function JobBoard() {
                 setProfile(user);
                 console.log(profile);
             })
-            .catch((error) => {
-                const err = error.message;
-                if (err.startsWith('Error: ')) {
-                    alert(err.slice(7));
-                    toast.error(err.slice(7), {
-                        position: "top-center",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light"
-                    });
-                } else {
-                    toast.error(err, {
-                        position: "top-center",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light"
-                    });
-                }
-                console.log(err);
-            });
             setOpenSubmitProfile(true);
             setGotProfile(true);
         } else {
