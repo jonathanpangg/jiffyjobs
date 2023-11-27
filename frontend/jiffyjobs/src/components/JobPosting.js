@@ -479,7 +479,7 @@ export function JobPosting() {
                     date_posted: new Date()
                 })
             }
-            const route = "http://localhost:4000/api/jobs/create"
+            const route = "https://jiffyjobs-api-production.up.railway.app/api/jobs/create"
             fetch(route, requestOptions)
                 .then((response) => {
                     response.json()
