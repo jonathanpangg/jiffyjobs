@@ -105,15 +105,16 @@ export const postJobs = async (req, res) => {
             hired: false,
             acceptedApplicant: "",
             rejectedApplicants: [],
-            job_poster_email: poster_email
+            job_poster_email: poster_email,
+            saved_applicants: []
         });
         console.log(title, job_poster, description)
 
-        console.log(poster_email)
+        console.log(time)
         const newJob = await makeJob.save();
-
         return handleSuccess(res, newJob);
     } catch (error) {
+        console.log(error)
         return handleServerError(res, error);
     }
 };
