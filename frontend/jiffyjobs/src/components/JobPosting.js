@@ -28,17 +28,8 @@ export function JobPosting() {
     const categories = ['Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving']
     const [expand, setExpand] = useState(false)
     const [amount, setAmount] = useState("")
-
-
-    const [selectedCategory, setSelectedCategory] = useState(''); // Default value can be an empty string or any default category
-
-const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value);
-    // Additional logic for what happens when a category is selected can be added here
-};
-
-
-
+    const [selectedCategories, setSelectedCategories] = useState([]);
+    
     // useState for the data
     const [val, setVal] = useState({
         title: '',
@@ -282,18 +273,14 @@ const handleCategoryChange = (event) => {
             times: val.times
         })
     }
-    
-    const renderSelectedOptions = (selected) => {
-        return Array.from(selected).map((data) => {
-            return (<Chip
-                key={data}
-                label={data}
-                onDelete={() => handleDelete(data)}
-                style={{ margin: '4px', paddingLeft: '4px', paddingRight: '4px', display: 'flex', alignItems: 'center', fontFamily: 'Outfit', fontSize: 'medium'}}
-                deleteIcon={<ClearIcon></ClearIcon>}
-              />)
-        })
-      }
+
+    const handleCategoryChange = (event) => {
+         setSelectedCategories(event.target.value); 
+    };
+
+    const handleDeleteCategory = (categoryToDelete) => {
+        setSelectedCategories((categories) => categories.filter((category) => category !== categoryToDelete));
+    };
 
     const firstJobSlide = () => {
         return (
@@ -425,29 +412,35 @@ const handleCategoryChange = (event) => {
                             </text> <br></br>
                             
                             <Select
-                                displayEmpty
-                                open={expand}
-                                onOpen={() => setExpand(true)}
-                                onClose={() => setExpand(false)}
-                                value={selectedCategory}
-                                onChange={handleCategoryChange}
-                                renderValue={selected => selected.length === 0 ? "+ Add Category" : selected}
-                                error={error.categoryError}
-                                style={{ width: '98.5%' }}
-                            >
-                                {categories.map((name) => (
-                                    <MenuItem key={name} value={name}>
-                                        {name}
-                                    </MenuItem>
-                                ))}
-                            </Select>
+                            multiple
+                            displayEmpty
+                            open={expand}
+                            onOpen={() => setExpand(true)}
+                            onClose={() => setExpand(false)}
+                            value={selectedCategories}
+                            onChange={handleCategoryChange}
+                            error={error.categoryError}
+                            renderValue={() => "+ Add Category"}
+                            style={{ width: '98.5%' }}
+                        >
+                            {categories.map((name) => (
+                                <MenuItem key={name} value={name}>
+                                    {name}
+                                </MenuItem>
+                            ))}
+                        </Select>
 
-                            <Grid container columnSpacing={2} className='category-tab'>
-                                {renderSelectedOptions(val.category)}
-                            </Grid>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', paddingTop: '10px' }}>
+                            {selectedCategories.map((value) => (
+                                <Chip
+                                    key={value}
+                                    label={value}
+                                    onDelete={() => handleDeleteCategory(value)}
+                                    style={{ margin: '2px' }}
+                                />
+                            ))}
                         </div>
-
-
+                        </div>
                     </DialogContentText>
                 </DialogContent>
                 <Divider/>
@@ -477,10 +470,7 @@ const handleCategoryChange = (event) => {
                 }
             }
 
-            var categoryList = []
-            for (const v of val.category) {
-                categoryList.push(v)
-            }
+            const categoryList = selectedCategories; 
             const requestOptions = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
