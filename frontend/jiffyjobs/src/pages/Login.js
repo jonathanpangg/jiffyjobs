@@ -156,9 +156,11 @@ export function Login() {
         <> 
         <RegNavBar/> 
             <div className={ 'outerCard1' }>
-            <Card sx={{ maxWidth: 700, maxHeight: 800, mx: 'auto', borderRadius: '20px'}}>
+            <Card sx={{ maxWidth: 650, maxHeight: 700, mx: 'auto', borderRadius: '20px'}}>
                 <CardContent style={{ textAlign: 'center' }}>
-                    <h2 style={{ fontFamily: 'Outfit', textAlign: 'center', margin: '16px 0' }}>Welcome to JIFFYJOBS!</h2>
+                    <div style={{ fontFamily: 'Outfit', fontWeight: 'bold', fontSize: '28px', textAlign: 'center', marginTop: '30px', marginBottom: '10px'}}>
+                        Welcome to JIFFYJOBS!
+                    </div>
                     
                     <form onSubmit={handleSubmit} noValidate autoComplete="off" style={{ alignItems: 'center' }}>
 
@@ -168,7 +170,7 @@ export function Login() {
                                 Email
                             </text> <br></br>
                         </div>
-                        <TextField error={error.emailError} helperText={error.emailError ? (val.email === '' ? "*This field is required" : "*Please enter a valid email address") : ""} required={true} placeholder={"Enter Email"}  type="email" square={false} style={{width: '68.5%', fontFamily: 'Outfit'}} FormHelperTextProps={{ style: { fontFamily: 'Outfit' }}} onChange={handleValues} id="email" value={val.email}
+                        <TextField error={error.emailError} helperText={error.emailError ? (val.email === '' ? "*This field is required" : "*Please enter a valid email address") : ""} required={true} placeholder={"Enter Email"}  type="email" square={false} style={{width: '68.5%', fontFamily: 'Outfit',}} FormHelperTextProps={{ style: { fontFamily: 'Outfit' }}} onChange={handleValues} id="email" value={val.email}
                             InputProps={{
                                 style: {  borderRadius: '10px', fontFamily: 'Outfit' }
                             }}
@@ -199,7 +201,7 @@ export function Login() {
                     </div>
                                 
                     <div style={{ }}>
-                        <Button type="submit" onClick={login} sx={{ width: '68.5%', mt: 1, mb: 2, paddingBottom: '1.5%', backgroundColor: '#A4A4A4', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit', border: '1px solid #5B5B5B' }} >
+                        <Button type="submit" onClick={login} sx={{ width: '68.5%', mt: 1, mb: 2, p: '1.5%', marginTop: '10px', marginBottom: '10px', backgroundColor: '#A4A4A4', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit', border: '1px solid #5B5B5B' }} >
                             Log in
                         </Button>
                     </div>
@@ -209,7 +211,7 @@ export function Login() {
                         <div class="orLine "></div>
                     </div>
                     <div style={{ }}>
-                        <Button onClick={handleSignUp} sx={{ width: '68.5%', mt: 1, mb: 2, paddingTop: '1.5%', paddingBottom: '1.5%', backgroundColor: '#5B5B5B', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit'}} >
+                        <Button onClick={handleSignUp} sx={{ width: '68.5%', mt: 1, mb: 2, p: '1.5%', marginTop: '10px', marginBottom: '30px', backgroundColor: '#5B5B5B', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit'}} >
                             Don’t have an account? Join now!
                         </Button>
                     </div>
