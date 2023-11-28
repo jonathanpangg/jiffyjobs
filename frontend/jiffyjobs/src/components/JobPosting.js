@@ -19,7 +19,9 @@ export function JobPosting() {
     const [openStartPop, setOpenStartPop] = useState(false)
     const [openSecondPop, setOpenSecondPop] = useState(false)
 
-    const categories = ['Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving']
+    const categories = ['Arts', 'Music & Theatre', 'Childcare', 'Eldercare', 'Data Entry', 'Office Help', 'Home Services', 'IT Help', 
+                        'Graphic Design', 'Tutoring', 'Moving', 'Pet Care', 'Party Help', 'Catering', 'Food Services', 'Research', 
+                        'Focus Groups', 'Sales & Marketing', 'Yardwork', 'Snow Shoveling', ]
     const [expand, setExpand] = useState(false)
     const [amount, setAmount] = useState("")
     const [selectedCategories, setSelectedCategories] = useState([]);

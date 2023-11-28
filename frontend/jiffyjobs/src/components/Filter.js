@@ -17,7 +17,9 @@ dayjs.extend(utc);
 export function Filter() {
     const [filterList, setFilterList] = useState(new Set())
     const filterOptions = {
-      Category: ['Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving'], 
+      Category: ['Arts', 'Music & Theatre', 'Childcare', 'Eldercare', 'Data Entry', 'Office Help', 'Home Services', 'IT Help', 
+                 'Graphic Design', 'Tutoring', 'Moving', 'Pet Care', 'Party Help', 'Catering', 'Food Services', 'Research', 
+                 'Focus Groups', 'Sales & Marketing', 'Yardwork', 'Snow Shoveling', ],
     };
     const [expandMap, setExpandMap] = useState(new Map(
       [["Category", false],
