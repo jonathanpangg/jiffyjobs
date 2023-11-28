@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import MenuItem from '@mui/material/MenuItem';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import Tooltip from '@mui/material/Tooltip';
-import Grid from '@mui/material/Grid';
-import Tabs from '@mui/material/Tabs'
-import Tab from '@mui/material/Tab'
-import { styled } from '@mui/material/styles';
+
+import { styled, Tab, Tabs, Grid, Tooltip, Menu, Typography,
+       MenuItem } from '@mui/material';
 
 export function NavBar() {
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const settings = ['Profile', 'Setting', 'Logout'];
+    const settings = ['Profile', 'Logout'];
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const location = useLocation();
@@ -20,43 +15,38 @@ export function NavBar() {
 
     console.log('Current route:', );
 
+    // handle new value 
     const handleChange = (_, newValue) => {
         setValue(newValue);
     };
 
-    const handleOpenNavMenu = (event) => {
-        setAnchorElNav(event.currentTarget);
-    };
-
+    // open nav menu
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
     };
 
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
-
+    // close nav menu
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
 
+    // go to job board
     const AllJobs = () => {
         navigate('/JobBoard')
     }
 
+    // go to profile
     const Profile = () => {
         setValue(-1)
         navigate('/Profile')
     };
 
+    // go to dashboard
     const goToDashboard = () => {
         navigate('/dashboard');
     };
 
-    const handleSettings = () => {
-        navigate('/setting');
-    }
-
+    // handle logout
     const handleLogout = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
@@ -64,18 +54,20 @@ export function NavBar() {
         navigate('/login');
     }
 
+    // handle settings actions
     const settingsActions = {
         'Profile': Profile,
-        'Setting': handleSettings,
         'Logout': handleLogout
     };
 
+    // custom tab
     const CustomTab = styled((props) => <Tab {...props} />)(() => ({
         textTransform: 'none',
         fontFamily: 'Outfit',
         fontSize: 'medium',
     }))
     
+    // custom tab props
     function allyProps(index) {
         return {
             id: `vertical-tab-${index}`,

@@ -1,24 +1,26 @@
 import React, { useState } from 'react';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
+
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
+import { Box, Grid, MenuItem, Menu, } from '@mui/material';
+
 import dayjs from 'dayjs';
 
 export function Sort({ rawData, setRawData, setJobData }) {
     const [selectedSortBy, setSelectedSortBy] = useState('');
     const [anchorEl, setAnchorEl] = useState(null);
 
+    // handle filter options
     const filterOptions = {
         SortBy: ['Date Deadline', 'Pay: Low to High', 'Pay: High to Low']
     };
 
+    // handle menu click
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
 
+    // handle menu close
     const handleClose = (value) => {
         setSelectedSortBy(value);
         
@@ -32,6 +34,7 @@ export function Sort({ rawData, setRawData, setJobData }) {
         }));
     };
     
+    // sort jobs based on selected criteria
     const sortJobs = (criteria, data) => {
         console.log("Selected criteria: ", criteria);
         const sortedData = [...data];
@@ -49,7 +52,6 @@ export function Sort({ rawData, setRawData, setJobData }) {
         return sortedData;
     };
     
-
     return (
         <Box sx={{ flexGrow: 1 }}>
             <Grid container columnSpacing={1}>

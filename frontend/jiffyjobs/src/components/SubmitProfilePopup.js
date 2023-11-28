@@ -1,5 +1,7 @@
 import React from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, Grid, Typography, Stack, Avatar, Divider } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, 
+       Button, TextField, Grid, Typography, Stack, Avatar, 
+       Divider } from '@mui/material';
 
 // submit profile popup
 function SubmitProfilePopup({ open, onClose, onSubmit }) {
