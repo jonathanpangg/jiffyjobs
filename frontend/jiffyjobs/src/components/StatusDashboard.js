@@ -90,11 +90,11 @@ export function StatusDashboard() {
                                             <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px'}}>
                                                 Time: {key[5][1]}
                                             </Typography>
-                                            <Typography style={{fontFamily: 'Outfit', fontSize:"12px", padding:'10px', position:'relative', overflow:'hidden', textOverflow:'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 3, maxHeight:'44px'}}>
+                                            <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px', position:'relative', overflow:'hidden', textOverflow:'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, maxHeight:'24px'}}>
                                                 Description: {key[4][1]}
                                             </Typography>
                                         </div>
-                                        <div style={{position: 'absolute', maxWidth: '100%', bottom: '-25%', left: '50%', textAlign: 'center', transform: 'translate(-50%, -50%)', whiteSpace: 'nowrap'}}>
+                                        <div style={{position: 'absolute', maxWidth: '100%', bottom: '-50%', left: '50%', textAlign: 'center', transform: 'translate(-50%, -50%)', whiteSpace: 'nowrap'}}>
                                             <Card sx={{width: '12.5vw', height: '2.5vw'}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '7px', fontFamily: 'Outfit', fontSize: '12px', fontWeight: '400', fontStyle: 'normal', backgroundColor: '#A4A4A4', display: 'inline-flex', justifyContent: 'center', alignItems: 'center'}}>
                                                 Withdraw Application
                                             </Card>
