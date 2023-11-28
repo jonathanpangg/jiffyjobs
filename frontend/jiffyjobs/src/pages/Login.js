@@ -168,9 +168,9 @@ export function Login() {
                                 Email
                             </text> <br></br>
                         </div>
-                        <TextField error={error.emailError} helperText={error.emailError ? (val.email === '' ? "*This field is required" : "*Please enter a valid email address") : ""} required={true} placeholder={"Enter Email"}  type="email" square={false} style={{width: '68.5%', fontFamily: 'Outfit'}} onChange={handleValues} id="email" value={val.email}
+                        <TextField error={error.emailError} helperText={error.emailError ? (val.email === '' ? "*This field is required" : "*Please enter a valid email address") : ""} required={true} placeholder={"Enter Email"}  type="email" square={false} style={{width: '68.5%', fontFamily: 'Outfit'}} FormHelperTextProps={{ style: { fontFamily: 'Outfit' }}} onChange={handleValues} id="email" value={val.email}
                             InputProps={{
-                                style: {  borderRadius: '10px' }
+                                style: {  borderRadius: '10px', fontFamily: 'Outfit' }
                             }}
                         />
                     </div>
@@ -180,8 +180,8 @@ export function Login() {
                                 Password
                             </text> <br></br>
                         </div>
-                        <TextField error={error.passwordError} helperText={error.passwordError ? "*This field is required" : ""} required={true} placeholder="Enter Password" type={showPassword ? "text" : "password"}  square={false} style={{width: '68.5%', fontFamily: 'Outfit'}} onChange={handleValues} id="password" value={val.password}
-                            InputProps={{
+                        <TextField error={error.passwordError} helperText={error.passwordError ? "*This field is required" : ""} required={true} placeholder="Enter Password" type={showPassword ? "text" : "password"}  square={false} style={{width: '68.5%', fontFamily: 'Outfit'}} FormHelperTextProps={{ style: { fontFamily: 'Outfit' }}} onChange={handleValues} id="password" value={val.password}
+                            InputProps={{ 
                                 endAdornment: (
                                     <InputAdornment position="end">
                                         <IconButton
@@ -193,7 +193,7 @@ export function Login() {
                                         </IconButton>
                                     </InputAdornment>
                                 ),
-                                style: {  borderRadius: '10px' }
+                                style: {  borderRadius: '10px', fontFamily: 'Outfit' }
                             }}
                         />
                     </div>
