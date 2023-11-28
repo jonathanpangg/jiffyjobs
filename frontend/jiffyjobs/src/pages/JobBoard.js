@@ -440,9 +440,11 @@ export function JobBoard() {
                                             <StarIcon style={{ color: '#A4A4A4' }} /> : 
                                             <StarBorderIcon style={{ color: '#A4A4A4' }} />}
                                     </IconButton>
-                                    {showSavedMessage && <div style={{ position: 'absolute', bottom: '-25px', left: '50%', transform: 'translateX(-50%)', fontSize: '12px', fontFamily: 'Outfit', textAlign: 'center' }}>
-                                    {isJobSaved ? 'Job Saved' : 'Job Unsaved'}
-                                    </div>}
+                                    {showSavedMessage && (
+                                        <div style={{ position: 'absolute', bottom: '-25px', left: '50%', transform: 'translateX(-50%)', fontSize: '12px', fontFamily: 'Outfit', textAlign: 'center' }}>
+                                            {isJobSaved[currentPop[0]] ? 'Job Saved' : 'Job Unsaved'}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                             <Typography style={{fontFamily: 'Outfit', fontSize:'20px', color:'#141414', fontWeight: '500', paddingLeft:'1%'}}>
