@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Button, TextField, ToggleButton, ToggleButtonGroup, Card, CardContent } from '@mui/material';
-import { InputAdornment, IconButton } from '@mui/material';
-import { RegNavBar } from '../components/RegNavBar';
-import { Navigate, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Navigate, useNavigate } from 'react-router-dom';
+
+import { Button, TextField, ToggleButton, ToggleButtonGroup, Card, 
+       CardContent, InputAdornment, IconButton } from '@mui/material';
+
+import { RegNavBar } from '../components/RegNavBar';
+
 
 export function Signup() {
     const [role, setRole] = React.useState('jobSeeker');
@@ -41,12 +44,14 @@ export function Signup() {
 
     }, [showToken])
 
+    // handles the role of the user
     const handleRole = (event, newRole) => {
         if (newRole !== null) {
         setRole(newRole);
         }
     };
 
+    // handles the submit button
     const handleSubmit = (event) => {
         event.preventDefault();
         handleError();
@@ -90,23 +95,28 @@ export function Signup() {
         });
     }
 
+    // handles the values of the input boxes
     function handleValues(event) {
         setVal({ ...val, [event.target.id]: event.target.value });
     }
 
+    // handles the password visibility
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
 
+    // handles the confirm password visibility
     const toggleConfirmPasswordVisibility = () => {
         setShowConfirmPassword(!showConfirmPassword);
     };
 
+    // validates the email
     const validateEmail = (email) => {
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email.toLowerCase());
     }
 
+    // handles the sign up
     const signUp = async () => {
         const register = {
             method: "POST",

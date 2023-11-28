@@ -1,43 +1,27 @@
 import React, { useState } from 'react';
 import '../styles/Filter.css';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Chip from '@mui/material/Chip';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import ClearIcon from '@mui/icons-material/Clear';
-import TextField from '@mui/material/TextField';
+
 import { DatePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import ClearIcon from '@mui/icons-material/Clear';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { Box, Grid, Chip, FormGroup, FormControlLabel, Checkbox, 
+       TextField } from '@mui/material';
+
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
-
 dayjs.extend(utc);
 
 export function Filter() {
-
-    const [expandMap, setExpandMap] = useState(new Map(
-      [["Category", false],
-      ["JobType", false],
-      ["DateRange", false]
-      // ["OnOffCampus", false]
-    ]
-    )) 
     const [filterList, setFilterList] = useState(new Set())
     const filterOptions = {
       Category: ['Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving'], 
-                //  'Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving',
-                //  'Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving',
-                //  'Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving'],
-      // JobType: ['Quick Jobs (1 day)', 'Short Term Jobs (1-7 days)', 'Part-Time Jobs (7+ Days)'],
-      // DateRange: [],
-      // OnOffCampus: ['On campus', 'Off campus'],
     };
-
+    const [expandMap, setExpandMap] = useState(new Map(
+      [["Category", false],
+    ])) 
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [dateRangeSelected, setDateRangeSelected] = useState(false);
@@ -77,7 +61,6 @@ export function Filter() {
       });
     }
   
-    
     // handles deleting selected filters
     function handleDelete(option) {
       if (isDateRangeString(option)) {
@@ -92,7 +75,6 @@ export function Filter() {
           return newFilterList;
       });
     }
-  
 
     // checks if string is a date range
     function isDateRangeString(str) {
@@ -100,7 +82,6 @@ export function Filter() {
       return pattern.test(str);
   }
   
-
     // updates filter list with date range
     function updateFilterListWithDateRange(dateRangeString) {
       setFilterList(prevFilterList => {
@@ -115,7 +96,6 @@ export function Filter() {
       });
     }
 
-
     // clears all current filters
     function clearAllFilters() {
       setFilterList(new Set());
@@ -125,7 +105,6 @@ export function Filter() {
       setDateAdded(false); 
   }
   
-    
     // renders chips for display and delete filters
     const renderSelectedOptions = (selected) => {
       const chips = Array.from(selected).map(option => {
@@ -170,10 +149,13 @@ export function Filter() {
       return chips;
     }
     
-    
     // renders filters
     const renderFilters = (filterCategory, bool) => {
+      const options = filterOptions[filterCategory];
+      const maxColumns = 5; 
+      const columns = Math.ceil(options.length / maxColumns);
       console.log(filterCategory, bool);
+      
       if (filterCategory === "DateRange") {
         return (
           <div style={{width: '12.5%', display: 'flex', flexDirection: 'column'}} className='filters'>
@@ -227,15 +209,11 @@ export function Filter() {
         );
       }
 
-    const options = filterOptions[filterCategory];
-    const maxColumns = 5; 
-    const columns = Math.ceil(options.length / maxColumns);
-
     return (
       <div style={{width: '12.5%'}} className='filters'>
         <Grid item xs={1.5} onClick={() => toggleFilter(filterCategory)} className = 'filter-tab'>
             { filterCategory } 
-            { bool ? <KeyboardArrowDownIcon className='arrow-pad'/> : <KeyboardArrowUpIcon className='arrow-pad'/> }
+            { bool ? <KeyboardArrowUpIcon className='arrow-pad'/> : <KeyboardArrowDownIcon className='arrow-pad'/> }
         </Grid>
         { bool && 
           <div style={{ display: 'flex', whiteSpace: 'nowrap', minWidth: '250%', marginTop: '10px'}}>

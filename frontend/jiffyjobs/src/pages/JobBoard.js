@@ -1,27 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Grid from '@mui/material/Grid';
-import Pagination from '@mui/material/Pagination';
-import { Dialog, Divider, Typography, DialogContentText, DialogContent, DialogActions, DialogTitle, Link, Button  } from '@mui/material';
+import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+
+import ClearIcon from '@mui/icons-material/Clear';
+import StarIcon from '@mui/icons-material/Star';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import { Dialog, Divider, Typography, DialogContentText, DialogContent, 
+        DialogActions, DialogTitle, Link, Button, Pagination, Grid, 
+        CardContent, Card, Box, IconButton, Chip, TextField, Avatar,
+        Stack,  } from '@mui/material';
+
+import dayjs from 'dayjs';
+
 import { Filter } from '../components/Filter';
 import { Sort } from '../components/Sort';
 import { JobPosting } from '../components/JobPosting';
-import dayjs from 'dayjs';
-import ClearIcon from '@mui/icons-material/Clear';
-import IconButton from '@mui/material/IconButton';
-import Chip from '@mui/material/Chip';
-import TextField from '@mui/material/TextField';
-import { useNavigate } from 'react-router-dom';
-import Avatar from '@mui/material/Avatar';
-import Stack from '@mui/material/Stack';
-import StarIcon from '@mui/icons-material/Star';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
-import { ToastContainer, toast } from 'react-toastify';
-import SubmitProfilePopup from '../components/SubmitProfilePopup';
-import JobCards from '../components/JobCards';
+import { JobCards } from '../components/JobCards';
 
 
 export function JobBoard() {
@@ -51,23 +45,10 @@ export function JobBoard() {
 
     const navigate = useNavigate();
 
-
+    // goes to dashboard
     const handleToDashboard = () => {
         navigate('/dashboard');
     };
-  
-    function processTime(time) {
-        var str = "Time: "
-        for (let i = 0; i < time.length; i++) {
-            if (i%2 === 0) {
-                str = str + dayjs(new Date(time[i])).format('MM/DD/YY h:mm A') + " - "
-            } else {
-                str = str + dayjs(new Date(time[i])).format('h:mm A') + "\n"
-            }
-        }
-
-        return str
-    }
 
     // handles getting all jobs
     useEffect(() => {
@@ -170,20 +151,24 @@ export function JobBoard() {
 
     }, [filterList])
 
+    // handles truncating job description
     function truncate(str) {
         return str.length > 80 ? str.substring(0, 77) + "..." : str;
     }
 
+    // handles opening job listing popup
     const closePop = () => {
         setOpenPop(false);
     }
     
+    // handles opening job listing popup
     const openPopUp = (key) => {
         setCurrentPop(key);
         console.log(currentPop);
         setOpenPop(true);
     }
 
+    // handles description element ref
     const descriptionElementRefStartPop = React.useRef(null)
     useEffect(() => {
         if (openPopUp) {
@@ -194,6 +179,7 @@ export function JobBoard() {
         }
     }, [openPopUp])
 
+    // handles logging job data
     function handleLogJobData() {
         console.log('Data', jobData)
         console.log('Raw', rawData)
@@ -262,10 +248,6 @@ export function JobBoard() {
         setOpenSubmitProfile(false);
     };
 
-    // const handleOpeningSubmitProfile = () => {
-    //     setOpenSubmitProfile(true);
-    // };
-
     // submit profile popup
     function SubmitProfilePopup({ open, onClose, onSubmit }) {
         return (
@@ -331,6 +313,7 @@ export function JobBoard() {
         );
     }
 
+    // handles submitting profile
     const handleSubmitProfile = () => {
         handleCloseSubmitProfile();
         setOpenCongratsPopup(true);
@@ -385,6 +368,7 @@ export function JobBoard() {
 
     };
 
+    // handles congrats popup
     function CongratsPopup({ open, onClose}) {
         const handleClose = () => {
             onClose(); 
@@ -429,8 +413,6 @@ export function JobBoard() {
         setShowSavedMessage(true);
         setTimeout(() => setShowSavedMessage(false), 1000);
     };  
-       
-    
     
     return (
         <div className={`outerCard ${openPop ? 'blur-background' : ''}`}>
@@ -573,7 +555,7 @@ export function JobBoard() {
                     </div>
                     <Divider width='100%'/>
                 </div>
-                <button onClick={handleLogJobData}>Log Job Data</button>
+                {/* <button onClick={handleLogJobData}>Log Job Data</button> */}
             </Box>
             <JobCards jobData={jobData} page={page} cardsPerPage={cardsPerPage} openPopUp={openPopUp}/>
             <div style={{ display: 'flex', justifyContent: 'center', padding: '1%', background: '#f3f3f3' }}>

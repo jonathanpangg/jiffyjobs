@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Button, TextField, ToggleButton, ToggleButtonGroup, Card, CardContent } from '@mui/material';
-import { Checkbox, FormControlLabel, Link } from '@mui/material';
-import { InputAdornment, IconButton } from '@mui/material';
-import GoogleIcon from '@mui/icons-material/Google';
-import { RegNavBar } from '../components/RegNavBar';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
+
+import { Button, TextField, ToggleButton, ToggleButtonGroup, Card, 
+        CardContent, Checkbox, FormControlLabel, Link, InputAdornment, 
+        IconButton } from '@mui/material';
+
+import { RegNavBar } from '../components/RegNavBar';
+
 
 export function Login() {
     const navigate = useNavigate()
@@ -39,18 +41,23 @@ export function Login() {
         }
 
     }, [showToken])
+
+    // go to the job board
     const AllJobs = () => {
         navigate('/JobBoard')
     }
 
+    // go to forget password page
     const handleForgotPassword = () => {
         navigate('/ForgotPass');
     };
 
+    // go to sign up page
     const handleSignUp = () => {
         navigate('/signup');
     };
 
+    // handles the submit button
     const handleSubmit = (event) => {
         event.preventDefault();
         handleError(); 
@@ -78,19 +85,23 @@ export function Login() {
         });
     }
 
+    // handles the values of the input boxes
     function handleValues(event) {
         setVal({ ...val, [event.target.id]: event.target.value });
     }
 
+    // handles the password visibility
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
 
+    // validates the email
     const validateEmail = (email) => {
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(String(email).toLowerCase());
     }
 
+    // handles the login
     const login = async () => {
         const Login = {
             method: "POST",
