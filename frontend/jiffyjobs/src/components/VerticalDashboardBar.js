@@ -16,15 +16,15 @@ const CustomTab = styled((props) => <Tab {...props} />)(() => ({
     fontWeight: 500,
     fontStyle: 'normal',
     textAlign: 'start',
+    minHeight: '0px',
+    height: '33px',
+    width: "142px",
     justifyContent: 'flex-start',
     whiteSpace: 'nowrap',
-    // borderRadius: '15px',
-    // "&.Mui-selected": {
-    //     backgroundColor: '#A4A4A4',
-    // },
-    // '&.MuiTab-root': {
-    //     height: '33px'
-    // }
+    borderRadius: '5px',
+    "&.Mui-selected": {
+        backgroundColor: '#A4A4A4',
+    },
 }))
 
 function allyProps(index) {
@@ -34,7 +34,7 @@ function allyProps(index) {
 }
   
 export function VerticalDashboardBar() {
-    const [value, setValue] = useState(6);
+    const [value, setValue] = useState(2);
 
     const handleChange = (_, newValue) => {
         setValue(newValue);
@@ -49,20 +49,23 @@ export function VerticalDashboardBar() {
                 onChange={handleChange} 
                 variant="scrollable"
                 textColor= "inherit"
-                TabIndicatorProps={{style: {backgroundColor: 'black'}}}
+                TabIndicatorProps={{style: {display: 'none'}}}
                 sx={{ 
                     borderRight: 1, 
                     borderColor: 'divider', 
-                    width: "142px",
-                    // height: '99px',
+                    width: "159px",
+                    alignItems: 'center',
                 }}
             >
-                {[...Array(6)].map((_) => 
-                    <br></br>                    
-                )}
-                <CustomTab label='Status' icon={<TrendingUpIcon/>} iconPosition="start" {...allyProps(6)}/> 
-                <CustomTab label='Posted Jobs' icon={<AssignmentIcon/>} iconPosition="start" {...allyProps(7)}/>      
-                <CustomTab label='Saved Jobs' icon={<StarOutlineRoundedIcon/>} iconPosition="start" {...allyProps(8)}/>      
+                <div className='logo' style={{paddingTop: '24px', paddingLeft: '24px'}}>
+                    JIFFY
+                </div>
+                <div className='logo' style={{paddingLeft: '24px', paddingBottom: '24px'}}>
+                    JOBS
+                </div>
+                <CustomTab label='Status' icon={<TrendingUpIcon/>} iconPosition="start" {...allyProps(2)}/> 
+                <CustomTab label='Posted Jobs' icon={<AssignmentIcon/>} iconPosition="start" {...allyProps(3)}/>      
+                <CustomTab label='Saved Jobs' icon={<StarOutlineRoundedIcon/>} iconPosition="start" {...allyProps(4)}/>      
             </Tabs>
         )
     }
