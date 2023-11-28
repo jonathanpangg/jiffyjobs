@@ -158,7 +158,7 @@ export function Login() {
             <div className={ 'outerCard1' }>
             <Card sx={{ maxWidth: 650, maxHeight: 700, mx: 'auto', borderRadius: '20px'}}>
                 <CardContent style={{ textAlign: 'center' }}>
-                    <div style={{ fontFamily: 'Outfit', fontWeight: 'bold', fontSize: '28px', textAlign: 'center', marginTop: '30px', marginBottom: '10px'}}>
+                    <div style={{ fontFamily: 'Outfit', fontWeight: 'bold', fontSize: '28px', textAlign: 'center', marginTop: '30px', marginBottom: '15px'}}>
                         Welcome to JIFFYJOBS!
                     </div>
                     
@@ -166,23 +166,23 @@ export function Login() {
 
                     <div style={{paddingTop: '1.5%'}}>
                         <div style={{ textAlign: 'left', width: '68.5%', margin: '0 auto' }}>
-                            <text className='pop-textfield-title' style={{ fontFamily: 'Outfit'}}>
+                            <text className='pop-textfield-title' style={{ fontFamily: 'Outfit', fontSize: '14px'}}>
                                 Email
                             </text> <br></br>
                         </div>
-                        <TextField error={error.emailError} helperText={error.emailError ? (val.email === '' ? "*This field is required" : "*Please enter a valid email address") : ""} required={true} placeholder={"Enter Email"}  type="email" square={false} style={{width: '68.5%', fontFamily: 'Outfit',}} FormHelperTextProps={{ style: { fontFamily: 'Outfit' }}} onChange={handleValues} id="email" value={val.email}
+                        <TextField error={error.emailError} helperText={error.emailError ? (val.email === '' ? "*This field is required" : "*Please enter a valid email address") : ""} required={true} placeholder={"Enter Email"}  type="email" square={false} style={{width: '68.5%', fontFamily: 'Outfit',}} FormHelperTextProps={{ style: { fontFamily: 'Outfit', fontSize: '14px' }}} onChange={handleValues} id="email" value={val.email}
                             InputProps={{
-                                style: {  borderRadius: '10px', fontFamily: 'Outfit' }
+                                style: {  borderRadius: '10px', fontFamily: 'Outfit', fontSize: '14px' }
                             }}
                         />
                     </div>
                     <div style={{paddingTop: '1.5%', paddingBottom: '1.5%'}}>
                         <div style={{ textAlign: 'left', width: '68.5%', margin: '0 auto' }}>
-                            <text className='pop-textfield-title' style={{ fontFamily: 'Outfit'}}>
+                            <text className='pop-textfield-title' style={{ fontFamily: 'Outfit', fontSize: '14px'}}>
                                 Password
                             </text> <br></br>
                         </div>
-                        <TextField error={error.passwordError} helperText={error.passwordError ? "*This field is required" : ""} required={true} placeholder="Enter Password" type={showPassword ? "text" : "password"}  square={false} style={{width: '68.5%', fontFamily: 'Outfit'}} FormHelperTextProps={{ style: { fontFamily: 'Outfit' }}} onChange={handleValues} id="password" value={val.password}
+                        <TextField error={error.passwordError} helperText={error.passwordError ? "*This field is required" : ""} required={true} placeholder="Enter Password" type={showPassword ? "text" : "password"}  square={false} style={{width: '68.5%', fontFamily: 'Outfit',}} FormHelperTextProps={{ style: { fontFamily: 'Outfit', fontSize: '14px' }}} onChange={handleValues} id="password" value={val.password}
                             InputProps={{ 
                                 endAdornment: (
                                     <InputAdornment position="end">
@@ -195,13 +195,13 @@ export function Login() {
                                         </IconButton>
                                     </InputAdornment>
                                 ),
-                                style: {  borderRadius: '10px', fontFamily: 'Outfit' }
+                                style: {  borderRadius: '10px', fontFamily: 'Outfit', fontSize: '14px' }
                             }}
                         />
                     </div>
                                 
                     <div style={{ }}>
-                        <Button type="submit" onClick={login} sx={{ width: '68.5%', mt: 1, mb: 2, p: '1.5%', marginTop: '10px', marginBottom: '10px', backgroundColor: '#A4A4A4', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit', border: '1px solid #5B5B5B' }} >
+                        <Button type="submit" onClick={login} sx={{ width: '68.5%', mt: 1, mb: 2, p: '1.5%', marginTop: '25px', marginBottom: '10px', backgroundColor: '#A4A4A4', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit', border: '1px solid #5B5B5B', fontSize: '16px' }} >
                             Log in
                         </Button>
                     </div>
@@ -211,7 +211,7 @@ export function Login() {
                         <div class="orLine "></div>
                     </div>
                     <div style={{ }}>
-                        <Button onClick={handleSignUp} sx={{ width: '68.5%', mt: 1, mb: 2, p: '1.5%', marginTop: '10px', marginBottom: '30px', backgroundColor: '#5B5B5B', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit'}} >
+                        <Button onClick={handleSignUp} sx={{ width: '68.5%', mt: 1, mb: 2, p: '1.5%', marginTop: '10px', marginBottom: '30px', backgroundColor: '#5B5B5B', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit', fontSize: '16px'}} >
                             Don’t have an account? Join now!
                         </Button>
                     </div>
