@@ -13,7 +13,7 @@ const JobCards = ({ jobData, page, cardsPerPage, openPopUp }) => {
                                         component="img"
                                         alt="placeholder"
                                         height="120"
-                                        image="https://source.unsplash.com/random"
+                                        image={key[1][0]}
                                         
                                     />
                                     <Typography style={{fontFamily: 'Outfit', fontSize:"14px", marginLeft:'27.5px', marginRight:'28.5px', marginTop:'21px', fontWeight: 'bold'}}>

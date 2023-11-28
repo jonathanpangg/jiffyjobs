@@ -69,6 +69,11 @@ export function JobBoard() {
         return str
     }
 
+    const randomImage = (seed) => {
+        return `https://source.unsplash.com/random?${seed}`;
+    };
+
+
     // handles getting all jobs
     useEffect(() => {
         async function GetAllJobs() {
@@ -94,7 +99,7 @@ export function JobBoard() {
                     setRawData(data);
                     const newJobData = data.map(function(obj) {
                         console.log(obj.time)
-                        return [[obj._id, obj.title], ["", obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
+                        return [[obj._id, obj.title], [randomImage(obj.categories.toString().split(",")[0]), obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
                     });
                     setJobData(newJobData);
 
@@ -140,7 +145,7 @@ export function JobBoard() {
                 .then((data) => {
                     setRawData(data);
                     const newJobData = data.map(function(obj) {
-                        return [[obj._id, obj.title], ["", obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
+                        return [[obj._id, obj.title], [randomImage(obj.categories.toString().split(",")[0]), obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
                     });
                     setJobData(newJobData);
                     setSize(jobData.length)
@@ -439,7 +444,7 @@ export function JobBoard() {
                 <div style={{ position: 'relative'}}>
                     <img
                         style={{ width: '100%', maxHeight: '30vh'}}
-                        src="https://source.unsplash.com/random"
+                        src={currentPop[1] && currentPop[1].length > 1 && currentPop[1][0]}
                         alt="placeholder"
                     />
                 </div>
