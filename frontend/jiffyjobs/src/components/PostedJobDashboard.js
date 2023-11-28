@@ -6,7 +6,7 @@ import '../styles/Dashboard.css';
 import { Box } from '@mui/system';
 import { Typography } from '@mui/material';
 
-export function SavedJobDashboard() {
+export function PostedJobDashboard() {
     const [jobData, setJobData] = useState(['1']) 
 
     return (
