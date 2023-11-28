@@ -222,7 +222,7 @@ export function JobBoard() {
                 headers: { 'Content-Type': 'application/json' },
             }
     
-            const route = `http://localhost:4000/api/users/getinfo/${userEmail}/${userRole}`;
+            const route = `https://jiffyjobs-api-production.up.railway.app/api/users/getinfo/${userEmail}/${userRole}`;
             fetch(route, requestedOptions)
             .then(async (response) => {
                 const res = await response.json()
