@@ -156,7 +156,7 @@ export function Login() {
         <> 
         <RegNavBar/> 
             <div className={ 'outerCard1' }>
-            <Card sx={{ maxWidth: 700, maxHeight: 685, mx: 'auto', borderRadius: '20px'}}>
+            <Card sx={{ maxWidth: 700, maxHeight: 800, mx: 'auto', borderRadius: '20px'}}>
                 <CardContent style={{ textAlign: 'center' }}>
                     <h2 style={{ fontFamily: 'Outfit', textAlign: 'center', margin: '16px 0' }}>Welcome to JIFFYJOBS!</h2>
                     
@@ -174,7 +174,7 @@ export function Login() {
                             }}
                         />
                     </div>
-                    <div style={{paddingTop: '1.5%'}}>
+                    <div style={{paddingTop: '1.5%', paddingBottom: '1.5%'}}>
                         <div style={{ textAlign: 'left', width: '68.5%', margin: '0 auto' }}>
                             <text className='pop-textfield-title' style={{ fontFamily: 'Outfit'}}>
                                 Password
@@ -199,7 +199,7 @@ export function Login() {
                     </div>
                                 
                     <div style={{ }}>
-                        <Button type="submit" onClick={login} sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#A4A4A4', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit', border: '1px solid #5B5B5B' }} >
+                        <Button type="submit" onClick={login} sx={{ width: '68.5%', mt: 1, mb: 2, paddingBottom: '1.5%', backgroundColor: '#A4A4A4', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit', border: '1px solid #5B5B5B' }} >
                             Log in
                         </Button>
                     </div>
@@ -209,7 +209,7 @@ export function Login() {
                         <div class="orLine "></div>
                     </div>
                     <div style={{ }}>
-                        <Button onClick={handleSignUp} sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#5B5B5B', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit'}} >
+                        <Button onClick={handleSignUp} sx={{ width: '68.5%', mt: 1, mb: 2, paddingTop: '1.5%', paddingBottom: '1.5%', backgroundColor: '#5B5B5B', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit'}} >
                             Don’t have an account? Join now!
                         </Button>
                     </div>
