@@ -98,7 +98,7 @@ export function NavBar() {
                 <div className='first-font' onClick={goToDashboard} style={{ cursor: 'pointer', marginRight: '10px', whiteSpace: 'nowrap' }}>
                     Dashboard
                 </div> */}
-                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" textColor='inherit' TabIndicatorProps={{style: {background: '#5B5B5B'}}}>
                     <CustomTab label="All Job" {...allyProps(0)} onClick={AllJobs}/>
                     <CustomTab label="Dashboard" {...allyProps(1)} onClick={goToDashboard}/>
                 </Tabs>
