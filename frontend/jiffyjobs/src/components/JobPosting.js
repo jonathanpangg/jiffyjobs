@@ -158,6 +158,7 @@ export function JobPosting() {
         if (token) {
             setOpenStartPop(true)
         } else {
+            toast.dismiss()
             toast.error('Please login to post!', {
                 position: "top-center",
                 autoClose: 5000,

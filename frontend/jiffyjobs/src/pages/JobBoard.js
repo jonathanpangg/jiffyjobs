@@ -182,7 +182,22 @@ export function JobBoard() {
     const openPopUp = (key) => {
         setCurrentPop(key);
         console.log(currentPop);
-        setOpenPop(true);
+        if (!userEmail) {
+            toast.dismiss()
+            console.log("here")
+            toast.error('Please login to view!', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        } else {
+            setOpenPop(true);
+        }
     }
 
     const descriptionElementRefStartPop = React.useRef(null)
@@ -208,19 +223,8 @@ export function JobBoard() {
 
     // open submit profile popup
     const handleOpenSubmitProfile = () => {
-        if (!userEmail) {
-            toast.error('Please Login!', {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
-            navigate('/login');
-        } else if (userRole === 'provider') {
+         if (userRole === 'provider') {
+            toast.dismiss()
             toast.error('You can only apply as a Seeker!', {
                 position: "top-center",
                 autoClose: 5000,

@@ -52,6 +52,7 @@ export function Dashboard() {
     useEffect(()=> {
         if (showToken) {
             console.log(showToken);
+            toast.dismiss()
             toast.error('Please Login!', {
                 position: "top-center",
                 autoClose: 5000,
@@ -61,11 +62,8 @@ export function Dashboard() {
                 draggable: true,
                 progress: undefined,
                 theme: "light",
-                onClose: () => {
-                    navigate('/login');
-                    setShowToken(false);
-                  }
             });
+            navigate('/login');
             setShowToken(false);
         }
 

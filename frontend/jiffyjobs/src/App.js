@@ -30,7 +30,6 @@ function App() {
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
-            limit={1}
             rtl={false}
             pauseOnFocusLoss
             draggable
