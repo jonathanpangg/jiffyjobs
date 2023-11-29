@@ -251,7 +251,7 @@ export function JobBoard() {
                 return res;
             })
             .then((data) => {
-                const user = [data.personal_info.first_name, data.personal_info.last_name, data.personal_info.school, data.personal_info.major, data.personal_info.grade, data.personal_info.personal_statement];
+                const user = [data.personal_info.first_name, data.personal_info.last_name, data.personal_info.school, data.personal_info.major, data.personal_info.grade, data.personal_info.personal_statement[0]];
                 setProfile(user);
                 console.log(profile);
             })
