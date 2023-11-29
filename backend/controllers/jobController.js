@@ -87,7 +87,7 @@ export const postJobs = async (req, res) => {
         time, 
         date_posted,
         job_type,
-        poster_email // changed
+        poster_email
     } = req.body;
 
     try {
@@ -108,9 +108,8 @@ export const postJobs = async (req, res) => {
             job_poster_email: poster_email,
             saved_applicants: []
         });
-        console.log(title, job_poster, description)
 
-        console.log(time)
+        console.log(poster_email)
         const newJob = await makeJob.save();
         return handleSuccess(res, newJob);
     } catch (error) {
