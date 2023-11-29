@@ -51,9 +51,19 @@ export function Login() {
         navigate('/signup');
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        handleError(); 
+
+        let isEmailError = !val.email || !validateEmail(val.email); 
+
+        setError({
+            emailError: isEmailError,
+            passwordError: val.password === '',
+        });
+
+        if (!isEmailError && val.password !== '') {
+            login();
+        }
     };
 
     // useState for the data
@@ -67,16 +77,6 @@ export function Login() {
         emailError: false,
         passwordError: false,
     })
-
-    // handles the error of the input boxes
-    function handleError() {
-        let isEmailError = !val.email || !validateEmail(val.email); 
-
-        setError({
-            emailError: isEmailError,
-            passwordError: val.password === '',
-        });
-    }
 
     function handleValues(event) {
         setVal({ ...val, [event.target.id]: event.target.value });
@@ -197,7 +197,7 @@ export function Login() {
                         <Link onClick={handleForgotPassword} variant="body2" style={{ fontFamily: 'Outfit', color: '#5B5B5B', textDecorationColor: '#5B5B5B', fontSize: '0.85rem' }} > Forgot Password?</Link>
                     </div>
                     <div style={{ }}>
-                        <Button type="submit" onClick={login} sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#A4A4A4', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit', border: '1px solid #5B5B5B' }} >
+                        <Button type="submit" sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#A4A4A4', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit', border: '1px solid #5B5B5B' }} >
                             Log in
                         </Button>
                     </div>
