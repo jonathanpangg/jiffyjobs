@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Grid, Link, Card, CardMedia, Typography } from '@mui/material';
 
-const JobCards = ({ jobData, page, cardsPerPage, openPopUp }) => {
+export function JobCards ({ jobData, page, cardsPerPage, openPopUp }) {
     return (
         <Box>
                 <Grid container className= { 'job-table-grid' } style={{ backgroundColor: 'inherit' }}rowSpacing={2} columnSpacing={2}>
@@ -37,7 +37,6 @@ const JobCards = ({ jobData, page, cardsPerPage, openPopUp }) => {
                     ))}
                 </Grid>
             </Box>
+
     );
 }
-
-export default JobCards;
