@@ -443,9 +443,10 @@ export function JobPosting() {
                     pay: val.pay,
                     location: val.location,
                     categories: categoryList,
-                    time: [val.date, val.startTime, val.endTime],
+                    time: [new Date(val.date.year, val.date.month-1, val.date.day, val.startTime.hour, val.startTime.min), new Date(val.date.year, val.date.month-1, val.date.day, val.endTime.hour, val.endTime.min)],
                     job_type: "Quick Jobs",
-                    date_posted: new Date()
+                    date_posted: new Date(),
+                    poster_email: localStorage.getItem("email")
                 })
             }
             const route = "https://jiffyjobs-api-production.up.railway.app/api/jobs/create"

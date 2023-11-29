@@ -22,22 +22,38 @@
 }
 
 .progress-box {
-    max-height: 75vh;
+    height: 599px;
     overflow-x: hidden;
     overflow-y: auto;
     padding-left: 5%
 }
 
 .header-one {
-    font-size: xx-large;
+    font-size: 24px;
+    font-weight: 500;
     font-family: 'Outfit';
     padding-top: 5%;
     padding-left: 5%;
 }
 
 .header-two {
-    font-size: large;
+    font-size: 14px;
+    font-weight: 500;
     font-family: 'Outfit';
-    padding-bottom: 5%;
+    padding-bottom: 35px;
     padding-left: 5%;
+}
+
+.outerCard {
+    background-color: #f3f3f3;
+    height: 100vh;
+    padding: 2%;
+    align-items: center;
+}
+
+.logo {
+    font-family: "Righteous-Regular";
+    font-size: 24px;
+    vertical-align: center;
+    align-items: center;
 }

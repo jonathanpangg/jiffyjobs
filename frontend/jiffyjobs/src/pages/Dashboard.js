@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import { VerticalDashboardBar } from '../components/VerticalDashboardBar';
 import { StatusDashboard } from '../components/StatusDashboard';
 import { SavedJobDashboard } from '../components/SavedJobDashboard';
+import { PostedJobDashboard } from '../components/PostedJobDashboard';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -60,23 +61,29 @@ export function Dashboard() {
                 draggable: true,
                 progress: undefined,
                 theme: "light",
+                onClose: () => {
+                    navigate('/login');
+                    setShowToken(false);
+                  }
             });
-            navigate('/login');
             setShowToken(false);
         }
 
     }, [showToken])
 
     return (
-        <div className='outerCard1' style={{paddingTop: '1%'}}>
+        <div className='outerCard' style={{paddingTop: '50px'}}>
             <Box className='outer-box'>
                 <div className='inner-div'>
                     <Card elevation='4' style={{display: 'flex', overflow: 'hidden', borderRadius: '15px', width: "100%"}}> 
                         { renderVerticalDashBoard }
-                        <TabPanel value={value} index={7} className='progress-tab'>
+                        <TabPanel value={value} index={2} className='progress-tab'>
                             <StatusDashboard/>
                         </TabPanel>
-                        <TabPanel value={value} index={9} className='progress-tab'>
+                        <TabPanel value={value} index={3} className='progress-tab'>
+                            <PostedJobDashboard/>
+                        </TabPanel>
+                        <TabPanel value={value} index={4} className='progress-tab'>
                             <SavedJobDashboard/>
                         </TabPanel>
                     </Card>
