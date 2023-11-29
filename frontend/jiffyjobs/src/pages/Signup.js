@@ -54,7 +54,31 @@ export function Signup() {
     // handles the submit button
     const handleSubmit = (event) => {
         event.preventDefault();
-        handleError();
+        let isEmailError = false;
+
+        if (val.email === '') {
+            isEmailError = true;
+        } else if (role === 'jobSeeker') {
+            isEmailError = !val.email.endsWith('.edu');
+        } else {
+            isEmailError = !validateEmail(val.email);
+        }
+
+        setError({
+            firstNameError: val.firstName === '',
+            lastNameError: val.lastName === '',
+            emailError: isEmailError,
+            passwordError: val.password === '',
+            confirmPasswordError: confirmPassword === '' || confirmPassword !== val.password,
+        });
+
+        console.log(error);
+
+        if (!isEmailError && val.firstName !== '' && val.lastName !== '' &&
+        val.password !== '' && confirmPassword !== '' && confirmPassword === val.password) {
+            console.log("here");
+            signUp();
+        }
     };
 
     // useState for the data
@@ -74,28 +98,7 @@ export function Signup() {
         confirmPasswordError: false, 
     });
 
-    // handles the error of the input boxes
-    function handleError() {
-        let isEmailError = false;
 
-        if (val.email === '') {
-            isEmailError = true;
-        } else if (role === 'jobSeeker') {
-            isEmailError = !val.email.endsWith('.edu');
-        } else {
-            isEmailError = !validateEmail(val.email);
-        }
-
-        setError({
-            firstNameError: val.firstName === '',
-            lastNameError: val.lastName === '',
-            emailError: isEmailError,
-            passwordError: val.password === '',
-            confirmPasswordError: confirmPassword === '' || confirmPassword !== val.password,
-        });
-    }
-
-    // handles the values of the input boxes
     function handleValues(event) {
         setVal({ ...val, [event.target.id]: event.target.value });
     }
@@ -132,7 +135,7 @@ export function Signup() {
         
         console.log(role);
         let route = "https://jiffyjobs-api-production.up.railway.app/api/auth/providerSignUp";
-        if (role === 'jobSeeker') {
+        if (role === 'jobSeeker' || val.email.endsWith(".edu")) {
             route = "https://jiffyjobs-api-production.up.railway.app/api/auth/seekerSignUp";
         }
         fetch(route, register)
@@ -288,7 +291,8 @@ export function Signup() {
                     </div>
 
                     <div style={{paddingTop: '1.5%'}}>
-                        <Button fullWidth onClick={signUp} sx={{ width: '68.5%', mt: 1, mb: 2, py: '1.5%', marginTop: '25px', marginBottom: '30px', backgroundColor: '#5B5B5B', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit', fontSize: '16px'  }}>
+
+                        <Button type="submit" fullWidth sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#5B5B5B', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit'  }}>
                             Sign up as a {role === 'jobSeeker' ? 'Job Seeker' : 'Job Provider'}
                         </Button>
                     </div>

@@ -51,6 +51,11 @@ export function JobBoard() {
         navigate('/dashboard');
     };
 
+    const randomImage = (seed) => {
+        return `https://source.unsplash.com/random?${seed}`;
+    };
+
+
     // handles getting all jobs
     useEffect(() => {
         async function GetAllJobs() {
@@ -76,7 +81,7 @@ export function JobBoard() {
                     setRawData(data);
                     const newJobData = data.map(function(obj) {
                         console.log(obj.time)
-                        return [[obj._id, obj.title], ["", obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
+                        return [[obj._id, obj.title], [randomImage(obj.categories.toString().split(",")[0]), obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
                     });
                     setJobData(newJobData);
 
@@ -122,7 +127,7 @@ export function JobBoard() {
                 .then((data) => {
                     setRawData(data);
                     const newJobData = data.map(function(obj) {
-                        return [[obj._id, obj.title], ["", obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
+                        return [[obj._id, obj.title], [randomImage(obj.categories.toString().split(",")[0]), obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
                     });
                     setJobData(newJobData);
                     setSize(jobData.length)
@@ -233,7 +238,7 @@ export function JobBoard() {
                 return res;
             })
             .then((data) => {
-                const user = [data.personal_info.first_name, data.personal_info.last_name, data.personal_info.school, data.personal_info.major, data.personal_info.grade, data.personal_info.personal_statement];
+                const user = [data.personal_info.first_name, data.personal_info.last_name, data.personal_info.school, data.personal_info.major, data.personal_info.grade, data.personal_info.personal_statement[0]];
                 setProfile(user);
                 console.log(profile);
             })
@@ -387,7 +392,33 @@ export function JobBoard() {
         });
         setShowSavedMessage(true);
         setTimeout(() => setShowSavedMessage(false), 1000);
-    };  
+
+        const save = {
+            method: "PUT",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                email: userEmail,
+                job_id: jobDetails
+            })
+        }
+
+        const route = "https://jiffyjobs-api-production.up.railway.app/api/users/save";
+        fetch(route, save)
+        .then(async (response) => {
+            const res = await response.json()
+            if (!response.ok) {
+                throw new Error(res.message);
+            } 
+            return res;
+        })
+        .then((data) => {
+            console.log(data);
+        }).catch((error) => {
+            console.log(error);
+        });
+        console.log(jobDetails)
+    };
+       
     
     return (
         <div className={`outerCard2 ${openPop ? 'blur-background' : ''}`}>
@@ -395,7 +426,7 @@ export function JobBoard() {
                 <div style={{ position: 'relative'}}>
                     <img
                         style={{ width: '100%', maxHeight: '30vh'}}
-                        src="https://source.unsplash.com/random"
+                        src={currentPop[1] && currentPop[1].length > 1 && currentPop[1][0]}
                         alt="placeholder"
                     />
                 </div>
@@ -410,6 +441,7 @@ export function JobBoard() {
                                     {currentPop[0] && currentPop[0].length > 1 && currentPop[0][1]}
                                 </Typography>
                                 <div style={{ display: 'inline-block', position: 'relative' }}>
+
                                     <IconButton onClick={() => toggleSaveJob(currentPop[0])} style={{ borderRadius: '10px' }}>
                                         {isJobSaved[currentPop[0]] ? 
                                             <StarIcon style={{ color: '#A4A4A4' }} /> : 
