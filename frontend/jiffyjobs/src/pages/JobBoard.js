@@ -263,10 +263,6 @@ export function JobBoard() {
         setOpenSubmitProfile(false);
     };
 
-    // const handleOpeningSubmitProfile = () => {
-    //     setOpenSubmitProfile(true);
-    // };
-
     // submit profile popup
     function SubmitProfilePopup({ open, onClose, onSubmit }) {
         return (
@@ -386,30 +382,6 @@ export function JobBoard() {
 
     };
 
-    function CongratsPopup({ open, onClose}) {
-        const handleClose = () => {
-            onClose(); 
-        };
-        return (
-            <Dialog open={open} onClose={onClose} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
-                <DialogTitle>Congratulations!</DialogTitle>
-                <DialogContent>
-                    <Typography>Your profile has been successfully submitted.</Typography>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleApplyMore}>Apply More</Button>
-                    <Button onClick={handleToDashboard}>Go to Dashboard</Button>
-                </DialogActions>
-            </Dialog>
-        );
-    }
-
-    // open job listing popup
-    const openJobListingPopup = (key) => {
-        setCurrentPop(key);
-        setOpenPop(true); 
-        console.log(currentPop);
-    };
 
     // close popups
     const handleApplyMore = () => {
