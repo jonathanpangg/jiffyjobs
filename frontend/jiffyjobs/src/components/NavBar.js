@@ -96,11 +96,19 @@ export function NavBar() {
                 <div style={{ height: '59px', borderRight: '2px solid #D9D9D9' }}></div>
             </div>
 
-            <div style={{ position: 'absolute', left: 'calc(100% - 160px)', top: 0, bottom: 0, display: 'flex', alignItems: 'center', }}>
+            {/* <div style={{ position: 'absolute', left: 'calc(100% - 160px)', top: 0, bottom: 0, display: 'flex', alignItems: 'center', }}>
                 <Tooltip onClick={handleOpenUserMenu} style={{ display: 'flex', alignItems: 'center', marginRight: '10px' }}>
                     <div className='profile-picture'></div>
-                    <span style={{ fontWeight: 500, whiteSpace: 'nowrap', fontSize: '14px', color: '#5B5B5B'}}>Lucas Yoon</span>
+                    <span style={{ fontWeight: 500, whiteSpace: 'nowrap', fontSize: '16px', color: '#5B5B5B', fontFamily: 'Outfit',}}>Lucas Yoon</span>
+                </Tooltip> */}
+          <div style={{ position: 'absolute', left: 'calc(100% - 162px)', top: '51%', transform: 'translate(-10%, -50%)', display: 'flex', alignItems: 'center', }}>
+            <div className='profile-picture'></div>
+            <div style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'left', maxWidth: '120px', wordBreak: 'break-all', }}>
+                <Tooltip onClick={handleOpenUserMenu} style={{ display: 'block' }}>
+                    <span style={{ fontWeight: 500, fontSize: '16px', color: '#5B5B5B', fontFamily: 'Outfit', }}> Stella Park </span> 
                 </Tooltip>
+            </div>
+
 
                 <Menu
                     sx={{ mt: '26px', alignItems: 'center', }}
