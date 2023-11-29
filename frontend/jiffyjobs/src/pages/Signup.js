@@ -202,6 +202,7 @@ export function Signup() {
                             <div style={{ textAlign: 'left', width: '100%',  }}>
                                 <text className='pop-textfield-title' style={{ fontFamily: 'Outfit', fontSize: '14px' }}>
                                     First Name
+                                    <span style={{"color": "red"}}>*</span>
                                 </text> <br></br>
                             </div>
                             <TextField error={error.firstNameError} helperText={error.firstNameError ? "*This field is required" : ""} required={true} placeholder="First Name" type="text" square={false} style={{width: '100%', fontFamily: 'Outfit', }} FormHelperTextProps={{ style: { fontFamily: 'Outfit', fontSize: '14px' }}} onChange={(e) => {handleValues(e)}} id='firstName' value={val.firstName}
@@ -214,6 +215,7 @@ export function Signup() {
                             <div style={{ textAlign: 'left', width: '100%', }}>
                                 <text className='pop-textfield-title' style={{ fontFamily: 'Outfit', fontSize: '14px'}}>
                                     Last Name
+                                    <span style={{"color": "red"}}>*</span>
                                 </text> <br></br>
                             </div>
                             <TextField error={error.lastNameError} helperText={error.lastNameError ? "*This field is required" : ""} required={true} placeholder="Last Name" type="text" square={false} style={{width: '100%', fontFamily: 'Outfit', }} FormHelperTextProps={{ style: { fontFamily: 'Outfit', fontSize: '14px' }}} onChange={(e) => {handleValues(e)}} id='lastName' value={val.lastName}
@@ -227,6 +229,7 @@ export function Signup() {
                         <div style={{ textAlign: 'left', width: '68.5%', margin: '0 auto' }}>
                             <text className='pop-textfield-title' style={{ fontFamily: 'Outfit', fontSize: '14px'}}>
                                 {role === 'jobProvider' ? 'Email' : 'School Email '}
+                                <span style={{"color": "red"}}>*</span>
                             </text> <br></br>
                         </div>
                         <TextField error={error.emailError} helperText={error.emailError ? (val.email === '' ? "*This field is required" : (role === 'jobSeeker' ? "*Please enter a valid .edu email address" : "*Please enter a valid email address")) : ""} required={true} placeholder={role === 'jobProvider' ? "example@email.com" : "example@bu.edu"}  type="email" square={false} style={{width: '68.5%', fontFamily: 'Outfit'}} FormHelperTextProps={{ style: { fontFamily: 'Outfit', fontSize: '14px' }}} onChange={(e) => {handleValues(e)}} id='email' value={val.email}
@@ -239,6 +242,7 @@ export function Signup() {
                         <div style={{ textAlign: 'left', width: '68.5%', margin: '0 auto' }}>
                             <text className='pop-textfield-title' style={{ fontFamily: 'Outfit', fontSize: '14px'}}>
                                 Password
+                                <span style={{"color": "red"}}>*</span>
                             </text> <br></br>
                         </div>
                         <TextField error={error.passwordError} helperText={error.passwordError ? "*This field is required" : ""} required={true} placeholder="Enter Password" type={showPassword ? "text" : "password"}  square={false} style={{width: '68.5%', fontFamily: 'Outfit'}} FormHelperTextProps={{ style: { fontFamily: 'Outfit', fontSize: '14px' }}} onChange={(e) => {handleValues(e)}} id='password' value={val.password}
@@ -262,6 +266,7 @@ export function Signup() {
                         <div style={{ textAlign: 'left', width: '68.5%', margin: '0 auto' }}>
                             <text className='pop-textfield-title' style={{ fontFamily: 'Outfit', fontSize: '14px'}}>
                                 Confirm Password
+                                <span style={{"color": "red"}}>*</span>
                             </text> <br></br>
                         </div>
                         <TextField error={error.confirmPasswordError} helperText={error.confirmPasswordError ? (confirmPassword === '' ? "*This field is required" : "*Passwords do not match") : ""} required={true} placeholder="Confirm Password" type={showConfirmPassword ? "text" : "password"}  square={false} style={{width: '68.5%', fontFamily: 'Outfit'}} FormHelperTextProps={{ style: { fontFamily: 'Outfit', fontSize: '14px' }}} onChange={(e) => setConfirmPassword(e.target.value)} id='confirmPassword' value={confirmPassword}

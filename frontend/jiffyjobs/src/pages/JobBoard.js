@@ -16,6 +16,7 @@ import { Filter } from '../components/Filter';
 import { Sort } from '../components/Sort';
 import { JobPosting } from '../components/JobPosting';
 import { JobCards } from '../components/JobCards';
+import { CongratsPopup } from '../components/CongratsPopup';
 
 
 export function JobBoard() {
@@ -368,37 +369,6 @@ export function JobBoard() {
 
     };
 
-    // handles congrats popup
-    function CongratsPopup({ open, onClose}) {
-        const handleClose = () => {
-            onClose(); 
-        };
-        return (
-            <Dialog open={open} onClose={onClose} maxWidth={"500px"} PaperProps={{ sx: { width: '345px', height: '220px', borderRadius: "15px", display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'Outfit' } }}>
-                <DialogTitle style={{ textAlign: 'center', fontFamily: 'Outfit' }}>Congratulations!</DialogTitle>
-                <DialogContent style={{ textAlign: 'center', fontFamily: 'Outfit' }}>
-                    <Typography style={{ fontSize: '17px' }}>You have successfully submitted your profile. You can track your status in the Dashboard.</Typography>
-                </DialogContent>
-                <Divider style={{ width: '100%', height: '4px', paddingTop: '14px' }} />
-                <DialogActions style={{ justifyContent: 'center' }}>
-                    <Button onClick={handleToDashboard} sx={{ border: '1px solid #5B5B5B', borderRadius: '8px', padding: '6px 12px', textTransform: 'none', color: '#5B5B5B', margin: '0 8px' }}>
-                        View Dashboard
-                    </Button>
-                    <Button onClick={handleApplyMore} sx={{ border: '1px solid #D9D9D9', borderRadius: '8px', padding: '6px 12px', textTransform: 'none', color: '#5B5B5B', backgroundColor: '#D9D9D9', '&:hover': {backgroundColor: '#D9D9D9'}, margin: '0 8px' }}>
-                        Back to Job Board
-                    </Button>
-                </DialogActions>
-            </Dialog>        
-        );
-    }
-
-    // open job listing popup
-    const openJobListingPopup = (key) => {
-        setCurrentPop(key);
-        setOpenPop(true); 
-        console.log(currentPop);
-    };
-
     // close popups
     const handleApplyMore = () => {
         setOpenCongratsPopup(false); 
@@ -420,7 +390,7 @@ export function JobBoard() {
     };  
     
     return (
-        <div className={`outerCard ${openPop ? 'blur-background' : ''}`}>
+        <div className={`outerCard2 ${openPop ? 'blur-background' : ''}`}>
             <Dialog open={openPop} onClose={closePop} className={`${openSubmitProfile || openCongratsPopup ? 'blur-effect' : ''}`} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
                 <div style={{ position: 'relative'}}>
                     <img
