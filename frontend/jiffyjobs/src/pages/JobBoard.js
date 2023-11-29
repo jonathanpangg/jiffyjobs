@@ -434,6 +434,31 @@ export function JobBoard() {
     
         setShowSavedMessage(true);
         setTimeout(() => setShowSavedMessage(false), 1000);
+
+        const save = {
+            method: "PUT",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                email: userEmail,
+                job_id: jobDetails
+            })
+        }
+
+        const route = "https://jiffyjobs-api-production.up.railway.app/api/users/save";
+        fetch(route, save)
+        .then(async (response) => {
+            const res = await response.json()
+            if (!response.ok) {
+                throw new Error(res.message);
+            } 
+            return res;
+        })
+        .then((data) => {
+            console.log(data);
+        }).catch((error) => {
+            console.log(error);
+        });
+        console.log(jobDetails)
     };
        
     
@@ -459,7 +484,7 @@ export function JobBoard() {
                                     {currentPop[0] && currentPop[0].length > 1 && currentPop[0][1]}
                                 </Typography>
                                 <div style={{ display: 'inline-block', position: 'relative' }}>
-                                    <IconButton onClick={() => toggleSaveJob(currentPop)} style={{ borderRadius: '10px' }}>
+                                    <IconButton onClick={() => toggleSaveJob(currentPop[0][0])} style={{ borderRadius: '10px' }}>
                                         {isJobSaved[currentPop] ? 
                                             <StarIcon style={{ color: '#A4A4A4' }} /> : 
                                             <StarBorderIcon style={{ color: '#A4A4A4' }} />}
