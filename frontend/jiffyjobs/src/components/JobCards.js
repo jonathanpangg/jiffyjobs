@@ -1,9 +1,9 @@
 import React from 'react';
 import { Box, Grid, Link, Card, CardMedia, Typography } from '@mui/material';
 
-const JobCards = ({ jobData, page, cardsPerPage, openPopUp }) => {
+export function JobCards ({ jobData, page, cardsPerPage, openPopUp }) {
     return (
-        <Box>
+          <Box>
             <Grid container className= { 'job-table-grid' } style={{ backgroundColor: 'inherit' }}rowSpacing={2} columnSpacing={2}>
                 {jobData.slice((page - 1) * cardsPerPage, page * cardsPerPage).map((key) => (
                     <Grid key={key} item>
@@ -39,5 +39,3 @@ const JobCards = ({ jobData, page, cardsPerPage, openPopUp }) => {
         </Box>
     );
 }
-
-export default JobCards;

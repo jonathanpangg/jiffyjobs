@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import Tabs from '@mui/material/Tabs'
-import Tab from '@mui/material/Tab'
-import { styled } from '@mui/material/styles';
 import '../styles/Dashboard.css';
-import Divider from '@mui/material/Divider'
+
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import StarOutlineRoundedIcon from '@mui/icons-material/StarOutlineRounded';
 import { alignProperty } from '@mui/material/styles/cssUtils';
+import { styled, Tab, Tabs, Divider } from '@mui/material';
+
 
 const CustomTab = styled((props) => <Tab {...props} />)(() => ({
     textTransform: 'none',

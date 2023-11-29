@@ -1,27 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Grid from '@mui/material/Grid';
-import Pagination from '@mui/material/Pagination';
-import { Dialog, Divider, Typography, DialogContentText, DialogContent, DialogActions, DialogTitle, Link, Button  } from '@mui/material';
+import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+
+import ClearIcon from '@mui/icons-material/Clear';
+import StarIcon from '@mui/icons-material/Star';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import { Dialog, Divider, Typography, DialogContentText, DialogContent, 
+        DialogActions, DialogTitle, Link, Button, Pagination, Grid, 
+        CardContent, Card, Box, IconButton, Chip, TextField, Avatar,
+        Stack,  } from '@mui/material';
+
+import dayjs from 'dayjs';
+
 import { Filter } from '../components/Filter';
 import { Sort } from '../components/Sort';
 import { JobPosting } from '../components/JobPosting';
-import dayjs from 'dayjs';
-import ClearIcon from '@mui/icons-material/Clear';
-import IconButton from '@mui/material/IconButton';
-import Chip from '@mui/material/Chip';
-import TextField from '@mui/material/TextField';
-import { useNavigate } from 'react-router-dom';
-import Avatar from '@mui/material/Avatar';
-import Stack from '@mui/material/Stack';
-import StarIcon from '@mui/icons-material/Star';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
-import { ToastContainer, toast } from 'react-toastify';
-import SubmitProfilePopup from '../components/SubmitProfilePopup';
-import JobCards from '../components/JobCards';
+import { JobCards } from '../components/JobCards';
 
 
 export function JobBoard() {
@@ -51,23 +45,10 @@ export function JobBoard() {
 
     const navigate = useNavigate();
 
-
+    // goes to dashboard
     const handleToDashboard = () => {
         navigate('/dashboard');
     };
-  
-    function processTime(time) {
-        var str = "Time: "
-        for (let i = 0; i < time.length; i++) {
-            if (i%2 === 0) {
-                str = str + dayjs(new Date(time[i])).format('MM/DD/YY h:mm A') + " - "
-            } else {
-                str = str + dayjs(new Date(time[i])).format('h:mm A') + "\n"
-            }
-        }
-
-        return str
-    }
 
     // handles getting all jobs
     useEffect(() => {
@@ -170,20 +151,24 @@ export function JobBoard() {
 
     }, [filterList])
 
+    // handles truncating job description
     function truncate(str) {
         return str.length > 80 ? str.substring(0, 77) + "..." : str;
     }
 
+    // handles opening job listing popup
     const closePop = () => {
         setOpenPop(false);
     }
     
+    // handles opening job listing popup
     const openPopUp = (key) => {
         setCurrentPop(key);
         console.log(currentPop);
         setOpenPop(true);
     }
 
+    // handles description element ref
     const descriptionElementRefStartPop = React.useRef(null)
     useEffect(() => {
         if (openPopUp) {
@@ -194,6 +179,7 @@ export function JobBoard() {
         }
     }, [openPopUp])
 
+    // handles logging job data
     function handleLogJobData() {
         console.log('Data', jobData)
         console.log('Raw', rawData)
@@ -262,10 +248,6 @@ export function JobBoard() {
         setOpenSubmitProfile(false);
     };
 
-    // const handleOpeningSubmitProfile = () => {
-    //     setOpenSubmitProfile(true);
-    // };
-
     // submit profile popup
     function SubmitProfilePopup({ open, onClose, onSubmit }) {
         return (
@@ -331,6 +313,7 @@ export function JobBoard() {
         );
     }
 
+    // handles submitting profile
     const handleSubmitProfile = () => {
         handleCloseSubmitProfile();
         setOpenCongratsPopup(true);
@@ -385,21 +368,27 @@ export function JobBoard() {
 
     };
 
+    // handles congrats popup
     function CongratsPopup({ open, onClose}) {
         const handleClose = () => {
             onClose(); 
         };
         return (
-            <Dialog open={open} onClose={onClose} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
-                <DialogTitle>Congratulations!</DialogTitle>
-                <DialogContent>
-                    <Typography>Your profile has been successfully submitted.</Typography>
+            <Dialog open={open} onClose={onClose} maxWidth={"500px"} PaperProps={{ sx: { width: '345px', height: '220px', borderRadius: "15px", display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'Outfit' } }}>
+                <DialogTitle style={{ textAlign: 'center', fontFamily: 'Outfit' }}>Congratulations!</DialogTitle>
+                <DialogContent style={{ textAlign: 'center', fontFamily: 'Outfit' }}>
+                    <Typography style={{ fontSize: '17px' }}>You have successfully submitted your profile. You can track your status in the Dashboard.</Typography>
                 </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleApplyMore}>Apply More</Button>
-                    <Button onClick={handleToDashboard}>Go to Dashboard</Button>
+                <Divider style={{ width: '100%', height: '4px', paddingTop: '14px' }} />
+                <DialogActions style={{ justifyContent: 'center' }}>
+                    <Button onClick={handleToDashboard} sx={{ border: '1px solid #5B5B5B', borderRadius: '8px', padding: '6px 12px', textTransform: 'none', color: '#5B5B5B', margin: '0 8px' }}>
+                        View Dashboard
+                    </Button>
+                    <Button onClick={handleApplyMore} sx={{ border: '1px solid #D9D9D9', borderRadius: '8px', padding: '6px 12px', textTransform: 'none', color: '#5B5B5B', backgroundColor: '#D9D9D9', '&:hover': {backgroundColor: '#D9D9D9'}, margin: '0 8px' }}>
+                        Back to Job Board
+                    </Button>
                 </DialogActions>
-            </Dialog>
+            </Dialog>        
         );
     }
 
@@ -417,21 +406,18 @@ export function JobBoard() {
     };
 
     // toggle save job
-    const toggleSaveJob = (jobDetails) => {
+    const toggleSaveJob = (key) => {
         setIsJobSaved(prevState => {
-            const currentJobs = prevState[0] || [];
-            const updatedJobs = [...currentJobs, jobDetails];
+            const newSavedStatus = !prevState[key];
+            console.log(`Key: ${key} - Saved Status: ${newSavedStatus ? 'Saved' : 'Unsaved'}`);
             return {
                 ...prevState,
-                0: updatedJobs
+                [key]: newSavedStatus
             };
         });
-    
         setShowSavedMessage(true);
         setTimeout(() => setShowSavedMessage(false), 1000);
-    };
-       
-    
+    };  
     
     return (
         <div className={`outerCard ${openPop ? 'blur-background' : ''}`}>
@@ -454,14 +440,16 @@ export function JobBoard() {
                                     {currentPop[0] && currentPop[0].length > 1 && currentPop[0][1]}
                                 </Typography>
                                 <div style={{ display: 'inline-block', position: 'relative' }}>
-                                    <IconButton onClick={() => toggleSaveJob(currentPop)} style={{ borderRadius: '10px' }}>
-                                        {isJobSaved[currentPop] ? 
+                                    <IconButton onClick={() => toggleSaveJob(currentPop[0])} style={{ borderRadius: '10px' }}>
+                                        {isJobSaved[currentPop[0]] ? 
                                             <StarIcon style={{ color: '#A4A4A4' }} /> : 
                                             <StarBorderIcon style={{ color: '#A4A4A4' }} />}
                                     </IconButton>
-                                    {showSavedMessage && <div style={{ position: 'absolute', bottom: '-25px', left: '50%', transform: 'translateX(-50%)', fontSize: '12px', fontFamily: 'Outfit', textAlign: 'center' }}>
-                                    {isJobSaved ? 'Job Saved' : 'Job Unsaved'}
-                                    </div>}
+                                    {showSavedMessage && (
+                                        <div style={{ position: 'absolute', bottom: '-25px', left: '50%', transform: 'translateX(-50%)', fontSize: '12px', fontFamily: 'Outfit', textAlign: 'center' }}>
+                                            {isJobSaved[currentPop[0]] ? 'Job Saved' : 'Job Unsaved'}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                             <Typography style={{fontFamily: 'Outfit', fontSize:'20px', color:'#141414', fontWeight: '500', paddingLeft:'1%'}}>

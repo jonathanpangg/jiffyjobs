@@ -1,23 +1,17 @@
 import React, { useState } from 'react';
 import '../styles/JobPosting.css';
+
 import ClearIcon from '@mui/icons-material/Clear';
-import IconButton from '@mui/material/IconButton';
-import { Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText } from '@mui/material';
-import TextField from '@mui/material/TextField';
-import CardContent from '@mui/material/CardContent';
-import Card from '@mui/material/Card';
-import Grid from '@mui/material/Grid';
-import Chip from '@mui/material/Chip';
-import { Divider, MenuItem } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import InputAdornment from '@mui/material/InputAdornment';
+import { Dialog, DialogActions, DialogContent, DialogTitle, 
+       DialogContentText, IconButton, TextField, CardContent, 
+       Card, Grid, Chip, Divider, MenuItem, InputAdornment, 
+       Box, Select } from '@mui/material';
+
 import dayjs from 'dayjs';
-import { Box } from '@mui/system';
-import { CalendarIcon } from '@mui/x-date-pickers';
-import Select from '@mui/material/Select';
 var objectSupport = require("dayjs/plugin/objectSupport");
 dayjs.extend(objectSupport);
 
@@ -25,7 +19,9 @@ export function JobPosting() {
     const [openStartPop, setOpenStartPop] = useState(false)
     const [openSecondPop, setOpenSecondPop] = useState(false)
 
-    const categories = ['Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving']
+    const categories = ['Arts', 'Music & Theatre', 'Childcare', 'Eldercare', 'Data Entry', 'Office Help', 'Home Services', 'IT Help', 
+                        'Graphic Design', 'Tutoring', 'Moving', 'Pet Care', 'Party Help', 'Catering', 'Food Services', 'Research', 
+                        'Focus Groups', 'Sales & Marketing', 'Yardwork', 'Snow Shoveling', ]
     const [expand, setExpand] = useState(false)
     const [amount, setAmount] = useState("")
     const [selectedCategories, setSelectedCategories] = useState([]);
@@ -180,19 +176,19 @@ export function JobPosting() {
         })
     }
 
-
-
-
+    // opens the pop up
     const openPop = () => {
         setOpenStartPop(true)
     }
 
+    // closes the pop up
     const closePop = () => {
         empytyVals()
         handleError()
         setOpenStartPop(false)
     }
 
+    // opens the next pop up
     const openNextPop = () => {
         if (val.title === '' || val.name === '' || val.location === '' || val.pay === '' || parseFloat(val.pay) <= 0) {
             handleError();
@@ -210,10 +206,12 @@ export function JobPosting() {
         }    
     }
 
+    // closes the next pop up
     const closeNextPop = () => {
         setOpenSecondPop(false)
     }
 
+    // goes back to the first pop up
     const backSecondPop = () => {
         setOpenSecondPop(false)
         setOpenStartPop(true)
@@ -239,49 +237,18 @@ export function JobPosting() {
         }
     }, [openSecondPop])
 
-    function handleAddingCategories(event) {
-        val.category.add(event)
-        console.log(event)
-            
-        setVal({
-            title: val.title,
-            name: val.name,
-            location: val.location,
-            pay: val.pay,
-            description: val.description,
-            category: val.category,
-            date: val.date,
-            startTime: val.startTime,
-            endTime: val.endTime,
-            times: val.times
-        })
-        setExpand(!expand)
-    }
 
-    function handleDelete(event) {
-        val.category.delete(event)
-        setVal({
-            title: val.title,
-            name: val.name,
-            location: val.location,
-            pay: val.pay,
-            description: val.description,
-            category: val.category,
-            date: val.date,
-            startTime: val.startTime,
-            endTime: val.endTime,
-            times: val.times
-        })
-    }
-
+    // handles the category change
     const handleCategoryChange = (event) => {
          setSelectedCategories(event.target.value); 
     };
 
+    // handles the delete category
     const handleDeleteCategory = (categoryToDelete) => {
         setSelectedCategories((categories) => categories.filter((category) => category !== categoryToDelete));
     };
 
+    // first job slide
     const firstJobSlide = () => {
         return (
             <Dialog open={openStartPop} onClose={closePop} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
@@ -341,6 +308,7 @@ export function JobPosting() {
         )
     }
 
+    // second job slide
     const secondJobSlide = () => {
         return (
             <Dialog open={openSecondPop} onClose={closeNextPop} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
@@ -460,6 +428,7 @@ export function JobPosting() {
         )
     }
 
+    // posts the job
     async function PostJobs() {
         handleError()
         if (!(error.titleError === true || error.nameError === true || error.locationError === true || error.payError === true || error.descriptionError === true || error.categoryError === true)) {
@@ -487,6 +456,7 @@ export function JobPosting() {
                     empytyVals()
                     setOpenStartPop(false)
                     setOpenSecondPop(false)
+                    console.log(response);
                 })
                 .catch((error) => {
                     console.log(error)

@@ -1,12 +1,14 @@
 import React, { useEffect, useState} from 'react';
-import { useNavigate } from 'react-router-dom';
-import Box from '@mui/material/Box'
-import PropTypes from 'prop-types';
-import Card from '@mui/material/Card'
-import { VerticalDashboardBar } from '../components/VerticalDashboardBar';
-import '../styles/Dashboard.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
+import '../styles/Dashboard.css';
+
+import { Box, Card } from '@mui/material'
+
+import PropTypes from 'prop-types';
+
+import { VerticalDashboardBar } from '../components/VerticalDashboardBar';
 import { StatusDashboard } from '../components/StatusDashboard';
 import { SavedJobDashboard } from '../components/SavedJobDashboard';
 import { PostedJobDashboard } from '../components/PostedJobDashboard';
