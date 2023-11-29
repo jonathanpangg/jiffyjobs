@@ -20,7 +20,6 @@ import Stack from '@mui/material/Stack';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { ToastContainer, toast } from 'react-toastify';
-import SubmitProfilePopup from '../components/SubmitProfilePopup';
 import JobCards from '../components/JobCards';
 
 
