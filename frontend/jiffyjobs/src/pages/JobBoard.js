@@ -390,7 +390,7 @@ export function JobBoard() {
     };  
     
     return (
-        <div className={`outerCard ${openPop ? 'blur-background' : ''}`}>
+        <div className={`outerCard2 ${openPop ? 'blur-background' : ''}`}>
             <Dialog open={openPop} onClose={closePop} className={`${openSubmitProfile || openCongratsPopup ? 'blur-effect' : ''}`} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
                 <div style={{ position: 'relative'}}>
                     <img
