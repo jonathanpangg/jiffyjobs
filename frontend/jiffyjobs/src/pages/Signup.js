@@ -151,6 +151,8 @@ export function Signup() {
             localStorage.setItem("token", data.token);
             localStorage.setItem("email", data.email);
             localStorage.setItem("user", data.role);
+            localStorage.setItem("first", data.first_name);
+            localStorage.setItem("last", data.last_name);
             navigate("/JobBoard");
         })
         .catch((error) => {

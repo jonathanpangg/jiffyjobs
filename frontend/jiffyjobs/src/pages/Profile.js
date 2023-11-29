@@ -39,7 +39,7 @@ export function Profile() {
         if (!token) setShowToken(true);
     },[token]);
 
-    useEffect(()=> {
+    useEffect(() => {
         if (showToken) {
             console.log(showToken);
             toast.dismiss()

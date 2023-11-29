@@ -106,7 +106,7 @@ export function Login() {
             })
         }
 
-        const route = "https://jiffyjobs-api-production.up.railway.app/api/auth/Login";
+        const route = "http://localhost:4000/api/auth/Login";
         fetch(route, Login)
         .then(async (response) => {
             const res = await response.json()
@@ -119,6 +119,9 @@ export function Login() {
         localStorage.setItem("token", data.token);
         localStorage.setItem("email", data.email);
         localStorage.setItem("user", data.role);
+        localStorage.setItem("first", data.first_name);
+        localStorage.setItem("last", data.last_name);
+        console.log(data)
         navigate("/JobBoard");
         })
         .catch((error) => {

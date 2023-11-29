@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { styled, Tab, Tabs, Grid, Tooltip, Menu, Typography,
@@ -11,6 +11,8 @@ export function NavBar() {
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const location = useLocation();
     const [value, setValue] = useState((location.pathname.toLowerCase() === '/jobboard' || location.pathname.toLowerCase() === '/' || location.pathname.toLowerCase() === '') ? 0 : (location.pathname.toLowerCase() === '/dashboard' ? 1 : -1));
+    const [last, setLast] = useState(localStorage.getItem("last"));
+    const [first, setFirst] = useState(localStorage.getItem("first"));
 
     const navigate = useNavigate();
 
@@ -80,6 +82,7 @@ export function NavBar() {
         };
     }
 
+
     return (
         <Grid container style={{ alignItems: 'center', height: '59px', position: 'relative' }}>
             <h1 className='logo-font' onClick={AllJobs} style={{ height: '38px', marginTop: '15px' }}>
@@ -96,11 +99,13 @@ export function NavBar() {
                 <div style={{ height: '59px', borderRight: '2px solid #D9D9D9' }}></div>
             </div>
 
+
+        // right side of divider 
           <div style={{ position: 'absolute', left: 'calc(100% - 162px)', top: '51%', transform: 'translate(-10%, -50%)', display: 'flex', alignItems: 'center', }}>
             <div className='profile-picture'></div>
             <div style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'left', maxWidth: '120px', wordBreak: 'break-all', }}>
                 <Tooltip onClick={handleOpenUserMenu} style={{ display: 'block' }}>
-                    <span style={{ fontWeight: 500, fontSize: '16px', color: '#5B5B5B', fontFamily: 'Outfit', }}> Stella Park </span> 
+                    <span style={{ fontWeight: 500, fontSize: '16px', color: '#5B5B5B', fontFamily: 'Outfit', }}> {first} {last} </span> 
                 </Tooltip>
             </div>
                 <Menu
@@ -126,7 +131,16 @@ export function NavBar() {
                     ))}
                 </Menu>
             </div>
-         
+
+            {/* <div style={{ position: 'absolute', left: 'calc(100% - 180px)', top: 0, bottom: 0, display: 'flex', alignItems: 'center', }}>
+                <div className='first-font' onClick={handleSignUp} style={{ cursor: 'pointer', marginBottom: '-2px', whiteSpace: 'nowrap', color: '#5B5B5B', fontWeight: 500 }}>
+                    Join Now
+                </div>
+                <div className='first-font' onClick={handleLogout} style={{ cursor: 'pointer', marginLeft: '15px', marginBottom: '-1px', whiteSpace: 'nowrap', padding: '5px 10px', backgroundColor: '#FFFFFF', border: '1px solid #D9D9D9', borderRadius: '8px', color: '#5B5B5B', fontWeight: 500 }}>
+                    Log in
+                </div>
+            </div>
+          */}
         </Grid>
     );
 }
