@@ -254,9 +254,9 @@ export function JobBoard() {
                 const user = [data.personal_info.first_name, data.personal_info.last_name, data.personal_info.school, data.personal_info.major, data.personal_info.grade, data.personal_info.personal_statement[0]];
                 setProfile(user);
                 console.log(profile);
+                setOpenSubmitProfile(true);
+                setGotProfile(true);
             })
-            setOpenSubmitProfile(true);
-            setGotProfile(true);
         } else {
             setOpenSubmitProfile(true);
         }
@@ -545,7 +545,7 @@ export function JobBoard() {
                 </DialogContent>
                 <Divider style={{borderBottomWidth: '2px'}}/>
                     <DialogActions style={{ justifyContent: 'center' }}>
-                        <Link style={{cursor:'pointer'}} underline='none' onClick={handleOpenSubmitProfile}>
+                        <Link style={{cursor:'pointer'}} underline='none'>
                             <Card sx={{height: 40, width: '100%'}} style={{overflow:'hidden', borderRadius: '15px', background: "#D9D9D9", color: 'white'}}>
                             <CardContent style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingTop: '3%' }}>
                                 <Button onClick={handleOpenSubmitProfile} style={{ textTransform: 'none', width: '100%' }}>
