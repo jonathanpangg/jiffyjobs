@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import CardMedia from '@mui/material/CardMedia'
-import Card from '@mui/material/Card'
-import Grid from '@mui/material/Grid';
 import '../styles/Dashboard.css';
-import { Box } from '@mui/system';
+
+import { Box, Card, Grid, CardMedia, Typography, } from '@mui/material';
+
 import dayjs from 'dayjs';
-import { Typography } from '@mui/material';
+
 import acceptedPicture from '../images/Accepted.png'
 import submittedPicture from '../images/Submitted.png'
 import rejectedPicture from '../images/Rejected.png'
@@ -54,7 +53,7 @@ export function StatusDashboard() {
                 Check your the progress on your job applications!
             </div>
             <Box className='progress-box'>
-                <Grid container className='progress-grid' rowSpacing={2} columnSpacing={2} width='70vw' style={{paddingBottom: '1%'}}>
+                <Grid container className='progress-grid' rowSpacing={3} columnSpacing={3} width='70vw' style={{paddingBottom: '1%'}}>
                     {statusData.map((key) => {
                         return ( 
                             <Grid key={key} item> 

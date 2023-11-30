@@ -1,12 +1,14 @@
 import React, { useEffect, useState} from 'react';
-import { useNavigate } from 'react-router-dom';
-import Box from '@mui/material/Box'
-import PropTypes from 'prop-types';
-import Card from '@mui/material/Card'
-import { VerticalDashboardBar } from '../components/VerticalDashboardBar';
-import '../styles/Dashboard.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
+import '../styles/Dashboard.css';
+
+import { Box, Card } from '@mui/material'
+
+import PropTypes from 'prop-types';
+
+import { VerticalDashboardBar } from '../components/VerticalDashboardBar';
 import { StatusDashboard } from '../components/StatusDashboard';
 import { SavedJobDashboard } from '../components/SavedJobDashboard';
 import { PostedJobDashboard } from '../components/PostedJobDashboard';
@@ -50,6 +52,7 @@ export function Dashboard() {
     useEffect(()=> {
         if (showToken) {
             console.log(showToken);
+            toast.dismiss()
             toast.error('Please Login!', {
                 position: "top-center",
                 autoClose: 5000,
@@ -59,11 +62,8 @@ export function Dashboard() {
                 draggable: true,
                 progress: undefined,
                 theme: "light",
-                onClose: () => {
-                    navigate('/login');
-                    setShowToken(false);
-                  }
             });
+            navigate('/login');
             setShowToken(false);
         }
 
@@ -75,13 +75,13 @@ export function Dashboard() {
                 <div className='inner-div'>
                     <Card elevation='4' style={{display: 'flex', overflow: 'hidden', borderRadius: '15px', width: "100%"}}> 
                         { renderVerticalDashBoard }
-                        <TabPanel value={value} index={6} className='progress-tab'>
+                        <TabPanel value={value} index={2} className='progress-tab'>
                             <StatusDashboard/>
                         </TabPanel>
-                        <TabPanel value={value} index={7} className='progress-tab'>
+                        <TabPanel value={value} index={3} className='progress-tab'>
                             <PostedJobDashboard/>
                         </TabPanel>
-                        <TabPanel value={value} index={8} className='progress-tab'>
+                        <TabPanel value={value} index={4} className='progress-tab'>
                             <SavedJobDashboard/>
                         </TabPanel>
                     </Card>

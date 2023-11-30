@@ -1,27 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Grid from '@mui/material/Grid';
-import Pagination from '@mui/material/Pagination';
-import { Dialog, Divider, Typography, DialogContentText, DialogContent, DialogActions, DialogTitle, Link, Button  } from '@mui/material';
+import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+
+import ClearIcon from '@mui/icons-material/Clear';
+import StarIcon from '@mui/icons-material/Star';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import { Dialog, Divider, Typography, DialogContentText, DialogContent, 
+        DialogActions, DialogTitle, Link, Button, Pagination, Grid, 
+        CardContent, Card, Box, IconButton, Chip, TextField, Avatar,
+        Stack,  } from '@mui/material';
+
+import dayjs from 'dayjs';
+
 import { Filter } from '../components/Filter';
 import { Sort } from '../components/Sort';
 import { JobPosting } from '../components/JobPosting';
-import dayjs from 'dayjs';
-import ClearIcon from '@mui/icons-material/Clear';
-import IconButton from '@mui/material/IconButton';
-import Chip from '@mui/material/Chip';
-import TextField from '@mui/material/TextField';
-import { useNavigate } from 'react-router-dom';
-import Avatar from '@mui/material/Avatar';
-import Stack from '@mui/material/Stack';
-import StarIcon from '@mui/icons-material/Star';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
-import { ToastContainer, toast } from 'react-toastify';
-import SubmitProfilePopup from '../components/SubmitProfilePopup';
-import JobCards from '../components/JobCards';
+import { JobCards } from '../components/JobCards';
+import { CongratsPopup } from '../components/CongratsPopup';
+
 
 
 export function JobBoard() {
@@ -69,6 +65,11 @@ export function JobBoard() {
         return str
     }
 
+    const randomImage = (seed) => {
+        return `https://source.unsplash.com/random?${seed}`;
+    };
+
+
     // handles getting all jobs
     useEffect(() => {
         async function GetAllJobs() {
@@ -94,7 +95,7 @@ export function JobBoard() {
                     setRawData(data);
                     const newJobData = data.map(function(obj) {
                         console.log(obj.time)
-                        return [[obj._id, obj.title], ["", obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
+                        return [[obj._id, obj.title], [randomImage(obj.categories.toString().split(",")[0]), obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
                     });
                     setJobData(newJobData);
 
@@ -140,7 +141,7 @@ export function JobBoard() {
                 .then((data) => {
                     setRawData(data);
                     const newJobData = data.map(function(obj) {
-                        return [[obj._id, obj.title], ["", obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
+                        return [[obj._id, obj.title], [randomImage(obj.categories.toString().split(",")[0]), obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
                     });
                     setJobData(newJobData);
                     setSize(jobData.length)
@@ -181,7 +182,22 @@ export function JobBoard() {
     const openPopUp = (key) => {
         setCurrentPop(key);
         console.log(currentPop);
-        setOpenPop(true);
+        if (!userEmail) {
+            toast.dismiss()
+            console.log("here")
+            toast.error('Please login to view!', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        } else {
+            setOpenPop(true);
+        }
     }
 
     const descriptionElementRefStartPop = React.useRef(null)
@@ -207,19 +223,8 @@ export function JobBoard() {
 
     // open submit profile popup
     const handleOpenSubmitProfile = () => {
-        if (!userEmail) {
-            toast.error('Please Login!', {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
-            navigate('/login');
-        } else if (userRole === 'provider') {
+         if (userRole === 'provider') {
+            toast.dismiss()
             toast.error('You can only apply as a Seeker!', {
                 position: "top-center",
                 autoClose: 5000,
@@ -246,7 +251,7 @@ export function JobBoard() {
                 return res;
             })
             .then((data) => {
-                const user = [data.personal_info.first_name, data.personal_info.last_name, data.personal_info.school, data.personal_info.major, data.personal_info.grade, data.personal_info.personal_statement];
+                const user = [data.personal_info.first_name, data.personal_info.last_name, data.personal_info.school, data.personal_info.major, data.personal_info.grade, data.personal_info.personal_statement[0]];
                 setProfile(user);
                 console.log(profile);
             })
@@ -261,10 +266,6 @@ export function JobBoard() {
     const handleCloseSubmitProfile = () => {
         setOpenSubmitProfile(false);
     };
-
-    // const handleOpeningSubmitProfile = () => {
-    //     setOpenSubmitProfile(true);
-    // };
 
     // submit profile popup
     function SubmitProfilePopup({ open, onClose, onSubmit }) {
@@ -385,30 +386,6 @@ export function JobBoard() {
 
     };
 
-    function CongratsPopup({ open, onClose}) {
-        const handleClose = () => {
-            onClose(); 
-        };
-        return (
-            <Dialog open={open} onClose={onClose} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
-                <DialogTitle>Congratulations!</DialogTitle>
-                <DialogContent>
-                    <Typography>Your profile has been successfully submitted.</Typography>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleApplyMore}>Apply More</Button>
-                    <Button onClick={handleToDashboard}>Go to Dashboard</Button>
-                </DialogActions>
-            </Dialog>
-        );
-    }
-
-    // open job listing popup
-    const openJobListingPopup = (key) => {
-        setCurrentPop(key);
-        setOpenPop(true); 
-        console.log(currentPop);
-    };
 
     // close popups
     const handleApplyMore = () => {
@@ -429,17 +406,42 @@ export function JobBoard() {
     
         setShowSavedMessage(true);
         setTimeout(() => setShowSavedMessage(false), 1000);
+
+        const save = {
+            method: "PUT",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                email: userEmail,
+                job_id: jobDetails
+            })
+        }
+
+        const route = "https://jiffyjobs-api-production.up.railway.app/api/users/save";
+        fetch(route, save)
+        .then(async (response) => {
+            const res = await response.json()
+            if (!response.ok) {
+                throw new Error(res.message);
+            } 
+            return res;
+        })
+        .then((data) => {
+            console.log(data);
+        }).catch((error) => {
+            console.log(error);
+        });
+        console.log(jobDetails)
     };
        
     
     
     return (
-        <div className={`outerCard ${openPop ? 'blur-background' : ''}`}>
+        <div className={`outerCard2 ${openPop ? 'blur-background' : ''}`}>
             <Dialog open={openPop} onClose={closePop} className={`${openSubmitProfile || openCongratsPopup ? 'blur-effect' : ''}`} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
                 <div style={{ position: 'relative'}}>
                     <img
                         style={{ width: '100%', maxHeight: '30vh'}}
-                        src="https://source.unsplash.com/random"
+                        src={currentPop[1] && currentPop[1].length > 1 && currentPop[1][0]}
                         alt="placeholder"
                     />
                 </div>
@@ -454,7 +456,7 @@ export function JobBoard() {
                                     {currentPop[0] && currentPop[0].length > 1 && currentPop[0][1]}
                                 </Typography>
                                 <div style={{ display: 'inline-block', position: 'relative' }}>
-                                    <IconButton onClick={() => toggleSaveJob(currentPop)} style={{ borderRadius: '10px' }}>
+                                    <IconButton onClick={() => toggleSaveJob(currentPop[0][0])} style={{ borderRadius: '10px' }}>
                                         {isJobSaved[currentPop] ? 
                                             <StarIcon style={{ color: '#A4A4A4' }} /> : 
                                             <StarBorderIcon style={{ color: '#A4A4A4' }} />}

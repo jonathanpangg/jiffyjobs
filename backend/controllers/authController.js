@@ -40,6 +40,8 @@ export const seekerSignUp = async (req, res) => {
         return handleSuccess(res,{
             _id: (await savedSeeker).id,
             email: (await savedSeeker).email,
+            first_name: (await savedSeeker).personal_info.first_name,
+            last_name: (await savedSeeker).personal_info.last_name,
             token: generateToken(savedSeeker._id),
             role: "seeker"
         });
@@ -67,6 +69,8 @@ export const Login = async (req, res) => {
             return handleSuccess(res, {
                 _id: seeker.id,
                 email: seeker.email,
+                first_name: seeker.personal_info.first_name,
+                last_name: seeker.personal_info.last_name,
                 token: generateToken(seeker._id),
                 role: "seeker"
             });
@@ -81,6 +85,8 @@ export const Login = async (req, res) => {
             return handleSuccess(res, {
                 _id: provider.id,
                 email: provider.email,
+                first_name: provider.personal_info.first_name,
+                last_name: provider.personal_info.last_name,
                 token: generateToken(provider._id),
                 role: "provider"
             });
@@ -120,6 +126,8 @@ export const providerSignUp = async(req, res) => {
         return handleSuccess(res, {
             _id: (await savedProvider).id,
             email: (await savedProvider).email,
+            first_name: (await savedProvider).personal_info.first_name,
+            last_name: (await savedProvider).personal_info.last_name,
             token: generateToken(savedProvider._id),
             role: "provider"
         })

@@ -1,23 +1,19 @@
 import React, { useState } from 'react';
 import '../styles/JobPosting.css';
+
 import ClearIcon from '@mui/icons-material/Clear';
-import IconButton from '@mui/material/IconButton';
-import { Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText } from '@mui/material';
-import TextField from '@mui/material/TextField';
-import CardContent from '@mui/material/CardContent';
-import Card from '@mui/material/Card';
-import Grid from '@mui/material/Grid';
-import Chip from '@mui/material/Chip';
-import { Divider, MenuItem } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import InputAdornment from '@mui/material/InputAdornment';
+import { Dialog, DialogActions, DialogContent, DialogTitle, 
+       DialogContentText, IconButton, TextField, CardContent, 
+       Card, Grid, Chip, Divider, MenuItem, InputAdornment, 
+       Box, Select, FormControl, FormHelperText } from '@mui/material';
+import { ToastContainer, toast } from 'react-toastify';
+
 import dayjs from 'dayjs';
-import { Box } from '@mui/system';
-import { CalendarIcon } from '@mui/x-date-pickers';
-import Select from '@mui/material/Select';
+import { useNavigate } from 'react-router-dom';
 var objectSupport = require("dayjs/plugin/objectSupport");
 dayjs.extend(objectSupport);
 
@@ -25,10 +21,30 @@ export function JobPosting() {
     const [openStartPop, setOpenStartPop] = useState(false)
     const [openSecondPop, setOpenSecondPop] = useState(false)
 
-    const categories = ['Cleaning', 'Food/Restaurant', 'Office jobs', 'Retail', 'Moving']
+    const categories = ['Arts', 'Catering', 'Childcare', 'Data Entry', 'Eldercare',
+                        'Focus Groups', 'Food Services', 'Graphic Design', 'Home Services', 'IT Help',
+                        'Moving', 'Music & Theatre', 'Office Help', 'Party Help', 'Pet Care',
+                        'Research', 'Sales & Marketing', 'Snow Shoveling', 'Tutoring', 'Yardwork'
+                        ]
     const [expand, setExpand] = useState(false)
-    const [amount, setAmount] = useState("")
+    const [error, setError] = useState({
+        titleError: false,
+        nameError: false,
+        locationError: false,
+        payError: false,
+        descriptionError: false,
+        categoryError: false,
+        dateError: false,
+        startTimeError: false,
+        endTimeError: false,
+    });
     const [selectedCategories, setSelectedCategories] = useState([]);
+
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [startTime, setStartTime] = useState(null);
+    const [endTime, setEndTime] = useState(null);
+    const [token, setToken] = useState(localStorage.getItem("token"));
+    const navigate = useNavigate();
     
     // useState for the data
     const [val, setVal] = useState({
@@ -54,27 +70,21 @@ export function JobPosting() {
         times: []
     })
 
-    // useState for errors
-    const [error, setError] = useState({
-        titleError: false,
-        nameError: false,
-        locationError: false,
-        payError: false,
-        descriptionError: false,
-        categoryError: false,
-    })
-
-    // handles the error of the input boxes
     function handleError() {
+        const isEndTimeInvalid = startTime && endTime && dayjs(endTime).isBefore(dayjs(startTime));
         setError({
             titleError: val.title === '',
             nameError: val.name === '',
             locationError: val.location === '',
             payError: val.pay === '' || val.pay === 0,
             descriptionError: val.description === '',
-            categoryError: val.category.length === 0
+            categoryError: selectedCategories.length === 0,
+            dateError: !selectedDate,
+            startTimeError: !startTime,
+            endTimeError: !endTime || isEndTimeInvalid,
         })
     }
+    
 
     // resets the data 
     function empytyVals() {
@@ -124,6 +134,7 @@ export function JobPosting() {
 
     // handles the date calendar data
     function handleDate(event) {
+        setSelectedDate(event);
         setVal({
             title: val.title,
             name: val.name,
@@ -142,57 +153,33 @@ export function JobPosting() {
         })
     }
 
-    // handles the start time 
-    function handleStartTime(event) {
-        setVal({
-            title: val.title,
-            name: val.name,
-            location: val.location,
-            pay: val.pay,
-            description: val.description,
-            category: val.category, 
-            date: val.date,
-            startTime: {
-                hour: event.$H+1,
-                min: event.$m
-            },
-            endTime: val.endTime,
-            times: val.times
-        })
-    }
-
-    // handles the end time
-    function handleEndTime(event) {
-        setVal({
-            title: val.title,
-            name: val.name,
-            location: val.location,
-            pay: val.pay,
-            description: val.description,
-            category: val.category, 
-            date: val.date,
-            startTime: val.startTime,
-            endTime: {
-                hour: event.$H+1,
-                min: event.$m
-            },
-            times: val.times
-        })
-    }
-
-
-
-
+    // opens the pop up
     const openPop = () => {
-        setOpenStartPop(true)
+        if (token) {
+            setOpenStartPop(true)
+        } else {
+            toast.dismiss()
+            toast.error('Please login to post!', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        }
     }
 
+    // closes the pop up
     const closePop = () => {
         empytyVals()
         handleError()
         setOpenStartPop(false)
     }
 
+    // opens the next pop up
     const openNextPop = () => {
         if (val.title === '' || val.name === '' || val.location === '' || val.pay === '' || parseFloat(val.pay) <= 0) {
             handleError();
@@ -210,10 +197,12 @@ export function JobPosting() {
         }    
     }
 
+    // closes the next pop up
     const closeNextPop = () => {
         setOpenSecondPop(false)
     }
 
+    // goes back to the first pop up
     const backSecondPop = () => {
         setOpenSecondPop(false)
         setOpenStartPop(true)
@@ -239,54 +228,23 @@ export function JobPosting() {
         }
     }, [openSecondPop])
 
-    function handleAddingCategories(event) {
-        val.category.add(event)
-        console.log(event)
-            
-        setVal({
-            title: val.title,
-            name: val.name,
-            location: val.location,
-            pay: val.pay,
-            description: val.description,
-            category: val.category,
-            date: val.date,
-            startTime: val.startTime,
-            endTime: val.endTime,
-            times: val.times
-        })
-        setExpand(!expand)
-    }
 
-    function handleDelete(event) {
-        val.category.delete(event)
-        setVal({
-            title: val.title,
-            name: val.name,
-            location: val.location,
-            pay: val.pay,
-            description: val.description,
-            category: val.category,
-            date: val.date,
-            startTime: val.startTime,
-            endTime: val.endTime,
-            times: val.times
-        })
-    }
-
+    // handles the category change
     const handleCategoryChange = (event) => {
          setSelectedCategories(event.target.value); 
     };
 
+    // handles the delete category
     const handleDeleteCategory = (categoryToDelete) => {
         setSelectedCategories((categories) => categories.filter((category) => category !== categoryToDelete));
     };
 
+    // first job slide
     const firstJobSlide = () => {
         return (
             <Dialog open={openStartPop} onClose={closePop} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
                 <div className='popup-title'>
-                    <DialogTitle style={{width: "90%"}}> 
+                    <DialogTitle style={{width: "90%", fontFamily: 'Outfit', fontSize: '20px', fontWeight: 500, color: 'black'}}> 
                         Tell us more about the job!
                     </DialogTitle>
                     <IconButton onClick={closePop}>
@@ -297,42 +255,58 @@ export function JobPosting() {
                     <DialogContent>
                         <DialogContentText ref={descriptionElementRefStartPop} tabIndex={-1} style={{width: '1000px'}}>
                             <div>
-                                <text className='pop-textfield-title'>
-                                    Job Title
+                                <text className='pop-textfield-title' style={{fontFamily: 'Outfit', fontSize: '14px', color: 'black'}}>
+                                    Job title
+                                    <span style={{"color": "red"}}>*</span>
                                 </text> <br></br>
-                                <TextField error={error.titleError} helperText={error.titleError ? "*This field is required" : ""} required={true} placeholder="Add the title you are hiring for" type="search" square={false} style={{width: '98.5%'}} onChange={(e) => {handleValues(e)}} id='title' value={val.title}/>
+                                <TextField error={error.titleError} helperText={error.titleError ? "*This field is required" : ""} required={true} placeholder="Add the title you are hiring for" type="search" square={false} style={{width: '98.5%'}} FormHelperTextProps={{ style: { fontFamily: 'Outfit', fontSize: '14px', }}} onChange={(e) => {handleValues(e)}} id='title' value={val.title}
+                                    InputProps={{
+                                        style: {  borderRadius: '10px', fontFamily: 'Outfit', fontSize: '14px' }
+                                    }}
+                                />
                             </div>
-                            <div style={{paddingTop: '2.5%'}}>
-                                <text className='pop-textfield-title'>
+                            <div style={{paddingTop: '1.5%'}}>
+                                <text className='pop-textfield-title' style={{fontFamily: 'Outfit', fontSize: '14px', color: 'black'}}>
                                     Company or Employer Name
+                                    <span style={{"color": "red"}}>*</span>
                                 </text> <br></br>
-                                <TextField error={error.nameError} helperText={error.nameError ? "*This field is required" : ""} required={true} placeholder="Add your or your company/department name" type="search" square={false} style={{width: '98.5%'}} onChange={(e) => {handleValues(e)}} id='name' value={val.name}/>
+                                <TextField error={error.nameError} helperText={error.nameError ? "*This field is required" : ""} required={true} placeholder="Add your or your company/department name" type="search" square={false} style={{width: '98.5%'}} FormHelperTextProps={{ style: { fontFamily: 'Outfit', fontSize: '14px' }}} onChange={(e) => {handleValues(e)}} id='name' value={val.name}
+                                    InputProps={{
+                                        style: {  borderRadius: '10px', fontFamily: 'Outfit', fontSize: '14px' }
+                                    }}
+                                />
                             </div>
-                            <div style={{paddingTop: '2.5%'}}>
-                                <text className='pop-textfield-title'>
+                            <div style={{paddingTop: '1.5%'}}>
+                                <text className='pop-textfield-title' style={{fontFamily: 'Outfit', fontSize: '14px', color: 'black'}}>
                                     Job Location
+                                    <span style={{"color": "red"}}>*</span>
                                 </text> <br></br>
-                                <TextField error={error.locationError} helperText={error.locationError ? "*This field is required" : ""} required={true} placeholder="Add the job location" type="search" square={false} style={{width: '98.5%'}} onChange={(e) => {handleValues(e)}} id='location' value={val.location}/>
+                                <TextField error={error.locationError} helperText={error.locationError ? "*This field is required" : ""} required={true} placeholder="Add the job location" type="search" square={false} style={{width: '98.5%'}} FormHelperTextProps={{ style: { fontFamily: 'Outfit', fontSize: '14px' }}} onChange={(e) => {handleValues(e)}} id='location' value={val.location}
+                                    InputProps={{
+                                        style: {  borderRadius: '10px', fontFamily: 'Outfit', fontSize: '14px' }
+                                    }}
+                                />
                             </div>
-                            <div style={{paddingTop: '2.5%', display: 'flex'}}>
+                            <div style={{paddingTop: '1.5%', display: 'flex'}}>
                                 <div style={{width: '35%', paddingRight: '2.5%'}}>
-                                    <text className='pop-textfield-title'>
-                                        Pay 
+                                    <text className='pop-textfield-title' style={{fontFamily: 'Outfit', fontSize: '14px', color: 'black'}}>
+                                        Total Payment
+                                        <span style={{"color": "red"}}>*</span>
                                     </text> <br></br>
-                                    <TextField InputProps={{inputProps: {inputMode: 'numeric', pattern: '[0-9.]*'}, startAdornment: <InputAdornment position="start">$</InputAdornment>}} error={error.payError} helperText={error.payError ? "*Invalid number" : ""} required={true} placeholder="" type="search" square={false} className='pop-textfield-title' style={{width: '100%'}} onChange={(e) => {handleValues(e)}} id='pay' value={val.pay}/>
+                                    <TextField InputProps={{style: {  borderRadius: '10px', fontFamily: 'Outfit', fontSize: '14px' }, inputProps: {inputMode: 'numeric', pattern: '[0-9.]*'}, startAdornment: <InputAdornment position="start"> <span style={{ fontFamily: 'Outfit', fontSize: '14px' }}>$</span></InputAdornment>}} error={error.payError} helperText={error.payError ? "*Invalid number" : ""} required={true} placeholder="00.00" type="search" square={false} className='pop-textfield-title' style={{width: '100%'}} FormHelperTextProps={{ style: { fontFamily: 'Outfit', fontSize: '14px', }}} onChange={(e) => {handleValues(e)}} id='pay' value={val.pay}/>
                                 </div>
                             </div>
                         </DialogContentText>
                     </DialogContent>
                 <Divider/>
                     <DialogActions>
-                        <Card sx={{height: 50, width: '10%'}} style={{overflow:'hidden', borderRadius: '15px', color: 'black', border: "1px solid black"}}>
-                            <CardContent style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} onClick={closePop}> 
-                                Back
+                        <Card sx={{height: 40, width: '7%'}} square={false} style={{overflow:'hidden', borderRadius: '10px', color: '#5B5B5B', border: "1px solid #5B5B5B", transform: 'translateX(-31.5px)'}}>
+                            <CardContent style={{ height: '25%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Outfit', fontSize: '16px',}} onClick={closePop}> 
+                                Cancel
                             </CardContent>
                         </Card>
-                        <Card sx={{height: 50, width: '10%'}} style={{overflow:'hidden', borderRadius: '15px', background: "gray", color: 'white'}}>
-                            <CardContent style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} onClick={openNextPop}> 
+                        <Card sx={{height: 40, width: '7%'}} square={false} style={{overflow:'hidden', borderRadius: '10px', background: "#D9D9D9", color: '#5B5B5B', transform: 'translateX(-31.5px)' }}>
+                            <CardContent style={{ height: '25%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Outfit', fontSize: '16px'}} onClick={openNextPop}> 
                                 Next
                             </CardContent>
                         </Card>
@@ -341,11 +315,12 @@ export function JobPosting() {
         )
     }
 
+    // second job slide
     const secondJobSlide = () => {
         return (
             <Dialog open={openSecondPop} onClose={closeNextPop} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
                 <div className='popup-title'>
-                    <DialogTitle style={{width: "90%"}}> 
+                    <DialogTitle style={{width: "90%", fontFamily: 'Outfit', fontSize: '20px', fontWeight: 500, color: 'black'}}> 
                         Tell us more about the job!
                     </DialogTitle>
                     <IconButton onClick={closeNextPop}>
@@ -358,100 +333,178 @@ export function JobPosting() {
 
                         <div className='time-outer' style={{width: '98.5%'}}> 
                             <div className='date'>
-                                <text className='pop-textfield-title'>
+                                <text className='pop-textfield-title' style={{fontFamily: 'Outfit', fontSize: '14px', color: 'black'}}>
                                     Date
+                                    <span style={{"color": "red"}}>*</span>
                                 </text> <br></br>
+                                <FormControl error={error.dateError}>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DatePicker
-                                        format="MM/DD/YYYY"
-                                        value={dayjs(new Date(val.date.year, val.date.month-1, val.date.day))}
-                                        onChange={(e) => {handleDate(e)}}
+                                        value={selectedDate}
+                                        onChange={(newValue) => {
+                                            setSelectedDate(newValue);
+                                        }}
+                                        renderInput={(params) => (
+                                            <TextField {...params} style={{ fontFamily: 'Outfit', fontSize: '14px', borderRadius: '10px' }}/>
+                                        )}
+                                        sx={{
+                                            '.MuiInputBase-input': {
+                                                fontFamily: 'Outfit', 
+                                                fontSize: '14px',
+                                            },
+                                            '.MuiOutlinedInput-root': { 
+                                                borderRadius: '10px',
+                                            },
+                                        }}
+                                        minDate={dayjs(new Date())}
                                     />
                                 </LocalizationProvider>
+                                {error.dateError && (
+                                    <FormHelperText style={{ fontFamily: 'Outfit', fontSize: '14px' }}>
+                                        *Invalid Date
+                                    </FormHelperText>
+                                )}
+                                </FormControl>
                             </div>
                             <div className='start-time'>
-                                <text className='pop-textfield-title'>
+                                <text className='pop-textfield-title' style={{fontFamily: 'Outfit', fontSize: '14px', color: 'black'}}>
                                     Start Time
+                                    <span style={{"color": "red"}}>*</span>
                                 </text> <br></br>
-                                <LocalizationProvider dateAdapter={AdapterDayjs} style={{float: 'right'}}>
-                                    <TimePicker 
-                                        defaultValue={dayjs("00:00:00", "HH:mm:ss")} 
-                                        ampm 
-                                        value={dayjs({hour: val.startTime.hour, minute: val.startTime.min})}
-                                        onChange={(e) => {handleStartTime(e)}}
-                                    />
-                                </LocalizationProvider>
+                                <FormControl error={error.startTimeError}>
+                                    <LocalizationProvider dateAdapter={AdapterDayjs} style={{float: 'right',}}>
+                                        <TimePicker 
+                                            value={startTime}
+                                            onChange={(newValue) => {
+                                                setStartTime(newValue);
+                                            }}
+                                            renderInput={(params) => (
+                                                <TextField {...params} style={{ fontFamily: 'Outfit', fontSize: '14px', borderRadius: '10px' }}/>
+                                            )}
+                                            ampm={true}
+                                            sx={{
+                                                '.MuiInputBase-input': {
+                                                    fontFamily: 'Outfit', 
+                                                    fontSize: '14px',
+                                                },
+                                                '.MuiOutlinedInput-root': { 
+                                                    borderRadius: '10px',
+                                                    borderColor: error.dateError ? 'red' : undefined
+                                                },
+                                            }}
+                                            minTime={val.date.year === new Date().getFullYear() && val.date.month === new Date().getMonth()+1 && val.date.day === new Date().getDate() ? dayjs(new Date()) : undefined}
+                                        />
+                                    </LocalizationProvider>
+                                    {error.startTimeError && (
+                                        <FormHelperText style={{ fontFamily: 'Outfit', fontSize: '14px' }}>
+                                            *Invalid Start
+                                        </FormHelperText>
+                                    )}
+                                    </FormControl>
                             </div>
                             <div>
-                                <text className='pop-textfield-title'>
+                                <text className='pop-textfield-title' style={{fontFamily: 'Outfit', fontSize: '14px', color: 'black'}}> 
                                     End Time
+                                    <span style={{"color": "red"}}>*</span>
                                 </text> <br></br>
-                                <LocalizationProvider dateAdapter={AdapterDayjs} style={{float: 'right'}}>
-                                    <TimePicker 
-                                        defaultValue={dayjs("00:00:00", "HH:mm:ss")} 
-                                        ampm 
-                                        value={dayjs({hour: val.endTime.hour, minute: val.endTime.min})}
-                                        onChange={(e) => {handleEndTime(e)}}
-                                    />
-                                </LocalizationProvider>
-                                      
+                                <FormControl error={error.endTimeError}>
+                                    <LocalizationProvider dateAdapter={AdapterDayjs} style={{float: 'right', }}>
+                                        <TimePicker 
+                                            value={endTime}
+                                            onChange={(newValue) => {
+                                                setEndTime(newValue);
+                                            }}
+                                            renderInput={(params) => (
+                                                <TextField {...params} style={{ fontFamily: 'Outfit', fontSize: '14px', borderRadius: '10px' }}/>
+                                            )}
+                                            ampm={true}
+                                            sx={{
+                                                '.MuiInputBase-input': {
+                                                    fontFamily: 'Outfit', 
+                                                    fontSize: '14px',
+                                                },
+                                                '.MuiOutlinedInput-root': { 
+                                                    borderRadius: '10px',
+                                                },
+                                            }}
+                                            minTime={val.date.year === new Date().getFullYear() && val.date.month === new Date().getMonth()+1 && val.date.day === new Date().getDate() ? dayjs(new Date()) : undefined}
+                                        />
+                                    </LocalizationProvider>
+                                    {error.endTimeError && (
+                                        <FormHelperText style={{ fontFamily: 'Outfit', fontSize: '14px',}}>
+                                            *Invalid End
+                                        </FormHelperText>
+                                    )}
+                                </FormControl>
                             </div>
                   
                     
                         </div>
                       
-                        <div>
-                            <text className='pop-textfield-title'>
+                        <div style={{paddingTop: '1.5%'}}>
+                            <text className='pop-textfield-title' style={{fontFamily: 'Outfit', fontSize: '14px', color: 'black'}}>
                                 Description
+                                <span style={{"color": "red"}}>*</span>
                             </text> <br></br>
-                            <TextField error={error.descriptionError} helperText={error.descriptionError ? "*This field is required" : ""} required={true} multiline rows={8} placeholder="Add the job description" type="search" square={false} style={{width: '98.5%'}} onChange={(e) => {handleValues(e)}} id='description' value={val.description}/>
+                            <TextField error={error.descriptionError} helperText={error.descriptionError ? "*This field is required" : ""} required={true} multiline rows={8} placeholder="Add the job description" type="search" square={false} style={{width: '98.5%'}} FormHelperTextProps={{ style: { fontFamily: 'Outfit', fontSize: '14px' }}} onChange={(e) => {handleValues(e)}} id='description' value={val.description}
+                                InputProps={{
+                                    style: {  borderRadius: '10px', fontFamily: 'Outfit', fontSize: '14px' }
+                                }}
+                            />
                         </div>
-                        <div style={{ paddingTop: '2.5%' }}>
-                            <text className='pop-textfield-title'>
+                        <div style={{ paddingTop: '1.5%' }} >
+                            <text className='pop-textfield-title' style={{fontFamily: 'Outfit', fontSize: '14px', color: 'black'}}>
                                 Category
+                                <span style={{"color": "red"}}>*</span>
                             </text> <br></br>
-                            
-                            <Select
-                            multiple
-                            displayEmpty
-                            open={expand}
-                            onOpen={() => setExpand(true)}
-                            onClose={() => setExpand(false)}
-                            value={selectedCategories}
-                            onChange={handleCategoryChange}
-                            error={error.categoryError}
-                            renderValue={() => "+ Add Category"}
-                            style={{ width: '98.5%' }}
-                        >
-                            {categories.map((name) => (
-                                <MenuItem key={name} value={name}>
-                                    {name}
-                                </MenuItem>
-                            ))}
-                        </Select>
-
-                        <div style={{ display: 'flex', flexWrap: 'wrap', paddingTop: '10px' }}>
-                            {selectedCategories.map((value) => (
-                                <Chip
-                                    key={value}
-                                    label={value}
-                                    onDelete={() => handleDeleteCategory(value)}
-                                    style={{ margin: '2px' }}
-                                />
-                            ))}
-                        </div>
+                            <FormControl style={{ width: '98.5%' }} error={error.categoryError}>
+                                <Select
+                                    multiple
+                                    displayEmpty
+                                    open={expand}
+                                    onOpen={() => setExpand(true)}
+                                    onClose={() => setExpand(false)}
+                                    value={selectedCategories}
+                                    onChange={handleCategoryChange}
+                                    renderValue={() => <span style={{ fontFamily: 'Outfit', fontSize: '14px' }}>+ Add Categories</span>}
+                                    style={{ fontFamily: 'Outfit', borderRadius: '10px' }} 
+                                    MenuProps={{ PaperProps: { style: { maxHeight: '18%' }, }, }}
+                                >
+                                    {categories.map((name) => (
+                                        <MenuItem key={name} value={name} style={{ fontFamily: 'Outfit', fontSize: '14px' }}>
+                                            {name}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                                {error.categoryError && (
+                                    <FormHelperText style={{ fontFamily: 'Outfit', fontSize: '14px' }}>
+                                        *This field is required
+                                    </FormHelperText>
+                                )}
+                            </FormControl>   
+                            <div style={{ display: 'flex', flexWrap: 'wrap', paddingTop: '5px' }}>
+                                {selectedCategories.map((value) => (
+                                    <Chip
+                                        key={value}
+                                        label={value}
+                                        onDelete={() => handleDeleteCategory(value)}
+                                        deleteIcon={<span style={{ fontFamily: 'Outfit', fontSize: '14px', color: 'white', fontWeight: 500, paddingRight: '4px' }}>X</span>}
+                                        style={{ margin: '2px', fontFamily: 'Outfit', fontSize: '14px', borderRadius: '10px', backgroundColor: '#5B5B5B', color: 'white' }}
+                                    />
+                                ))}
+                            </div>
                         </div>
                     </DialogContentText>
                 </DialogContent>
                 <Divider/>
                 <DialogActions>
-                    <Card sx={{height: 50, width: '10%'}} square={false} style={{overflow:'hidden', borderRadius: '15px', color: 'black', border: "1px solid black"}}>
-                        <CardContent style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} onClick={backSecondPop}> 
+                    <Card sx={{height: 40, width: '7%'}} square={false} style={{overflow:'hidden', borderRadius: '10px', color: '#5B5B5B', border: "1px solid #5B5B5B", transform: 'translateX(-31.5px)'}}>
+                        <CardContent style={{ height: '25%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Outfit', fontSize: '16px',}} onClick={backSecondPop}> 
                             Back
                         </CardContent>
                     </Card>
-                    <Card sx={{height: 50, width: '10%'}} square={false} style={{overflow:'hidden', borderRadius: '15px', background: "gray", color: 'white'}}>
-                        <CardContent style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} onClick={PostJobs}> 
+                    <Card sx={{height: 40, width: '7%'}} square={false} style={{overflow:'hidden', borderRadius: '10px', background: "#D9D9D9", color: '#5B5B5B', transform: 'translateX(-31.5px)' }}>
+                        <CardContent style={{ height: '25%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Outfit', fontSize: '16px'}} onClick={PostJobs}> 
                             Submit
                         </CardContent>
                     </Card>
@@ -460,7 +513,36 @@ export function JobPosting() {
         )
     }
 
+    // posts the job
     async function PostJobs() {
+        // checks errors directly before submitting
+        const hasTitleError = val.title === '';
+        const hasNameError = val.name === '';
+        const hasLocationError = val.location === '';
+        const hasPayError = val.pay === '' || val.pay === 0;
+        const hasDescriptionError = val.description === '';
+        const hasCategoryError = selectedCategories.length === 0;
+        const hasDateError = !selectedDate 
+        const hasStartTimeError = !startTime;
+        const isEndTimeInvalid = startTime && endTime && dayjs(endTime).isBefore(dayjs(startTime));
+        const isTimeError = !endTime || isEndTimeInvalid;
+
+        if (hasTitleError || hasNameError || hasLocationError || hasPayError || hasDescriptionError || hasCategoryError || hasDateError || hasStartTimeError || isTimeError) {
+            setError({
+                titleError: hasTitleError,
+                nameError: hasNameError,
+                locationError: hasLocationError,
+                payError: hasPayError,
+                descriptionError: hasDescriptionError,
+                categoryError: hasCategoryError,
+                dateError: hasDateError,
+                startTimeError: hasStartTimeError,
+                endTimeError: isTimeError,
+            });
+
+            return;
+        }
+
         handleError()
         if (!(error.titleError === true || error.nameError === true || error.locationError === true || error.payError === true || error.descriptionError === true || error.categoryError === true)) {
             const categoryList = selectedCategories; 
@@ -488,6 +570,7 @@ export function JobPosting() {
                     empytyVals()
                     setOpenStartPop(false)
                     setOpenSecondPop(false)
+                    console.log(response);
                 })
                 .catch((error) => {
                     console.log(error)
