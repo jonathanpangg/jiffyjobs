@@ -257,40 +257,40 @@ export function Profile() {
 
         <div className={'profile-background'}>
         
-            <Grid item xs={12} sx={{backgroundColor:"#f3f3f3", marginBottom:"500px", height:900}}>
+            <Grid item xs={12} sx={{backgroundColor:"#f3f3f3", marginBottom:"500px", height:450}}>
                     <Card elevation={3} sx={{ p: 2, borderRadius: '15px', maxWidth: 1000, maxHeight:900, mx: "auto" }}> 
-                             <Typography variant="h5" component="h2" sx={{ textAlign: 'left', mb: 2, fontFamily: 'Outfit', fontWeight: "88px", marginLeft: "50px", marginTop: "15px" }}>
+                            <Typography variant="h5" component="h2" sx={{ textAlign: 'left', mb: 2, fontFamily: 'Outfit', fontWeight: "90px", marginLeft: "50px", marginTop: "15px" }}>
                                  Edit Profile
-                             </Typography>
+                            </Typography>
                              
 
 
-                            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, paddingBottom:"25px"}}>
                                 <Avatar sx={{ bgcolor: "lightgray", marginRight: 2, color: "black", marginLeft: 10, width: 56, height: 56, fontSize: '1.9rem'  }}>{getInitials(personalInfo.first_name, personalInfo.last_name)}</Avatar>
                                 <Typography variant="h6" component="h2" sx={{mb:2, fontFamily: 'Outfit', fontWeight: "88px", fontSize: "25px"}}>
                                     {personalInfo.first_name + " " + personalInfo.last_name || 'Your Name'}
                                 </Typography>
+                                
                             </Box>
-                            <text className='basicinformation'>
+
+                            <text className='basicinformation' style={{paddingTop:"20px"}}>
                                 Basic Information
                             </text>
-
-                            <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch', alignContent: 'center', paddingLeft: '10px' } }} noValidate autoComplete="off">
-                            {userRole === "seeker" ?  <Grid container spacing={1} >
+                            {userRole === "seeker" ?  
+                            <div>
+                        <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch', alignContent: 'center', paddingLeft: '10px'}}} noValidate autoComplete="off">
+                           <Grid container spacing={1} >
                                
                                 <div className='label-input-pair'>
 
                                     <Grid item xs={6} sm={3} className='name-box-pair' >
-                                        <Typography className='profile-components'  gutterBottom>
+                                        <Typography className='profile-components' sx={{fontSize:"15px", fontWeight:"normal"}} gutterBottom>
                                         <p>School<span style={{"color": "red"}}>*</span></p>
                                         </Typography>
 
                                         <TextField
                                             disabled
                                             id="school"
-                                            InputLabelProps={{
-                                                shrink: true,
-                                            }}
                                             value={personalInfo.school}
                                             className='profile-box-fixed'
                                         />
@@ -298,14 +298,14 @@ export function Profile() {
                                     </Grid>
 
                                     <Grid item xs={6} sm={3} className='name-box-pair' >
-                                            <Typography className='profile-components'  gutterBottom>
+                                            <Typography className='profile-components'  sx={{fontSize:"15px", fontWeight:"normal"}} gutterBottom>
                                                 Email<span style={{"color": "red"}}>*</span>
                                             </Typography>
 
                                             <TextField
                                                 disabled
                                                 id="email"
-                                                sx={{ fontSize:"25px" }}
+                                                sx={{ fontSize:"40px" }}
                                                 InputLabelProps={{
                                                     shrink: true,
                                                 }}
@@ -318,13 +318,13 @@ export function Profile() {
                                 <div className='label-input-pair'> 
                                     
                                
-                                <Grid item xs={6} sm={3} className='name-box-pair' sx={{marginLeft:"5px" }}>
-                                    <Typography className='profile-components' gutterBottom>
+                                <Grid item xs={6} sm={3} className='name-box-pair' >
+                                    <Typography className='profile-components'  sx={{fontSize:"15px", fontWeight:"normal", paddingLeft:"13px"}} gutterBottom>
                                         Major
                                     </Typography>
                                         <TextField
                                             required
-                                            sx={{ fontSize:"25px"}}
+                                            sx={{ fontSize:"42.5px" }}
                                             id="major"
                                             value={major}
                                             fullWidth
@@ -335,7 +335,7 @@ export function Profile() {
 
 
                                 <Grid item xs={6} sm={3} className='name-box-pair'  >
-                                        <Typography className='profile-components' gutterBottom>
+                                        <Typography className='profile-components'  sx={{fontSize:"15px", fontWeight:"normal", marginLeft:"4px"}} gutterBottom>
                                             Grade
                                         </Typography>
                                         <FormControl fullWidth variant="outlined" className='profile-box' >
@@ -344,7 +344,7 @@ export function Profile() {
                                             id="degree"
                                             value={grade || ''}
                                             onChange={handleGradeChange}
-                                            sx={{height:"41px", width:"195px", marginLeft:"35px"}}
+                                            sx={{height:"34px", width:"195px", marginLeft:"18px"}}
                                             className='dropdown-box'
                                             >
                                             {/* <MenuItem value="">
@@ -362,73 +362,24 @@ export function Profile() {
                                             <MenuItem value="Other">Other</MenuItem> */}
                                             </Select>
                                         </FormControl>
-                                    </Grid>
-
-                                    
+                                    </Grid>                        
                                  </div>               
-
-
-                                
-                                </Grid> 
-                                
-                                
-                                
-                                
-                                : <Grid container spacing={1}>
-                                    <div className='label-input-pair'>
-                                    <Grid item xs={6} sm={3} className='name-box-pair' >
-                                        <Typography gutterBottom>
-                                        Organization<span style={{"color": "red"}}>*   </span>
-                                        </Typography>
-
-                                        <TextField
-                                            disabled
-                                            id="organization"
-                                            sx={{ fontSize:"35px"}}
-                                            InputLabelProps={{
-                                                shrink: true,
-                                            }}
-                                            value={personalInfo.school}
-                                            className='profile-box-fixed'
-                                        />
-                                
-                                    </Grid>
-                                    </div>
-                                    <div className='label-input-pair'>
-                                    <Grid item xs={6} sm={3} className='name-box-pair' >
-                                            <Typography   gutterBottom>
-                                                Email<span style={{"color": "red"}}>*</span>
-                                            </Typography>
-
-                                            <TextField
-                                                disabled
-                                                id="email"
-                                                sx={{ fontSize:"16px" }}
-                                                InputLabelProps={{
-                                                    shrink: true,
-                                                }}
-                                                value={UserEmailstate}                    
-                                                className='profile-box-fixed'
-                                            />
-                                    
-                                        </Grid>
-
-                                    </div>
-                                </Grid>}
+                                </Grid>                             
                             </Box> 
                             
                            
                             <div style={{paddingTop:"50px"}}></div>
 
-                            <text className='otherinformation'>
+                            <text className='otherinformation' style={{paddingBottom:"109px"}}>
                                 Other Information
                             </text>
+                            <div style={{paddingTop:"20px"}}></div>
 
-                            <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch', alignContent: 'center', paddingLeft: '10px' } }} noValidate autoComplete="off">
+                            <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch', alignContent: 'center', paddingLeft: '15px' } }} noValidate autoComplete="off">
                                 <Grid container spacing={1} >
                                     <div className='label-input-pair-beg'>
                                     <Grid item className='name-box-pair'>
-                                        <Typography className='profile-components-bio' gutterBottom>
+                                        <Typography className='profile-components-bio' sx={{marginLeft:"20px"}} gutterBottom>
                                             Bio
                                         </Typography>
                                         <TextField  
@@ -438,7 +389,7 @@ export function Profile() {
                                             onChange={handleBioChange} 
                                             type="search" 
                                             square={false} 
-                                            sx={{width:"1000px", minWidth:"850px", paddingLeft:'500px', right:"30px"}} 
+                                            sx={{width:"1000px", minWidth:"800px", paddingLeft:'500px', right:"30px"}} 
                                             className='profile-box-bio' 
                                             id='bio' 
                                             value={bio}/>
@@ -464,7 +415,7 @@ export function Profile() {
                                     </div>
                                 <div className='label-input-pair-beg'>
                                     {/* For the submit button */}
-                                    <div style={{ textAlign: 'left', marginLeft:'760px', marginTop:"20px" }}>
+                                    <div style={{ textAlign: 'left', marginLeft:'760px' }}>
                                         <Button 
                                             variant="contained" 
                                             sx={{ 
@@ -481,8 +432,51 @@ export function Profile() {
                                         </Button>
                                     </div>
                                 </div>
-                            </Box>
-                        </Card>
+                        </Box></div>
+                        :<div>
+                            <Grid container spacing={1}>
+                            <div className='label-input-pair'>
+                            <Grid item xs={6} sm={3} className='name-box-pair' >
+                                <Typography gutterBottom>
+                                Organization<span style={{"color": "red"}}>*   </span>
+                                </Typography>
+
+                                <TextField
+                                    disabled
+                                    id="organization"
+                                    sx={{ fontSize:"35px"}}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    value={personalInfo.school}
+                                    className='profile-box-fixed'
+                                />
+                        
+                            </Grid>
+                            </div>
+                            <div className='label-input-pair'>
+                            <Grid item xs={6} sm={3} className='name-box-pair' >
+                                    <Typography   gutterBottom>
+                                        Email<span style={{"color": "red"}}>*</span>
+                                    </Typography>
+
+                                    <TextField
+                                        disabled
+                                        id="email"
+                                        sx={{ fontSize:"16px" }}
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
+                                        value={UserEmailstate}                    
+                                        className='profile-box-fixed'
+                                    />
+                            
+                                </Grid>
+
+                            </div>
+                        </Grid>
+                    </div>}
+                    </Card>
                 </Grid>
     </div>
     );
