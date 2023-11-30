@@ -153,6 +153,7 @@ export function Signup() {
             localStorage.setItem("user", data.role);
             localStorage.setItem("first", data.first_name);
             localStorage.setItem("last", data.last_name);
+            console.log(data);
             navigate("/JobBoard");
         })
         .catch((error) => {

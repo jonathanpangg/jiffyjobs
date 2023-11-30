@@ -60,6 +60,8 @@ export function NavBar() {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         localStorage.removeItem("email");
+        localStorage.removeItem("first");
+        localStorage.removeItem("last");
         navigate('/login');
     }
 
