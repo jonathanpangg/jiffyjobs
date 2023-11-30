@@ -4,7 +4,7 @@ import { Box, Grid, Link, Card, CardMedia, Typography } from '@mui/material';
 export function JobCards ({ jobData, page, cardsPerPage, openPopUp }) {
     return (    
             <Box sx={{ display: 'flex', justifyContent: 'center' }}> 
-                <Grid container className='job-table-grid' sx={{ maxWidth: 'lg', justifyContent: 'center' }} rowSpacing={2} columnSpacing={2}> 
+                <Grid container className='job-table-grid' sx={{ maxWidth: 'lg', justifyContent: 'center' }} rowSpacing={'20px'} columnSpacing={'20px'}> 
                     {jobData.slice((page - 1) * cardsPerPage, page * cardsPerPage).map((key) => (
                         <Grid key={key} item>
                             <Link overlay underline="none" sx={{ color: 'text.tertiary', cursor: 'pointer' }} onClick={() => openPopUp(key)}>
