@@ -6,7 +6,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { Button, TextField, ToggleButton, ToggleButtonGroup, Card, 
        CardContent, InputAdornment, IconButton } from '@mui/material';
 
-import { RegNavBar } from '../components/RegNavBar';
+import { NavBar } from '../components/NavBar';
 
 
 export function Signup() {
@@ -186,7 +186,7 @@ export function Signup() {
     
     return (
         <>
-        <RegNavBar/>
+        <NavBar/>
             <div className={ 'outerCard1' }>
                 <Card sx={{ maxWidth: 650, maxHeight: 685, mx: 'auto', borderRadius: '20px'}}>
                 <CardContent style={{ textAlign: 'center' }}>

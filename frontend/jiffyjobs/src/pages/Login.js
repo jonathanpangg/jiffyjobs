@@ -7,7 +7,7 @@ import { Button, TextField, ToggleButton, ToggleButtonGroup, Card,
         CardContent, Checkbox, FormControlLabel, Link, InputAdornment, 
         IconButton } from '@mui/material';
 
-import { RegNavBar } from '../components/RegNavBar';
+import { NavBar } from '../components/NavBar';
 
 
 export function Login() {
@@ -156,7 +156,7 @@ export function Login() {
 
     return (
         <> 
-        <RegNavBar/> 
+        <NavBar/> 
             <div className={ 'outerCard1' }>
             <Card sx={{ maxWidth: 650, maxHeight: 700, mx: 'auto', borderRadius: '20px'}}>
                 <CardContent style={{ textAlign: 'center' }}>
