@@ -10,8 +10,10 @@ import { Dialog, DialogActions, DialogContent, DialogTitle,
        DialogContentText, IconButton, TextField, CardContent, 
        Card, Grid, Chip, Divider, MenuItem, InputAdornment, 
        Box, Select, FormControl, FormHelperText } from '@mui/material';
+import { ToastContainer, toast } from 'react-toastify';
 
 import dayjs from 'dayjs';
+import { useNavigate } from 'react-router-dom';
 var objectSupport = require("dayjs/plugin/objectSupport");
 dayjs.extend(objectSupport);
 
@@ -41,6 +43,8 @@ export function JobPosting() {
     const [selectedDate, setSelectedDate] = useState(null);
     const [startTime, setStartTime] = useState(null);
     const [endTime, setEndTime] = useState(null);
+    const [token, setToken] = useState(localStorage.getItem("token"));
+    const navigate = useNavigate();
     
     // useState for the data
     const [val, setVal] = useState({
@@ -151,7 +155,21 @@ export function JobPosting() {
 
     // opens the pop up
     const openPop = () => {
-        setOpenStartPop(true)
+        if (token) {
+            setOpenStartPop(true)
+        } else {
+            toast.dismiss()
+            toast.error('Please login to post!', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        }
     }
 
     // closes the pop up

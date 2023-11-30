@@ -19,6 +19,7 @@ import { JobCards } from '../components/JobCards';
 import { CongratsPopup } from '../components/CongratsPopup';
 
 
+
 export function JobBoard() {
     const [jobData, setJobData] = useState([])
     const [rawData, setRawData] = useState([]);
@@ -46,10 +47,28 @@ export function JobBoard() {
 
     const navigate = useNavigate();
 
-    // goes to dashboard
+
     const handleToDashboard = () => {
         navigate('/dashboard');
     };
+  
+    function processTime(time) {
+        var str = "Time: "
+        for (let i = 0; i < time.length; i++) {
+            if (i%2 === 0) {
+                str = str + dayjs(new Date(time[i])).format('MM/DD/YY h:mm A') + " - "
+            } else {
+                str = str + dayjs(new Date(time[i])).format('h:mm A') + "\n"
+            }
+        }
+
+        return str
+    }
+
+    const randomImage = (seed) => {
+        return `https://source.unsplash.com/random?${seed}`;
+    };
+
 
     // handles getting all jobs
     useEffect(() => {
@@ -76,7 +95,7 @@ export function JobBoard() {
                     setRawData(data);
                     const newJobData = data.map(function(obj) {
                         console.log(obj.time)
-                        return [[obj._id, obj.title], ["", obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
+                        return [[obj._id, obj.title], [randomImage(obj.categories.toString().split(",")[0]), obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
                     });
                     setJobData(newJobData);
 
@@ -122,7 +141,7 @@ export function JobBoard() {
                 .then((data) => {
                     setRawData(data);
                     const newJobData = data.map(function(obj) {
-                        return [[obj._id, obj.title], ["", obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
+                        return [[obj._id, obj.title], [randomImage(obj.categories.toString().split(",")[0]), obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
                     });
                     setJobData(newJobData);
                     setSize(jobData.length)
@@ -152,24 +171,35 @@ export function JobBoard() {
 
     }, [filterList])
 
-    // handles truncating job description
     function truncate(str) {
         return str.length > 80 ? str.substring(0, 77) + "..." : str;
     }
 
-    // handles opening job listing popup
     const closePop = () => {
         setOpenPop(false);
     }
     
-    // handles opening job listing popup
     const openPopUp = (key) => {
         setCurrentPop(key);
         console.log(currentPop);
-        setOpenPop(true);
+        if (!userEmail) {
+            toast.dismiss()
+            console.log("here")
+            toast.error('Please login to view!', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        } else {
+            setOpenPop(true);
+        }
     }
 
-    // handles description element ref
     const descriptionElementRefStartPop = React.useRef(null)
     useEffect(() => {
         if (openPopUp) {
@@ -180,7 +210,6 @@ export function JobBoard() {
         }
     }, [openPopUp])
 
-    // handles logging job data
     function handleLogJobData() {
         console.log('Data', jobData)
         console.log('Raw', rawData)
@@ -194,19 +223,8 @@ export function JobBoard() {
 
     // open submit profile popup
     const handleOpenSubmitProfile = () => {
-        if (!userEmail) {
-            toast.error('Please Login!', {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
-            navigate('/login');
-        } else if (userRole === 'provider') {
+         if (userRole === 'provider') {
+            toast.dismiss()
             toast.error('You can only apply as a Seeker!', {
                 position: "top-center",
                 autoClose: 5000,
@@ -233,7 +251,7 @@ export function JobBoard() {
                 return res;
             })
             .then((data) => {
-                const user = [data.personal_info.first_name, data.personal_info.last_name, data.personal_info.school, data.personal_info.major, data.personal_info.grade, data.personal_info.personal_statement];
+                const user = [data.personal_info.first_name, data.personal_info.last_name, data.personal_info.school, data.personal_info.major, data.personal_info.grade, data.personal_info.personal_statement[0]];
                 setProfile(user);
                 console.log(profile);
             })
@@ -314,7 +332,6 @@ export function JobBoard() {
         );
     }
 
-    // handles submitting profile
     const handleSubmitProfile = () => {
         handleCloseSubmitProfile();
         setOpenCongratsPopup(true);
@@ -369,6 +386,7 @@ export function JobBoard() {
 
     };
 
+
     // close popups
     const handleApplyMore = () => {
         setOpenCongratsPopup(false); 
@@ -376,18 +394,46 @@ export function JobBoard() {
     };
 
     // toggle save job
-    const toggleSaveJob = (key) => {
+    const toggleSaveJob = (jobDetails) => {
         setIsJobSaved(prevState => {
-            const newSavedStatus = !prevState[key];
-            console.log(`Key: ${key} - Saved Status: ${newSavedStatus ? 'Saved' : 'Unsaved'}`);
+            const currentJobs = prevState[0] || [];
+            const updatedJobs = [...currentJobs, jobDetails];
             return {
                 ...prevState,
-                [key]: newSavedStatus
+                0: updatedJobs
             };
         });
+    
         setShowSavedMessage(true);
         setTimeout(() => setShowSavedMessage(false), 1000);
-    };  
+
+        const save = {
+            method: "PUT",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                email: userEmail,
+                job_id: jobDetails
+            })
+        }
+
+        const route = "https://jiffyjobs-api-production.up.railway.app/api/users/save";
+        fetch(route, save)
+        .then(async (response) => {
+            const res = await response.json()
+            if (!response.ok) {
+                throw new Error(res.message);
+            } 
+            return res;
+        })
+        .then((data) => {
+            console.log(data);
+        }).catch((error) => {
+            console.log(error);
+        });
+        console.log(jobDetails)
+    };
+       
+    
     
     return (
         <div className={`outerCard2 ${openPop ? 'blur-background' : ''}`}>
@@ -395,7 +441,7 @@ export function JobBoard() {
                 <div style={{ position: 'relative'}}>
                     <img
                         style={{ width: '100%', maxHeight: '30vh'}}
-                        src="https://source.unsplash.com/random"
+                        src={currentPop[1] && currentPop[1].length > 1 && currentPop[1][0]}
                         alt="placeholder"
                     />
                 </div>
@@ -410,16 +456,14 @@ export function JobBoard() {
                                     {currentPop[0] && currentPop[0].length > 1 && currentPop[0][1]}
                                 </Typography>
                                 <div style={{ display: 'inline-block', position: 'relative' }}>
-                                    <IconButton onClick={() => toggleSaveJob(currentPop[0])} style={{ borderRadius: '10px' }}>
-                                        {isJobSaved[currentPop[0]] ? 
+                                    <IconButton onClick={() => toggleSaveJob(currentPop[0][0])} style={{ borderRadius: '10px' }}>
+                                        {isJobSaved[currentPop] ? 
                                             <StarIcon style={{ color: '#A4A4A4' }} /> : 
                                             <StarBorderIcon style={{ color: '#A4A4A4' }} />}
                                     </IconButton>
-                                    {showSavedMessage && (
-                                        <div style={{ position: 'absolute', bottom: '-25px', left: '50%', transform: 'translateX(-50%)', fontSize: '12px', fontFamily: 'Outfit', textAlign: 'center' }}>
-                                            {isJobSaved[currentPop[0]] ? 'Job Saved' : 'Job Unsaved'}
-                                        </div>
-                                    )}
+                                    {showSavedMessage && <div style={{ position: 'absolute', bottom: '-25px', left: '50%', transform: 'translateX(-50%)', fontSize: '12px', fontFamily: 'Outfit', textAlign: 'center' }}>
+                                    {isJobSaved ? 'Job Saved' : 'Job Unsaved'}
+                                    </div>}
                                 </div>
                             </div>
                             <Typography style={{fontFamily: 'Outfit', fontSize:'20px', color:'#141414', fontWeight: '500', paddingLeft:'1%'}}>

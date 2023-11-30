@@ -39,9 +39,10 @@ export function Profile() {
         if (!token) setShowToken(true);
     },[token]);
 
-    useEffect(()=> {
+    useEffect(() => {
         if (showToken) {
             console.log(showToken);
+            toast.dismiss()
             toast.error('Please Login!', {
                 position: "top-center",
                 autoClose: 5000,
