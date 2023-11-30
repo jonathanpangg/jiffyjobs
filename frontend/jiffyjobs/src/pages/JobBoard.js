@@ -8,7 +8,7 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { Dialog, Divider, Typography, DialogContentText, DialogContent, 
         DialogActions, DialogTitle, Link, Button, Pagination, Grid, 
         CardContent, Card, Box, IconButton, Chip, TextField, Avatar,
-        Stack,  } from '@mui/material';
+        Stack, CardMedia } from '@mui/material';
 
 import dayjs from 'dayjs';
 
@@ -439,9 +439,10 @@ export function JobBoard() {
         <div className={`outerCard2 ${openPop ? 'blur-background' : ''}`}>
             <Dialog open={openPop} onClose={closePop} className={`${openSubmitProfile || openCongratsPopup ? 'blur-effect' : ''}`} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
                 <div style={{ position: 'relative'}}>
-                    <img
-                        style={{ width: '100%', maxHeight: '30vh'}}
-                        src={currentPop[1] && currentPop[1].length > 1 && currentPop[1][0]}
+                    <CardMedia
+                        component="img"
+                        style={{ width: '100%', maxHeight: '30vh',}}
+                        image={currentPop[1] && currentPop[1].length > 1 && currentPop[1][0]}
                         alt="placeholder"
                     />
                 </div>
