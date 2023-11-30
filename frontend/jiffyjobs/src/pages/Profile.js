@@ -136,7 +136,7 @@ export function Profile() {
                 }
                 const data = await response.json();
                 // Set the data to the state here
-
+                
                 // when the user is not found
                 if (data.err) {
                     setuserEmail("user not found")
@@ -148,6 +148,7 @@ export function Profile() {
                     setpersonalInfo(data.personal_info)
                 }
             } catch (error) {
+                console.log(error)
                 console.error("Error fetching profile data:", error);
             }
         };
