@@ -4,11 +4,11 @@ import { Box, Grid, Link, Card, CardMedia, Typography } from '@mui/material';
 export function JobCards ({ jobData, page, cardsPerPage, openPopUp }) {
     return (    
             <Box sx={{ display: 'flex', justifyContent: 'center' }}> 
-                <Grid container className='job-table-grid' sx={{ maxWidth: 'lg', justifyContent: 'center' }} rowSpacing={4} columnSpacing={0}> 
+                <Grid container className='job-table-grid' sx={{ maxWidth: 'lg', justifyContent: 'center' }} rowSpacing={2} columnSpacing={2}> 
                     {jobData.slice((page - 1) * cardsPerPage, page * cardsPerPage).map((key) => (
-                        <Grid key={key} item xs={12} sm={6} md={4} lg={3} style={{ display: 'flex', justifyContent: 'center' }}>
+                        <Grid key={key} item>
                             <Link overlay underline="none" sx={{ color: 'text.tertiary', cursor: 'pointer' }} onClick={() => openPopUp(key)}>
-                                <Card sx={{width: 264, height: 264,   '&:hover': { boxShadow: 'md', borderColor: 'neutral.outlinedHoverBorder' }}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px' }}>
+                                <Card sx={{width: '264px', height: '264px',  '&:hover': { boxShadow: 'md', borderColor: 'neutral.outlinedHoverBorder' }}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px' }}>
                                     <CardMedia
                                         component="img"
                                         alt="placeholder"

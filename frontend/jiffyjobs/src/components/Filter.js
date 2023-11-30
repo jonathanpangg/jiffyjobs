@@ -220,9 +220,9 @@ export function Filter() {
             { bool ? <KeyboardArrowUpIcon className='arrow-pad'/> : <KeyboardArrowDownIcon className='arrow-pad'/> }
         </Grid>
         { bool && 
-          <div style={{ display: 'flex', whiteSpace: 'nowrap', minWidth: '250%', marginTop: '10px'}}>
+          <div style={{ display: 'flex', whiteSpace: 'nowrap', minWidth: '250%', marginTop: '10px' }}>
           {Array.from({ length: columns }, (_, columnIndex) => (
-            <div key={columnIndex} style={{ display: 'flex', flexDirection: 'column', marginRight: '16px'}}>
+            <div key={columnIndex} style={{ display: 'flex', flexDirection: 'column', marginRight: '16px' }}>
               {options
                 .slice(columnIndex * maxColumns, (columnIndex + 1) * maxColumns)
                 .map((option) => (
@@ -234,12 +234,12 @@ export function Filter() {
                           color='primary'
                           icon={
                             <span
-                              style={{ backgroundColor: 'white', width: '16px', height: '16px', display: 'block', borderRadius: '4px', border: '1px solid grey' }}
+                              style={{ backgroundColor: 'white', width: '14px', height: '14px', display: 'block', borderRadius: '4px', border: '1px solid grey' }}
                             ></span>
                           }
                           checkedIcon={
                             <span
-                              style={{ backgroundColor: 'gray', width: '16px', height: '16px', display: 'block', borderRadius: '4px', border: '1px solid grey' }}
+                              style={{ backgroundColor: 'gray', width: '14px', height: '14px', display: 'block', borderRadius: '4px', border: '1px solid grey' }}
                             ></span>
                           }
                         />
