@@ -432,8 +432,6 @@ export function JobBoard() {
         });
         console.log(jobDetails)
     };
-       
-    
     
     return (
         <div className={`outerCard2 ${openPop ? 'blur-background' : ''}`}>

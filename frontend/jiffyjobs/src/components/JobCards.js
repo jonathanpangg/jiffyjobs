@@ -8,7 +8,7 @@ export function JobCards ({ jobData, page, cardsPerPage, openPopUp }) {
                     {jobData.slice((page - 1) * cardsPerPage, page * cardsPerPage).map((key) => (
                         <Grid key={key} item>
                             <Link overlay underline="none" sx={{ color: 'text.tertiary', cursor: 'pointer' }} onClick={() => openPopUp(key)}>
-                                <Card sx={{width: '264px', height: '264px',  '&:hover': { boxShadow: 'md', borderColor: 'neutral.outlinedHoverBorder' }}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px' }}>
+                                <Card sx={{width: '264px', height: '264px', '&:hover': { boxShadow: 'md', borderColor: 'neutral.outlinedHoverBorder' }}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px' }}>
                                     <CardMedia
                                         component="img"
                                         alt="placeholder"

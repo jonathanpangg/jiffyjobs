@@ -43,16 +43,6 @@ export function StatusDashboard() {
         }
     }, [statusData]);
 
-    // function handleWithdraw(e, value) {
-    //     // console.log(e)
-    //     if (e.type === 'mouseover') {
-    //         setAppear(appear.set(value, true))
-    //     } else {
-    //         setAppear(appear.set(value, false))
-    //     }
-    // }
-        
-
     return (
         <div>
             <div className='header-one'>
