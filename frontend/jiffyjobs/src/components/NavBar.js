@@ -118,7 +118,7 @@ export function NavBar() {
                             </Tooltip>
                         </div>
                             <Menu
-                                sx={{ mt: '26px', alignItems: 'center', }}
+                                sx={{ mt: '31px', alignItems: 'center', }}
                                 id="menu-appbar"
                                 anchorEl={anchorElUser}
                                 anchorOrigin={{
