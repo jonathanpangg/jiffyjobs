@@ -467,7 +467,7 @@ export function JobBoard() {
                                     </div>}
                                 </div>
                             </div>
-                            <Typography style={{fontFamily: 'Outfit', fontSize:'20px', color:'#141414', fontWeight: '500', paddingLeft:'1%'}}>
+                            <Typography style={{fontFamily: 'Outfit', fontSize:'20px', color:'#141414', fontWeight: '500', paddingLeft:'1%', paddingBottom: '2%', lineHeight:'0.5'}}>
                                 {currentPop[1] && currentPop[1].length > 1 && currentPop[1][1]}
                             </Typography>
                         </div>
