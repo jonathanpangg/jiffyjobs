@@ -196,3 +196,8 @@
   background-color: #D9D9D9;
   border-radius: 5px;
 }
+
+.custom-pagination .MuiPaginationItem-root {
+  font-family: 'Outfit';
+  font-size: 14px;
+}
