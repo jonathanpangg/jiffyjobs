@@ -34,11 +34,8 @@ export function Signup() {
                 draggable: true,
                 progress: undefined,
                 theme: "light",
-                onClose: () => {
-                    navigate('/JobBoard');
-                    setShowToken(false);
-                  }
             });
+            navigate('/JobBoard');
             setShowToken(false);
         }
 
