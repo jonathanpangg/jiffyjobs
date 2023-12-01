@@ -564,8 +564,8 @@ export function JobBoard() {
                 </div>
             </Box>
             <Box className='job-table-box'>
-                <div style={{display: 'grid', justifyContent: 'center', alignItems: 'center'}}>
-                    <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>
+                <div style={{display: 'grid', justifyContent: 'center', alignItems: 'center',}}>
+                    <div style={{ display: 'flex', justifyContent: 'flex-start', width: '1116px', }}>
                         { render }
                         <div>
                             <Sort rawData={rawData} setRawData={setRawData} setJobData={setJobData} />

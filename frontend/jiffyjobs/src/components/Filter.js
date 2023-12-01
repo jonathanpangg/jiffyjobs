@@ -163,6 +163,7 @@ export function Filter() {
                     </FormGroup>
                   ))}
                 </div>
+              ))}
             </div>
           }
         </div>
@@ -174,14 +175,14 @@ export function Filter() {
     filterList,
     render: (
     <Box sx={{ flexGrow: 1 }}>
-       <Grid container columnSpacing={1} wrap="nowrap">
+       <Grid container columnSpacing={1} wrap="nowrap" style={{ width: '1116px', marginLeft: '0px'}}>
           {Object.keys(filterOptions).map((filterCategory) => (
             <div style={{ fontFamily: 'Outfit' }}>
               {renderFilters(filterCategory, expandMap.get(filterCategory))}
             </div>
           ))}   
       </Grid>
-      <div> 
+      <div style={{ width: '1116px'}}> 
           { (filterList.size > 0 || dateRangeSelected) && 
             <span className='filterby-tag' style={{fontFamily: 'Outfit', fontSize: '14px', fontWeight: 500, marginTop: '10px', position: 'relative', top: '1.5px',}}>Filtered By:</span>
           }
