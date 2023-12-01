@@ -11,7 +11,8 @@
   
 .filters {
     padding-left: 0.925%;
-    display: grid
+    display: grid;
+    font-family: 'Outfit';
 }
   
 .checkboxes {

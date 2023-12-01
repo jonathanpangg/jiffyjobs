@@ -2,11 +2,18 @@ import React from 'react';
 import { Box, Grid, Link, Card, CardMedia, Typography } from '@mui/material';
 
 export function JobCards ({ jobData, page, cardsPerPage, openPopUp }) {
+    const startIndex = (page - 1) * cardsPerPage;
+    const endIndex = page * cardsPerPage;
+    const pageJobData = jobData.slice(startIndex, endIndex);
+
+    const isLastPageNotFull = pageJobData.length < cardsPerPage;
+    const emptySlots = isLastPageNotFull ? cardsPerPage - pageJobData.length : 0;
+
     return (    
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}> 
-                <Grid container className='job-table-grid' sx={{ maxWidth: 'lg', justifyContent: 'center' }} rowSpacing={'20px'} columnSpacing={'20px'}> 
-                    {jobData.slice((page - 1) * cardsPerPage, page * cardsPerPage).map((key) => (
-                        <Grid key={key} item>
+        <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}> 
+            <Grid container sx={{ maxWidth: 'lg', justifyContent: 'center', columnGap: '50px', marginTop: '25px', marginLeft: '-25px'}}> 
+                {pageJobData.map((key) => (
+                    <Grid item key={key} xs={2.4} style={{ marginBottom: key === pageJobData.length - 1 ? '0' : '25px', }}>
                             <Link overlay underline="none" sx={{ color: 'text.tertiary', cursor: 'pointer' }} onClick={() => openPopUp(key)}>
                                 <Card sx={{width: '264px', height: '264px', '&:hover': { boxShadow: 'md', borderColor: 'neutral.outlinedHoverBorder' }}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px' }}>
                                     <CardMedia
@@ -51,8 +58,10 @@ export function JobCards ({ jobData, page, cardsPerPage, openPopUp }) {
                             </Link>
                         </Grid>
                     ))}
-                </Grid>
-            </Box>
-
+                    {Array.from({ length: emptySlots }, (key) => (
+                    <Grid item key={`empty-${key}`} xs={2.4} style={{ minWidth: 'calc(20% - 25px)' }} />
+                ))}
+            </Grid>
+        </Box>
     );
 }

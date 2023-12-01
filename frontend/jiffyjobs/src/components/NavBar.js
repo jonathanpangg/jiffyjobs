@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { styled, Tab, Tabs, Grid, Tooltip, Menu, Typography,
-       MenuItem } from '@mui/material';
+       Avatar, MenuItem } from '@mui/material';
 
 export function NavBar() {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -111,14 +111,16 @@ export function NavBar() {
                 // logged in
                   <>
                     <div style={{ position: 'absolute', left: 'calc(100% - 162px)', top: '51%', transform: 'translate(-10%, -50%)', display: 'flex', alignItems: 'center', }}>
-                        <div className='profile-picture'></div>
-                        <div style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'left', maxWidth: '120px', wordBreak: 'break-all', }}>
-                            <Tooltip onClick={handleOpenUserMenu} style={{ display: 'block' }}>
+                        <Tooltip onClick={handleOpenUserMenu} style={{ display: 'block' }}>
+                            <div className='profile-picture'>
+                                <Avatar sx={{ bgcolor: "#cccccc", marginRight: 10, color: "#5B5B5B", width: 25, height: 25, fontSize: '14px', fontFamily: 'Outfit'}}>{first[0] + last[0]}</Avatar>
+                            </div>
+                            <div style={{ display: 'inline-block', marginLeft: '5px', flexDirection: 'column', justifyContent: 'center', textAlign: 'left', maxWidth: '120px', wordBreak: 'break-all', }}>
                                 <span style={{ fontWeight: 500, fontSize: '16px', color: '#5B5B5B', fontFamily: 'Outfit', }}> {first} {last} </span> 
-                            </Tooltip>
-                        </div>
+                            </div>
+                        </Tooltip>
                             <Menu
-                                sx={{ mt: '26px', alignItems: 'center', }}
+                                sx={{ mt: '32.75px', alignItems: 'center', }}
                                 id="menu-appbar"
                                 anchorEl={anchorElUser}
                                 anchorOrigin={{

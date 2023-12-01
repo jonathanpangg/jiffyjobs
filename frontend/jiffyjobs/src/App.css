@@ -58,8 +58,8 @@
 }
 
 .profile-picture {
-  width: 20px; 
-  height: 20px;
+  width: 25px; 
+  height: 25px;
   background-color: #cccccc; 
   border-radius: 50%; 
   display: inline-block;
@@ -195,4 +195,9 @@
   color:black;
   background-color: #D9D9D9;
   border-radius: 5px;
+}
+
+.custom-pagination .MuiPaginationItem-root {
+  font-family: 'Outfit';
+  font-size: 14px;
 }

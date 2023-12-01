@@ -8,7 +8,7 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { Dialog, Divider, Typography, DialogContentText, DialogContent, 
         DialogActions, DialogTitle, Link, Button, Pagination, Grid, 
         CardContent, Card, Box, IconButton, Chip, TextField, Avatar,
-        Stack,  } from '@mui/material';
+        Stack, CardMedia } from '@mui/material';
 
 import dayjs from 'dayjs';
 
@@ -254,9 +254,9 @@ export function JobBoard() {
                 const user = [data.personal_info.first_name, data.personal_info.last_name, data.personal_info.school, data.personal_info.major, data.personal_info.grade, data.personal_info.personal_statement[0]];
                 setProfile(user);
                 console.log(profile);
+                setOpenSubmitProfile(true);
+                setGotProfile(true);
             })
-            setOpenSubmitProfile(true);
-            setGotProfile(true);
         } else {
             setOpenSubmitProfile(true);
         }
@@ -270,61 +270,65 @@ export function JobBoard() {
     // submit profile popup
     function SubmitProfilePopup({ open, onClose, onSubmit }) {
         return (
-            <Dialog open={open} onClose={onClose} maxWidth={"xl"} PaperProps={{ sx: { borderRadius: "15px", margin: 'auto', width: '500px' } }}>
-                <DialogTitle sx={{ textAlign: 'center', fontFamily: 'Outfit', marginTop: 2, }}>Are you sure you want to submit?</DialogTitle>
-                    <DialogContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '16px', margin: 'auto', border: '2px dashed #ccc', borderRadius: '5px', maxWidth: 'calc(100% - 150px)' }}>
-                        <Stack direction="row" spacing={2} alignItems="center" justifyContent="center" style={{ paddingBottom: 4, paddingTop: 20, marginRight: '60px'}} >
-                            <Avatar sx={{ bgcolor: '#D9D9D9', width: 45, height: 45, color: 'black', fontSize: '25px'}}>{profile[0] && profile[0].length > 0 && profile[0][0]}{profile[1] && profile[1].length > 0 && profile[1][0]}</Avatar>
-                            <Typography variant="subtitle1" style={{ fontFamily: 'Outfit', fontSize: '20px', fontWeight: 'bold' }}>
+            <Dialog open={open} onClose={onClose} PaperProps={{ sx: { borderRadius: "15px", margin: 'auto', width: '519px', height: '622px' } }}>
+                <DialogTitle sx={{ textAlign: 'center', fontFamily: 'Outfit', marginTop: 2, fontSize: '24px', fontWeight: 500 }}>Are you sure you want to submit?</DialogTitle>
+                    <DialogContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '16px', margin: 'auto', border: '2px dashed #ccc', borderRadius: '10px', width: '326px', height: '395px' }}>
+                        <Stack direction="row" spacing={2} alignItems="center" justifyContent="center" style={{ paddingBottom: 4, paddingTop: 20, marginRight: '70px'}} >
+                            <Avatar sx={{ bgcolor: '#D9D9D9', width: 50, height: 50, color: 'black', fontSize: '26.231px', fontFamily: 'Outfit', fontWeight: 400}}>{profile[0] && profile[0].length > 0 && profile[0][0]}{profile[1] && profile[1].length > 0 && profile[1][0]}</Avatar>
+                            <Typography style={{ fontFamily: 'Outfit', fontSize: '18px', fontWeight: 500 }}>
                                 {profile[0] && profile[0].length > 0 && profile[0]} {profile[1] && profile[1].length > 0 && profile[1]}
                             </Typography>
                         </Stack>
                         <form noValidate autoComplete="off" style={{ width: '100%' }}>
                             <Grid container alignItems="center" justifyContent="center" style={{ width: '100%' }}>
-                                <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 8 }}>
-                                    <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4'}}>School<span style={{"color": "red"}}>*</span></Typography>
+                                <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingLeft: '57px', paddingRight: '10px', paddingTop: '20px', width: '49px', height: '9px' }}>
+                                    <Typography align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4', fontWeight: 400, fontSize: '14px'}}>School<span style={{"color": "red"}}>*</span></Typography>
                                 </Grid>
-                                <Grid item xs={7} style={{ padding: 8 }}>
-                                    <TextField disabled defaultValue={profile[2] && profile[2].length > 0 && profile[2]} variant="outlined" size="small" className="inputSubmit" style={{ width: '200px' }}
-                                    InputProps={{ style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}}/>
+                                <Grid item xs={7} style={{ paddingRight: '43px', paddingTop: '20px', }}>
+                                    <TextField disabled defaultValue={profile[2] && profile[2].length > 0 && profile[2]} variant="outlined" size="small" className="inputSubmit" style={{ width: '161px', }}
+                                    InputProps={{ style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '12px' }}}/>
                                 </Grid>
-                                <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 8 }}>
-                                    <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4' }}>Major</Typography>
+
+                                <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingLeft: '57px', paddingRight: '10px', paddingTop: '10px', width: '37px', height: '9px' }}>
+                                    <Typography align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4', fontWeight: 400, fontSize: '14px'}}>Major</Typography>
                                 </Grid>
-                                <Grid item xs={7} style={{ padding: 8 }}>
-                                    <TextField disabled defaultValue={(profile[3] && profile[3].length > 0) ? profile[3][0] : ''} variant="outlined" size="small" style={{ width: '200px' }}
-                                    InputProps={{ style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}}/>
+                                <Grid item xs={7} style={{ paddingRight: '43px', paddingTop: '10px', }}>
+                                    <TextField disabled defaultValue={(profile[3] && profile[3].length > 0) ? profile[3][0] : ''} variant="outlined" size="small" style={{ width: '161px' }}
+                                    InputProps={{ style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '12px' }}}/>
                                 </Grid>
-                                <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 8 }}>
-                                    <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4' }}>Grade</Typography>
+
+                                <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingLeft: '57px', paddingRight: '10px', paddingTop: '10px', width: '37px', height: '9px' }}>
+                                    <Typography align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4', fontWeight: 400, fontSize: '14px' }}>Grade</Typography>
                                 </Grid>
-                                <Grid item xs={7} style={{ padding: 8 }}>
-                                    <TextField disabled defaultValue={(profile[4] && profile[4].length > 0) ? profile[4] : ''} variant="outlined" size="small" style={{ width: '200px' }}
-                                    InputProps={{ style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}}/>
+                                <Grid item xs={7} style={{ paddingRight: '43px', paddingTop: '10px',  }}>
+                                    <TextField disabled defaultValue={(profile[4] && profile[4].length > 0) ? profile[4] : ''} variant="outlined" size="small" style={{ width: '161px' }}
+                                    InputProps={{ style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '12px' }}}/>
                                 </Grid>
-                                <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 8 }}>
-                                    <Typography variant="subtitle1" align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4' }}>Email<span style={{"color": "red"}}>*</span></Typography>
+
+                                <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingLeft: '57px', paddingRight: '10px', paddingTop: '10px', width: '37px', height: '9px'  }}>
+                                    <Typography align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4', fontWeight: 400, fontSize: '14px' }}>Email<span style={{"color": "red"}}>*</span></Typography>
                                 </Grid>
-                                <Grid item xs={7} style={{ padding: 8 }}>
-                                    <TextField disabled defaultValue={userEmail} variant="outlined" size="small" className="inputSubmit" style={{ width: '200px' }}
-                                    InputProps={{style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px' }}}/>
+                                <Grid item xs={7} style={{ paddingRight: '43px', paddingTop: '10px',   }}>
+                                    <TextField disabled defaultValue={userEmail} variant="outlined" size="small" className="inputSubmit" style={{ width: '161px' }}
+                                    InputProps={{style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '12px' }}}/>
                                 </Grid>
-                                <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 8 }}>
-                                    <Typography diabled variant="subtitle1" align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4' }}>Bio</Typography>
+
+                                <Grid item xs={3} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingLeft: '57px', paddingRight: '10px', paddingTop: '10px', width: '37px', height: '9px' }}>
+                                    <Typography diabled align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4', fontWeight: 400, fontSize: '14px' }}>Bio</Typography>
                                 </Grid>
-                                <Grid item xs={7} style={{ paddingRight: 8, paddingTop: 8, paddingLeft: 8 }}>
-                                    <TextField disabled defaultValue={(profile[5] && profile[5].length > 5) ? profile[5] : ''} variant="outlined" multiline rows={6} size="small" style={{ width: '200px' }}
-                                    InputProps={{style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '14px', }}} />
+                                <Grid item xs={7} style={{ paddingRight: '43px', paddingTop: '10px', }}>
+                                    <TextField disabled defaultValue={(profile[5] && profile[5].length > 5) ? profile[5] : ''} variant="outlined" multiline rows={6} size="small" style={{ width: '161px',  }}
+                                    InputProps={{style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '12px', }}} />
                                 </Grid>
                             </Grid>
                         </form>            
                     </DialogContent>
-                    <Divider style={{ width: '100%', marginTop: '25px',  height: '4px' }} />
-                <DialogActions sx={{ marginRight: '15px' }}>
-                    <Button onClick={onClose} sx={{ border: '1px solid #5B5B5B', borderRadius: '8px', padding: '6px 12px', fontFamily: 'Outfit', textTransform: 'none', color: '#5B5B5B' }}>
+                    <Divider style={{ width: '100%', marginTop: '25px',  height: '2px' }} />
+                <DialogActions sx={{ p: '18.8px' }}>
+                    <Button onClick={onClose} sx={{ border: '1px solid #5B5B5B', borderRadius: '9.6px', fontFamily: 'Outfit', textTransform: 'none', color: '#5B5B5B', fontSize: '19.2px', width: '102.2px', height: '44.2px', fontWeight: 400 }}>
                         Cancel
                     </Button>
-                    <Button onClick={onSubmit} sx={{ border: '1px solid #D9D9D9', borderRadius: '8px', padding: '6px 12px', fontFamily: 'Outfit', textTransform: 'none', color: '#5B5B5B', backgroundColor: '#D9D9D9', '&:hover': {backgroundColor: '#D9D9D9'}}}>
+                    <Button onClick={onSubmit} sx={{ border: '1px solid #D9D9D9', borderRadius: '9.6px', fontFamily: 'Outfit', textTransform: 'none', color: '#5B5B5B', backgroundColor: '#D9D9D9', '&:hover': {backgroundColor: '#D9D9D9'}, fontSize: '19.2px', width: '162.2px', height: '44.2px', fontWeight: 400}}>
                         Submit Profile
                     </Button>
                 </DialogActions>
@@ -386,18 +390,12 @@ export function JobBoard() {
 
     };
 
-
-    // close popups
-    const handleApplyMore = () => {
-        setOpenCongratsPopup(false); 
-        setOpenPop(false); 
-    };
-
     // toggle save job
     const toggleSaveJob = (jobDetails) => {
         setIsJobSaved(prevState => {
             const currentJobs = prevState[0] || [];
             const updatedJobs = [...currentJobs, jobDetails];
+            console.log(updatedJobs);
             return {
                 ...prevState,
                 0: updatedJobs
@@ -437,9 +435,10 @@ export function JobBoard() {
         <div className={`outerCard2 ${openPop ? 'blur-background' : ''}`}>
             <Dialog open={openPop} onClose={closePop} className={`${openSubmitProfile || openCongratsPopup ? 'blur-effect' : ''}`} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
                 <div style={{ position: 'relative'}}>
-                    <img
-                        style={{ width: '100%', maxHeight: '30vh'}}
-                        src={currentPop[1] && currentPop[1].length > 1 && currentPop[1][0]}
+                    <CardMedia
+                        component="img"
+                        style={{ width: '100%', maxHeight: '30vh',}}
+                        image={currentPop[1] && currentPop[1].length > 1 && currentPop[1][0]}
                         alt="placeholder"
                     />
                 </div>
@@ -464,7 +463,7 @@ export function JobBoard() {
                                     </div>}
                                 </div>
                             </div>
-                            <Typography style={{fontFamily: 'Outfit', fontSize:'20px', color:'#141414', fontWeight: '500', paddingLeft:'1%'}}>
+                            <Typography style={{fontFamily: 'Outfit', fontSize:'20px', color:'#141414', fontWeight: '500', paddingLeft:'1%', paddingBottom: '2%', lineHeight:'0.5'}}>
                                 {currentPop[1] && currentPop[1].length > 1 && currentPop[1][1]}
                             </Typography>
                         </div>
@@ -543,7 +542,7 @@ export function JobBoard() {
                 </DialogContent>
                 <Divider style={{borderBottomWidth: '2px'}}/>
                     <DialogActions style={{ justifyContent: 'center' }}>
-                        <Link style={{cursor:'pointer'}} underline='none' onClick={handleOpenSubmitProfile}>
+                        <Link style={{cursor:'pointer'}} underline='none'>
                             <Card sx={{height: 40, width: '100%'}} style={{overflow:'hidden', borderRadius: '15px', background: "#D9D9D9", color: 'white'}}>
                             <CardContent style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingTop: '3%' }}>
                                 <Button onClick={handleOpenSubmitProfile} style={{ textTransform: 'none', width: '100%' }}>
@@ -577,8 +576,8 @@ export function JobBoard() {
                 {/* <button onClick={handleLogJobData}>Log Job Data</button> */}
             </Box>
             <JobCards jobData={jobData} page={page} cardsPerPage={cardsPerPage} openPopUp={openPopUp}/>
-            <div style={{ display: 'flex', justifyContent: 'center', padding: '1%', background: '#f3f3f3' }}>
-                <Pagination count={totalPages} page={page} onChange={(event, value) => setPage(value)} />
+            <div style={{ display: 'flex', justifyContent: 'center', padding: '1%', background: '#f3f3f3', fontFamily: 'Outfit', fontSize: '14px' }}>
+                <Pagination count={totalPages} page={page} onChange={(event, value) => setPage(value)}  className="custom-pagination" />
             </div>
             {openSubmitProfile && (<SubmitProfilePopup open={openSubmitProfile} onClose={handleCloseSubmitProfile} onSubmit={handleSubmitProfile}/>)}
             {openCongratsPopup && (<CongratsPopup open={openCongratsPopup} onClose={() => setOpenCongratsPopup(false)} onDashboardRedirect={handleToDashboard}/>)}
