@@ -32,11 +32,8 @@ export function Login() {
                 draggable: true,
                 progress: undefined,
                 theme: "light",
-                onClose: () => {
-                    navigate('/JobBoard');
-                    setShowToken(false);
-                  }
             });
+            navigate('/JobBoard');
             setShowToken(false);
         }
 
