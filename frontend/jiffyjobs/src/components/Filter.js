@@ -175,7 +175,7 @@ export function Filter() {
     filterList,
     render: (
     <Box sx={{ flexGrow: 1 }}>
-       <Grid container columnSpacing={1} wrap="nowrap" style={{ width: '1116px', marginLeft: '0px'}}>
+       <Grid container columnSpacing={1} wrap="nowrap" style={{ width: '1116px', marginLeft: '0px', marginRight: '0'}}>
           {Object.keys(filterOptions).map((filterCategory) => (
             <div style={{ fontFamily: 'Outfit' }}>
               {renderFilters(filterCategory, expandMap.get(filterCategory))}

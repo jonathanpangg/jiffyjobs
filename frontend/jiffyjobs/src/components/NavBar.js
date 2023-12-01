@@ -4,6 +4,15 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { styled, Tab, Tabs, Grid, Tooltip, Menu, Typography,
        Avatar, MenuItem } from '@mui/material';
 
+
+const StickyNavBar = styled(Grid)(({ theme }) => ({
+    position: 'sticky',
+    top: 0,
+    zIndex: 1100, 
+    backgroundColor: 'white',
+    boxShadow: '0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)' 
+}));
+
 export function NavBar() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const settings = ['Profile', 'Logout'];
@@ -92,7 +101,7 @@ export function NavBar() {
 
 
     return (
-        <Grid container style={{ alignItems: 'center', height: '59px', position: 'relative' }}>
+        <StickyNavBar container style={{ alignItems: 'center', height: '59px' }}>
             <h1 className='logo-font' onClick={AllJobs} style={{ height: '38px', marginTop: '15px' }}>
                 JIFFYJOBS
             </h1>
@@ -154,6 +163,6 @@ export function NavBar() {
                     </div>
                 </div>
              )}
-        </Grid>
+        </StickyNavBar>
     );
 }
