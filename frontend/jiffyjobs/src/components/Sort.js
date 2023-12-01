@@ -55,14 +55,14 @@ export function Sort({ rawData, setRawData, setJobData }) {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <Grid container columnSpacing={1}>
-                <div style={{width: '12.5%'}} className='filters'>
+                <div style={{width: '12.5%', whiteSpace: 'nowrap'}} className='filters'>
                     <Grid 
                       item
                       xs={1.5}
                       onClick={handleClick}
                       className='filter-tab'
                     >
-                        SortBy 
+                        Sort by 
                         { anchorEl 
                             ? <KeyboardArrowUpIcon className='arrow-pad'/> 
                             : <KeyboardArrowDownIcon className='arrow-pad'/>
@@ -76,7 +76,7 @@ export function Sort({ rawData, setRawData, setJobData }) {
                         onClose={() => setAnchorEl(null)}
                     >
                         {filterOptions.SortBy.map(option => (
-                            <MenuItem key={option} onClick={() => handleClose(option)}>
+                            <MenuItem key={option} onClick={() => handleClose(option)} style={{fontFamily: 'Outfit', fontSize: '14px'}}>
                                 {option}
                             </MenuItem>
                         ))}
