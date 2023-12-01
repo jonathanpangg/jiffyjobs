@@ -106,7 +106,7 @@ export function NavBar() {
                 JIFFYJOBS
             </h1>
             <div style={{ flex: '1', display: 'flex', justifyContent: 'flex-end', maxWidth: 'calc(100% - 400px)' }}> 
-                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" textColor='inherit' TabIndicatorProps={{ style: { background: '#5B5B5B' } }}>
+                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" textColor='inherit' TabIndicatorProps={{ style: { background: '#5B5B5B',height: '4px', borderRadius: '5px'} }}>
                     <CustomTab label="All Job" {...allyProps(0)} onClick={AllJobs} />
                     {isLoggedIn() ? (<CustomTab label="Dashboard" {...allyProps(1)} onClick={goToDashboard} />) : (<></>)}
                 </Tabs>
