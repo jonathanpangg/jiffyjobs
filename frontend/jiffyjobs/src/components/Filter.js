@@ -163,7 +163,6 @@ export function Filter() {
                     </FormGroup>
                   ))}
                 </div>
-              ))}
             </div>
           }
         </div>

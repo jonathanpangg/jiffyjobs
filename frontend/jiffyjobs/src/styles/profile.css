@@ -18,16 +18,19 @@
 .profile-background {
     background-color: #f3f3f3;
     height: 100vh;
+    padding-top: 50px;
   }
   
   .basicinformation
   {
     color:#5b5b5b;
     text-align:left;
-    vertical-align:text-top;
+    /* vertical-align:text-top; */
     font-size:medium;
     font-family:Outfit;
     line-height:auto;
+    margin-top: 100px;
+    padding-top: 1000px;
     border-style:hidden;
     outline:none;
     width:111px;
@@ -62,7 +65,7 @@
   color: #5b5b5b;
   font-family: Outfit;
   position: 'fixed';
-
+  left: 50px;
 }
 .profile-components-bio
 {
@@ -70,29 +73,29 @@
   color: #5b5b5b;
   font-family: Outfit;
   position: relative;
-  top: -20px; 
+  top: -45px; 
+  /* left: 15px; */
 }
 
 .profile-box-fixed .MuiInputBase-input
 {
   color:black;
   background-color: lightgray;
-  font-size:16px;  
+  font-size:13px;  
   font-family:Outfit;
   width: 290px;
-  height: 8px;
+  height: 0px;
   position:relative;
   border-radius:6px;
-
 }
 
 .profile-box .MuiInputBase-input
 {
   color:black;
-  font-size:16px;  
+  font-size:13px;  
   font-family:Outfit;
   width: 290px;
-  height: 8px;
+  height: 0px;
   position:relative;
   border-radius:6px;
 }
@@ -100,10 +103,9 @@
 .profile-box-bio .MuiInputBase-input
 {
   color:black;
-  font-size:16px;  
+  font-size:13px;  
   font-family:Outfit;
-  width: 29000px;
-  /* position:relative; */
+  position:relative;
   /* border-radius:6px; */
 }
 
@@ -138,7 +140,7 @@
 
 .dropdown-box .MuiInputBase-input{
   color:black;
-  font-size:16px;  
+  font-size:13px;  
   font-family:Outfit;
   width: 250px;
   padding-left: 15px;

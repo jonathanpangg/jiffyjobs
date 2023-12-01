@@ -15,7 +15,7 @@ export function JobCards ({ jobData, page, cardsPerPage, openPopUp }) {
                 {pageJobData.map((key) => (
                     <Grid item key={key} xs={2.4} style={{ marginBottom: key === pageJobData.length - 1 ? '0' : '25px', }}>
                             <Link overlay underline="none" sx={{ color: 'text.tertiary', cursor: 'pointer' }} onClick={() => openPopUp(key)}>
-                                <Card sx={{width: 264, height: 264,   '&:hover': { boxShadow: 'md', borderColor: 'neutral.outlinedHoverBorder' }}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px' }}>
+                                <Card sx={{width: '264px', height: '264px', '&:hover': { boxShadow: 'md', borderColor: 'neutral.outlinedHoverBorder' }}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px' }}>
                                     <CardMedia
                                         component="img"
                                         alt="placeholder"
