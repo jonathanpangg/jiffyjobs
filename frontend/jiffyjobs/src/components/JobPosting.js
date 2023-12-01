@@ -70,22 +70,6 @@ export function JobPosting() {
         times: []
     })
 
-    function handleError() {
-        const isEndTimeInvalid = startTime && endTime && dayjs(endTime).isBefore(dayjs(startTime));
-        setError({
-            titleError: val.title === '',
-            nameError: val.name === '',
-            locationError: val.location === '',
-            payError: val.pay === '' || val.pay === 0,
-            descriptionError: val.description === '',
-            categoryError: selectedCategories.length === 0,
-            dateError: !selectedDate,
-            startTimeError: !startTime,
-            endTimeError: !endTime || isEndTimeInvalid,
-        })
-    }
-    
-
     // resets the data 
     function empytyVals() {
         setVal({
@@ -116,6 +100,22 @@ export function JobPosting() {
         setSelectedCategories([]);
     }
 
+    // handles the errors
+    function handleError() {
+        const isEndTimeInvalid = startTime && endTime && dayjs(endTime).isBefore(dayjs(startTime));
+        setError({
+            titleError: val.title === '',
+            nameError: val.name === '',
+            locationError: val.location === '',
+            payError: val.pay === '' || val.pay === 0,
+            descriptionError: val.description === '',
+            categoryError: selectedCategories.length === 0,
+            dateError: !selectedDate,
+            startTimeError: !startTime,
+            endTimeError: !endTime || isEndTimeInvalid,
+        })
+    }
+
     // changes the vals for all except date and time
     function handleValues(event) {
         const { id, value } = event.target;
@@ -136,25 +136,56 @@ export function JobPosting() {
         });
     }
 
+    // handles the category change
+    const handleCategoryChange = (event) => {
+        setSelectedCategories(event.target.value); 
+   };
+
+   // handles the delete category
+   const handleDeleteCategory = (categoryToDelete) => {
+       setSelectedCategories((categories) => categories.filter((category) => category !== categoryToDelete));
+   };
+
     // handles the date calendar data
     function handleDate(event) {
-        setSelectedDate(event);
-        setVal({
-            title: val.title,
-            name: val.name,
-            location: val.location,
-            pay: val.pay,
-            description: val.description,
-            category: val.category, 
+        const newDate = dayjs(event);
+        setSelectedDate(newDate);
+        setVal(prevVal => ({
+            ...prevVal,
             date: {
-                month: event.$M+1,
-                day: event.$D,
-                year: event.$y
+                month: newDate.month() + 1, 
+                day: newDate.date(),
+                year: newDate.year()
             },
-            startTime: val.startTime,
-            endTime: val.endTime,
-            times: val.times
-        })
+            startTime: prevVal.startTime,
+            endTime: prevVal.endTime
+        }));
+    }
+
+    // handles the start time
+    function handleStartTime(time) {
+        const newStartTime = dayjs(time);
+        setStartTime(newStartTime);
+        setVal(prevVal => ({
+            ...prevVal,
+            startTime: {
+                hour: newStartTime.hour(),
+                min: newStartTime.minute()
+            }
+        }));
+    }
+    
+    // handles the end time
+    function handleEndTime(time) {
+        const newEndTime = dayjs(time);
+        setEndTime(newEndTime);
+        setVal(prevVal => ({
+            ...prevVal,
+            endTime: {
+                hour: newEndTime.hour(),
+                min: newEndTime.minute()
+            }
+        }));
     }
 
     // opens the pop up
@@ -231,18 +262,6 @@ export function JobPosting() {
             }
         }
     }, [openSecondPop])
-
-
-    // handles the category change
-    const handleCategoryChange = (event) => {
-         setSelectedCategories(event.target.value); 
-    };
-
-    // handles the delete category
-    const handleDeleteCategory = (categoryToDelete) => {
-        setSelectedCategories((categories) => categories.filter((category) => category !== categoryToDelete));
-    };
-
 
     // first job slide
     const firstJobSlide = () => {
@@ -347,7 +366,7 @@ export function JobPosting() {
                                     <DatePicker
                                         value={selectedDate}
                                         onChange={(newValue) => {
-                                            setSelectedDate(newValue);
+                                            handleDate(newValue);
                                         }}
                                         renderInput={(params) => (
                                             <TextField {...params} style={{ fontFamily: 'Outfit', fontSize: '14px', borderRadius: '10px' }}/>
@@ -381,7 +400,7 @@ export function JobPosting() {
                                         <TimePicker 
                                             value={startTime}
                                             onChange={(newValue) => {
-                                                setStartTime(newValue);
+                                                handleStartTime(newValue);
                                             }}
                                             renderInput={(params) => (
                                                 <TextField {...params} style={{ fontFamily: 'Outfit', fontSize: '14px', borderRadius: '10px' }}/>
@@ -417,7 +436,7 @@ export function JobPosting() {
                                         <TimePicker 
                                             value={endTime}
                                             onChange={(newValue) => {
-                                                setEndTime(newValue);
+                                                handleEndTime(newValue);
                                             }}
                                             renderInput={(params) => (
                                                 <TextField {...params} style={{ fontFamily: 'Outfit', fontSize: '14px', borderRadius: '10px' }}/>
