@@ -102,14 +102,18 @@ export function JobPosting() {
             },
             startTime: {
                 hour: '0',
-                min: '0'
+                min: '0',
             },
             endTime: {
                 hour: '0',
-                min: '0'
-            }, 
-            times: []
-        })
+                min: '0',
+            },
+            times: [],
+        });
+        setSelectedDate(null);
+        setStartTime(null);
+        setEndTime(null);
+        setSelectedCategories([]);
     }
 
     // changes the vals for all except date and time
@@ -238,6 +242,7 @@ export function JobPosting() {
     const handleDeleteCategory = (categoryToDelete) => {
         setSelectedCategories((categories) => categories.filter((category) => category !== categoryToDelete));
     };
+
 
     // first job slide
     const firstJobSlide = () => {
@@ -392,7 +397,7 @@ export function JobPosting() {
                                                     borderColor: error.dateError ? 'red' : undefined
                                                 },
                                             }}
-                                            minTime={val.date.year === new Date().getFullYear() && val.date.month === new Date().getMonth()+1 && val.date.day === new Date().getDate() ? dayjs(new Date()) : undefined}
+                                            minTime={dayjs(selectedDate).isSame(dayjs(), 'day') ? dayjs().add(1, 'minute') : undefined}
                                         />
                                     </LocalizationProvider>
                                     {error.startTimeError && (
@@ -427,7 +432,7 @@ export function JobPosting() {
                                                     borderRadius: '10px',
                                                 },
                                             }}
-                                            minTime={val.date.year === new Date().getFullYear() && val.date.month === new Date().getMonth()+1 && val.date.day === new Date().getDate() ? dayjs(new Date()) : undefined}
+                                            minTime={dayjs(selectedDate).isSame(dayjs(), 'day') ? dayjs().add(1, 'minute') : undefined}
                                         />
                                     </LocalizationProvider>
                                     {error.endTimeError && (
@@ -545,6 +550,9 @@ export function JobPosting() {
 
         handleError()
         if (!(error.titleError === true || error.nameError === true || error.locationError === true || error.payError === true || error.descriptionError === true || error.categoryError === true)) {
+            console.log('val.date:', val.date);
+    console.log('val.startTime:', val.startTime);
+    console.log('val.endTime:', val.endTime);
             const categoryList = selectedCategories; 
             const requestOptions = {
                 method: 'POST',
