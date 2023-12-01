@@ -154,8 +154,9 @@ export function Login() {
     return (
         <> 
         <NavBar/> 
-            <div className={ 'outerCard1' }>
-            <Card sx={{ maxWidth: 650, maxHeight: 700, mx: 'auto', borderRadius: '20px'}}>
+            <div className={ 'outerCard' } style={{paddingTop: '30px'}}>
+            <div style={{transform: 'scale(0.80)', }}>
+            <Card sx={{ maxWidth: 650, maxHeight: 7000, mx: 'auto', borderRadius: '20px'}}>
                 <CardContent style={{ textAlign: 'center' }}>
                     <div style={{ fontFamily: 'Outfit', fontWeight: 'bold', fontSize: '28px', textAlign: 'center', marginTop: '30px', marginBottom: '15px'}}>
                         Welcome to JIFFYJOBS!
@@ -217,6 +218,7 @@ export function Login() {
                     </form>
                     </CardContent>
                 </Card>
+                </div>
             </div>
         </>
     )

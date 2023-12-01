@@ -70,7 +70,8 @@ export function Dashboard() {
     }, [showToken])
 
     return (
-        <div className='outerCard' style={{paddingTop: '50px'}}>
+        <div className='outerCard' style={{paddingTop: '20px'}}>
+            <div style={{transform: 'scale(0.80)', }}>
             <Box className='outer-box'>
                 <div className='inner-div'>
                     <Card elevation='4' style={{display: 'flex', overflow: 'hidden', borderRadius: '15px', width: "100%"}}> 
@@ -87,6 +88,7 @@ export function Dashboard() {
                     </Card>
                 </div>
             </Box> 
+            </div>
         </div>
     );
 }
