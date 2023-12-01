@@ -40,10 +40,10 @@ export function CongratsPopup({ open, onClose}) {
             </DialogContent>
             <Divider style={{ width: '100%', height: '2px', paddingTop: '14px', fontWeight: 500 }} />
             <DialogActions style={{ justifyContent: 'center', padding: '17.9px' }}>
-                <Button onClick={handleToDashboard} sx={{ border: '1px solid #5B5B5B', borderRadius: '8px', textTransform: 'none', color: '#5B5B5B', fontFamily: 'Outfit', fontSize: '19.2px', width: '199.2px', height: '44.2px', fontWeight: 400}}>
+                <Button onClick={handleToDashboard} sx={{ border: '1px solid #5B5B5B', borderRadius: '9.6px', textTransform: 'none', color: '#5B5B5B', fontFamily: 'Outfit', fontSize: '19.2px', width: '199.2px', height: '44.2px', fontWeight: 400}}>
                     View Dashboard
                 </Button>
-                <Button onClick={handleApplyMore} sx={{ border: '1px solid #D9D9D9', borderRadius: '8px', textTransform: 'none', color: '#5B5B5B', backgroundColor: '#D9D9D9', '&:hover': {backgroundColor: '#D9D9D9'}, fontFamily: 'Outfit', fontSize: '19.2px', width: '199.2px', height: '44.2px', fontWeight: 400 }}>
+                <Button onClick={handleApplyMore} sx={{ border: '1px solid #D9D9D9', borderRadius: '9.6px', textTransform: 'none', color: '#5B5B5B', backgroundColor: '#D9D9D9', '&:hover': {backgroundColor: '#D9D9D9'}, fontFamily: 'Outfit', fontSize: '19.2px', width: '199.2px', height: '44.2px', fontWeight: 400 }}>
                     Back to Job Board
                 </Button>
             </DialogActions>
