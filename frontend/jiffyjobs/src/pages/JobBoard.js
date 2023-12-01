@@ -430,8 +430,6 @@ export function JobBoard() {
         });
         console.log(jobDetails)
     };
-       
-    
     
     return (
         <div className={`outerCard2 ${openPop ? 'blur-background' : ''}`}>
@@ -559,21 +557,21 @@ export function JobBoard() {
             </Dialog>
             <JobPosting/> 
             <Box className='job-table-box'>
-                <div className='job-table-inner' style={{ paddingTop: '50px' }}>
-                    <Typography style={{fontFamily: 'Outfit', fontSize: 'xx-large', justifyContent: 'center', alignItems: 'center', textAlign: 'start'}}>
+                <div className='job-table-inner' style={{ paddingTop: '50px', width: '1116px'}}>
+                    <Typography style={{fontFamily: 'Outfit', fontSize: '20px', justifyContent: 'center', alignItems: 'center', textAlign: 'start'}}>
                         Job Board 
                     </Typography>
                 </div>
             </Box>
             <Box className='job-table-box'>
-                <div className='job-table-inner'>
+                <div style={{display: 'grid', justifyContent: 'center', alignItems: 'center'}}>
                     <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>
                         { render }
                         <div>
                             <Sort rawData={rawData} setRawData={setRawData} setJobData={setJobData} />
                         </div>
                     </div>
-                    <Divider width='100%'/>
+                    <Divider width='1116px'/>
                 </div>
                 {/* <button onClick={handleLogJobData}>Log Job Data</button> */}
             </Box>

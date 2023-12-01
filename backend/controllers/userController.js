@@ -14,7 +14,6 @@ import Jobs from "../models/JobSchema.js"
 export const getUserinfo = async(req, res) => {
     const mail = req.params.email;
     const role = req.params.role;
-    // isjobseeker = boolean from the login database, get the user information.
 
     try {
         if (role === "seeker") {
@@ -285,7 +284,6 @@ export const saveJobs = async(req, res) => {
                 { $pull: { jobs_saved: { _id: job_id } } }
             );
         } else {
-            console.log("here")
             seeker.jobs_saved.push(job_id);
         }
 

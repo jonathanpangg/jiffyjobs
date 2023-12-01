@@ -590,6 +590,7 @@ export function JobPosting() {
                 })
             }
             const route = "https://jiffyjobs-api-production.up.railway.app/api/jobs/create"
+            console.log(requestOptions)
             fetch(route, requestOptions)
                 .then((response) => {
                     response.json()
