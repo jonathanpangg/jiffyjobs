@@ -3,8 +3,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
 import ClearIcon from '@mui/icons-material/Clear';
-import StarIcon from '@mui/icons-material/Star';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
+import StarBorderRounded from '@mui/icons-material/StarBorderRounded';
+import StarRoundedIcon from "@mui/icons-material/StarRounded"
 import { Dialog, Divider, Typography, DialogContentText, DialogContent, 
         DialogActions, DialogTitle, Link, Button, Pagination, Grid, 
         CardContent, Card, Box, IconButton, Chip, TextField, Avatar,
@@ -457,8 +457,8 @@ export function JobBoard() {
                                 <div style={{ display: 'inline-block', position: 'relative' }}>
                                     <IconButton onClick={() => toggleSaveJob(currentPop[0][0])} style={{ borderRadius: '10px' }}>
                                         {isJobSaved[currentPop] ? 
-                                            <StarIcon style={{ color: '#A4A4A4' }} /> : 
-                                            <StarBorderIcon style={{ color: '#A4A4A4' }} />}
+                                            <StarRoundedIcon style={{ width: '35px', height: '35px', color: '#A4A4A4' }} /> : 
+                                            <StarBorderRounded style={{ width: '35px', height: '35px', color: '#A4A4A4' }} />}
                                     </IconButton>
                                     {showSavedMessage && <div style={{ position: 'absolute', bottom: '-25px', left: '50%', transform: 'translateX(-50%)', fontSize: '12px', fontFamily: 'Outfit', textAlign: 'center' }}>
                                     {isJobSaved ? 'Job Saved' : 'Job Unsaved'}
