@@ -325,10 +325,10 @@ export function JobBoard() {
                     </DialogContent>
                     <Divider style={{ width: '100%', marginTop: '25px',  height: '2px' }} />
                 <DialogActions sx={{ p: '18.8px' }}>
-                    <Button onClick={onClose} sx={{ border: '1px solid #5B5B5B', borderRadius: '8px', fontFamily: 'Outfit', textTransform: 'none', color: '#5B5B5B', fontSize: '19.2px', width: '102.2px', height: '44.2px', fontWeight: 400 }}>
+                    <Button onClick={onClose} sx={{ border: '1px solid #5B5B5B', borderRadius: '9.6px', fontFamily: 'Outfit', textTransform: 'none', color: '#5B5B5B', fontSize: '19.2px', width: '102.2px', height: '44.2px', fontWeight: 400 }}>
                         Cancel
                     </Button>
-                    <Button onClick={onSubmit} sx={{ border: '1px solid #D9D9D9', borderRadius: '8px', fontFamily: 'Outfit', textTransform: 'none', color: '#5B5B5B', backgroundColor: '#D9D9D9', '&:hover': {backgroundColor: '#D9D9D9'}, fontSize: '19.2px', width: '162.2px', height: '44.2px', fontWeight: 400}}>
+                    <Button onClick={onSubmit} sx={{ border: '1px solid #D9D9D9', borderRadius: '9.6px', fontFamily: 'Outfit', textTransform: 'none', color: '#5B5B5B', backgroundColor: '#D9D9D9', '&:hover': {backgroundColor: '#D9D9D9'}, fontSize: '19.2px', width: '162.2px', height: '44.2px', fontWeight: 400}}>
                         Submit Profile
                     </Button>
                 </DialogActions>
@@ -390,18 +390,12 @@ export function JobBoard() {
 
     };
 
-
-    // close popups
-    const handleApplyMore = () => {
-        setOpenCongratsPopup(false); 
-        setOpenPop(false); 
-    };
-
     // toggle save job
     const toggleSaveJob = (jobDetails) => {
         setIsJobSaved(prevState => {
             const currentJobs = prevState[0] || [];
             const updatedJobs = [...currentJobs, jobDetails];
+            console.log(updatedJobs);
             return {
                 ...prevState,
                 0: updatedJobs
