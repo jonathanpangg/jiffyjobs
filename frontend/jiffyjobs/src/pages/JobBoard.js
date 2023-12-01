@@ -42,8 +42,11 @@ export function JobBoard() {
     const [isJobSaved, setIsJobSaved] = useState({});
     const [showSavedMessage, setShowSavedMessage] = useState(false);
 
-    const [ userEmail, setEmail ] = useState(localStorage.getItem("email"));
+    const [ userEmail, setUserEmail ] = useState(localStorage.getItem("email"));
     const [ userRole, setUserRole ] = useState(localStorage.getItem("user"));
+
+    const [savedJobs, setSavedJobs] = useState([]) 
+    const [jobSaved, setJobSaved] = useState(false)
 
     const navigate = useNavigate();
 
@@ -152,10 +155,10 @@ export function JobBoard() {
                         setBackground("")
                     }
 
-                    const savedStatus = {};
-                data.forEach(job => {
-                    savedStatus[job.id] = false; // Replace 'job.id' with your unique job identifier
-                });
+                     const savedStatus = {};
+                 data.forEach(job => {
+                     savedStatus[job.id] = false; // Replace 'job.id' with your unique job identifier
+                 });
                 setIsJobSaved(savedStatus);
                 })
                 .catch((error) => {
@@ -210,15 +213,16 @@ export function JobBoard() {
         }
     }, [openPopUp])
 
-    function handleLogJobData() {
-        console.log('Data', jobData)
-        console.log('Raw', rawData)
-        console.log('Job Saved', isJobSaved)
-    }
+    // function handleLogJobData() {
+    //     console.log('Data', jobData)
+    //     console.log('Raw', rawData)
+    //     console.log('Job Saved', isJobSaved)
+    // }
 
     useEffect(()=> {
         console.log(userEmail);
         console.log(userRole);
+        console.log(savedJobs);
     })
 
     // open submit profile popup
@@ -391,16 +395,7 @@ export function JobBoard() {
     };
 
     // toggle save job
-    const toggleSaveJob = (jobDetails) => {
-        setIsJobSaved(prevState => {
-            const currentJobs = prevState[0] || [];
-            const updatedJobs = [...currentJobs, jobDetails];
-            console.log(updatedJobs);
-            return {
-                ...prevState,
-                0: updatedJobs
-            };
-        });
+    const toggleSaveJob = async (jobDetails) => {
     
         setShowSavedMessage(true);
         setTimeout(() => setShowSavedMessage(false), 1000);
@@ -415,7 +410,7 @@ export function JobBoard() {
         }
 
         const route = "https://jiffyjobs-api-production.up.railway.app/api/users/save";
-        fetch(route, save)
+        await fetch(route, save)
         .then(async (response) => {
             const res = await response.json()
             if (!response.ok) {
@@ -423,13 +418,50 @@ export function JobBoard() {
             } 
             return res;
         })
-        .then((data) => {
+        .then(async (data) => {
+            await getJobs();
+            await setJobSaved(savedJobs.includes(jobDetails));
+            setIsJobSaved(prevState => ({
+                ...prevState,
+                [jobDetails]: !prevState[jobDetails] 
+            }));
+
+
+            setShowSavedMessage(true);
             console.log(data);
         }).catch((error) => {
             console.log(error);
         });
         console.log(jobDetails)
     };
+
+    async function getJobs() {
+        const route = `https://jiffyjobs-api-production.up.railway.app/api/users/saved/${userEmail}`
+
+        fetch(route)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                const newJobData = data.map(function(obj) {
+                    return obj._id
+                });
+                setSavedJobs(newJobData);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
+    useEffect(() => {
+        if (userEmail) {
+            getJobs();
+        }
+    }, [userEmail]);
+
     
     return (
         <div className={`outerCard2 ${openPop ? 'blur-background' : ''}`}>
@@ -454,12 +486,12 @@ export function JobBoard() {
                                 </Typography>
                                 <div style={{ display: 'inline-block', position: 'relative' }}>
                                     <IconButton onClick={() => toggleSaveJob(currentPop[0][0])} style={{ borderRadius: '10px' }}>
-                                        {isJobSaved[currentPop] ? 
+                                        {savedJobs.includes(currentPop[0] && currentPop[0].length > 1 && currentPop[0][0]) ? 
                                             <StarRoundedIcon style={{ width: '27.046px', height: '27.046px', color: '#A4A4A4' }} /> : 
                                             <StarBorderRounded style={{ width: '27.046px', height: '27.046px', color: '#A4A4A4' }} />}
                                     </IconButton>
                                     {showSavedMessage && <div style={{ position: 'absolute', bottom: '-18px', left: '50%', transform: 'translateX(-50%)', fontSize: '10px', fontFamily: 'Outfit', fontWeight: 500, textAlign: 'center' }}>
-                                    {isJobSaved ? 'Job Saved' : 'Job Unsaved'}
+                                    {jobSaved ? 'Job Unsaved' : 'Job Saved'}
                                     </div>}
                                 </div>
                             </div>
