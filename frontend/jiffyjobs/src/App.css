@@ -155,9 +155,22 @@
 .outerCard1 {
   background-color: #f3f3f3;
   height: 100vh;
-  padding: 2%;
+  padding: 1%;
   align-items: center;
 }
+
+.outerCard3 {
+  background-color: #f3f3f3;
+  height: 87.5vh;
+  align-items: center;
+}
+
+.outerCard4 {
+  background-color: #f3f3f3;
+  height: 88.75vh;
+  align-items: center;
+}
+
 
 .orLine-container {
   display: flex;

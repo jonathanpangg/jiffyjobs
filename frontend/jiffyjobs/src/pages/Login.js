@@ -39,11 +39,6 @@ export function Login() {
 
     }, [showToken])
 
-    // go to the job board
-    const AllJobs = () => {
-        navigate('/JobBoard')
-    }
-
     // go to sign up page
     const handleSignUp = () => {
         navigate('/signup');
@@ -154,8 +149,9 @@ export function Login() {
     return (
         <> 
         <NavBar/> 
-            <div className={ 'outerCard1' }>
-            <Card sx={{ maxWidth: 650, maxHeight: 700, mx: 'auto', borderRadius: '20px'}}>
+            <div className={ 'outerCard3' } style={{paddingTop: '30px'}} >
+            <div style={{transform: 'scale(0.90)', marginTop: '30px', }}>
+            <Card sx={{ maxWidth: 650, maxHeight: 7000, mx: 'auto', borderRadius: '20px'}}>
                 <CardContent style={{ textAlign: 'center' }}>
                     <div style={{ fontFamily: 'Outfit', fontWeight: 'bold', fontSize: '28px', textAlign: 'center', marginTop: '30px', marginBottom: '15px'}}>
                         Welcome to JIFFYJOBS!
@@ -217,6 +213,7 @@ export function Login() {
                     </form>
                     </CardContent>
                 </Card>
+                </div>
             </div>
         </>
     )

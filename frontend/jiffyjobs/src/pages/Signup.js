@@ -181,12 +181,18 @@ export function Signup() {
             }
         });
     }
+
+    // checks if there are any errors
+    const hasErrors = () => {
+        return Object.values(error).some(e => e);
+    };
     
     return (
         <>
         <NavBar/>
-            <div className={ 'outerCard1' }>
-                <Card sx={{ maxWidth: 650, maxHeight: 685, mx: 'auto', borderRadius: '20px'}}>
+            <div className={hasErrors() ? 'outerCard' : 'outerCard4'} style={{paddingTop: '20px'}}>
+                <div style={{transform: 'scale(0.90)', marginTop: '-5px'}} >
+                <Card sx={{ maxWidth: 650, maxHeight: 7000, mx: 'auto', borderRadius: '20px',}}>
                 <CardContent style={{ textAlign: 'center' }}>
                     <div style={{ fontFamily: 'Outfit', fontWeight: 'bold', fontSize: '28px', textAlign: 'center', marginTop: '30px', marginBottom: '15px'}}>
                         Welcome to JIFFYJOBS!
@@ -299,6 +305,7 @@ export function Signup() {
                     </form>
                 </CardContent>
                 </Card>
+                </div>
             </div>
         </>
     )

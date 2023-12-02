@@ -4,6 +4,15 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { styled, Tab, Tabs, Grid, Tooltip, Menu, Typography,
        Avatar, MenuItem } from '@mui/material';
 
+
+const StickyNavBar = styled(Grid)(({ theme }) => ({
+    position: 'sticky',
+    top: 0,
+    zIndex: 1100, 
+    backgroundColor: 'white',
+    boxShadow: '0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)' 
+}));
+
 export function NavBar() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const settings = ['Profile', 'Logout'];
@@ -37,7 +46,8 @@ export function NavBar() {
 
     // go to job board
     const AllJobs = () => {
-        navigate('/JobBoard')
+        navigate('/JobBoard');
+        setValue(0); 
     }
 
     // go to profile
@@ -90,15 +100,22 @@ export function NavBar() {
         };
     }
 
+    useEffect(() => {
+        const currentPath = location.pathname.toLowerCase();
+        const newValue = currentPath === '/jobboard' || currentPath === '/' || currentPath === '' ? 0 
+                        : currentPath === '/dashboard' ? 1 
+                        : -1;
+        setValue(newValue);
+    }, [location]);
 
     return (
-        <Grid container style={{ alignItems: 'center', height: '59px', position: 'relative' }}>
-            <h1 className='logo-font' onClick={AllJobs} style={{ height: '38px', marginTop: '15px' }}>
+        <StickyNavBar container style={{ alignItems: 'center', height: '59px' }}>
+            <h1 className='logo-font' onClick={AllJobs} style={{ height: '38px', marginTop: '15px', cursor:'pointer' }}>
                 JIFFYJOBS
             </h1>
             <div style={{ flex: '1', display: 'flex', justifyContent: 'flex-end', maxWidth: 'calc(100% - 400px)' }}> 
-                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" textColor='inherit' TabIndicatorProps={{ style: { background: '#5B5B5B' } }}>
-                    <CustomTab label="All Job" {...allyProps(0)} onClick={AllJobs} />
+                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" textColor='inherit' TabIndicatorProps={{ style: { background: '#5B5B5B',height: '4px', borderRadius: '5px'} }}>
+                    <CustomTab label="All Jobs" {...allyProps(0)} onClick={AllJobs} />
                     {isLoggedIn() ? (<CustomTab label="Dashboard" {...allyProps(1)} onClick={goToDashboard} />) : (<></>)}
                 </Tabs>
             </div>
@@ -154,6 +171,6 @@ export function NavBar() {
                     </div>
                 </div>
              )}
-        </Grid>
+        </StickyNavBar>
     );
 }

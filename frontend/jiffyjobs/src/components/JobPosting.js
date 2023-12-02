@@ -44,7 +44,6 @@ export function JobPosting() {
     const [startTime, setStartTime] = useState(null);
     const [endTime, setEndTime] = useState(null);
     const [token, setToken] = useState(localStorage.getItem("token"));
-    const navigate = useNavigate();
     
     // useState for the data
     const [val, setVal] = useState({
@@ -325,12 +324,12 @@ export function JobPosting() {
                 <Divider/>
                     <DialogActions>
                         <Card sx={{height: 40, width: '7%'}} square={false} style={{overflow:'hidden', borderRadius: '10px', color: '#5B5B5B', border: "1px solid #5B5B5B", transform: 'translateX(-31.5px)'}}>
-                            <CardContent style={{ height: '25%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Outfit', fontSize: '16px',}} onClick={closePop}> 
+                            <CardContent style={{ height: '25%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Outfit', fontSize: '16px', cursor:'pointer'}} onClick={closePop}> 
                                 Cancel
                             </CardContent>
                         </Card>
-                        <Card sx={{height: 40, width: '7%'}} square={false} style={{overflow:'hidden', borderRadius: '10px', background: "#D9D9D9", color: '#5B5B5B', transform: 'translateX(-31.5px)' }}>
-                            <CardContent style={{ height: '25%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Outfit', fontSize: '16px'}} onClick={openNextPop}> 
+                        <Card sx={{height: 40, width: '7%'}} square={false} style={{overflow:'hidden', borderRadius: '10px', background: "#D9D9D9", color: '#5B5B5B', transform: 'translateX(-31.5px)'}}>
+                            <CardContent style={{ height: '25%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Outfit', fontSize: '16px', cursor:'pointer'}} onClick={openNextPop}> 
                                 Next
                             </CardContent>
                         </Card>
@@ -523,12 +522,12 @@ export function JobPosting() {
                 <Divider/>
                 <DialogActions>
                     <Card sx={{height: 40, width: '7%'}} square={false} style={{overflow:'hidden', borderRadius: '10px', color: '#5B5B5B', border: "1px solid #5B5B5B", transform: 'translateX(-31.5px)'}}>
-                        <CardContent style={{ height: '25%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Outfit', fontSize: '16px',}} onClick={backSecondPop}> 
+                        <CardContent style={{ height: '25%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Outfit', fontSize: '16px', cursor:'pointer'}} onClick={backSecondPop}> 
                             Back
                         </CardContent>
                     </Card>
                     <Card sx={{height: 40, width: '7%'}} square={false} style={{overflow:'hidden', borderRadius: '10px', background: "#D9D9D9", color: '#5B5B5B', transform: 'translateX(-31.5px)' }}>
-                        <CardContent style={{ height: '25%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Outfit', fontSize: '16px'}} onClick={PostJobs}> 
+                        <CardContent style={{ height: '25%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Outfit', fontSize: '16px', cursor:'pointer'}} onClick={PostJobs}> 
                             Submit
                         </CardContent>
                     </Card>

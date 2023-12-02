@@ -24,29 +24,25 @@ export function CongratsPopup({ open, onClose}) {
         navigate('/dashboard');
     };
 
-    const handleClose = () => {
-        onClose(); 
-    };
-
     return (
-        <Dialog open={open} onClose={onClose} maxWidth={"500px"} PaperProps={{ sx: { width: '519px', height: '290px', borderRadius: "15px", display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'Outfit', } }}>
+        <Dialog open={open} onClose={onClose} maxWidth={"360px"} PaperProps={{ sx: { width: '374px', height: '209px', borderRadius: "10.9px", display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'Outfit' } }}>
             <DialogContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{ textAlign: 'center', fontFamily: 'Outfit', width: '179px', height: '16px',  }}>
-                    <Typography style={{ textAlign: 'center', fontFamily: 'Outfit', fontSize: '24px', fontWeight: 500}}>Congratulations!</Typography>
+                <div style={{ textAlign: 'center', fontFamily: 'Outfit', width: '129px', height: '12px' }}>
+                    <Typography style={{ textAlign: 'center', fontFamily: 'Outfit', fontSize: '17px', fontWeight: 500 }}>Congratulations!</Typography>
                 </div>
-                <div style={{ textAlign: 'center', fontFamily: 'Outfit', width: '360px', height: '64px', marginTop: '33px' }}>
-                    <Typography style={{ fontFamily: 'Outfit', fontSize: '20px', fontWeight: 400 }}>You have successfully submitted your profile. You can now track your status in the Dashboard.</Typography>
+                <div style={{ textAlign: 'center', fontFamily: 'Outfit', width: '259px', height: '46px', marginTop: '24px' }}>
+                    <Typography style={{ fontFamily: 'Outfit', fontSize: '14px', fontWeight: 400 }}>You have successfully submitted your profile. You can now track your status in the Dashboard.</Typography>
                 </div>
             </DialogContent>
-            <Divider style={{ width: '100%', height: '2px', paddingTop: '14px', fontWeight: 500 }} />
-            <DialogActions style={{ justifyContent: 'center', padding: '17.9px' }}>
-                <Button onClick={handleToDashboard} sx={{ border: '1px solid #5B5B5B', borderRadius: '9.6px', textTransform: 'none', color: '#5B5B5B', fontFamily: 'Outfit', fontSize: '19.2px', width: '199.2px', height: '44.2px', fontWeight: 400}}>
+            <Divider style={{ width: '100%', height: '1.44px', paddingTop: '10px', fontWeight: 500 }} />
+            <DialogActions style={{ justifyContent: 'center', padding: '13px' }}>
+                <Button onClick={handleToDashboard} sx={{ border: '1px solid #5B5B5B', borderRadius: '7px', textTransform: 'none', color: '#5B5B5B', fontFamily: 'Outfit', fontSize: '14px', width: '143px', height: '32px', fontWeight: 400 }}>
                     View Dashboard
                 </Button>
-                <Button onClick={handleApplyMore} sx={{ border: '1px solid #D9D9D9', borderRadius: '9.6px', textTransform: 'none', color: '#5B5B5B', backgroundColor: '#D9D9D9', '&:hover': {backgroundColor: '#D9D9D9'}, fontFamily: 'Outfit', fontSize: '19.2px', width: '199.2px', height: '44.2px', fontWeight: 400 }}>
+                <Button onClick={handleApplyMore} sx={{ border: '1px solid #D9D9D9', borderRadius: '7px', textTransform: 'none', color: '#5B5B5B', backgroundColor: '#D9D9D9', '&:hover': {backgroundColor: '#D9D9D9'}, fontFamily: 'Outfit', fontSize: '14px', width: '143px', height: '32px', fontWeight: 400 }}>
                     Back to Job Board
                 </Button>
             </DialogActions>
-        </Dialog>        
+        </Dialog>          
     );
 }

@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/Filter.css';
 
-import { DatePicker } from '@mui/x-date-pickers';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import ClearIcon from '@mui/icons-material/Clear';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
@@ -26,10 +23,6 @@ export function Filter() {
     const [expandMap, setExpandMap] = useState(new Map(
       [["Category", false],
     ])) 
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
-    const [dateRangeSelected, setDateRangeSelected] = useState(false);
-    const [dateAdded, setDateAdded] = useState(false);
 
     // handles the expanding of filters
     function toggleFilter(type) { 
@@ -47,32 +40,20 @@ export function Filter() {
     function handleFilterList(event) {
       const val = event.target.value;
       setFilterList((prevFilterList) => {
-          const newFilterList = new Set(prevFilterList);
-          if (val === "DateRange") {
-              if (dateRangeSelected) { 
-                newFilterList.add(val);
-              } else {
-                  newFilterList.delete(val);
-              }
-          } else {
-              if (newFilterList.has(val)) {
-                  newFilterList.delete(val);
-              } else {
-                  newFilterList.add(val);
-              }
-          }
-          return newFilterList;
+        const newFilterList = new Set(prevFilterList);
+    
+        if (newFilterList.has(val)) {
+          newFilterList.delete(val);
+        } else {
+          newFilterList.add(val);
+        }
+    
+        return newFilterList;
       });
     }
   
     // handles deleting selected filters
     function handleDelete(option) {
-      if (isDateRangeString(option)) {
-          setStartDate(null);
-          setEndDate(null);
-          setDateRangeSelected(false);
-          setDateAdded(false); 
-      }
       setFilterList((prevFilterList) => { 
           const newFilterList = new Set(prevFilterList);
           newFilterList.delete(option);
@@ -80,34 +61,10 @@ export function Filter() {
       });
     }
 
-    // checks if string is a date range
-    function isDateRangeString(str) {
-      const pattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}\+\d{2}:\d{2},\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}\+\d{2}:\d{2}$/;
-      return pattern.test(str);
-  }
-  
-    // updates filter list with date range
-    function updateFilterListWithDateRange(dateRangeString) {
-      setFilterList(prevFilterList => {
-          const newFilterList = new Set(prevFilterList);
-          Array.from(newFilterList).forEach(item => {
-              if (isDateRangeString(item)) {
-                  newFilterList.delete(item);
-              }
-          });
-          newFilterList.add(dateRangeString);
-          return newFilterList;
-      });
-    }
-
     // clears all current filters
     function clearAllFilters() {
       setFilterList(new Set());
-      setStartDate(null);
-      setEndDate(null);
-      setDateRangeSelected(false);
-      setDateAdded(false); 
-  }
+    }
   
     // renders chips for display and delete filters
     const renderSelectedOptions = (selected) => {
@@ -130,7 +87,7 @@ export function Filter() {
       const columns = Math.ceil(options.length / maxColumns);
     
       return (
-        <div style={{ width: '12.5%' }} className='filters'>
+        <div style={{ width: '12.5%', cursor: 'pointer'}} className='filters'>
           <Grid item xs={1.5} onClick={() => toggleFilter(filterCategory)} className='filter-tab' style={{ fontFamily: 'Outfit', fontSize: '14px', fontWeight: 500 }}>
             {filterCategory} 
             {bool ? <KeyboardArrowUpIcon className='arrow-pad'/> : <KeyboardArrowDownIcon className='arrow-pad'/>}
@@ -168,29 +125,28 @@ export function Filter() {
           }
         </div>
       );
-    }
-    
+    } 
 
   return {
     filterList,
     render: (
-    <Box sx={{ flexGrow: 1 }}>
-       <Grid container columnSpacing={1} wrap="nowrap">
+      <Box sx={{ flexGrow: 1 }}>
+        <Grid container columnSpacing={1} wrap="nowrap" style={{ width: '1116px', marginLeft: '0px', marginRight: '0', cursor:'pointer'}}>
           {Object.keys(filterOptions).map((filterCategory) => (
             <div style={{ fontFamily: 'Outfit' }}>
               {renderFilters(filterCategory, expandMap.get(filterCategory))}
             </div>
           ))}   
-      </Grid>
-      <div> 
-          { (filterList.size > 0 || dateRangeSelected) && 
-            <span className='filterby-tag' style={{fontFamily: 'Outfit', fontSize: '14px', fontWeight: 500, marginTop: '10px', position: 'relative', top: '1.5px',}}>Filtered By:</span>
+        </Grid>
+        <div style={{ width: '1116px' }}> 
+          { filterList.size > 0 && 
+            <span className='filterby-tag' style={{ fontFamily: 'Outfit', fontSize: '14px', fontWeight: 500, marginTop: '10px', position: 'relative', top: '1.5px' }}>Filtered By:</span>
           }
           {renderSelectedOptions(filterList)} 
-          { (filterList.size > 0 || dateRangeSelected) && 
-            <span className='filter-clearall' onClick={clearAllFilters} style={{fontFamily: 'Outfit', fontSize: '14px', fontWeight: 500, position: 'relative', top: '1.5px'}}>CLEAR ALL</span>
+          { filterList.size > 0 && 
+            <span className='filter-clearall' onClick={clearAllFilters} style={{ fontFamily: 'Outfit', fontSize: '14px', fontWeight: 500, position: 'relative', top: '1.5px' }}>CLEAR ALL</span>
           }
-      </div>
-    </Box>
+        </div>
+    </Box>    
   )};
 }
