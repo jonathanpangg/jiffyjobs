@@ -171,6 +171,11 @@
   align-items: center;
 }
 
+.outerCard5 {
+  background-color: #f3f3f3;
+  height: 103vh;
+  align-items: center;
+}
 
 .orLine-container {
   display: flex;
