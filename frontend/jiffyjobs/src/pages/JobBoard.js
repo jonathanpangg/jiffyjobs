@@ -19,7 +19,6 @@ import { JobCards } from '../components/JobCards';
 import { CongratsPopup } from '../components/CongratsPopup';
 
 
-
 export function JobBoard() {
     const [jobData, setJobData] = useState([])
     const [rawData, setRawData] = useState([]);
@@ -50,24 +49,12 @@ export function JobBoard() {
 
     const navigate = useNavigate();
 
-
+    // go to dashboard
     const handleToDashboard = () => {
         navigate('/dashboard');
     };
-  
-    function processTime(time) {
-        var str = "Time: "
-        for (let i = 0; i < time.length; i++) {
-            if (i%2 === 0) {
-                str = str + dayjs(new Date(time[i])).format('MM/DD/YY h:mm A') + " - "
-            } else {
-                str = str + dayjs(new Date(time[i])).format('h:mm A') + "\n"
-            }
-        }
 
-        return str
-    }
-
+    // random image for category
     const randomImage = (seed) => {
         return `https://source.unsplash.com/random?${seed}`;
     };
@@ -174,14 +161,12 @@ export function JobBoard() {
 
     }, [filterList])
 
-    function truncate(str) {
-        return str.length > 80 ? str.substring(0, 77) + "..." : str;
-    }
-
+    // close popup
     const closePop = () => {
         setOpenPop(false);
     }
     
+    // open popup
     const openPopUp = (key) => {
         setCurrentPop(key);
         console.log(currentPop);
@@ -277,8 +262,8 @@ export function JobBoard() {
             <Dialog open={open} onClose={onClose} PaperProps={{ sx: { borderRadius: "15px", margin: 'auto', width: '480px', height: '622px', transform: 'scale(0.85)' } }}>
                 <DialogTitle sx={{ textAlign: 'center', fontFamily: 'Outfit', marginTop: 2, fontSize: '24px', fontWeight: 500 }}>Are you sure you want to submit?</DialogTitle>
                     <DialogContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '16px', margin: 'auto', border: '2px dashed #ccc', borderRadius: '10px', width: '326px', height: '395px', transform: 'scale(1.05)'  }}>
-                        <Stack direction="row" spacing={2} alignItems="center" justifyContent="center" style={{ paddingBottom: 4, paddingTop: 20, marginRight: '70px'}} >
-                            <Avatar sx={{ bgcolor: '#D9D9D9', width: 50, height: 50, color: 'black', fontSize: '26.231px', fontFamily: 'Outfit', fontWeight: 400}}>{profile[0] && profile[0].length > 0 && profile[0][0]}{profile[1] && profile[1].length > 0 && profile[1][0]}</Avatar>
+                        <Stack direction="row" spacing={2} alignItems="center" justifyContent="center" style={{ paddingBottom: 4, paddingTop: 20, paddingLeft: '14px', marginRight: '113px'}} >
+                            <Avatar sx={{ bgcolor: '#D9D9D9', width: 50, height: 50, color: 'black', fontSize: '26.231px', fontFamily: 'Outfit', fontWeight: 400, }}>{profile[0] && profile[0].length > 0 && profile[0][0]}{profile[1] && profile[1].length > 0 && profile[1][0]}</Avatar>
                             <Typography style={{ fontFamily: 'Outfit', fontSize: '18px', fontWeight: 500 }}>
                                 {profile[0] && profile[0].length > 0 && profile[0]} {profile[1] && profile[1].length > 0 && profile[1]}
                             </Typography>

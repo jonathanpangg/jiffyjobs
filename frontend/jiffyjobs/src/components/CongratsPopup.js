@@ -24,10 +24,6 @@ export function CongratsPopup({ open, onClose}) {
         navigate('/dashboard');
     };
 
-    const handleClose = () => {
-        onClose(); 
-    };
-
     return (
         <Dialog open={open} onClose={onClose} maxWidth={"360px"} PaperProps={{ sx: { width: '374px', height: '209px', borderRadius: "10.9px", display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'Outfit' } }}>
             <DialogContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>

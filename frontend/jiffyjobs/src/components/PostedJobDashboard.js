@@ -46,10 +46,10 @@ export function PostedJobDashboard() {
     return (
         <div>
             <div className='header-one'>
-                Saved
+                Jobs Posted
             </div>
             <div className='header-two'>
-                View all the jobs you applied for!
+                Check who applied to your job posting!
             </div>
             <Box className='progress-box'>
                 <Grid container className='progress-grid' rowSpacing={3} columnSpacing={3} width='70vw' style={{paddingBottom: '1%'}}>

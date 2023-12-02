@@ -46,7 +46,8 @@ export function NavBar() {
 
     // go to job board
     const AllJobs = () => {
-        navigate('/JobBoard')
+        navigate('/JobBoard');
+        setValue(0); 
     }
 
     // go to profile
@@ -99,15 +100,22 @@ export function NavBar() {
         };
     }
 
+    useEffect(() => {
+        const currentPath = location.pathname.toLowerCase();
+        const newValue = currentPath === '/jobboard' || currentPath === '/' || currentPath === '' ? 0 
+                        : currentPath === '/dashboard' ? 1 
+                        : -1;
+        setValue(newValue);
+    }, [location]);
 
     return (
         <StickyNavBar container style={{ alignItems: 'center', height: '59px' }}>
-            <h1 className='logo-font' onClick={AllJobs} style={{ height: '38px', marginTop: '15px' }}>
+            <h1 className='logo-font' onClick={AllJobs} style={{ height: '38px', marginTop: '15px', cursor:'pointer' }}>
                 JIFFYJOBS
             </h1>
             <div style={{ flex: '1', display: 'flex', justifyContent: 'flex-end', maxWidth: 'calc(100% - 400px)' }}> 
                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" textColor='inherit' TabIndicatorProps={{ style: { background: '#5B5B5B',height: '4px', borderRadius: '5px'} }}>
-                    <CustomTab label="All Job" {...allyProps(0)} onClick={AllJobs} />
+                    <CustomTab label="All Jobs" {...allyProps(0)} onClick={AllJobs} />
                     {isLoggedIn() ? (<CustomTab label="Dashboard" {...allyProps(1)} onClick={goToDashboard} />) : (<></>)}
                 </Tabs>
             </div>

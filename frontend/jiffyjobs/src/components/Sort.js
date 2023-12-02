@@ -61,6 +61,7 @@ export function Sort({ rawData, setRawData, setJobData }) {
                       xs={1.5}
                       onClick={handleClick}
                       className='filter-tab'
+                      style={{fontFamily: 'Outfit', cursor:'pointer'}}
                     >
                         Sort by 
                         { anchorEl 
