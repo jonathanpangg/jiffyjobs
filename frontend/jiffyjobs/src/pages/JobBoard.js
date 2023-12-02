@@ -397,42 +397,57 @@ export function JobBoard() {
     // toggle save job
     const toggleSaveJob = async (jobDetails) => {
     
-        setShowSavedMessage(true);
-        setTimeout(() => setShowSavedMessage(false), 1000);
+        // setShowSavedMessage(true);
+        // setTimeout(() => setShowSavedMessage(false), 1000);
+        if (userRole === "provider") {
+            toast.dismiss()
+            toast.error('You can only save jobs as a Seeker!', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        } else {
+            const save = {
+                method: "PUT",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: userEmail,
+                    job_id: jobDetails
+                })
+            }
 
-        const save = {
-            method: "PUT",
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                email: userEmail,
-                job_id: jobDetails
+            const route = "https://jiffyjobs-api-production.up.railway.app/api/users/save";
+            await fetch(route, save)
+            .then(async (response) => {
+                const res = await response.json()
+                if (!response.ok) {
+                    throw new Error(res.message);
+                } 
+                return res;
             })
+            .then(async (data) => {
+                await getJobs();
+                await setJobSaved(savedJobs.includes(jobDetails));
+                setIsJobSaved(prevState => ({
+                    ...prevState,
+                    [jobDetails]: !prevState[jobDetails] 
+                }));
+
+
+                setShowSavedMessage(true);
+                setTimeout(() => setShowSavedMessage(false), 1000);
+
+                console.log("here");
+            }).catch((error) => {
+                console.log(error);
+            });
+            console.log(jobDetails)
         }
-
-        const route = "https://jiffyjobs-api-production.up.railway.app/api/users/save";
-        await fetch(route, save)
-        .then(async (response) => {
-            const res = await response.json()
-            if (!response.ok) {
-                throw new Error(res.message);
-            } 
-            return res;
-        })
-        .then(async (data) => {
-            await getJobs();
-            await setJobSaved(savedJobs.includes(jobDetails));
-            setIsJobSaved(prevState => ({
-                ...prevState,
-                [jobDetails]: !prevState[jobDetails] 
-            }));
-
-
-            setShowSavedMessage(true);
-            console.log(data);
-        }).catch((error) => {
-            console.log(error);
-        });
-        console.log(jobDetails)
     };
 
     async function getJobs() {
