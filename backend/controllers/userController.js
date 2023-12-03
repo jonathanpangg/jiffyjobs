@@ -4,8 +4,6 @@ import {
 	handleServerError,
     handleBadRequest,
     } from "../utils/handler.js";
-import { getProviders, getProviderByEmail, deleteProvider, updateProvider } from "./providerController.js";
-import { getSeekers, getSeekerByEmail, deleteSeeker, updateSeeker } from "./seekerController.js"
 import Seeker from "../models/SeekerSchema.js";
 import Provider from "../models/ProviderSchema.js";
 import Jobs from "../models/JobSchema.js"
@@ -104,11 +102,7 @@ export const applytoJobs = async (req, res) => {
         if (!job) {
           return handleNotFound(res, 'Job not found');
         }
-        // Add the seeker to the job's applicants if they haven't applied already
-        if (!job.applicants.includes(seeker_email)) {
-            job.applicants.push(seeker_email);
-            await job.save();
-        }
+        
         // Find the seeker by email
         const applicant = await Seeker.findOne({ email: seeker_email });
         // If the seeker does not exist, handle the error
@@ -118,19 +112,33 @@ export const applytoJobs = async (req, res) => {
 
         // Check if the job_id already exists in the jobs_applied array
         if (applicant.jobs_applied.some(jobApplied => jobApplied._id.toString() === job_id)) {
-          return res.status(400).json({ message: 'You have already applied to this job.' });
+          return res.status(400).json({ message: 'You have already applied to this job' });
         }
 
-        // fix so that if there is someone already hired, throw error
+        // Add the seeker to the job's applicants if they haven't applied already
+        if (!job.applicants.includes(seeker_email)) {
+            job.applicants.push(seeker_email);
+        }
+
+        // if there is someone already hired, throw error
+        if (job.hired === true) {
+            return handleBadRequest(res, "The job has already been filled")
+        }
+
+        // if the person posted the job applied to the job, throws an error
+        if (job.job_poster_email === seeker_email) {
+            return handleBadRequest(res, "You cannot apply to the job you posted");
+        }
 
         // Add the job to the seeker's jobs_applied
         applicant.jobs_applied.push({ _id: job_id });
 
-
         // Save the updated applicant
         await applicant.save();
+        await job.save();
         // Respond with success and the updated job
         return handleSuccess(res, job);
+
     } catch (error) {
         // Handle any server errors
         return handleServerError(res, error);
@@ -274,6 +282,17 @@ export const allApplicants = async(req, res) => {
     }
 }
 
+
+export const withdrawApp = async(req, res) => {
+    try{
+
+    } catch(error) {
+        handleServerError(res, error);
+    }
+}
+
+
+// save a job
 export const saveJobs = async(req, res) => {
     const { job_id, email } = req.body;
     try {
@@ -305,6 +324,7 @@ export const saveJobs = async(req, res) => {
     }
 }
 
+// retrieve the saved jobs given a user
 export const getSavedJobs = async(req, res) => {
     const email = req.params.email;
     try {
