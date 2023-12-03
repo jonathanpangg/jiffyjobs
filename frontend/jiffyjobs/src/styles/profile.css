@@ -89,6 +89,18 @@
   border-radius:6px;
 }
 
+.profile-box-fixed-provider .MuiInputBase-input
+{
+  color:black;
+  background-color: lightgray;
+  font-size:13px;  
+  font-family:Outfit;
+  width: 290px;
+  height: 0px;
+  position:relative;
+  border-radius:6px;
+}
+
 .profile-box .MuiInputBase-input
 {
   color:black;
