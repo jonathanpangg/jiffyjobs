@@ -285,6 +285,21 @@ export const allApplicants = async(req, res) => {
 
 export const withdrawApp = async(req, res) => {
     try{
+        const jobId = req.params.jobId;
+        const seekerEmail = req.params.seekerEmail;
+        const today = new Date();
+
+        const job = await Jobs.findOne({ _id: jobId, 'time.0': { $lt: today }, hired: false });
+
+        if (!job) {
+            return handleNotFound(res, 'You cannot withdraw application from an in-progress job');
+        }
+        await Jobs.updateOne({ _id: jobId }, { $pull: { applicants: { _id : seekerEmail} } });
+        const seek = await Seeker.updateOne(
+            { email: seekerEmail }, 
+            { $pull: { jobs_applied: { _id: jobId } } }
+        );        
+        return handleSuccess(res, 'Application withdrawn successfully');
 
     } catch(error) {
         handleServerError(res, error);

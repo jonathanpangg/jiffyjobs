@@ -246,3 +246,13 @@ export const filterJobs = async (req, res) => {
 }
 
 
+export const searchJobs = async (req, res) => {
+    try {
+
+        
+
+    } catch(error) {
+        return handleServerError(error);
+    }
+}
+
