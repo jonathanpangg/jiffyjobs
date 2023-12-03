@@ -8,24 +8,17 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export function Profile() {
     const [UserEmailstate, setuserEmail] = useState("");
-    const [userPassword, setuserPassword] = useState("");
-    const [degree, setDegree] = useState('');
-    const [minor, setMinor] = useState('');
     const [major, setMajor] = useState('');
-    const [GPA, setGPA] = useState('');
-    const [gender, setGender] = useState('');
-    const [pronouns, setPronouns] = useState('');
     const [grade, setGrade] = useState('')
     const [bio, setBio] = useState('');
     const [isPublic, setIsPublic] = useState(false);
     const [fname, setFname] = useState("");
+    const [userPassword, setuserPassword] = useState("");
     const [lname, setLname] = useState("");
-    //tells you if its 'seeker' or 'provider'
+    const [org, setOrg] = useState("");
     const [ userRole, setUserRole ] = useState(localStorage.getItem("user"));
 
     // user email
-    // const [ userEmail, setEmail ] = useState(localStorage.getItem("email"));
-
     const gradeList = ["Freshmen", "Sophomore", "Junior", "Senior", "Graduate Student", "Other"]
 
     const [personalInfo, setpersonalInfo] = useState({});
@@ -64,16 +57,17 @@ export function Profile() {
 
 
     useEffect(() => {
-        if (personalInfo.minor) {
-            setMinor(personalInfo.minor);
-        }
-    }, [personalInfo.minor]); 
-
-    useEffect(() => {
         if (personalInfo.first_name) {
             setFname(personalInfo.first_name);
         }
     }, [personalInfo.first_name]); 
+
+    useEffect(() => {
+        if (personalInfo.organization) {
+            setFname(personalInfo.organization);
+        }
+    }, [personalInfo.organization]); 
+
 
 
     useEffect(() => {
@@ -107,23 +101,6 @@ export function Profile() {
     }, [personalInfo.major]); 
 
 
-    useEffect(() => {
-        if (personalInfo.gpa) {
-            setMajor(personalInfo.gpa);
-        }
-    }, [personalInfo.gpa]); 
-
-    useEffect(() => {
-        if (personalInfo.gender) {
-            setGender(personalInfo.gender);
-        }
-    }, [personalInfo.gender]); 
-
-    useEffect(() => {
-        if (personalInfo.pronouns) {
-            setPronouns(personalInfo.pronouns);
-        }
-    }, [personalInfo.pronouns]); 
 
     useEffect(() => {
         // Fetch user profile data from the API and set it to state
@@ -153,41 +130,11 @@ export function Profile() {
                 console.error("Error fetching profile data:", error);
             }
         };
-        console.log(localStorage.getItem("user"))
         if (localStorage.getItem("email")) {
             getProfile(localStorage.getItem("email"));
         }
     }, []);
 
-
-
-      
-
-
-    const handleCheckboxChange = (event) => {
-        setIsPublic(event.target.checked);
-      };
-    const handleFnameChange = (event) => {
-        setFname(event.target.value);
-    };
-    const handleLnameChange = (event) => {
-        setLname(event.target.value);
-    };
-    const handleMinorChange = (event) => {
-        setMinor(event.target.value);
-    };
-    const handleMajorChange = (event) => {
-        setMajor(event.target.value);
-    };
-    const handleGPAChange = (event) => {
-        setGPA(event.target.value);
-    };
-    const handleGenderChange = (event) => {
-        setGender(event.target.value);
-    };
-    const handlePronounsChange = (event) => {
-        setPronouns(event.target.value);
-    };
     const handleGradeChange = (event) => {
         setGrade(event.target.value)
     };
@@ -204,19 +151,38 @@ export function Profile() {
         }
       };
 
+    const handleMajorChange = (event) => {
+        setMajor(event.target.value);
+    }
+
+    const handleOrgChange = (event) => {
+        setOrg(event.target.value);
+    }
 
 
       const saveProfileChanges = async () => {
-        // Assuming `bio` is a state variable holding the bio information    
-        const requestBody = {
-            userEmail: UserEmailstate, // Should be dynamically set
-            role: "seeker", // Should be dynamically set
-            major: major, // Should be dynamically set or obtained from state
-            grade: grade, // Should be dynamically set or obtained from state
-            bio: bio, // Using the bio from your state
-        };
+        // Assuming `bio` is a state variable holding the bio information   
+        let requestBody = {};
+       
     
         try {
+            if (userRole === "seeker") { 
+                requestBody = {
+                    userEmail: UserEmailstate, // Should be dynamically set
+                    role: "seeker", // Should be dynamically set
+                    major: major, // Should be dynamically set or obtained from state
+                    grade: grade, // Should be dynamically set or obtained from state
+                    bio: bio, // Using the bio from your state
+                };
+            } else if (userRole === "provider") {
+                requestBody = {
+                    userEmail: UserEmailstate,
+                    role: "provider",
+                    organization: org
+                }
+            }
+            console.log(requestBody)
+
             const response = await fetch('https://jiffyjobs-api-production.up.railway.app/api/users/getinfo/update', { 
                 method: 'PUT',
                 headers: {
@@ -224,7 +190,6 @@ export function Profile() {
                 },
                 body: JSON.stringify(requestBody),
             });
-    
             if (response.ok) {
                 // Handle success
                 const result = await response.json();
@@ -237,15 +202,6 @@ export function Profile() {
             // Handle network errors
             console.error('Error saving profile:', error);
         }
-    };
-    
-
-
-
-    // Handle form submission
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        // Here you would typically send the profileData state to the server
     };
 
     const getInitials = (first_name, last_name) => {
@@ -267,21 +223,22 @@ export function Profile() {
                              
 
 
-                            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, paddingBottom:"25px"}}>
-                                <Avatar sx={{ bgcolor: "lightgray", marginRight: 2, color: "black", marginLeft: 10, width: 56, height: 56, fontSize: '1.9rem'  }}>{getInitials(personalInfo.first_name, personalInfo.last_name)}</Avatar>
+                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                <Avatar 
+                                    sx={{ bgcolor: "lightgray", marginRight: 2, color: "black", marginLeft: 10, width: 56, height: 56, fontSize: '1.9rem', bottom:"5px" }}>{getInitials(personalInfo.first_name, personalInfo.last_name)}
+                                </Avatar>
                                 <Typography variant="h6" component="h2" sx={{mb:2, fontFamily: 'Outfit', fontWeight: "88px", fontSize: "25px"}}>
                                     {personalInfo.first_name + " " + personalInfo.last_name || 'Your Name'}
                                 </Typography>
-                                
                             </Box>
-
+                            <div style={{padding:"15px"}}></div>
                             <text className='basicinformation' style={{paddingTop:"20px"}}>
                                 Basic Information
                             </text>
                             {userRole === "seeker" ?  
                             <div>
-                        <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch', alignContent: 'center', paddingLeft: '10px'}}} noValidate autoComplete="off">
-                           <Grid container spacing={1} >
+                            <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch', alignContent: 'center', paddingLeft: '10px'}}} noValidate autoComplete="off">
+                                <Grid container spacing={1} >
                                
                                 <div className='label-input-pair'>
 
@@ -314,14 +271,13 @@ export function Profile() {
                                                 value={UserEmailstate}                    
                                                 className='profile-box-fixed'
                                             />
-                                    
                                         </Grid>
                                 </div>
                                 <div className='label-input-pair'> 
                                     
                                
                                 <Grid item xs={6} sm={3} className='name-box-pair' >
-                                    <Typography className='profile-components'  sx={{fontSize:"15px", fontWeight:"normal", paddingLeft:"13px"}} gutterBottom>
+                                    <Typography className='profile-components'  sx={{fontSize:"15px", fontWeight:"normal", paddingLeft:"12px"}} gutterBottom>
                                         Major
                                     </Typography>
                                         <TextField
@@ -334,8 +290,6 @@ export function Profile() {
                                             className='profile-box'
                                         />
                                     </Grid>
-
-
                                 <Grid item xs={6} sm={3} className='name-box-pair'  >
                                         <Typography className='profile-components'  sx={{fontSize:"15px", fontWeight:"normal", marginLeft:"4px"}} gutterBottom>
                                             Grade
@@ -349,27 +303,15 @@ export function Profile() {
                                             sx={{height:"34px", width:"195px", marginLeft:"18px"}}
                                             className='dropdown-box'
                                             >
-                                            {/* <MenuItem value="">
-                                                <em>Delete Option</em>
-                                            </MenuItem> */}
                                             { gradeList.map((data) => {
                                                 return (<MenuItem value={data}> {data} </MenuItem>)
                                             })}
-                                            {/* <MenuItem value="First-year">First-year</MenuItem>
-                                            <MenuItem value="Second-year">Second-year</MenuItem>
-                                            <MenuItem value="Third-year">Third-year</MenuItem>
-                                            <MenuItem value="Fourth-year">Fourth-year</MenuItem>
-                                            <MenuItem value="Fifth+-year">Fifth +-year</MenuItem>
-                                            <MenuItem value="Graduate student">Graduate student</MenuItem>
-                                            <MenuItem value="Other">Other</MenuItem> */}
                                             </Select>
                                         </FormControl>
                                     </Grid>                        
                                  </div>               
                                 </Grid>                             
                             </Box> 
-                            
-                           
                             <div style={{paddingTop:"50px"}}></div>
 
                             <text className='otherinformation' style={{paddingBottom:"109px"}}>
@@ -399,25 +341,9 @@ export function Profile() {
                                     </div>      
                                 </Grid>
                                 <div className='label-input-pair' >
-                                {/* <FormGroup>
-                                    <FormControlLabel
-                                        control={
-                                        <Checkbox
-                                            checked={isPublic}
-                                            onChange={handleCheckboxChange}
-                                            name="isPublic"
-                                        />
-                                        }
-                                        label="Make this profile public."
-                                    />
-                                    <Typography variant="caption" display="block" gutterBottom sx={{marginLeft:"30px", marginTop:"-9px"}}>
-                                        By checking this box, you agree to share information on Profile 1 with potential employers. Other profiles won’t be shared.
-                                    </Typography>
-                                </FormGroup> */}
-                                    </div>
+                                </div>
                                 <div className='label-input-pair-beg'>
-                                    {/* For the submit button */}
-                                    <div style={{ textAlign: 'left', marginLeft:'760px' }}>
+                                    <div style={{ textAlign: 'left', marginLeft:'80%' }}>
                                         <Button 
                                             variant="contained" 
                                             sx={{ 
@@ -435,49 +361,80 @@ export function Profile() {
                                     </div>
                                 </div>
                         </Box></div>
-                        :<div>
-                            <Grid container spacing={1}>
-                            <div className='label-input-pair'>
-                            <Grid item xs={6} sm={3} className='name-box-pair' >
-                                <Typography gutterBottom>
-                                Organization<span style={{"color": "red"}}>*   </span>
-                                </Typography>
 
-                                <TextField
-                                    disabled
-                                    id="organization"
-                                    sx={{ fontSize:"35px"}}
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                    value={personalInfo.school}
-                                    className='profile-box-fixed'
-                                />
-                        
-                            </Grid>
-                            </div>
-                            <div className='label-input-pair'>
-                            <Grid item xs={6} sm={3} className='name-box-pair' >
-                                    <Typography   gutterBottom>
-                                        Email<span style={{"color": "red"}}>*</span>
-                                    </Typography>
 
-                                    <TextField
-                                        disabled
-                                        id="email"
-                                        sx={{ fontSize:"16px" }}
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
-                                        value={UserEmailstate}                    
-                                        className='profile-box-fixed'
-                                    />
-                            
-                                </Grid>
 
-                            </div>
-                        </Grid>
-                    </div>}
+
+                        :
+                        <div> 
+                            <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch', alignContent: 'center', paddingLeft: '10px'}}} noValidate autoComplete="off">
+                                <Grid container spacing={1} >
+                                    
+                                    <div className='label-input-pair'>
+
+                                        <Grid item xs={6} sm={3} className='name-box-pair' >
+                                            <Typography sx={{ fontSize:"15px", fontWeight:"normal"}}>
+                                            <p>Organization<span style={{"color": "red"}}>*</span></p>
+                                            </Typography>
+
+                                            <TextField
+                                                sx={{ minWidth:"200px"}}
+                                                id="organzation"
+                                                onChange={handleOrgChange}
+                                                value={personalInfo.organization}
+                                                className='profile-box'
+                                            />
+                                        </Grid>
+                                    </div>
+                                    <div className='label-input-pair'> 
+                                                
+                                           
+                                            <Grid item xs={6} sm={3} className='name-box-pair' >
+                                                <Typography className='profile-components'  sx={{fontSize:"15px", width:"200px", marginLeft:"50px", fontWeight:"normal"}}>
+                                                                Email<span style={{"color": "red"}}>*</span>
+                                                            </Typography>
+                
+                                                            <TextField
+                                                                disabled
+                                                                id="email"
+                                                                InputLabelProps={{
+                                                                    shrink: true,
+                                                                }}
+                                                                sx={{minWidth:"200px"}}
+                                                                value={UserEmailstate}                    
+                                                                className='profile-box-fixed-provider'
+                                                            />
+                                                </Grid>
+                                             </div>               
+                                            </Grid>                             
+                                        </Box> 
+                                        <div style={{paddingTop:"50px"}}></div>
+            
+            
+                                        <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch', alignContent: 'center', paddingLeft: '15px' } }} noValidate autoComplete="off">
+                                          
+                                            <div className='label-input-pair' >
+                                            </div>
+                                            <div className='label-input-pair-beg'>
+                                                <div style={{ textAlign: 'left', marginLeft:'80%' }}>
+                                                    <Button 
+                                                        variant="contained" 
+                                                        sx={{ 
+                                                        bgcolor: 'grey.700', // This sets the background color to a shade of grey
+                                                        color: 'white', // Sets the text color to black
+                                                        '&:hover': {
+                                                            bgcolor: 'grey.500', // Darker grey on hover
+                                                        },
+                                                        mb: 2 // Margin bottom if needed
+                                                        }}
+                                                        onClick={saveProfileChanges} 
+                                                    >
+                                                        Save Changes
+                                                    </Button>
+                                                </div>
+                                            </div>
+                                        </Box>
+                                </div>}
                     </Card>
                 </Grid>
     </div>

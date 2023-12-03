@@ -65,6 +65,12 @@ export function NavBar() {
         navigate('/signup');
     };
 
+    const getInitials = (first_name, last_name) => {
+        if (first_name && last_name) {
+            return first_name[0] + last_name[0]
+        }
+    };
+
     // handle logout
     const handleLogout = () => {
         localStorage.removeItem("token");
@@ -130,7 +136,7 @@ export function NavBar() {
                     <div style={{ position: 'absolute', left: 'calc(100% - 162px)', top: '51%', transform: 'translate(-10%, -50%)', display: 'flex', alignItems: 'center', }}>
                         <Tooltip onClick={handleOpenUserMenu} style={{ display: 'block' }}>
                             <div className='profile-picture'>
-                                <Avatar sx={{ bgcolor: "#cccccc", marginRight: 10, color: "#5B5B5B", width: 25, height: 25, fontSize: '14px', fontFamily: 'Outfit'}}>{first[0] + last[0]}</Avatar>
+                                <Avatar sx={{ bgcolor: "#cccccc", marginRight: 10, color: "#5B5B5B", width: 25, height: 25, fontSize: '14px', fontFamily: 'Outfit'}}>{getInitials(first, last)}</Avatar>
                             </div>
                             <div style={{ display: 'inline-block', marginLeft: '5px', flexDirection: 'column', justifyContent: 'center', textAlign: 'left', maxWidth: '120px', wordBreak: 'break-all', }}>
                                 <span style={{ fontWeight: 500, fontSize: '16px', color: '#5B5B5B', fontFamily: 'Outfit', }}> {first} {last} </span> 
