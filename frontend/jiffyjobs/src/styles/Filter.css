@@ -1,21 +1,22 @@
 .filter-tab {
     font-family: "Outfit";
-    font-size: large;
+    font-size: 16px;
     vertical-align: center;
     display: inline-flex;
 }
   
 .arrow-pad {
-    padding-right: '25%';
+    position: relative;
 }
   
 .filters {
     padding-left: 0.925%;
-    display: grid
+    display: grid;
+    font-family: 'Outfit';
 }
   
 .checkboxes {
-    font-size: small;
+    font-size: 14px;
     font-family: 'Outfit';
 }
   

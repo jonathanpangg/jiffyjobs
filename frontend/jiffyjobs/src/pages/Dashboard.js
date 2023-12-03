@@ -70,10 +70,11 @@ export function Dashboard() {
     }, [showToken])
 
     return (
-        <div className='outerCard' style={{paddingTop: '50px'}}>
+        <div className='outerCard' style={{paddingTop: '5px'}}>
+            <div style={{transform: 'scale(0.85)', }}>
             <Box className='outer-box'>
                 <div className='inner-div'>
-                    <Card elevation='4' style={{display: 'flex', overflow: 'hidden', borderRadius: '15px', width: "100%"}}> 
+                    <Card elevation='4' style={{display: 'flex', overflow: 'hidden', borderRadius: '15px', width: "100%",}}> 
                         { renderVerticalDashBoard }
                         <TabPanel value={value} index={2} className='progress-tab'>
                             <StatusDashboard/>
@@ -87,6 +88,7 @@ export function Dashboard() {
                     </Card>
                 </div>
             </Box> 
+            </div>
         </div>
     );
 }

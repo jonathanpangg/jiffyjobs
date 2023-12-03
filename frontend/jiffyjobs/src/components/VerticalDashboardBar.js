@@ -63,7 +63,7 @@ export function VerticalDashboardBar() {
                     JOBS
                 </div>
                 <CustomTab label='Status' icon={<TrendingUpIcon/>} iconPosition="start" {...allyProps(2)}/> 
-                <CustomTab label='Posted Jobs' icon={<AssignmentIcon/>} iconPosition="start" {...allyProps(3)}/>      
+                <CustomTab label='Jobs Posted' icon={<AssignmentIcon/>} iconPosition="start" {...allyProps(3)}/>      
                 <CustomTab label='Saved Jobs' icon={<StarOutlineRoundedIcon/>} iconPosition="start" {...allyProps(4)}/>      
             </Tabs>
         )

@@ -30,7 +30,7 @@ export function Sort({ rawData, setRawData, setJobData }) {
         
         setRawData(sortedData);
         setJobData(sortedData.map(obj => {
-            return [[obj._id, obj.title], ["", obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
+            return [[obj._id, obj.title], [`https://source.unsplash.com/random?${obj.categories.toString().split(",")[0]}`, obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
         }));
     };
     
@@ -54,15 +54,16 @@ export function Sort({ rawData, setRawData, setJobData }) {
     
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <Grid container columnSpacing={1}>
-                <div style={{width: '12.5%'}} className='filters'>
+            <Grid container justifyContent="flex-end" alignItems="center" style={{ marginLeft: '-72px' }}>
+                <div style={{width: '12.5%', whiteSpace: 'nowrap'}} className='filters'>
                     <Grid 
                       item
                       xs={1.5}
                       onClick={handleClick}
                       className='filter-tab'
+                      style={{fontFamily: 'Outfit', cursor:'pointer'}}
                     >
-                        SortBy 
+                        Sort by 
                         { anchorEl 
                             ? <KeyboardArrowUpIcon className='arrow-pad'/> 
                             : <KeyboardArrowDownIcon className='arrow-pad'/>
@@ -76,7 +77,7 @@ export function Sort({ rawData, setRawData, setJobData }) {
                         onClose={() => setAnchorEl(null)}
                     >
                         {filterOptions.SortBy.map(option => (
-                            <MenuItem key={option} onClick={() => handleClose(option)}>
+                            <MenuItem key={option} onClick={() => handleClose(option)} style={{fontFamily: 'Outfit', fontSize: '14px'}}>
                                 {option}
                             </MenuItem>
                         ))}

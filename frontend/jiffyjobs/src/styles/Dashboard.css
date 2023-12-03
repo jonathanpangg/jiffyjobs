@@ -46,7 +46,7 @@
 
 .outerCard {
     background-color: #f3f3f3;
-    height: 100vh;
+    height: 87vh;
     padding: 2%;
     align-items: center;
 }
@@ -56,4 +56,40 @@
     font-size: 24px;
     vertical-align: center;
     align-items: center;
+}
+
+.status-card {
+    height: 200px;
+}
+
+.status-card:hover + .withdraw-card {
+    display: block;
+}
+
+.status-card:hover {
+    filter: blur(2.5px);
+}
+
+.overall-card {
+    position: relative;
+    max-width: 100%;
+}
+
+.withdraw-card {
+    position: absolute;
+    max-width: 100%;
+    bottom: 15%;
+    left: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    display: none; 
+}
+
+.withdraw-card:hover + .status-card {
+    filter: blur(2.5px);
+}
+
+.withdraw-card:hover {
+    display: block
 }
