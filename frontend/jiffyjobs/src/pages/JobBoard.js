@@ -144,7 +144,7 @@ export function JobBoard() {
 
                      const savedStatus = {};
                  data.forEach(job => {
-                     savedStatus[job.id] = false; // Replace 'job.id' with your unique job identifier
+                     savedStatus[job.id] = false; 
                  });
                 setIsJobSaved(savedStatus);
                 })
