@@ -40,6 +40,7 @@ TabPanel.propTypes = {
 export function Dashboard() {
     const { renderPostedJobDashboard, jobID } = PostedJobDashboard()
     const { renderVerticalDashBoard, value } = VerticalDashboardBar()
+    // const { renderViewApplicants } = ViewApplicants()
     const [token, setToken] = useState(localStorage.getItem("token"));
     const [showToken, setShowToken] = useState(false);
     const navigate = useNavigate();

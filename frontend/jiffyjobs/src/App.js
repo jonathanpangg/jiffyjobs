@@ -24,7 +24,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />   
           <Route path="/JobBoard"  element={<> <NavBar /> <JobBoard /> </>} />
           <Route path="/dashboard/" element={<> <NavBar /> <Dashboard/> </>} />
-          <Route path="/dashboard/reset" element={<> {navigate('/dashboard')} </>} />
+          {/* <Route path="/dashboard/reset" element={<> {navigate('/dashboard')} </>} /> */}
           <Route path="/profile" element={<> <NavBar /> <Profile /> </> } />
         </Routes>
       </header>

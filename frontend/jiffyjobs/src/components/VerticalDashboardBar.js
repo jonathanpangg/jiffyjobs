@@ -33,6 +33,7 @@ function allyProps(index) {
   
 export function VerticalDashboardBar() {
     const [value, setValue] = useState(2);
+    const [identifier, setIdentifier] = useState(0)
     const navigate = useNavigate();
 
     const handleChange = (_, newValue) => {
@@ -62,7 +63,7 @@ export function VerticalDashboardBar() {
                 <div className='logo' style={{paddingLeft: '24px', paddingBottom: '24px'}}>
                     JOBS
                 </div>
-                <CustomTab label='Status' icon={<TrendingUpIcon/>} iconPosition="start" onClick={() => {navigate('/dashboard/reset')}} {...allyProps(2)}/> 
+                <CustomTab label='Status' icon={<TrendingUpIcon/>} iconPosition="start" {...allyProps(2)}/> 
                 <CustomTab label='Jobs Posted' icon={<AssignmentIcon/>} iconPosition="start" {...allyProps(3)}/>      
                 <CustomTab label='Saved Jobs' icon={<StarOutlineRoundedIcon/>} iconPosition="start" {...allyProps(4)}/>      
             </Tabs>

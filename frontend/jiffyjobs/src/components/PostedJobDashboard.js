@@ -52,8 +52,6 @@ export function PostedJobDashboard() {
                 <div className='header-two'>
                     Check who applied to your job posting!
                 </div>
-                <div>
-                </div>
                 <Box className='progress-box'>
                     <Grid container className='progress-grid' rowSpacing={3} columnSpacing={3} width='70vw' style={{paddingBottom: '1%'}}>
                         {statusData.map((key) => {
