@@ -225,7 +225,7 @@ export function Profile() {
 
                             <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                 <Avatar 
-                                    sx={{ bgcolor: "lightgray", marginRight: 2, color: "black", marginLeft: 10, width: 56, height: 56, fontSize: '1.9rem', bottom:"5px" }}>{getInitials(personalInfo.first_name, personalInfo.last_name)}
+                                    sx={{ bgcolor: "lightgray", marginRight: 2, color: "black", marginLeft: 10, width: 56, height: 56, fontSize: '1.9rem', bottom:"6px" }}>{getInitials(personalInfo.first_name, personalInfo.last_name)}
                                 </Avatar>
                                 <Typography variant="h6" component="h2" sx={{mb:2, fontFamily: 'Outfit', fontWeight: "88px", fontSize: "25px"}}>
                                     {personalInfo.first_name + " " + personalInfo.last_name || 'Your Name'}

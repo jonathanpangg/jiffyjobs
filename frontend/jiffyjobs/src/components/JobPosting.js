@@ -12,15 +12,19 @@ import { Dialog, DialogActions, DialogContent, DialogTitle,
        Card, Grid, Chip, Divider, MenuItem, InputAdornment, 
        Box, Select, FormControl, FormHelperText, Button } from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
+import FilterListIcon from '@mui/icons-material/FilterList';
+
+
 
 import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 var objectSupport = require("dayjs/plugin/objectSupport");
 dayjs.extend(objectSupport);
 
-export function JobPosting() {
+export function JobPosting( { onJobDataSubmit } ) {
     const [openStartPop, setOpenStartPop] = useState(false)
     const [openSecondPop, setOpenSecondPop] = useState(false)
+    const [searchInput, setSearchInput] = useState("");
 
     const categories = ['Arts', 'Catering', 'Childcare', 'Data Entry', 'Eldercare',
                         'Focus Groups', 'Food Services', 'Graphic Design', 'Home Services', 'IT Help',
@@ -116,7 +120,7 @@ export function JobPosting() {
         })
     }
 
-    // changes the vals for all except date and time
+    // changes the vals for all except date, time, and search components
     function handleValues(event) {
         const { id, value } = event.target;
     
@@ -135,6 +139,18 @@ export function JobPosting() {
             return updatedVal;
         });
     }
+
+    // changes the values for search input
+    const handleSearchInputChange = (event) => {
+        if (event.target.value === "") {
+            setSearchInput("");
+            onJobDataSubmit("");       
+            return;
+        } else {
+            setSearchInput(event.target.value);
+        }
+    };
+    
 
     // handles the category change
     const handleCategoryChange = (event) => {
@@ -607,6 +623,7 @@ export function JobPosting() {
 
     const handleSearchClick = () => {
         // search stuff
+        onJobDataSubmit(searchInput);
     };
     
 
@@ -622,7 +639,17 @@ export function JobPosting() {
                                 </text>
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '23px' }}>
-                                <TextField placeholder="Find Jobs..." type="search" style={{ width: '332px' }} 
+                                <TextField 
+                                    placeholder="Find Jobs..." 
+                                    type="search"  
+                                    style={{ width: '332px' }} 
+                                    value={searchInput} 
+                                    onChange={handleSearchInputChange}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter') {
+                                            handleSearchClick();
+                                        }
+                                    }}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">

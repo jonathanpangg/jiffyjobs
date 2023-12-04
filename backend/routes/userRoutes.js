@@ -1,5 +1,5 @@
 import express from "express";
-import {getUserinfo, updateUserInfo, allPostedJobs, allAppliedJobs, applytoJobs, acceptApplicant, rejectApplicant, allApplicants, saveJobs, getSavedJobs} from "../controllers/userController.js"
+import {getUserinfo, updateUserInfo, allPostedJobs, allAppliedJobs, applytoJobs, acceptApplicant, rejectApplicant, allApplicants, saveJobs, getSavedJobs, withdrawApp} from "../controllers/userController.js"
 const router = express.Router();
 
 
@@ -35,6 +35,9 @@ router.put("/save", saveJobs)
 
 //gets all the saved jobs
 router.get("/saved/:email", getSavedJobs)
+
+// withdraw application
+router.delete("/withDraw/:jobId/:seekerEmail", withdrawApp)
 
 
 export default router;
