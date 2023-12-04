@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 import './App.css';
 
 import { NavBar } from './components/NavBar'
@@ -12,6 +13,8 @@ import { Signup }  from './pages/Signup';
 import { Login } from './pages/Login';
 
 function App() {
+  const navigate = useNavigate()
+  
   return (
     <div>
       <header>
@@ -20,7 +23,8 @@ function App() {
           <Route path="/login" element={<Login />} /> 
           <Route path="/signup" element={<Signup />} />   
           <Route path="/JobBoard"  element={<> <NavBar /> <JobBoard /> </>} />
-          <Route path="/dashboard" element={<> <NavBar /> <Dashboard/> </>} />
+          <Route path="/dashboard/" element={<> <NavBar /> <Dashboard/> </>} />
+          {/* <Route path="/dashboard/reset" element={<> {navigate('/dashboard')} </>} /> */}
           <Route path="/profile" element={<> <NavBar /> <Profile /> </> } />
         </Routes>
       </header>

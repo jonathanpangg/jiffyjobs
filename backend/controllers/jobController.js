@@ -177,6 +177,8 @@ export const filterJobs = async (req, res) => {
     const job_type = req.params.job_type;
     const date_range = req.params.date_range.split(",");
     const location_metric = req.params.location_metric;
+    const currentTime = new Date();
+
     try { 
             // Create a query object to build the filter criteria
             const query = {};
@@ -188,7 +190,8 @@ export const filterJobs = async (req, res) => {
                 // const jcquery = {categories : {'$in' : c}}
                 // query.$and.push(jcquery)  
 
-                const jobs = await Jobs.find({ 
+                const jobs = await Jobs.find({
+                    "time.0": { $gte: currentTime }, 
                     categories: { 
                         $all: job_Category, 
                     } 
@@ -248,9 +251,31 @@ export const filterJobs = async (req, res) => {
 
 export const searchJobs = async (req, res) => {
     try {
+        const searchContent = req.params.searchContent;
+        const newsearch = searchContent.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const searchRegex = new RegExp(newsearch, 'i');
+        const currentTime = new Date();
+        if (searchContent === " ") {
+            const jobs = await Jobs.find({ "time.0": { $gte: currentTime } });
 
-        
+            if (!jobs) {
+                return handleNotFound(res, "No Jobs");
+            }
+            return handleSuccess(res, jobs)
+        } else {
 
+            // Query the database
+            const jobs = await Jobs.find({ 
+                $or: [
+                    { title: { $regex: searchRegex } },
+                    { job_poster: { $regex: searchRegex } },
+                    { description: { $regex: searchRegex } },
+                    { location: { $regex: searchRegex } }
+                ], "time.0": { $gte: currentTime }
+            });
+            // Return the found jobs
+            return handleSuccess(res, jobs);
+        }
     } catch(error) {
         return handleServerError(error);
     }

@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import '../styles/Dashboard.css';
-
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import StarOutlineRoundedIcon from '@mui/icons-material/StarOutlineRounded';
-import { alignProperty } from '@mui/material/styles/cssUtils';
-import { styled, Tab, Tabs, Divider } from '@mui/material';
+import { styled, Tab, Tabs } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 
 const CustomTab = styled((props) => <Tab {...props} />)(() => ({
@@ -34,6 +33,8 @@ function allyProps(index) {
   
 export function VerticalDashboardBar() {
     const [value, setValue] = useState(2);
+    const [identifier, setIdentifier] = useState(0)
+    const navigate = useNavigate();
 
     const handleChange = (_, newValue) => {
         setValue(newValue);

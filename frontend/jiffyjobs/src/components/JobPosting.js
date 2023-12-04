@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../styles/JobPosting.css';
 
 import ClearIcon from '@mui/icons-material/Clear';
+import SearchIcon from '@mui/icons-material/Search'; 
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -9,9 +10,8 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { Dialog, DialogActions, DialogContent, DialogTitle, 
        DialogContentText, IconButton, TextField, CardContent, 
        Card, Grid, Chip, Divider, MenuItem, InputAdornment, 
-       Box, Select, FormControl, FormHelperText } from '@mui/material';
+       Box, Select, FormControl, FormHelperText, Button } from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
-import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
 
 
@@ -21,9 +21,10 @@ import { useNavigate } from 'react-router-dom';
 var objectSupport = require("dayjs/plugin/objectSupport");
 dayjs.extend(objectSupport);
 
-export function JobPosting() {
+export function JobPosting( { onJobDataSubmit } ) {
     const [openStartPop, setOpenStartPop] = useState(false)
     const [openSecondPop, setOpenSecondPop] = useState(false)
+    const [searchInput, setSearchInput] = useState("");
 
     const categories = ['Arts', 'Catering', 'Childcare', 'Data Entry', 'Eldercare',
                         'Focus Groups', 'Food Services', 'Graphic Design', 'Home Services', 'IT Help',
@@ -119,7 +120,7 @@ export function JobPosting() {
         })
     }
 
-    // changes the vals for all except date and time
+    // changes the vals for all except date, time, and search components
     function handleValues(event) {
         const { id, value } = event.target;
     
@@ -138,6 +139,18 @@ export function JobPosting() {
             return updatedVal;
         });
     }
+
+    // changes the values for search input
+    const handleSearchInputChange = (event) => {
+        if (event.target.value === "") {
+            setSearchInput("");
+            onJobDataSubmit("");       
+            return;
+        } else {
+            setSearchInput(event.target.value);
+        }
+    };
+    
 
     // handles the category change
     const handleCategoryChange = (event) => {
@@ -608,39 +621,57 @@ export function JobPosting() {
         }
     }
 
+    const handleSearchClick = () => {
+        // search stuff
+        onJobDataSubmit(searchInput);
+    };
+    
+
     return (
-        <Box className='job-search-tab'> 
-            <div className='inner-div'>
-                <Card sx={{ height: '10vw'}}elevation={8} style={{overflow: 'hidden', borderRadius: '15px', paddingTop: '3.5%', textAlign: 'center'}}>
-                    <text className='job-search-text'> 
-                        Find jobs or hire college students starting now with {" "}
-                    </text>
-                    <text className='job-search-logo'>
-                        JiffyJobs
-                    </text>
-                    <br></br>
-                    <div>
-                        <TextField 
-                            placeholder="Find Jobs..." 
-                            type="search" 
-                            style={{width: '25vw', paddingRight: '2.5%'}} 
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <SearchIcon />
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
-                        <Card sx={{width: '8vw'}} elevation={8} style={{overflow:'hidden', borderRadius: '15px', background: "#8253E7", color: 'white', display: 'inline-block', verticalAlign: 'center', alignItems: 'center', justifyContent: 'center'}}>
-                            <CardContent onClick={openPop}> 
-                                Post a Job
-                            </CardContent>
-                        </Card>
-                    </div>
-                    { openSecondPop ? secondJobSlide(): firstJobSlide()}
-                </Card>
-            </div>
-        </Box>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            <Box style={{paddingTop: '3.9px', width: '1128px'}}> 
+                <div className='inner-div' style={{marginBottom: '68px', }}>
+                    <Card elevation={4} style={{ overflow: 'hidden', borderRadius: '15px', textAlign: 'center', height: '222px', width: '1128px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                            <div style={{ marginBottom: '29px' }}> 
+                                <text className='job-search-text' style={{}}> 
+                                    Find jobs or hire college students starting now with <span className='job-search-logo'>JIFFYJOBS</span>
+                                </text>
+                            </div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '23px' }}>
+                                <TextField 
+                                    placeholder="Find Jobs..." 
+                                    type="search"  
+                                    style={{ width: '332px' }} 
+                                    value={searchInput} 
+                                    onChange={handleSearchInputChange}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter') {
+                                            handleSearchClick();
+                                        }
+                                    }}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <Button onClick={handleSearchClick} style={{ borderRadius: '8px', background: "#4348DB", color: 'white', minWidth: '47px', height: '47px', padding: '0', marginRight: '-6px'}}>
+                                                    <SearchIcon />
+                                                </Button>
+                                            </InputAdornment>
+                                        ),
+                                        style: {  borderRadius: '11px', fontFamily: 'Outfit', fontSize: '18px' }
+                                    }}
+                                />
+                                <Card sx={{ width: '140px', height: '60px' }} style={{borderRadius: '8px', background: "#4348DB", color: 'white', display: 'flex', justifyContent: 'center', }}>
+                                    <CardContent onClick={openPop} style={{marginTop: '2px', fontFamily: 'Outfit', fontSize: '18px', fontWeight: 400}}> 
+                                        Post a Job
+                                    </CardContent>
+                                </Card>
+                            </div>
+                            { openSecondPop ? secondJobSlide() : firstJobSlide() }
+                        </div>
+                    </Card>
+                </div>
+            </Box>
+        </div>
     )
 }

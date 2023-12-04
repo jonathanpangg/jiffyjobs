@@ -20,18 +20,20 @@
 }
 
 .inner-div {
-  width: 100vw;
+  width: 1128px;
   height: 25vh;
 }
 
 .job-search-text {
   font-family: "Outfit";
-  font-size: xx-large;
+  font-size: 24px;
+  font-weight: 500;
 }
 
 .job-search-logo {
   font-family: "Righteous-Regular";
-  font-size: xx-large;
+  font-size: 24px;
+  font-weight: 400;
 }
 
 .job-button {
