@@ -611,10 +611,10 @@ export function JobPosting() {
     
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center',}}>
-            <Box className='job-search-tab'> 
+        <div lassName='outerCard' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center',}}>
+            <Box className='job-search-tab' style={{paddingTop: '3.9px'}}> 
                 <div className='inner-div' style={{marginBottom: '68px', }}>
-                    <Card style={{ overflow: 'hidden', borderRadius: '15px', textAlign: 'center', height: '222px', width: '1128px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                    <Card elevation={4} style={{ overflow: 'hidden', borderRadius: '15px', textAlign: 'center', height: '222px', width: '1128px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                             <div style={{ marginBottom: '29px' }}> 
                                 <text className='job-search-text' style={{}}> 
