@@ -613,7 +613,7 @@ export function JobPosting() {
     return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
             <Box style={{paddingTop: '3.9px', width: '1128px'}}> 
-                <div className='inner-div' style={{marginBottom: '68px', }}>
+                <div className='inner-div' style={{marginBottom: '8px', }}>
                     <Card elevation={4} style={{ overflow: 'hidden', borderRadius: '15px', textAlign: 'center', height: '222px', width: '1128px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                             <div style={{ marginBottom: '29px' }}> 
@@ -634,7 +634,7 @@ export function JobPosting() {
                                         style: {  borderRadius: '11px', fontFamily: 'Outfit', fontSize: '18px' }
                                     }}
                                 />
-                                <Card sx={{ width: '140px', height: '60px' }} style={{borderRadius: '8px', background: "#4348DB", color: 'white', display: 'flex', justifyContent: 'center', }}>
+                                <Card sx={{ width: '140px', height: '58px' }} style={{borderRadius: '8px', background: "#4348DB", color: 'white', display: 'flex', justifyContent: 'center', }}>
                                     <CardContent onClick={openPop} style={{marginTop: '2px', fontFamily: 'Outfit', fontSize: '18px', fontWeight: 400}}> 
                                         Post a Job
                                     </CardContent>
