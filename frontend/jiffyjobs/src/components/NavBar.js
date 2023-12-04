@@ -110,11 +110,11 @@ export function NavBar() {
 
     return (
         <StickyNavBar container style={{ alignItems: 'center', height: '59px' }}>
-            <h1 className='logo-font' onClick={AllJobs} style={{ height: '38px', marginTop: '15px', cursor:'pointer' }}>
+            <h1 className='logo-font' onClick={AllJobs} style={{ height: '38px', marginTop: '15px', cursor:'pointer', color: '#4348DB', fontWeight: 400 }}>
                 JIFFYJOBS
             </h1>
             <div style={{ flex: '1', display: 'flex', justifyContent: 'flex-end', maxWidth: 'calc(100% - 400px)' }}> 
-                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" textColor='inherit' TabIndicatorProps={{ style: { background: '#5B5B5B',height: '4px', borderRadius: '5px'} }}>
+                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" textColor='inherit' TabIndicatorProps={{ style: { background: '#4348DB',height: '4px', borderRadius: '5px'} }}>
                     <CustomTab label="All Jobs" {...allyProps(0)} onClick={AllJobs} />
                     {isLoggedIn() ? (<CustomTab label="Dashboard" {...allyProps(1)} onClick={goToDashboard} />) : (<></>)}
                 </Tabs>
@@ -128,12 +128,12 @@ export function NavBar() {
                 // logged in
                   <>
                     <div style={{ position: 'absolute', left: 'calc(100% - 162px)', top: '51%', transform: 'translate(-10%, -50%)', display: 'flex', alignItems: 'center', }}>
-                        <Tooltip onClick={handleOpenUserMenu} style={{ display: 'block' }}>
+                        <Tooltip onClick={handleOpenUserMenu} style={{ display: 'flex', alignItems: 'center' }}>
                             <div className='profile-picture'>
-                                <Avatar sx={{ bgcolor: "#cccccc", marginRight: 10, color: "#5B5B5B", width: 25, height: 25, fontSize: '14px', fontFamily: 'Outfit'}}>{first[0] + last[0]}</Avatar>
+                                <Avatar sx={{ bgcolor: "#cccccc", marginRight: 10, color: "#5B5B5B", width: 25, height: 25, fontSize: '14px', fontFamily: 'Outfit' }}>{first[0] + last[0]}</Avatar>
                             </div>
-                            <div style={{ display: 'inline-block', marginLeft: '5px', flexDirection: 'column', justifyContent: 'center', textAlign: 'left', maxWidth: '120px', wordBreak: 'break-all', }}>
-                                <span style={{ fontWeight: 500, fontSize: '16px', color: '#5B5B5B', fontFamily: 'Outfit', }}> {first} {last} </span> 
+                            <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left', maxWidth: '120px', wordBreak: 'break-all', marginLeft: '5px' }}>
+                                <span style={{ fontWeight: 500, fontSize: '16px', color: '#5B5B5B', fontFamily: 'Outfit', marginTop: '-0.665px' }}>{first} {last}</span>
                             </div>
                         </Tooltip>
                             <Menu
