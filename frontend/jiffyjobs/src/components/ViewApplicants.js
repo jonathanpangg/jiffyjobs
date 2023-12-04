@@ -125,7 +125,7 @@ export function ViewApplicants({children, jobID}) {
                                         <u style={{fontSize: '16px'}}> {key[1] + " " + key[2]} </u>
                                         <CircleIcon style={{width: '5px', height: '5px', marginLeft: '6px', marginRight: '6px', color: '#5B5B5B'}}/>
                                         <div style={{fontSize: '12px', color: '#5B5B5B'}}> Click to view Profile </div>
-                                        <div style={{display: 'flex', position: 'absolute', right: 300}}>
+                                        <div style={{display: 'flex', position: 'absolute', right: 200}}>
                                             <div style={{display: 'flex', position: 'relative', width: '60.5px', height: '26.25px', fontSize: '12px', color: '#FFFFFF', alignItems: 'center', justifyContent: 'center', backgroundColor: "#66C120", borderRadius: '6px', marginRight: '8.5px'}} onClick={() => { getUserInfo(key[4]) }}> Accept </div>
                                             <div style={{display: 'flex', position: 'relative', width: '60.5px', height: '26.25px', fontSize: '12px', color: '#FFFFFF', alignItems: 'center', justifyContent: 'center', backgroundColor: "#C12020", borderRadius: '6px'}}> Reject </div>
                                         </div>
@@ -135,7 +135,7 @@ export function ViewApplicants({children, jobID}) {
                                         <u style={{fontSize: '16px'}}> {key[1] + " " + key[2]} </u>
                                         <CircleIcon style={{width: '5px', height: '5px', marginLeft: '6px', marginRight: '6px', color: '#5B5B5B'}}/>
                                         <div style={{fontSize: '12px', color: '#5B5B5B'}}> Selected Applicant </div>
-                                        <div style={{display: 'flex', position: 'absolute', right: 300}}>
+                                        <div style={{display: 'flex', position: 'absolute', right: 200}}>
                                             <div style={{display: 'flex', position: 'relative', width: '73px', height: '26.25px', fontSize: '12px', color: '#FFFFFF', alignItems: 'center', justifyContent: 'center', backgroundColor: "#66C120", borderRadius: '6px'}}> Accepted </div>
                                         </div>
                                     </div>
