@@ -611,8 +611,8 @@ export function JobPosting() {
     
 
     return (
-        <div lassName='outerCard' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center',}}>
-            <Box className='job-search-tab' style={{paddingTop: '3.9px'}}> 
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            <Box style={{paddingTop: '3.9px', width: '1128px'}}> 
                 <div className='inner-div' style={{marginBottom: '68px', }}>
                     <Card elevation={4} style={{ overflow: 'hidden', borderRadius: '15px', textAlign: 'center', height: '222px', width: '1128px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
