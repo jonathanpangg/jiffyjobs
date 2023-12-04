@@ -115,10 +115,10 @@ export function ViewApplicants({children, jobID}) {
                 See the list of applicants and accept or reject them!
             </div>
             <Box className='progress-box'>
-                <Grid container className='progress-grid' rowSpacing={0} columnSpacing={3} width='900px' style={{paddingBottom: '1%'}}>
+                <Grid container className='progress-grid' rowSpacing={0} columnSpacing={3} width='70vw' style={{paddingBottom: '1%'}}>
                     { applicantData.map((key) => {
                         return (
-                            <Grid width='900px' key={key} item> 
+                            <Grid width='70vw' key={key} item> 
                                 { key[3] !== 'accepted' ? 
                                     <div style={{display: 'flex', width: '92.5%', height: '50px', alignItems: 'center', fontFamily: 'Outfit', border: '1px solid #D9D9D9', borderTopLeftRadius: key[0] === 0 ? '10px': '0px', borderTopRightRadius: key[0] === 0 ? '10px': '0px', borderBottomLeftRadius: key[0] === applicantData.length-1 ? '10px': '0px', borderBottomRightRadius: key[0] === applicantData.length-1 ? '10px': '0px'}}>
                                         <Avatar sx={{ bgcolor: "#cccccc", color: "#5B5B5B", width: '26px', height: '26px', fontSize: '16px', fontFamily: 'Outfit', marginLeft: '25px', marginRight: '13px'}}>{ getInitials(key[1], key[2]) }</Avatar>
