@@ -578,7 +578,6 @@ export function JobBoard() {
                                 <Divider/>
                                 </div>
                         </div>
-                        
 
                     <DialogActions style={{ justifyContent: 'center', marginBottom: '6.58px', marginTop: '6.58px' }}>
                         <Link style={{cursor:'pointer'}} underline='none'>
