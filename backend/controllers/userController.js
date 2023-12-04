@@ -267,15 +267,31 @@ export const rejectApplicant = async(req, res) => {
 // get all applicants applied
 export const allApplicants = async(req, res) => {
     const jobId = req.params.jobId;
-    console.log(jobId)
     try {
         const jobs = await Jobs.findById(jobId)
         const seekerEmailObjects = jobs.applicants
-
+        
         const seekerEmails = seekerEmailObjects.map(obj => obj._id);
         const seekers = await Seeker.find({ email: { $in: seekerEmails } });
+         
+        // Add the application status to each job
+        const currentDateTime = new Date();
 
-        return handleSuccess(res, seekers);
+        const seekersWithStatus = seekers.map(seeker => {
+            // Clone the job object
+            const seekerWithStatus = {...seeker._doc};
+            // Determine the status based on the conditions provided
+            if (jobs.acceptedApplicant === seeker.email) {
+                seekerWithStatus.status = 'accepted';
+            } else if (jobs.time[0] < currentDateTime && jobs.acceptedApplicant === "" && !jobs.rejectedApplicants.includes(seeker.email)) {
+                seekerWithStatus.status = 'submitted';
+            } else {
+                seekerWithStatus.status = 'rejected';
+            }
+            return seekerWithStatus;
+          });
+ 
+        return handleSuccess(res, seekersWithStatus);
 
     } catch (error) {
         return handleServerError(res, error)

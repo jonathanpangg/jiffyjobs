@@ -11,6 +11,10 @@ import { Dialog, DialogActions, DialogContent, DialogTitle,
        Card, Grid, Chip, Divider, MenuItem, InputAdornment, 
        Box, Select, FormControl, FormHelperText } from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
+import SearchIcon from '@mui/icons-material/Search';
+import FilterListIcon from '@mui/icons-material/FilterList';
+
+
 
 import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
@@ -565,12 +569,12 @@ export function JobPosting() {
 
             return;
         }
-        
+
         handleError()
         if (!(error.titleError === true || error.nameError === true || error.locationError === true || error.payError === true || error.descriptionError === true || error.categoryError === true)) {
             console.log('val.date:', val.date);
-            console.log('val.startTime:', val.startTime);
-            console.log('val.endTime:', val.endTime);
+    console.log('val.startTime:', val.startTime);
+    console.log('val.endTime:', val.endTime);
             const categoryList = selectedCategories; 
             const requestOptions = {
                 method: 'POST',
@@ -616,7 +620,18 @@ export function JobPosting() {
                     </text>
                     <br></br>
                     <div>
-                        <TextField placeholder="Find Jobs..." type="search" style={{width: '25vw', paddingRight: '2.5%', borderRadius:"20px"}}/>
+                        <TextField 
+                            placeholder="Find Jobs..." 
+                            type="search" 
+                            style={{width: '25vw', paddingRight: '2.5%'}} 
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <SearchIcon />
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
                         <Card sx={{width: '8vw'}} elevation={8} style={{overflow:'hidden', borderRadius: '15px', background: "#8253E7", color: 'white', display: 'inline-block', verticalAlign: 'center', alignItems: 'center', justifyContent: 'center'}}>
                             <CardContent onClick={openPop}> 
                                 Post a Job

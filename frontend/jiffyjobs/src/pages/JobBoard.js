@@ -18,7 +18,6 @@ import { JobPosting } from '../components/JobPosting';
 import { JobCards } from '../components/JobCards';
 import { CongratsPopup } from '../components/CongratsPopup';
 
-
 export function JobBoard() {
     const [jobData, setJobData] = useState([])
     const [rawData, setRawData] = useState([]);
@@ -123,7 +122,7 @@ export function JobBoard() {
             console.log(route)
             fetch(route, requestOptions)
                 .then((response) => {
-                    if (!response.ok) {
+                    if (!response.ok) { 
                         throw new Error('Network response was not ok');
                     }
                     return response.json();
