@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import '../styles/Dashboard.css';
-
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import StarOutlineRoundedIcon from '@mui/icons-material/StarOutlineRounded';
-import { alignProperty } from '@mui/material/styles/cssUtils';
-import { styled, Tab, Tabs, Divider } from '@mui/material';
+import { styled, Tab, Tabs } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 
 const CustomTab = styled((props) => <Tab {...props} />)(() => ({
@@ -34,6 +33,7 @@ function allyProps(index) {
   
 export function VerticalDashboardBar() {
     const [value, setValue] = useState(2);
+    const navigate = useNavigate();
 
     const handleChange = (_, newValue) => {
         setValue(newValue);
@@ -62,7 +62,7 @@ export function VerticalDashboardBar() {
                 <div className='logo' style={{paddingLeft: '24px', paddingBottom: '24px'}}>
                     JOBS
                 </div>
-                <CustomTab label='Status' icon={<TrendingUpIcon/>} iconPosition="start" {...allyProps(2)}/> 
+                <CustomTab label='Status' icon={<TrendingUpIcon/>} iconPosition="start" onClick={() => {navigate('/dashboard/reset')}} {...allyProps(2)}/> 
                 <CustomTab label='Jobs Posted' icon={<AssignmentIcon/>} iconPosition="start" {...allyProps(3)}/>      
                 <CustomTab label='Saved Jobs' icon={<StarOutlineRoundedIcon/>} iconPosition="start" {...allyProps(4)}/>      
             </Tabs>
