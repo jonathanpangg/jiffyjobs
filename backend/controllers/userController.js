@@ -50,7 +50,7 @@ export const getUserinfo = async(req, res) => {
 
 // updates the user information
 export const updateUserInfo = async(req, res) => {
-    const { userEmail, role, major, grade, bio } = req.body;
+    const { userEmail, role, major, grade, bio, organization } = req.body;
     try{
         if (role === "seeker") {
             const updateData = {
@@ -70,8 +70,19 @@ export const updateUserInfo = async(req, res) => {
         
               return handleSuccess(res, updatedSeeker);
         } else if (role === "provider") {
-            console.log("not yet implemented")
-        }
+            const updateData = {
+                ...(organization && { 'personal_info.organization': organization || "" }), // only add organization to update if provided
+              };
+              const updatedprovider = await Provider.findOneAndUpdate(
+                { email: userEmail },
+                { $set: updateData },
+                { new: true, runValidators: true }
+              );
+              if (!updatedProvider) {
+                return handleNotFound(res, 'Provider not found');
+              }
+        
+              return handleSuccess(res, updatedprovider);        }
 
     } catch(error) {
         return handleServerError(res, error);
@@ -179,11 +190,11 @@ export const allAppliedJobs = async(req, res) => {
 
 // get all jobs posted
 export const allPostedJobs = async(req, res) => {
-    const userEmail = req.params.userEmail
+    const userEmail = req.params.email
+
     try {
     // Find all jobs posted by the user
     const myPostedJobs = await Jobs.find({ job_poster_email: userEmail });    
-    
     if (myPostedJobs.length === 0) {
         // Handle the case where no jobs are found
         return handleNotFound(res, "No jobs found for the provided email.");

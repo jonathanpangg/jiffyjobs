@@ -22,10 +22,10 @@
 }
 
 .progress-box {
-    height: 599px;
+    height: 600px;
     overflow-x: hidden;
     overflow-y: auto;
-    padding-left: 5%
+    padding-left: 5%;
 }
 
 .header-one {
@@ -78,7 +78,7 @@
 .withdraw-card {
     position: absolute;
     max-width: 100%;
-    bottom: 15%;
+    bottom: 25%;
     left: 50%;
     text-align: center;
     transform: translate(-50%, -50%);
