@@ -134,12 +134,12 @@ export function NavBar() {
                 // logged in
                   <>
                     <div style={{ position: 'absolute', left: 'calc(100% - 162px)', top: '51%', transform: 'translate(-10%, -50%)', display: 'flex', alignItems: 'center', }}>
-                        <Tooltip onClick={handleOpenUserMenu} style={{ display: 'block' }}>
+                        <Tooltip onClick={handleOpenUserMenu} style={{ display: 'flex', alignItems: 'center' }}>
                             <div className='profile-picture'>
-                                <Avatar sx={{ bgcolor: "#cccccc", marginRight: 10, color: "#5B5B5B", width: 25, height: 25, fontSize: '14px', fontFamily: 'Outfit'}}>{getInitials(first, last)}</Avatar>
+                                <Avatar sx={{ bgcolor: "#cccccc", marginRight: 10, color: "#5B5B5B", width: 25, height: 25, fontSize: '14px', fontFamily: 'Outfit' }}>{getInitials(first, last)}</Avatar>
                             </div>
-                            <div style={{ display: 'inline-block', marginLeft: '5px', flexDirection: 'column', justifyContent: 'center', textAlign: 'left', maxWidth: '120px', wordBreak: 'break-all', }}>
-                                <span style={{ fontWeight: 500, fontSize: '16px', color: '#5B5B5B', fontFamily: 'Outfit', }}> {first} {last} </span> 
+                            <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left', maxWidth: '120px', wordBreak: 'break-all', marginLeft: '5px' }}>
+                                <span style={{ fontWeight: 500, fontSize: '16px', color: '#5B5B5B', fontFamily: 'Outfit', marginTop: '-0.665px' }}>{first} {last}</span>
                             </div>
                         </Tooltip>
                             <Menu
