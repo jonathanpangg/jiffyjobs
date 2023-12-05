@@ -69,7 +69,7 @@ export function Dashboard() {
     }, [showToken])
 
     return (
-        <div className='outerCard' style={{paddingTop: '50px'}}>
+        <div className='outerCard' style={{marginTop: '-25px'}}>
             <div style={{transform: 'scale(0.85)', }}> 
                 <Box className='outer-box'>
                     <div className='inner-div'>
