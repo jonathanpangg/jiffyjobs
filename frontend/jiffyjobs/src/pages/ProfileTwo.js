@@ -17,8 +17,8 @@ export function Profile() {
     const [lname, setLname] = useState("");
     const [org, setOrg] = useState("");
     const [ userRole, setUserRole ] = useState(localStorage.getItem("user"));
+    const [ userEmail, setUserEmail ] = useState(localStorage.getItem("email")); 
 
-    // user email
     const gradeList = ["Freshmen", "Sophomore", "Junior", "Senior", "Graduate Student", "Other"]
 
     const [personalInfo, setpersonalInfo] = useState({});
@@ -28,7 +28,25 @@ export function Profile() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!token) setShowToken(true);
+        if (!token) {
+            setShowToken(true);
+        } else {
+            async function getProfile() {
+                const route = `https://jiffyjobs-api-production.up.railway.app/api/users/getinfo/${userEmail}/${userRole}`;
+                fetch(route)
+                    .then(async (response) => {
+                        const res = await response.json();
+                        if (!response.ok) {
+                            throw new Error(res.message);
+                        }
+                        return res;
+                    }).then((data) => {
+                        console.log(data);
+                    }).error((error) => {
+                        console.log(error);
+                    })
+            }
+        }
     },[token]);
 
     useEffect(() => {
@@ -99,41 +117,6 @@ export function Profile() {
             setMajor(personalInfo.major);
         }
     }, [personalInfo.major]); 
-
-
-
-    useEffect(() => {
-        // Fetch user profile data from the API and set it to state
-        // Replace with your actual API request
-        const getProfile = async (userID) => {
-            const route = `https://jiffyjobs-api-production.up.railway.app/api/users/getinfo/${userID}/${userRole}`;
-            try {
-                const response = await fetch(route);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                // Set the data to the state here
-                
-                // when the user is not found
-                if (data.err) {
-                    setuserEmail("user not found")
-                    setuserPassword("user not found")
-                    setpersonalInfo("user not found")
-                } else {
-                    setuserEmail(data.email)
-                    setuserPassword(data.password)
-                    setpersonalInfo(data.personal_info)
-                }
-            } catch (error) {
-                console.log(error)
-                console.error("Error fetching profile data:", error);
-            }
-        };
-        if (localStorage.getItem("email")) {
-            getProfile(localStorage.getItem("email"));
-        }
-    }, []);
 
     const handleGradeChange = (event) => {
         setGrade(event.target.value)
