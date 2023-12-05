@@ -29,11 +29,13 @@
 }
 
 .header-one {
+    display: flex;
     font-size: 24px;
     font-weight: 500;
     font-family: 'Outfit';
     padding-top: 5%;
     padding-left: 5%;
+    align-items: center;
 }
 
 .header-two {
