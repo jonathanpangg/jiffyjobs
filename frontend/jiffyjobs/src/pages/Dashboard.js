@@ -38,9 +38,7 @@ TabPanel.propTypes = {
 };
 
 export function Dashboard() {
-    const { renderPostedJobDashboard, jobID } = PostedJobDashboard()
     const { renderVerticalDashBoard, value } = VerticalDashboardBar()
-    // const { renderViewApplicants } = ViewApplicants()
     const [token, setToken] = useState(localStorage.getItem("token"));
     const [showToken, setShowToken] = useState(false);
     const navigate = useNavigate();
@@ -79,7 +77,7 @@ export function Dashboard() {
                                 <StatusDashboard/>
                             </TabPanel>
                             <TabPanel value={value} index={3} className='progress-tab'>
-                                { jobID === "" ? renderPostedJobDashboard : <ViewApplicants jobID={jobID} />}
+                                <PostedJobDashboard/>
                             </TabPanel>
                             <TabPanel value={value} index={4} className='progress-tab'>
                                 <SavedJobDashboard/>

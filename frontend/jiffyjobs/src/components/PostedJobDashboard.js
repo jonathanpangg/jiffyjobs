@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../styles/Dashboard.css';
 import { Box, Card, Grid, CardMedia, Typography, } from '@mui/material'
 import dayjs from 'dayjs';
+import { ViewApplicants } from './ViewApplicants';
 
 export function PostedJobDashboard() {
     const [statusData, setStatusData] = useState([]) 
@@ -42,56 +43,57 @@ export function PostedJobDashboard() {
         }
     }, [statusData]);
 
-    return {
-        jobID,
-        renderPostedJobDashboard: (
-            <div>
-                <div className='header-one'>
-                    Jobs Posted
-                </div>
-                <div className='header-two'>
-                    Check who applied to your job posting!
-                </div>
-                <Box className='progress-box'>
-                    <Grid container className='progress-grid' rowSpacing={3} columnSpacing={3} width='70vw' style={{paddingBottom: '1%'}}>
-                        {statusData.map((key) => {
-                            return ( 
-                                <Grid key={key} item> 
-                                    <Card sx={{width: '264px', height: '264px'}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px'}} onClick={() => {setJobID(key[8])}}>
-                                        <div className='overall-card'>
-                                            <CardMedia
-                                                component="img"
-                                                alt="placeholder"
-                                                height="99px"
-                                                image={randomImage(key[6][1].split(",")[0])}
-                                            />
-                                        </div>
-                                        <div className='overall-card'>
-                                            <div style={{height: '200px'}}>
-                                                <Typography style={{fontFamily: 'Outfit', fontSize:"14px", paddingLeft:'10px', paddingRight:'10px', paddingTop:'10px'}}>
-                                                    <u>{key[0]}</u>
-                                                </Typography>
-                                                <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px', paddingTop:'15px'}}>
-                                                    Pay: ${key[3]}
-                                                </Typography>
-                                                <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px'}}>
-                                                    Location: <u>{key[2]}</u>
-                                                </Typography>
-                                                <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px'}}>
-                                                    Time: {key[5]}
-                                                </Typography>
-                                                <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft: '10px', paddingRight:'10px', position:'relative', overflow:'hidden', textOverflow:'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, lineHeight: '1.1', height: '26px'}}>
-                                                    Description: {key[4]}
-                                                </Typography>
+    return (
+        <>
+            { jobID !== '' ? <ViewApplicants jobID={jobID}/>: 
+                <div>
+                    <div className='header-one'>
+                        Jobs Posted
+                    </div>
+                    <div className='header-two'>
+                        Check who applied to your job posting!
+                    </div>
+                    <Box className='progress-box'>
+                        <Grid container className='progress-grid' rowSpacing={3} columnSpacing={3} width='70vw' style={{paddingBottom: '1%'}}>
+                            {statusData.map((key) => {
+                                return ( 
+                                    <Grid key={key} item> 
+                                        <Card sx={{width: '264px', height: '264px'}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px'}} onClick={() => {setJobID(key[8])}}>
+                                            <div className='overall-card'>
+                                                <CardMedia
+                                                    component="img"
+                                                    alt="placeholder"
+                                                    height="99px"
+                                                    image={randomImage(key[6][1].split(",")[0])}
+                                                />
                                             </div>
-                                        </div>
-                                    </Card>
-                                </Grid>
-                            )
-                        })}
-                    </Grid>
-                </Box>
-            </div>
-        )
-    }
+                                            <div className='overall-card'>
+                                                <div style={{height: '200px'}}>
+                                                    <Typography style={{fontFamily: 'Outfit', fontSize:"14px", paddingLeft:'10px', paddingRight:'10px', paddingTop:'10px'}}>
+                                                        <u>{key[0]}</u>
+                                                    </Typography>
+                                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px', paddingTop:'15px'}}>
+                                                        Pay: ${key[3]}
+                                                    </Typography>
+                                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px'}}>
+                                                        Location: <u>{key[2]}</u>
+                                                    </Typography>
+                                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px'}}>
+                                                        Time: {key[5]}
+                                                    </Typography>
+                                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft: '10px', paddingRight:'10px', position:'relative', overflow:'hidden', textOverflow:'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, lineHeight: '1.1', height: '26px'}}>
+                                                        Description: {key[4]}
+                                                    </Typography>
+                                                </div>
+                                            </div>
+                                        </Card>
+                                    </Grid>
+                                )
+                            })}
+                        </Grid>
+                    </Box>
+                </div>
+            }
+        </>
+    )
 }
