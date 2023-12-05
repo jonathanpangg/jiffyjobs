@@ -153,10 +153,10 @@ export function ViewApplicants({children, jobID}) {
                     <Dialog open={open} onClose={() => {setOpen(false)}}>
                         <DialogTitle style={{width: '520px', display: 'flex', justifyContent: 'center', fontFamily: 'Outfit', fontSize: '24px', fontWeight: '500', bold: 'none'}}>
                             <CloseIcon style={{width: '25px', height: '25px', position: 'absolute', right: 25}} onClick={() => {setOpen(false)}}/>
-                            <div style={{marginTop: '2.5%'}}> { typeResponse === 'standard' || 'selected' ? "Applicant Profile": (typeResponse === "accept" ? 'Are you sure you want to accept?': 'Are you sure you want to reject?')} </div>
+                            <div style={{marginTop: '2.5%'}}> { (typeResponse === 'standard' || typeResponse === 'selected') ? "Applicant Profile": (typeResponse === "accept" ? 'Are you sure you want to accept?': 'Are you sure you want to reject?')} </div>
                         </DialogTitle>
                         <DialogContent style={{display: 'flex', justifyContent: 'center'}}>
-                            <div style={{ width: '431px', height: '399px', border: '1px solid #A4A4A4', borderRadius: '10px', backgroundColor: typeResponse === 'standard' || 'selected' ? "white": (typeResponse === "accept" ? 'rgba(102, 193, 32, 0.15)': 'rgba(193, 32, 32, 0.15)')}}>
+                            <div style={{ width: '431px', height: '399px', border: '1px solid #A4A4A4', borderRadius: '10px', backgroundColor: (typeResponse === 'standard' || typeResponse === 'selected') ? "white": (typeResponse === "accept" ? 'rgba(102, 193, 32, 0.15)': 'rgba(193, 32, 32, 0.15)')}}>
                                 <DialogContentText>
                                     <div style={{display: 'flex', alignItems: 'center', fontFamily: 'Outfit', marginTop: '26px'}}>
                                         <Avatar sx={{ bgcolor: "#cccccc", color: "black", width: '50px', height: '50px', fontSize: '26px', fontFamily: 'Outfit', marginLeft: '35px', marginRight: '11px'}}>{ getInitials(applicant[0], applicant[1]) }</Avatar>
