@@ -306,7 +306,7 @@ export function JobBoard() {
                                     <Typography diabled align="right" style={{ fontFamily: 'Outfit', color: '#A4A4A4', fontWeight: 400, fontSize: '14px' }}>Bio</Typography>
                                 </Grid>
                                 <Grid item xs={7} style={{ paddingRight: '43px', paddingTop: '10px', }}>
-                                    <TextField disabled defaultValue={(profile[5] && profile[5].length > 5) ? profile[5] : ''} variant="outlined" multiline rows={6} size="small" style={{ width: '161px',  }}
+                                    <TextField disabled defaultValue={(profile[5] && profile[5].length > 0) ? profile[5] : ''} variant="outlined" multiline rows={6} size="small" style={{ width: '161px',  }}
                                     InputProps={{style: { textAlign: 'center',  fontFamily: 'Outfit', fontSize: '12px', }}} />
                                 </Grid>
                             </Grid>

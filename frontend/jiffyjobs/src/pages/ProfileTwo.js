@@ -1,27 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Card, Grid, Container, Typography, TextField, Button, FormControlLabel, Checkbox, Avatar, FormGroup, FormControl, InputLabel, OutlinedInput, Select, MenuItem } from '@mui/material';
 import '../styles/profile.css'
-import { deepOrange } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export function Profile() {
-    const [UserEmailstate, setuserEmail] = useState("");
-    const [major, setMajor] = useState('');
-    const [grade, setGrade] = useState('')
-    const [bio, setBio] = useState('');
-    const [isPublic, setIsPublic] = useState(false);
-    const [fname, setFname] = useState("");
-    const [userPassword, setuserPassword] = useState("");
-    const [lname, setLname] = useState("");
-    const [org, setOrg] = useState("");
     const [ userRole, setUserRole ] = useState(localStorage.getItem("user"));
     const [ userEmail, setUserEmail ] = useState(localStorage.getItem("email")); 
+    const [seeker, setSeeker] = useState({
+        email: data.email,
+        major: data.major,
+        grade: data.grade,
+        school: data.school,
+        first_name: data.first_name,
+        last_name: data.last_name,
+        bio: data.bio
+    })
+    const [ provider, setProvider ] = useState({
+        email: '',
+        first_name: '',
+        last_name: '',
+        org: ''
+    })
 
-    const gradeList = ["Freshmen", "Sophomore", "Junior", "Senior", "Graduate Student", "Other"]
-
-    const [personalInfo, setpersonalInfo] = useState({});
+    const gradeList = ["First-year", "Second-year", "Third-year", "Fourth-year", "Grad Student"];
 
     const [ token, setToken ] = useState(localStorage.getItem("token"));
     const [showToken, setShowToken] = useState(false);
@@ -41,7 +44,23 @@ export function Profile() {
                         }
                         return res;
                     }).then((data) => {
-                        console.log(data);
+                        if (userRole === 'seeker') {
+                            setSeeker({
+                                major: data.personal_info.major,
+                                grade: data.personal_info.grade,
+                                school: data.personal_info.school,
+                                first_name: data.personal_info.first_name,
+                                last_name: data.personal_info.last_name,
+                                bio: data.personal_info.bio
+                            })
+                        } else {
+                            setProvider({
+                                first_name: data.personal_info.first_name,
+                                last_name: data.personal_info.last_name,
+                                org: data.personal_info.organization
+                            })
+                        }
+                        
                     }).error((error) => {
                         console.log(error);
                     })
@@ -69,58 +88,8 @@ export function Profile() {
 
     }, [showToken])
 
-    // const userEmail = "pangj@bu.edu"; // This will eventually come from user login state
-    // const userEmail = "example_email@bu.edu"
     const wordLimit = 50;
 
-
-    useEffect(() => {
-        if (personalInfo.first_name) {
-            setFname(personalInfo.first_name);
-        }
-    }, [personalInfo.first_name]); 
-
-    useEffect(() => {
-        if (personalInfo.organization) {
-            setFname(personalInfo.organization);
-        }
-    }, [personalInfo.organization]); 
-
-
-
-    useEffect(() => {
-        if (personalInfo.last_name) {
-            setLname(personalInfo.last_name);
-        }
-    }, [personalInfo.last_name]); 
-
-
-    useEffect(() => {
-        if (personalInfo.personal_statement) {
-            try {
-                setBio(personalInfo.personal_statement[0]);
-            }
-            catch {
-                setBio(" ")
-            }
-        }
-    }, [personalInfo.personal_statement]); 
-
-    useEffect(() => {
-        if (personalInfo.grade) {
-            setGrade(personalInfo.grade);
-        }
-    }, [personalInfo.grade]); 
-
-    useEffect(() => {
-        if (personalInfo.major) {
-            setMajor(personalInfo.major);
-        }
-    }, [personalInfo.major]); 
-
-    const handleGradeChange = (event) => {
-        setGrade(event.target.value)
-    };
     const handleBioChange = (event) => {
         const text = event.target.value;
         const words = text.split(/\s+/); 
@@ -134,57 +103,42 @@ export function Profile() {
         }
       };
 
-    const handleMajorChange = (event) => {
-        setMajor(event.target.value);
-    }
-
-    const handleOrgChange = (event) => {
-        setOrg(event.target.value);
-    }
-
-
-      const saveProfileChanges = async () => {
-        // Assuming `bio` is a state variable holding the bio information   
-        let requestBody = {};
-       
-    
-        try {
-            if (userRole === "seeker") { 
-                requestBody = {
-                    userEmail: UserEmailstate, // Should be dynamically set
-                    role: "seeker", // Should be dynamically set
-                    major: major, // Should be dynamically set or obtained from state
-                    grade: grade, // Should be dynamically set or obtained from state
-                    bio: bio, // Using the bio from your state
-                };
-            } else if (userRole === "provider") {
-                requestBody = {
-                    userEmail: UserEmailstate,
-                    role: "provider",
-                    organization: org
-                }
-            }
-            console.log(requestBody)
-
-            const response = await fetch('https://jiffyjobs-api-production.up.railway.app/api/users/getinfo/update', { 
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(requestBody),
-            });
-            if (response.ok) {
-                // Handle success
-                const result = await response.json();
-                console.log('Profile updated:', result);
-            } else {
-                // Handle errors
-                console.error('Failed to update profile:', response.statusText);
-            }
-        } catch (error) {
-            // Handle network errors
-            console.error('Error saving profile:', error);
+    const saveProfileChanges = async () => {
+        const update = {
+            method: "PUT",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                email: userEmail,
+                role: userRole,
+                major: '',
+                grade: '',
+                bio: '',
+                organization: ''
+            })
         }
+        const route = 'https://jiffyjobs-api-production.up.railway.app/api/users/getinfo/update'
+        await fetch(route, update)
+        .then(async (response) => {
+            const res = await response.json()
+            if (!response.ok) {
+                throw new Error(res.message);
+            } 
+            return res;
+        }).then(async (data) => {
+            if (userRole === 'seeker') {
+                setSeeker({
+                    major: data.personal_info.major,
+                    grade: data.personal_info.grade,
+                    bio: data.personal_info.bio
+                })
+            } else {
+                setProvider({
+                    org: data.personal_info.organization
+                })
+            }
+        }).error((error) => {
+            console.log(error)
+        })
     };
 
     const getInitials = (first_name, last_name) => {
