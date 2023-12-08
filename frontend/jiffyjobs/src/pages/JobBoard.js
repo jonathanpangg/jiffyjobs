@@ -651,7 +651,7 @@ export function JobBoard() {
                 {/* <button onClick={handleLogJobData}>Log Job Data</button> */}
             </Box>
             <JobCards jobData={jobData} page={page} cardsPerPage={cardsPerPage} openPopUp={openPopUp}/>
-            <div style={{ display: 'flex', justifyContent: 'center', padding: '1%', background: '#f3f3f3', fontFamily: 'Outfit', fontSize: '14px' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', padding: '1%', fontFamily: 'Outfit', fontSize: '14px' }}>
                 <Pagination count={totalPages} page={page} onChange={(event, value) => setPage(value)}  className="custom-pagination" />
             </div>
             {openSubmitProfile && (<SubmitProfilePopup open={openSubmitProfile} onClose={handleCloseSubmitProfile} onSubmit={handleSubmitProfile}/>)}
