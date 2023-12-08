@@ -93,7 +93,7 @@ export function StatusDashboard() {
                                             </Typography>
                                         </div>
                                         <div className='withdraw-card'>
-                                            <Card sx={{width: '12.5vw', height: '2.5vw'}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '7px', fontFamily: 'Outfit', fontSize: '12px', fontWeight: '400', fontStyle: 'normal', backgroundColor: '#A4A4A4', display: 'inline-flex', justifyContent: 'center', alignItems: 'center'}}>
+                                            <Card sx={{width: '12.5vw', height: '2.5vw'}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '7px', fontFamily: 'Outfit', fontSize: '12px', cursor:'pointer', fontWeight: '400', fontStyle: 'normal', backgroundColor: '#4A4FE4', color: 'white', display: 'inline-flex', justifyContent: 'center', alignItems: 'center'}}>
                                                 Withdraw Application
                                             </Card>
                                         </div>
