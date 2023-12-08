@@ -15,7 +15,8 @@ import {getDistanceBetweenAddresses, distance} from '../utils/controllerFunction
  */
 export const getJobs = async (req, res) => {
     try {
-        const jobs = await Jobs.find();
+        const currentTime = new Date();
+        const jobs = await Jobs.find({ "time.0": { $gte: currentTime } });
 
         if (!jobs) {
             return handleNotFound(res, "No Jobs");
@@ -176,36 +177,47 @@ export const filterJobs = async (req, res) => {
     const job_type = req.params.job_type;
     const date_range = req.params.date_range.split(",");
     const location_metric = req.params.location_metric;
+    const currentTime = new Date();
+
     try { 
             // Create a query object to build the filter criteria
             const query = {};
             query.$and = []
             // Add filters based on the request parameters
             if (job_Category[0] != "*") {  
-                const c = job_Category.map(category => category);   
-                console.log(c)       
-                const jcquery = {categories : {'$in' : c}}
-                query.$and.push(jcquery);
-            }
-            
-            if (job_type != "*") {
-                const durationqr = {job_type: job_type}
-                query.$and.push(durationqr);
-            }
-    
-            if (date_range[0] != "*") {
-                const [startDate, endDate] = date_range;
-                const drquery = {date_posted : { $gte: new Date(startDate), $lte: new Date(endDate) }}
-                query.$and.push(drquery);
-            }
+                // const c = job_Category.map(category => category.toLowerCase());   
+                // console.log(c)       
+                // const jcquery = {categories : {'$in' : c}}
+                // query.$and.push(jcquery)  
 
-            if(query.$and.length == 0) {
-                const jobs = await Jobs.find();
-                handleSuccess(res, jobs);
-            } else {
-                const jobs = await Jobs.find(query);
-                handleSuccess(res, jobs);
-            }
+                const jobs = await Jobs.find({
+                    "time.0": { $gte: currentTime }, 
+                    categories: { 
+                        $all: job_Category, 
+                    } 
+                });
+                return handleSuccess(res, jobs);
+            } 
+            
+            // more filtering options: add in future iterations (if applicable)
+            // if (job_type != "*") {
+            //     const durationqr = {job_type: job_type}
+            //     query.$and.push(durationqr);
+            // }
+    
+            // if (date_range[0] != "*") {
+            //     const [startDate, endDate] = date_range;
+            //     const drquery = {date_posted : { $gte: new Date(startDate), $lte: new Date(endDate) }}
+            //     query.$and.push(drquery);
+            // }
+
+            // if(query.$and.length == 0) {
+            //     const jobs = await Jobs.find();
+            //     handleSuccess(res, jobs);
+            // } else {
+            //     const jobs = await Jobs.find(query);
+            //     handleSuccess(res, jobs);
+            // }
 
             // add to future iteration: filter by location
             // if (location != "*" && jobs) {
@@ -236,4 +248,36 @@ export const filterJobs = async (req, res) => {
     }
 }
 
+
+export const searchJobs = async (req, res) => {
+    try {
+        const searchContent = req.params.searchContent;
+        const newsearch = searchContent.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const searchRegex = new RegExp(newsearch, 'i');
+        const currentTime = new Date();
+        if (searchContent === " ") {
+            const jobs = await Jobs.find({ "time.0": { $gte: currentTime } });
+
+            if (!jobs) {
+                return handleNotFound(res, "No Jobs");
+            }
+            return handleSuccess(res, jobs)
+        } else {
+
+            // Query the database
+            const jobs = await Jobs.find({ 
+                $or: [
+                    { title: { $regex: searchRegex } },
+                    { job_poster: { $regex: searchRegex } },
+                    { description: { $regex: searchRegex } },
+                    { location: { $regex: searchRegex } }
+                ], "time.0": { $gte: currentTime }
+            });
+            // Return the found jobs
+            return handleSuccess(res, jobs);
+        }
+    } catch(error) {
+        return handleServerError(error);
+    }
+}
 

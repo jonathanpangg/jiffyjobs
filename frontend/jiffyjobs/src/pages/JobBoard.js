@@ -18,7 +18,6 @@ import { JobPosting } from '../components/JobPosting';
 import { JobCards } from '../components/JobCards';
 import { CongratsPopup } from '../components/CongratsPopup';
 
-
 export function JobBoard() {
     const [jobData, setJobData] = useState([])
     const [rawData, setRawData] = useState([]);
@@ -48,6 +47,44 @@ export function JobBoard() {
     const [jobSaved, setJobSaved] = useState(false)
 
     const navigate = useNavigate();
+
+    // whenever user clicks the search button, gets directed to here
+    const handleJobPostingData = (data) => {
+        if (!data) {
+            data = " ";
+        }
+        const route = `http://localhost:4000/api/jobs/search/${data}/prop`;
+        fetch(route)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                setRawData(data);
+                const newJobData = data.map(function(obj) {
+                    return [[obj._id, obj.title], [randomImage(obj.categories.toString().split(",")[0]), obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
+                });
+                setJobData(newJobData);
+                setSize(jobData.length)
+
+                if (size <= 4) {
+                    setBackground("1")
+                } else {
+                    setBackground("")
+                }
+
+                const savedStatus = {};
+             data.forEach(job => {
+                 savedStatus[job.id] = false; 
+             });
+            setIsJobSaved(savedStatus);
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    };
 
     // go to dashboard
     const handleToDashboard = () => {
@@ -123,7 +160,7 @@ export function JobBoard() {
             console.log(route)
             fetch(route, requestOptions)
                 .then((response) => {
-                    if (!response.ok) {
+                    if (!response.ok) { 
                         throw new Error('Network response was not ok');
                     }
                     return response.json();
@@ -142,7 +179,7 @@ export function JobBoard() {
                         setBackground("")
                     }
 
-                     const savedStatus = {};
+                    const savedStatus = {};
                  data.forEach(job => {
                      savedStatus[job.id] = false; 
                  });
@@ -593,7 +630,7 @@ export function JobBoard() {
                         </Link>
                     </DialogActions>
             </Dialog>
-            <JobPosting/> 
+            <JobPosting onJobDataSubmit={handleJobPostingData} /> 
             <Box className='job-table-box'>
                 <div className='job-table-inner' style={{ paddingTop: '50px', width: '1136px'}}>
                     <Typography style={{fontFamily: 'Outfit', fontSize: '20px', justifyContent: 'center', alignItems: 'center', textAlign: 'start'}}>
