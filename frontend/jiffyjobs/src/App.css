@@ -9,6 +9,7 @@
   align-items: center;
   padding-left: 5%;
   /* padding-bottom: 0.85%; */
+  border-radius: 10px;
 }
 
 .first-tab {
@@ -155,6 +156,34 @@
 .outerCard1 {
   background-color: #f3f3f3;
   height: 100vh;
+  padding: 2%;
+  align-items: center;
+}
+
+.outerCardLogin {
+  background-color: #f3f3f3;
+  height: 83.25vh;
+  padding: 2%;
+  align-items: center;
+}
+
+.outerCardSignup1 {
+  background-color: #f3f3f3;
+  height: 84.75vh;
+  padding: 2%;
+  align-items: center;
+}
+
+.outerCardSignup2 {
+  background-color: #f3f3f3;
+  height: 98.75vh;
+  padding: 2%;
+  align-items: center;
+}
+
+.outerCardProfile {
+  background-color: #f3f3f3;
+  height: 83.5vh;
   padding: 2%;
   align-items: center;
 }

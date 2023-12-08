@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import '../styles/JobPosting.css';
 
 import { Button, TextField, ToggleButton, ToggleButtonGroup, Card, 
         CardContent, Checkbox, FormControlLabel, Link, InputAdornment, 
         IconButton } from '@mui/material';
 
 import { NavBar } from '../components/NavBar';
+
 
 
 export function Login() {
@@ -149,12 +151,12 @@ export function Login() {
     return (
         <> 
         <NavBar/> 
-            <div className={ 'outerCard3' } style={{paddingTop: '30px'}} >
+            <div className={ 'outerCardLogin' } style={{paddingTop: '30px'}} >
             <div style={{transform: 'scale(0.90)', marginTop: '30px', }}>
             <Card sx={{ maxWidth: 650, maxHeight: 7000, mx: 'auto', borderRadius: '20px'}}>
                 <CardContent style={{ textAlign: 'center' }}>
                     <div style={{ fontFamily: 'Outfit', fontWeight: 'bold', fontSize: '28px', textAlign: 'center', marginTop: '30px', marginBottom: '15px'}}>
-                        Welcome to JIFFYJOBS!
+                        Welcome to <span className='job-search-logo' style={{color: '#4A4FE4', fontSize: '28px'}}>JIFFYJOBS</span>!
                     </div>
                     
                     <form onSubmit={handleSubmit} noValidate autoComplete="off" style={{ alignItems: 'center' }}>
@@ -196,7 +198,7 @@ export function Login() {
                     </div>
                                 
                     <div style={{ }}>
-                        <Button type="submit" sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#A4A4A4', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit', border: '1px solid #5B5B5B' }} >
+                        <Button type="submit" sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#4A4FE4', '&:hover': { backgroundColor: '#4A4FE4' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit', border: '1px solid #5B5B5B' }} >
                             Log in
                         </Button>
                     </div>
@@ -206,7 +208,7 @@ export function Login() {
                         <div class="orLine "></div>
                     </div>
                     <div style={{ }}>
-                        <Button onClick={handleSignUp} sx={{ width: '68.5%', mt: 1, mb: 2, p: '1.5%', marginTop: '10px', marginBottom: '30px', backgroundColor: '#5B5B5B', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit', fontSize: '16px'}} >
+                        <Button onClick={handleSignUp} sx={{ width: '68.5%', mt: 1, mb: 2, p: '1.5%', marginTop: '10px', marginBottom: '30px', color: 'black', borderColor: '#4A4FE4', '&:hover': { backgroundColor: 'white', borderColor: '#4A4FE4', }, borderRadius: '30px', textTransform: 'none', fontFamily: 'Outfit', fontSize: '16px'}} variant="outlined">
                             Don’t have an account? Join now!
                         </Button>
                     </div>

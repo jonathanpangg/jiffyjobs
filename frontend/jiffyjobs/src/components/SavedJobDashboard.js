@@ -92,7 +92,7 @@ export function SavedJobDashboard() {
                                         />
                                         <div style={{position: 'absolute', maxWidth: '100%', top: '30%', left: '90%', textAlign: 'center', transform: 'translate(-50%, -50%)', whiteSpace: 'nowrap'}}>
                                             <StarRoundedIcon
-                                                style={{ width: '40px', height: '40px', color: '#5B5B5B'}}
+                                                style={{ width: '40px', height: '40px', color: '#4A4FE4'}}
                                             />
                                         </div>
                                     </div>

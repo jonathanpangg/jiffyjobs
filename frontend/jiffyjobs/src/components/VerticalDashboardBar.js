@@ -19,7 +19,8 @@ const CustomTab = styled((props) => <Tab {...props} />)(() => ({
     whiteSpace: 'nowrap',
     borderRadius: '5px',
     "&.Mui-selected": {
-        backgroundColor: '#A4A4A4',
+        backgroundColor: '#4A4FE4',
+        color: 'white',
     },
 }))
 
