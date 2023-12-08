@@ -153,7 +153,7 @@ export function NavBar() {
                                 <Avatar sx={{ bgcolor: "#cccccc", marginRight: 10, color: "#5B5B5B", width: 25, height: 25, fontSize: '14px', fontFamily: 'Outfit' }}>{first[0] + last[0]}</Avatar>
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left', maxWidth: '120px', wordBreak: 'break-all', marginLeft: '5px' }}>
-                                <span style={{ fontWeight: 500, fontSize: '16px', color: '#5B5B5B', fontFamily: 'Outfit', marginTop: '-0.665px' }}>{first} {last}</span>
+                                <span style={{ fontWeight: 600, fontSize: '16px', color: '#5B5B5B', fontFamily: 'Outfit', marginTop: '-0.665px', textDecoration: 'underline' }}>{first} {last}</span>
                             </div>
                             {isDropdownOpen ? <ArrowDropUpIcon className='arrow-pad' style={{ marginLeft: '2px', color: '#4A4FE4'}}/> : <ArrowDropDownIcon className='arrow-pad' style={{ marginLeft: '2px', color: '#D9D9D9' }}/>}
                         </Tooltip>
