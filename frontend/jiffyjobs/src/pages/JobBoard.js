@@ -5,10 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import ClearIcon from '@mui/icons-material/Clear';
 import StarBorderRounded from '@mui/icons-material/StarBorderRounded';
 import StarRoundedIcon from "@mui/icons-material/StarRounded"
-import { Dialog, Divider, Typography, DialogContentText, DialogContent, 
-        DialogActions, DialogTitle, Link, Button, Pagination, Grid, 
-        CardContent, Card, Box, IconButton, Chip, TextField, Avatar,
-        Stack, CardMedia } from '@mui/material';
+import { Box, Typography, Divider, Pagination } from '@mui/material';
 
 import dayjs from 'dayjs';
 
