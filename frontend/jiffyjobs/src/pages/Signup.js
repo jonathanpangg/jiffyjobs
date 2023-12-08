@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Navigate, useNavigate } from 'react-router-dom';
+import '../styles/JobPosting.css';
 
 import { Button, TextField, ToggleButton, ToggleButtonGroup, Card, 
        CardContent, InputAdornment, IconButton } from '@mui/material';
@@ -190,12 +191,12 @@ export function Signup() {
     return (
         <>
         <NavBar/>
-            <div className={hasErrors() ? 'outerCard5' : 'outerCard4'} style={{paddingTop: '20px'}}>
+            <div className={hasErrors() ? 'outerCardSignup2' : 'outerCardSignup1'} style={{paddingTop: '20px'}}>
                 <div style={{transform: 'scale(0.90)', marginTop: '-5px'}} >
                 <Card sx={{ maxWidth: 650, maxHeight: 7000, mx: 'auto', borderRadius: '20px',}}>
                 <CardContent style={{ textAlign: 'center' }}>
                     <div style={{ fontFamily: 'Outfit', fontWeight: 'bold', fontSize: '28px', textAlign: 'center', marginTop: '30px', marginBottom: '15px'}}>
-                        Welcome to JIFFYJOBS!
+                        Welcome to <span className='job-search-logo' style={{color: '#4A4FE4', fontSize: '28px'}}>JIFFYJOBS</span>!
                     </div>
                     <text style={{ fontFamily: 'Outfit', textAlign: 'center', color: '#5B5B5B', fontSize: '16px' }}>Sign up as a...</text>
 
@@ -298,7 +299,7 @@ export function Signup() {
 
                     <div style={{paddingTop: '1.5%'}}>
 
-                        <Button type="submit" fullWidth sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#5B5B5B', '&:hover': { backgroundColor: '#7D7D7D' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit'  }}>
+                        <Button type="submit" fullWidth sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#4A4FE4', '&:hover': { backgroundColor: '#4A4FE4' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit'  }}>
                             Sign up as a {role === 'jobSeeker' ? 'Job Seeker' : 'Job Provider'}
                         </Button>
                     </div>

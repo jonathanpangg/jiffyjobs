@@ -107,7 +107,9 @@ export function JobPosting( { onJobDataSubmit } ) {
     // handles the errors
     function handleError() {
         const isEndTimeInvalid = startTime && endTime && dayjs(endTime).isBefore(dayjs(startTime));
+        const isStartTimeToday = startTime && selectedDate && dayjs(selectedDate).isSame(dayjs(), 'day') && dayjs(startTime).isBefore(dayjs());
         setError({
+        // ... [o
             titleError: val.title === '',
             nameError: val.name === '',
             locationError: val.location === '',
@@ -115,7 +117,7 @@ export function JobPosting( { onJobDataSubmit } ) {
             descriptionError: val.description === '',
             categoryError: selectedCategories.length === 0,
             dateError: !selectedDate,
-            startTimeError: !startTime,
+            startTimeError: !startTime || isStartTimeToday,
             endTimeError: !endTime || isEndTimeInvalid,
         })
     }
@@ -284,7 +286,7 @@ export function JobPosting( { onJobDataSubmit } ) {
         return (
             <Dialog open={openStartPop} onClose={closePop} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
                 <div className='popup-title'>
-                    <DialogTitle style={{width: "90%", fontFamily: 'Outfit', fontSize: '20px', fontWeight: 500, color: 'black'}}> 
+                    <DialogTitle style={{width: "90%", fontFamily: 'Outfit', fontSize: '20px', fontWeight: 500, color: '#4A4FE4'}}> 
                         Tell us more about the job!
                     </DialogTitle>
                     <IconButton onClick={closePop}>
@@ -345,7 +347,7 @@ export function JobPosting( { onJobDataSubmit } ) {
                                 Cancel
                             </CardContent>
                         </Card>
-                        <Card sx={{height: 40, width: '7%'}} square={false} style={{overflow:'hidden', borderRadius: '10px', background: "#D9D9D9", color: '#5B5B5B', transform: 'translateX(-31.5px)'}}>
+                        <Card sx={{height: 40, width: '7%'}} square={false} style={{overflow:'hidden', borderRadius: '10px', background: "#4A4FE4", color: 'white', transform: 'translateX(-31.5px)'}}>
                             <CardContent style={{ height: '25%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Outfit', fontSize: '16px', cursor:'pointer'}} onClick={openNextPop}> 
                                 Next
                             </CardContent>
@@ -360,7 +362,7 @@ export function JobPosting( { onJobDataSubmit } ) {
         return (
             <Dialog open={openSecondPop} onClose={closeNextPop} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
                 <div className='popup-title'>
-                    <DialogTitle style={{width: "90%", fontFamily: 'Outfit', fontSize: '20px', fontWeight: 500, color: 'black'}}> 
+                    <DialogTitle style={{width: "90%", fontFamily: 'Outfit', fontSize: '20px', fontWeight: 500, color: '#4A4FE4'}}> 
                         Tell us more about the job!
                     </DialogTitle>
                     <IconButton onClick={closeNextPop}>
@@ -529,7 +531,7 @@ export function JobPosting( { onJobDataSubmit } ) {
                                         label={value}
                                         onDelete={() => handleDeleteCategory(value)}
                                         deleteIcon={<span style={{ fontFamily: 'Outfit', fontSize: '14px', color: 'white', fontWeight: 500, paddingRight: '4px' }}>X</span>}
-                                        style={{ margin: '2px', fontFamily: 'Outfit', fontSize: '14px', borderRadius: '10px', backgroundColor: '#5B5B5B', color: 'white' }}
+                                        style={{ margin: '2px', fontFamily: 'Outfit', fontSize: '14px', borderRadius: '10px', backgroundColor: '#A0A4FF', color: 'white' }}
                                     />
                                 ))}
                             </div>
@@ -543,7 +545,7 @@ export function JobPosting( { onJobDataSubmit } ) {
                             Back
                         </CardContent>
                     </Card>
-                    <Card sx={{height: 40, width: '7%'}} square={false} style={{overflow:'hidden', borderRadius: '10px', background: "#D9D9D9", color: '#5B5B5B', transform: 'translateX(-31.5px)' }}>
+                    <Card sx={{height: 40, width: '7%'}} square={false} style={{overflow:'hidden', borderRadius: '10px', background: "##4A4FE4", color: 'white', transform: 'translateX(-31.5px)' }}>
                         <CardContent style={{ height: '25%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Outfit', fontSize: '16px', cursor:'pointer'}} onClick={PostJobs}> 
                             Submit
                         </CardContent>
@@ -563,11 +565,11 @@ export function JobPosting( { onJobDataSubmit } ) {
         const hasDescriptionError = val.description === '';
         const hasCategoryError = selectedCategories.length === 0;
         const hasDateError = !selectedDate 
-        const hasStartTimeError = !startTime;
+        const isStartTimeToday = startTime && selectedDate && dayjs(selectedDate).isSame(dayjs(), 'day') && dayjs(startTime).isBefore(dayjs());
         const isEndTimeInvalid = startTime && endTime && dayjs(endTime).isBefore(dayjs(startTime));
         const isTimeError = !endTime || isEndTimeInvalid;
 
-        if (hasTitleError || hasNameError || hasLocationError || hasPayError || hasDescriptionError || hasCategoryError || hasDateError || hasStartTimeError || isTimeError) {
+        if (hasTitleError || hasNameError || hasLocationError || hasPayError || hasDescriptionError || hasCategoryError || hasDateError || isStartTimeToday || isEndTimeInvalid) {
             setError({
                 titleError: hasTitleError,
                 nameError: hasNameError,
@@ -576,8 +578,8 @@ export function JobPosting( { onJobDataSubmit } ) {
                 descriptionError: hasDescriptionError,
                 categoryError: hasCategoryError,
                 dateError: hasDateError,
-                startTimeError: hasStartTimeError,
-                endTimeError: isTimeError,
+                startTimeError: isStartTimeToday,
+                endTimeError: isEndTimeInvalid,
             });
 
             return;
@@ -586,8 +588,8 @@ export function JobPosting( { onJobDataSubmit } ) {
         handleError()
         if (!(error.titleError === true || error.nameError === true || error.locationError === true || error.payError === true || error.descriptionError === true || error.categoryError === true)) {
             console.log('val.date:', val.date);
-    console.log('val.startTime:', val.startTime);
-    console.log('val.endTime:', val.endTime);
+            console.log('val.startTime:', val.startTime);
+            console.log('val.endTime:', val.endTime);
             const categoryList = selectedCategories; 
             const requestOptions = {
                 method: 'POST',
@@ -630,12 +632,12 @@ export function JobPosting( { onJobDataSubmit } ) {
     return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
             <Box style={{paddingTop: '3.9px', width: '1128px'}}> 
-                <div className='inner-div' style={{marginBottom: '68px', }}>
+                <div className='inner-div' style={{marginBottom: '8px', }}>
                     <Card elevation={4} style={{ overflow: 'hidden', borderRadius: '15px', textAlign: 'center', height: '222px', width: '1128px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                             <div style={{ marginBottom: '29px' }}> 
                                 <text className='job-search-text' style={{}}> 
-                                    Find jobs or hire college students starting now with <span className='job-search-logo'>JIFFYJOBS</span>
+                                    Find jobs or hire college students starting now with <span className='job-search-logo' style={{color: '#4A4FE4'}}>JIFFYJOBS</span>
                                 </text>
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '23px' }}>
@@ -661,7 +663,7 @@ export function JobPosting( { onJobDataSubmit } ) {
                                         style: {  borderRadius: '11px', fontFamily: 'Outfit', fontSize: '18px' }
                                     }}
                                 />
-                                <Card sx={{ width: '140px', height: '60px' }} style={{borderRadius: '8px', background: "#4348DB", color: 'white', display: 'flex', justifyContent: 'center', }}>
+                                <Card sx={{ width: '140px', height: '58px' }} style={{borderRadius: '8px', background: "#4348DB", color: 'white', display: 'flex', justifyContent: 'center', }}>
                                     <CardContent onClick={openPop} style={{marginTop: '2px', fontFamily: 'Outfit', fontSize: '18px', fontWeight: 400}}> 
                                         Post a Job
                                     </CardContent>
