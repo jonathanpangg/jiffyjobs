@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import '../styles/Filter.css';
 
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { styled, Tab, Tabs, Grid, Tooltip, Menu, Typography,
        Avatar, MenuItem } from '@mui/material';
 
@@ -14,10 +17,9 @@ const StickyNavBar = styled(Grid)(({ theme }) => ({
 }));
 
 export function NavBar() {
-    const [anchorEl, setAnchorEl] = React.useState(null);
     const settings = ['Profile', 'Logout'];
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const location = useLocation();
     const [value, setValue] = useState((location.pathname.toLowerCase() === '/jobboard' || location.pathname.toLowerCase() === '/' || location.pathname.toLowerCase() === '') ? 0 : (location.pathname.toLowerCase() === '/dashboard' ? 1 : -1));
    
@@ -37,11 +39,13 @@ export function NavBar() {
     // open nav menu
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
+        setIsDropdownOpen(true); 
     };
 
     // close nav menu
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
+        setIsDropdownOpen(false); 
     };
 
     // go to job board
@@ -97,13 +101,6 @@ export function NavBar() {
         marginBottom: '6px',
     }))
     
-    // custom tab props
-    function allyProps(index) {
-        return {
-            id: `vertical-tab-${index}`,
-            'aria-controls': `vertical-tabpanel-${index}`,
-        };
-    }
 
     useEffect(() => {
         const currentPath = location.pathname.toLowerCase();
@@ -145,26 +142,30 @@ export function NavBar() {
                             <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left', maxWidth: '120px', wordBreak: 'break-all', marginLeft: '5px' }}>
                                 <span style={{ fontWeight: 500, fontSize: '16px', color: '#5B5B5B', fontFamily: 'Outfit', marginTop: '-0.665px' }}>{first} {last}</span>
                             </div>
+                            {isDropdownOpen ? <ArrowDropUpIcon className='arrow-pad' style={{ marginLeft: '2px', color: '#4A4FE4'}}/> : <ArrowDropDownIcon className='arrow-pad' style={{ marginLeft: '2px', color: '#D9D9D9' }}/>}
                         </Tooltip>
                             <Menu
-                                sx={{ mt: '32.75px', alignItems: 'center', }}
+                                sx={{ mt: '7.75px', alignItems: 'center', }}
                                 id="menu-appbar"
                                 anchorEl={anchorElUser}
                                 anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
+                                    vertical: 'bottom',
+                                    horizontal: 'center',
                                 }}
                                 keepMounted
                                 transformOrigin={{
                                     vertical: 'top',
-                                    horizontal: 'right',
+                                    horizontal: 'center',
                                 }}
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
+                                PaperProps={{
+                                    sx: { borderRadius: '10px', width: '110px' } 
+                                }}
                             >
                                 {settings.map((setting) => (
                                     <MenuItem key={setting} onClick={() => { handleCloseUserMenu(); settingsActions[setting](); }}>
-                                        <Typography textAlign="center">{setting}</Typography>
+                                        <Typography sx={{ fontSize: '14px', fontWeight: 400, fontFamily: 'Outfit' }}>{setting}</Typography>
                                     </MenuItem>
                                 ))}
                             </Menu>
