@@ -262,8 +262,6 @@ export function JobBoard() {
     };
 
     const handleSubmitProfile = () => {
-        handleCloseSubmitProfile();
-        setOpenCongratsPopup(true);
         const user = {
             method: "PUT",
             headers: { 'Content-Type': 'application/json' },
@@ -283,7 +281,8 @@ export function JobBoard() {
             return res;
         })
         .then((data) => {
-            console.log(data);
+            handleCloseSubmitProfile();
+            setOpenCongratsPopup(true);
         })
         .catch((error) => {
             const err = error.message;
