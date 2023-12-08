@@ -98,14 +98,19 @@ export function Profile() {
                     throw new Error(res.message);
                 }
                 return res;
-            }).then((data) => {
+            }).then(async (data) => {
                 if (userRole === 'seeker') {
-                    setSeeker({
+                    await setSeeker({
                         major: data.personal_info.major,
                         grade: data.personal_info.grade,
                         school: data.personal_info.school,
                         bio: data.personal_info.personal_statement[0]
                     })
+
+                    const words = data.personal_info.personal_statement[0].split(/\s+/).filter(Boolean); 
+                    const wordCount = words.length;
+                    localStorage.setItem("wordCount", wordCount); 
+                    setWordCount(wordCount);
                 } else {
                     setProvider({
                         org: data.personal_info.organization
