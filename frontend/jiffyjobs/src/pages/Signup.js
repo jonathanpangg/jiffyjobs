@@ -190,7 +190,7 @@ export function Signup() {
     return (
         <>
         <NavBar/>
-            <div className={hasErrors() ? 'outerCard5' : 'outerCard4'} style={{paddingTop: '20px'}}>
+            <div className={hasErrors() ? 'outerCardSignup2' : 'outerCardSignup1'} style={{paddingTop: '20px'}}>
                 <div style={{transform: 'scale(0.90)', marginTop: '-5px'}} >
                 <Card sx={{ maxWidth: 650, maxHeight: 7000, mx: 'auto', borderRadius: '20px',}}>
                 <CardContent style={{ textAlign: 'center' }}>

@@ -149,7 +149,7 @@ export function Login() {
     return (
         <> 
         <NavBar/> 
-            <div className={ 'outerCard3' } style={{paddingTop: '30px'}} >
+            <div className={ 'outerCardLogin' } style={{paddingTop: '30px'}} >
             <div style={{transform: 'scale(0.90)', marginTop: '30px', }}>
             <Card sx={{ maxWidth: 650, maxHeight: 7000, mx: 'auto', borderRadius: '20px'}}>
                 <CardContent style={{ textAlign: 'center' }}>

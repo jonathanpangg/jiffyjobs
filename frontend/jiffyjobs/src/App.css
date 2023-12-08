@@ -159,9 +159,30 @@
   align-items: center;
 }
 
+.outerCardLogin {
+  background-color: #f3f3f3;
+  height: 83.25vh;
+  padding: 2%;
+  align-items: center;
+}
+
+.outerCardSignup1 {
+  background-color: #f3f3f3;
+  height: 84.75vh;
+  padding: 2%;
+  align-items: center;
+}
+
+.outerCardSignup2 {
+  background-color: #f3f3f3;
+  height: 98.75vh;
+  padding: 2%;
+  align-items: center;
+}
+
 .outerCardProfile {
   background-color: #f3f3f3;
-  height: 82.75vh;
+  height: 83.5vh;
   padding: 2%;
   align-items: center;
 }
