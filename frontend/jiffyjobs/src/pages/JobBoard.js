@@ -469,7 +469,7 @@ export function JobBoard() {
                 <div style={{ position: 'relative'}}>
                     <CardMedia
                         component="img"
-                        style={{ width: '744px', maxHeight: '162px',}}
+                        style={{ width: '744px', maxHeight: '195px',}}
                         image={currentPop[1] && currentPop[1].length > 1 && currentPop[1][0]}
                         alt="placeholder"
                     />
@@ -487,8 +487,8 @@ export function JobBoard() {
                                 <div style={{ display: 'inline-block', position: 'relative' }}>
                                     <IconButton onClick={() => toggleSaveJob(currentPop[0][0])} style={{ borderRadius: '10px' }}>
                                         {savedJobs.includes(currentPop[0] && currentPop[0].length > 1 && currentPop[0][0]) ? 
-                                            <StarRoundedIcon style={{ width: '27.046px', height: '27.046px', color: '#A4A4A4' }} /> : 
-                                            <StarBorderRounded style={{ width: '27.046px', height: '27.046px', color: '#A4A4A4' }} />}
+                                            <StarRoundedIcon style={{ width: '27.046px', height: '27.046px', color: '#4A4FE4' }} /> : 
+                                            <StarBorderRounded style={{ width: '27.046px', height: '27.046px', color: '#4A4FE4' }} />}
                                     </IconButton>
                                     {showSavedMessage && <div style={{ position: 'absolute', bottom: '-18px', left: '50%', transform: 'translateX(-50%)', fontSize: '10px', fontFamily: 'Outfit', fontWeight: 500, textAlign: 'center' }}>
                                     {jobSaved ? 'Job Unsaved' : 'Job Saved'}
@@ -557,7 +557,7 @@ export function JobBoard() {
                                     key={index}
                                     label={item.trim()}
                                     variant="outlined"
-                                    style={{ margin: '2px', fontFamily: 'Outfit', fontSize: '10.439px', borderRadius: '10px', backgroundColor: '#D9D9D9', color: '#5B5B5B' }}
+                                    style={{ margin: '2px', fontFamily: 'Outfit', fontSize: '10.439px', borderRadius: '10px', backgroundColor: '#A0A4FF', color: 'white', borderColor: '#A0A4FF' }}
                                 />
                                 ))
                             ) : (

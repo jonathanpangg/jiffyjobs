@@ -270,7 +270,7 @@ export function JobPosting() {
         return (
             <Dialog open={openStartPop} onClose={closePop} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
                 <div className='popup-title'>
-                    <DialogTitle style={{width: "90%", fontFamily: 'Outfit', fontSize: '20px', fontWeight: 500, color: 'black'}}> 
+                    <DialogTitle style={{width: "90%", fontFamily: 'Outfit', fontSize: '20px', fontWeight: 500, color: '#4A4FE4'}}> 
                         Tell us more about the job!
                     </DialogTitle>
                     <IconButton onClick={closePop}>
@@ -331,7 +331,7 @@ export function JobPosting() {
                                 Cancel
                             </CardContent>
                         </Card>
-                        <Card sx={{height: 40, width: '7%'}} square={false} style={{overflow:'hidden', borderRadius: '10px', background: "#D9D9D9", color: '#5B5B5B', transform: 'translateX(-31.5px)'}}>
+                        <Card sx={{height: 40, width: '7%'}} square={false} style={{overflow:'hidden', borderRadius: '10px', background: "#4A4FE4", color: 'white', transform: 'translateX(-31.5px)'}}>
                             <CardContent style={{ height: '25%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Outfit', fontSize: '16px', cursor:'pointer'}} onClick={openNextPop}> 
                                 Next
                             </CardContent>
@@ -346,7 +346,7 @@ export function JobPosting() {
         return (
             <Dialog open={openSecondPop} onClose={closeNextPop} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
                 <div className='popup-title'>
-                    <DialogTitle style={{width: "90%", fontFamily: 'Outfit', fontSize: '20px', fontWeight: 500, color: 'black'}}> 
+                    <DialogTitle style={{width: "90%", fontFamily: 'Outfit', fontSize: '20px', fontWeight: 500, color: '#4A4FE4'}}> 
                         Tell us more about the job!
                     </DialogTitle>
                     <IconButton onClick={closeNextPop}>
@@ -515,7 +515,7 @@ export function JobPosting() {
                                         label={value}
                                         onDelete={() => handleDeleteCategory(value)}
                                         deleteIcon={<span style={{ fontFamily: 'Outfit', fontSize: '14px', color: 'white', fontWeight: 500, paddingRight: '4px' }}>X</span>}
-                                        style={{ margin: '2px', fontFamily: 'Outfit', fontSize: '14px', borderRadius: '10px', backgroundColor: '#5B5B5B', color: 'white' }}
+                                        style={{ margin: '2px', fontFamily: 'Outfit', fontSize: '14px', borderRadius: '10px', backgroundColor: '#A0A4FF', color: 'white' }}
                                     />
                                 ))}
                             </div>
@@ -529,7 +529,7 @@ export function JobPosting() {
                             Back
                         </CardContent>
                     </Card>
-                    <Card sx={{height: 40, width: '7%'}} square={false} style={{overflow:'hidden', borderRadius: '10px', background: "#D9D9D9", color: '#5B5B5B', transform: 'translateX(-31.5px)' }}>
+                    <Card sx={{height: 40, width: '7%'}} square={false} style={{overflow:'hidden', borderRadius: '10px', background: "##4A4FE4", color: 'white', transform: 'translateX(-31.5px)' }}>
                         <CardContent style={{ height: '25%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Outfit', fontSize: '16px', cursor:'pointer'}} onClick={PostJobs}> 
                             Submit
                         </CardContent>
@@ -620,7 +620,7 @@ export function JobPosting() {
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                             <div style={{ marginBottom: '29px' }}> 
                                 <text className='job-search-text' style={{}}> 
-                                    Find jobs or hire college students starting now with <span className='job-search-logo'>JIFFYJOBS</span>
+                                    Find jobs or hire college students starting now with <span className='job-search-logo' style={{color: '#4A4FE4'}}>JIFFYJOBS</span>
                                 </text>
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '23px' }}>

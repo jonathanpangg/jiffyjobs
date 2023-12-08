@@ -9,6 +9,7 @@
   align-items: center;
   padding-left: 5%;
   /* padding-bottom: 0.85%; */
+  border-radius: 10px;
 }
 
 .first-tab {

@@ -27,11 +27,11 @@ export function CongratsPopup({ open, onClose}) {
     return (
         <Dialog open={open} onClose={onClose} maxWidth={"360px"} PaperProps={{ sx: { width: '374px', height: '209px', borderRadius: "10.9px", display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'Outfit' } }}>
             <DialogContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{ textAlign: 'center', fontFamily: 'Outfit', width: '129px', height: '12px' }}>
-                    <Typography style={{ textAlign: 'center', fontFamily: 'Outfit', fontSize: '17px', fontWeight: 500 }}>Congratulations!</Typography>
+                <div style={{ fontFamily: 'Outfit', width: '129px', height: '12px' }}>
+                    <Typography style={{ fontFamily: 'Outfit', fontSize: '17px', fontWeight: 600, color: '#4A4FE4' }}>Congratulations!</Typography>
                 </div>
                 <div style={{ textAlign: 'center', fontFamily: 'Outfit', width: '259px', height: '46px', marginTop: '24px' }}>
-                    <Typography style={{ fontFamily: 'Outfit', fontSize: '14px', fontWeight: 400 }}>You have successfully submitted your profile. You can now track your status in the Dashboard.</Typography>
+                    <Typography style={{ fontFamily: 'Outfit', fontSize: '14px', fontWeight: 400 }}>You have successfully submitted your profile. You can now track your status of the application in the <span style={{textDecoration: 'underline', fontWeight: 600}}>Dashboard</span>.</Typography>
                 </div>
             </DialogContent>
             <Divider style={{ width: '100%', height: '1.44px', paddingTop: '10px', fontWeight: 500 }} />
