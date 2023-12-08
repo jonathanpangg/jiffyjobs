@@ -642,9 +642,9 @@ export function JobPosting( { onJobDataSubmit } ) {
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '23px' }}>
                                 <TextField 
-                                    placeholder="Find Jobs..." 
+                                    placeholder="Search Jobs..." 
                                     type="search"  
-                                    style={{ width: '332px' }} 
+                                    style={{ width: '332px', }} 
                                     value={searchInput} 
                                     onChange={handleSearchInputChange}
                                     onKeyDown={(e) => {
@@ -660,7 +660,7 @@ export function JobPosting( { onJobDataSubmit } ) {
                                                 </Button>
                                             </InputAdornment>
                                         ),
-                                        style: {  borderRadius: '11px', fontFamily: 'Outfit', fontSize: '18px' }
+                                        style: {  borderRadius: '11px', fontFamily: 'Outfit', fontSize: '18px', backgroundColor: '#EFEFEF', color: '#54555B' }
                                     }}
                                 />
                                 <Card sx={{ width: '140px', height: '58px' }} style={{borderRadius: '8px', background: "#4348DB", color: 'white', display: 'flex', justifyContent: 'center', }}>
