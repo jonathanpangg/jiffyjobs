@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, 
         Stack, Avatar, Typography, Grid, Divider, Button, TextField} from '@mui/material';
-import { ToastContainer, toast } from 'react-toastify';
-
 
 export function SubmitProfilePopup({ open, onClose, onSubmit, profile }) {
     const [ userEmail, setUserEmail ] = useState(localStorage.getItem("email"));
