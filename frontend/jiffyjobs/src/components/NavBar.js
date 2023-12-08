@@ -52,7 +52,6 @@ export function NavBar() {
 
     // go to profile
     const Profile = () => {
-        setValue(-1)
         navigate('/Profile')
     };
 
@@ -108,9 +107,14 @@ export function NavBar() {
 
     useEffect(() => {
         const currentPath = location.pathname.toLowerCase();
-        const newValue = currentPath === '/jobboard' || currentPath === '/' || currentPath === '' ? 0 
-                        : currentPath === '/dashboard' ? 1 
-                        : -1;
+        let newValue;
+        if (currentPath === '/jobboard' || currentPath === '/' || currentPath === '') {
+            newValue = 0; 
+        } else if (currentPath === '/dashboard') {
+            newValue = 1;
+        } else {
+            newValue = false; 
+        }
         setValue(newValue);
     }, [location]);
 
@@ -120,10 +124,10 @@ export function NavBar() {
                 JIFFYJOBS
             </h1>
             <div style={{ flex: '1', display: 'flex', justifyContent: 'flex-end', maxWidth: 'calc(100% - 400px)' }}> 
-                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" textColor='inherit' TabIndicatorProps={{ style: { background: '#4348DB',height: '4px', borderRadius: '5px'} }}>
-                    <CustomTab label="All Jobs" {...allyProps(0)} onClick={AllJobs} />
-                    {isLoggedIn() ? (<CustomTab label="Dashboard" {...allyProps(1)} onClick={goToDashboard} />) : (<></>)}
-                </Tabs>
+            <Tabs value={value === false ? false : value} onChange={handleChange} aria-label="basic tabs example"  textColor='inherit' TabIndicatorProps={{ style: { background: '#4348DB',height: '4px', borderRadius: '5px'} }}>
+                <CustomTab label="All Jobs" value={0} onClick={AllJobs} />
+                {isLoggedIn() && <CustomTab label="Dashboard" value={1} onClick={goToDashboard} />}
+            </Tabs>
             </div>
 
             <div style={{ position: 'absolute', right: '200px', top: 0, bottom: 0 }}>
