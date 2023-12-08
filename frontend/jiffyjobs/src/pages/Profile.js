@@ -300,7 +300,9 @@ export function Profile() {
                         </Grid>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '49px', marginBottom: '29px', marginTop: '40px'}}>
+
                         <Button variant="contained" style={{ width: '131px', height: '34px', backgroundColor: '#4A4FE4', color: 'white', marginTop: '20px', fontSize: '13.514px', fontFamily: 'Outfit', fontWeight: 400, padding: '13px 18px', borderRadius: '8px' }} onClick={saveProfileChanges}>
+
                             <span style={{textTransform:'none'}}>Save changes</span>
                         </Button>
                     </div>
