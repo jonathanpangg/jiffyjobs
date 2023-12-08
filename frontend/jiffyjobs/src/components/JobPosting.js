@@ -103,7 +103,9 @@ export function JobPosting() {
     // handles the errors
     function handleError() {
         const isEndTimeInvalid = startTime && endTime && dayjs(endTime).isBefore(dayjs(startTime));
+        const isStartTimeToday = startTime && selectedDate && dayjs(selectedDate).isSame(dayjs(), 'day') && dayjs(startTime).isBefore(dayjs());
         setError({
+        // ... [o
             titleError: val.title === '',
             nameError: val.name === '',
             locationError: val.location === '',
@@ -111,7 +113,7 @@ export function JobPosting() {
             descriptionError: val.description === '',
             categoryError: selectedCategories.length === 0,
             dateError: !selectedDate,
-            startTimeError: !startTime,
+            startTimeError: !startTime || isStartTimeToday,
             endTimeError: !endTime || isEndTimeInvalid,
         })
     }
@@ -547,11 +549,11 @@ export function JobPosting() {
         const hasDescriptionError = val.description === '';
         const hasCategoryError = selectedCategories.length === 0;
         const hasDateError = !selectedDate 
-        const hasStartTimeError = !startTime;
+        const isStartTimeToday = startTime && selectedDate && dayjs(selectedDate).isSame(dayjs(), 'day') && dayjs(startTime).isBefore(dayjs());
         const isEndTimeInvalid = startTime && endTime && dayjs(endTime).isBefore(dayjs(startTime));
         const isTimeError = !endTime || isEndTimeInvalid;
 
-        if (hasTitleError || hasNameError || hasLocationError || hasPayError || hasDescriptionError || hasCategoryError || hasDateError || hasStartTimeError || isTimeError) {
+        if (hasTitleError || hasNameError || hasLocationError || hasPayError || hasDescriptionError || hasCategoryError || hasDateError || isStartTimeToday || isEndTimeInvalid) {
             setError({
                 titleError: hasTitleError,
                 nameError: hasNameError,
@@ -560,8 +562,8 @@ export function JobPosting() {
                 descriptionError: hasDescriptionError,
                 categoryError: hasCategoryError,
                 dateError: hasDateError,
-                startTimeError: hasStartTimeError,
-                endTimeError: isTimeError,
+                startTimeError: isStartTimeToday,
+                endTimeError: isEndTimeInvalid,
             });
 
             return;
@@ -570,8 +572,8 @@ export function JobPosting() {
         handleError()
         if (!(error.titleError === true || error.nameError === true || error.locationError === true || error.payError === true || error.descriptionError === true || error.categoryError === true)) {
             console.log('val.date:', val.date);
-    console.log('val.startTime:', val.startTime);
-    console.log('val.endTime:', val.endTime);
+            console.log('val.startTime:', val.startTime);
+            console.log('val.endTime:', val.endTime);
             const categoryList = selectedCategories; 
             const requestOptions = {
                 method: 'POST',
