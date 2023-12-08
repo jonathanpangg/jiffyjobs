@@ -159,6 +159,13 @@
   align-items: center;
 }
 
+.outerCardProfile {
+  background-color: #f3f3f3;
+  height: 82.75vh;
+  padding: 2%;
+  align-items: center;
+}
+
 .orLine-container {
   display: flex;
   align-items: center;

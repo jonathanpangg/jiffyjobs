@@ -469,7 +469,7 @@ export function JobBoard() {
                 <div style={{ position: 'relative'}}>
                     <CardMedia
                         component="img"
-                        style={{ width: '744px', maxHeight: '195px',}}
+                        style={{ width: '744px', maxHeight: '162px',}}
                         image={currentPop[1] && currentPop[1].length > 1 && currentPop[1][0]}
                         alt="placeholder"
                     />

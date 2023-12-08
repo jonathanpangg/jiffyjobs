@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
-import { Box, Card, Stack, Avatar, Typography, Grid, TextField } from '@mui/material';
+import { Box, Card, Stack, Avatar, Typography, Grid, TextField, Button } from '@mui/material';
 import '../styles/Dashboard.css';
 
 export function Profile() { 
-    const [ userType, setUserType ] = useState('seeker');
+    const [ userType, setUserType ] = useState('provider'); // delete later
     const [ userRole, setUserRole ] = useState(localStorage.getItem("user"));
     const [ userEmail, setUserEmail ] = useState(localStorage.getItem("email")); 
     const [last, setLast] = useState(localStorage.getItem("last"));
@@ -26,6 +26,18 @@ export function Profile() {
     const [ token, setToken ] = useState(localStorage.getItem("token"));
     const [ showToken, setShowToken ] = useState(false);
     const navigate = useNavigate();
+
+    const handleMajorChange = (event) => {
+        setSeeker({ ...seeker, major: event.target.value });
+    };
+
+    const handleGradeChange = (event) => {
+        setSeeker({ ...seeker, grade: event.target.value });
+    };
+
+    const handleBioChange = (event) => {
+        setSeeker({ ...seeker, bio: event.target.value });
+    };    
 
     useEffect(() => {
         if (!token) {
@@ -89,23 +101,12 @@ export function Profile() {
 
     const wordLimit = 50;
 
-    // const handleBioChange = (event) => {
-    //     const text = event.target.value;
-    //     const words = text.split(/\s+/); 
-    //     if (words.length <= wordLimit || text.endsWith(" ")) {
-    //       setBio(text);
-    //     } else {
-    //       const trimmedText = words.slice(0, wordLimit).join(' ');
-    //       setBio(trimmedText);
-    //     }
-    //   };
-
     const saveProfileChanges = async () => {
         const update = {
             method: "PUT",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                email: userEmail,
+                userEmail: userEmail,
                 role: userRole,
                 major: '',
                 grade: '',
@@ -126,7 +127,7 @@ export function Profile() {
                 setSeeker({
                     major: data.personal_info.major,
                     grade: data.personal_info.grade,
-                    bio: data.personal_info.bio[0]
+                    bio: data.personal_info.personal_statement[0]
                 })
             } else {
                 setProvider({
@@ -171,49 +172,49 @@ export function Profile() {
         } else {
             return (
                 <>
-                <Grid container direction="row" alignItems="center" spacing={2}>
-                    <Grid item xs={6} container direction="row" alignItems="center" spacing={1}>
-                        <Grid item xs={3}>
-                            <Typography style={{ fontFamily: 'Outfit', color: '#A4A4A4', fontWeight: 400, fontSize: '14px' }}>
+                <Grid container direction="row" alignItems="center" spacing={2} style={{ marginBottom: '20px' }}>
+                    <Grid item xs={6} container direction="row" justifyContent="flex-end" alignItems="center" >
+                        <Grid item >
+                            <Typography style={{ fontFamily: 'Outfit', color: '#A4A4A4', fontWeight: 400, fontSize: '14px', marginRight: '15.5px' }}>
                                 School<span style={{ color: "red" }}>*</span>
                             </Typography>
                         </Grid>
                         <Grid item xs={9}>
-                            <TextField disabled value={seeker.school} variant="outlined" fullWidth size="small" className="inputSubmit" style={{ width: '161px' }}
+                            <TextField disabled value={seeker.school} variant="outlined" fullWidth size="small" className="inputSubmit" style={{ width: '161px', marginLeft: '2px' }}
                                 InputProps={{ style: { fontFamily: 'Outfit', fontSize: '12px' }}} />
                         </Grid>
                     </Grid>
                     <Grid item xs={6} container direction="row" alignItems="center" spacing={1}>
-                        <Grid item xs={3}>
-                            <Typography style={{ fontFamily: 'Outfit', color: '#A4A4A4', fontWeight: 400, fontSize: '14px' }}>
-                                Major<span style={{color: "red"}}>*</span>
+                        <Grid item >
+                            <Typography style={{ fontFamily: 'Outfit', color: '#A4A4A4', fontWeight: 400, fontSize: '14px', marginRight: '10px' }}>
+                                Major
                             </Typography>
                         </Grid>
                         <Grid item xs={9}>
-                            <TextField value={seeker.major} variant="outlined" fullWidth size="small" className="inputSubmit" style={{ width: '161px' }}
+                            <TextField value={seeker.major} onChange={handleMajorChange} variant="outlined" fullWidth size="small" style={{ width: '161px' }}
                             InputProps={{ style: { fontFamily: 'Outfit', fontSize: '12px' }}}/>
                         </Grid>
                     </Grid>
                 </Grid>
 
-                <Grid container direction="row" alignItems="center" spacing={2}>
-                    <Grid item xs={6} container direction="row" alignItems="center" spacing={1}>
-                        <Grid item xs={3}>
-                            <Typography style={{ fontFamily: 'Outfit', color: '#A4A4A4', fontWeight: 400, fontSize: '14px' }}>
+                <Grid container direction="row" alignItems="center" spacing={2} style={{ marginBottom: '20px' }}>
+                    <Grid item xs={6} container direction="row" justifyContent="flex-end" alignItems="center" spacing={1}>
+                        <Grid item >
+                            <Typography style={{ fontFamily: 'Outfit', color: '#A4A4A4', fontWeight: 400, fontSize: '14px', marginRight: '10px'  }}>
                                 Grade
                             </Typography>
                         </Grid>
                         <Grid item xs={9}>
-                            <TextField value={seeker.grade} variant="outlined" fullWidth size="small" className="inputSubmit" style={{ width: '161px' }}
+                            <TextField value={seeker.grade} onChange={handleGradeChange} variant="outlined" fullWidth size="small" style={{ width: '161px' }}
                             InputProps={{ style: { fontFamily: 'Outfit', fontSize: '12px' }}}/>
                         </Grid>
                     </Grid>
                 </Grid>
 
-                <Grid container direction="row" alignItems="center" spacing={2}>
-                    <Grid item xs={6} container direction="row" alignItems="center" spacing={1}>
-                        <Grid item xs={3}>
-                            <Typography style={{ fontFamily: 'Outfit', color: '#A4A4A4', fontWeight: 400, fontSize: '14px' }}>
+                <Grid container direction="row" alignItems="center" spacing={2} style={{ marginBottom: '20px' }}>
+                    <Grid item xs={6} container direction="row" justifyContent="flex-end" alignItems="center" spacing={1}>
+                        <Grid item >
+                            <Typography style={{ fontFamily: 'Outfit', color: '#A4A4A4', fontWeight: 400, fontSize: '14px', marginRight: '10px'  }}>
                                 Email<span style={{color: "red"}}>*</span>
                             </Typography>
                         </Grid>
@@ -227,14 +228,14 @@ export function Profile() {
                 <Typography style={{ fontFamily: 'Outfit', color: '#A4A4A4', fontWeight: 400, fontSize: '14px' }}> Other Information</Typography>
 
                 <Grid container direction="row" alignItems="center" spacing={2}>
-                    <Grid item xs={6} container direction="row" alignItems="center" spacing={1}>
-                        <Grid item xs={3}>
-                            <Typography style={{ fontFamily: 'Outfit', color: '#A4A4A4', fontWeight: 400, fontSize: '14px' }}>
+                    <Grid item xs={6} container direction="row" justifyContent="flex-end" spacing={1}>
+                        <Grid item >
+                            <Typography style={{ fontFamily: 'Outfit', color: '#A4A4A4', fontWeight: 400, fontSize: '14px', marginRight: '10px', marginTop: '6px'  }}>
                                 Bio
                             </Typography>
                         </Grid>
                         <Grid item xs={9}>
-                            <TextField value={seeker.bio} variant="outlined" fullWidth size="small" className="inputSubmit" style={{ width: '161px' }}
+                            <TextField  multiline rows={4} onChange={handleBioChange} value={seeker.bio} variant="outlined" fullWidth size="small" style={{ width: '161px', width: '736px', height: '79px', }}
                             InputProps={{ style: { fontFamily: 'Outfit', fontSize: '12px' }}}/>
                         </Grid>
                     </Grid>
@@ -244,36 +245,40 @@ export function Profile() {
         }
     };
     return (
-        <div className='outerCard' style={{ marginTop: '0px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <div style={{}}>
-                <Box className='outer-box'>
-                    <div className='inner-div'>
-                        <Card elevation='4' style={{ overflow: 'hidden', borderRadius: '15px', width: "100%" }}>
-                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', padding: '16px', marginLeft: '73px' }}>
-                                <div style={{ marginBottom: '8px' }}>
-                                    <Grid container direction="column" spacing={2} style={{marginTop: '10px'}}>
-                                        
-                                        <Typography style={{ fontFamily: 'Outfit', color: '#A4A4A4', fontWeight: 400, fontSize: '14px' }}> Edit Profile</Typography>
-                                        
-                                        <div style={{ marginBottom: '16px', display: 'flex', alignItems: 'center' }}>
-                                            <Avatar sx={{ bgcolor: '#D9D9D9', width: 50, height: 50, color: 'black', fontSize: '26.231px', fontFamily: 'Outfit', fontWeight: 400 }}>{first && first.length > 0 && first[0]}{last && last.length > 0 && last[0]} </Avatar>
-                                        
-                                            <div style={{ fontFamily: 'Outfit', fontSize: '18px', fontWeight: 500, marginLeft: '8px' }}>
-                                                {first && first.length > 0 && first} {last && last.length > 0 && last} 
-                                            </div>
+        <div className='outerCardProfile' style={{ marginTop: '0px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Box className='outer-box' style={{ width: '983px' }}>
+                <div className='inner-div'>
+                    <Card elevation={4} style={{ overflow: 'hidden', borderRadius: '15px', width: '983px',  }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', padding: '16px', marginLeft: '73px' }}>
+                            <div style={{ marginBottom: '8px' }}>
+                                <Grid container direction="column" spacing={2} style={{marginTop: '10px'}}>
+                                    
+                                    <Typography style={{ fontFamily: 'Outfit', color: '#A4A4A4', fontWeight: 400, fontSize: '14px' }}> Edit Profile</Typography>
+                                    
+                                    <div style={{ marginBottom: '16px', display: 'flex', alignItems: 'center' }}>
+                                        <Avatar sx={{ bgcolor: '#D9D9D9', width: 50, height: 50, color: 'black', fontSize: '26.231px', fontFamily: 'Outfit', fontWeight: 400 }}>{first && first.length > 0 && first[0]}{last && last.length > 0 && last[0]} </Avatar>
+                                    
+                                        <div style={{ fontFamily: 'Outfit', fontSize: '18px', fontWeight: 500, marginLeft: '8px' }}>
+                                            {first && first.length > 0 && first} {last && last.length > 0 && last} 
                                         </div>
+                                    </div>
 
 
-                                        <Typography style={{ fontFamily: 'Outfit', color: '#A4A4A4', fontWeight: 400, fontSize: '14px' }}> Basic Information</Typography>
+                                    <Typography style={{ fontFamily: 'Outfit', color: '#A4A4A4', fontWeight: 400, fontSize: '14px' }}> Basic Information</Typography>
 
-                                        {renderFields()}
-                                    </Grid>
-                                </div>
+                                    {renderFields()}
+
+                                    <div style={{ display: 'flex', justifyContent: 'flex-end', marginLeft: '100px'}}>
+                                        <Button variant="contained" style={{ width: '134px', height: '37px', backgroundColor: '#5B5B5B', color: 'white', marginTop: '20px' }} onClick={saveProfileChanges}>
+                                            Save Changes
+                                        </Button>
+                                    </div>
+                                </Grid>
                             </div>
-                        </Card>
-                    </div>
-                </Box>
-            </div>
+                        </div>
+                    </Card>
+                </div>
+            </Box>
         </div>
     )
 }
