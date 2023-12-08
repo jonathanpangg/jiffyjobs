@@ -42,13 +42,22 @@ export function Profile() {
       
         if (wordCount <= wordLimit) {
           setSeeker({ ...seeker, bio: text });
-          setWordCount(wordCount); 
+          setWordCount(wordCount);
+          localStorage.setItem("wordCount", wordCount); 
         } else {
           if (text.length < seeker.bio.length) {
             setSeeker({ ...seeker, bio: text });
           }
         }
-      };
+    };
+    
+    useEffect(() => {
+        const savedWordCount = localStorage.getItem("wordCount");
+        if (savedWordCount) {
+            setWordCount(parseInt(savedWordCount));
+        }
+    }, []);
+    
 
     const handleOrgChange = (event) => {
         setProvider({ ...provider, org: event.target.value });
