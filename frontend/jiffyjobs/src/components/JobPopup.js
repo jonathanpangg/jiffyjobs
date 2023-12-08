@@ -108,7 +108,7 @@ export function JobPopup({open, onClose, openPopUp, currentPop, openSubmitProfil
         <div style={{ position: 'relative'}}>
             <CardMedia
                 component="img"
-                style={{ width: '750px', maxHeight: '190px',}}
+                style={{ width: '744px', maxHeight: '190px',}}
                 image={currentPop[1] && currentPop[1].length > 1 && currentPop[1][0]}
                 alt="placeholder"
             />
