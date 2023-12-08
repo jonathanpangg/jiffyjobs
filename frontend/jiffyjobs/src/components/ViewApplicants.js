@@ -114,7 +114,7 @@ export function ViewApplicants({children, jobID}) {
                 <div>
                     <div className='header-one'>
                         Applicants
-                        <CloseIcon style={{position: 'absolute', right: 175, pointer: 'grab'}} onClick={() => {setClose(true)}}/>
+                        <CloseIcon style={{position: 'absolute', right: 175, pointer: 'grab',  color: '#4A4FE4'}} onClick={() => {setClose(true)}}/>
                     </div>
                     <div className='header-two'>
                         See the list of applicants and accept or reject them!

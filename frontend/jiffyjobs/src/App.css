@@ -230,3 +230,13 @@
   font-family: 'Outfit';
   font-size: 14px;
 }
+
+.custom-pagination .MuiPaginationItem-page.Mui-selected {
+  background-color: #A0A4FF;
+  color: #54555B; 
+  border-radius: 50%;
+}
+
+.custom-pagination .MuiPaginationItem-page:hover {
+  background-color: #4A4FE4; 
+}

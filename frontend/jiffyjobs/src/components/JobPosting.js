@@ -289,7 +289,7 @@ export function JobPosting( { onJobDataSubmit } ) {
                     <DialogTitle style={{width: "90%", fontFamily: 'Outfit', fontSize: '20px', fontWeight: 500, color: '#4A4FE4'}}> 
                         Tell us more about the job!
                     </DialogTitle>
-                    <IconButton onClick={closePop}>
+                    <IconButton onClick={closePop} style={{color: '#4A4FE4'}}>
                         <ClearIcon/>
                     </IconButton>
                 </div>

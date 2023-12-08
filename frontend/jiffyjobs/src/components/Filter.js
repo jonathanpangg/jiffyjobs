@@ -4,6 +4,7 @@ import '../styles/Filter.css';
 import ClearIcon from '@mui/icons-material/Clear';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import CheckIcon from '@mui/icons-material/Check';
 import { Box, Grid, Chip, FormGroup, FormControlLabel, Checkbox, 
        TextField, Typography } from '@mui/material';
 
@@ -74,7 +75,7 @@ export function Filter() {
           label={option}
           onDelete={() => handleDelete(option)}
           style={{ margin: '2px', background: 'transparent', border: 'none',  alignItems: 'center', fontFamily: 'Outfit', fontSize: '14px', fontWeight: 400}}
-          deleteIcon={<ClearIcon className='filter-delete'></ClearIcon>}
+          deleteIcon={<ClearIcon className='filter-delete' style={{color: '#4A4FE4'}}></ClearIcon>}
         />
       ));
       return chips;
@@ -107,7 +108,9 @@ export function Filter() {
                               <span style={{ backgroundColor: 'white', width: '14px', height: '14px', display: 'block', borderRadius: '1px', border: '1px solid grey' }}></span>
                             }
                             checkedIcon={
-                              <span style={{ backgroundColor: 'gray', width: '14px', height: '14px', display: 'block', borderRadius: '1px', border: '1px solid grey' }}></span>
+                              <span style={{ backgroundColor: '#4A4FE4', width: '14px', height: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '1px', border: '1px solid grey' }}>
+                                <CheckIcon style={{ color: 'white', fontSize: '14px' }} />
+                              </span>
                             }
                           />
                         }
@@ -119,7 +122,7 @@ export function Filter() {
                       />
                     </FormGroup>
                   ))}
-                </div>
+                </div>                       
               ))}
             </div>
           }

@@ -108,12 +108,12 @@ export function JobPopup({open, onClose, openPopUp, currentPop, openSubmitProfil
         <div style={{ position: 'relative'}}>
             <CardMedia
                 component="img"
-                style={{ width: '750px', maxHeight: '195px',}}
+                style={{ width: '750px', maxHeight: '190px',}}
                 image={currentPop[1] && currentPop[1].length > 1 && currentPop[1][0]}
                 alt="placeholder"
             />
         </div>
-        <IconButton onClick={onClose} style={{position: 'absolute', right:'0', top:'0'}}>
+        <IconButton onClick={onClose} style={{position: 'absolute', right:'0', top:'0', color: '#4A4FE4'}}>
             <ClearIcon/>
         </IconButton>        
         <DialogContent style={{display: 'flex', flexDirection: 'column', paddingLeft: '29.02px', paddingRight: '34.55px', paddingTop: '20.01px',  }}>
@@ -129,7 +129,7 @@ export function JobPopup({open, onClose, openPopUp, currentPop, openSubmitProfil
                                     <StarRoundedIcon style={{ width: '27.046px', height: '27.046px', color: '#4A4FE4' }} /> : 
                                     <StarBorderRounded style={{ width: '27.046px', height: '27.046px', color: '#4A4FE4' }} />}
                             </IconButton>
-                            {showSavedMessage && <div style={{ position: 'absolute', bottom: '-18px', left: '50%', transform: 'translateX(-50%)', fontSize: '10px', fontFamily: 'Outfit', fontWeight: 500, textAlign: 'center' }}>
+                            {showSavedMessage && <div style={{ position: 'absolute', bottom: '-18px', left: '50%', transform: 'translateX(-50%)', fontSize: '10px', fontFamily: 'Outfit', fontWeight: 500, textAlign: 'center', color: '#4A4FE4' }}>
                             {jobSaved ? 'Job Unsaved' : 'Job Saved'}
                             </div>}
                         </div>
@@ -220,10 +220,10 @@ export function JobPopup({open, onClose, openPopUp, currentPop, openSubmitProfil
 
             <DialogActions style={{ justifyContent: 'center', marginBottom: '6.58px', marginTop: '6.58px' }}>
                 <Link style={{cursor:'pointer'}} underline='none'>
-                    <Card sx={{height: 30, width: '100%'}} style={{overflow:'hidden', borderRadius: '6.63px', background: "#D9D9D9", color: 'white'}}>
+                    <Card sx={{height: 35, width: '100%'}} style={{overflow:'hidden', borderRadius: '6.63px', background: "#4A4FE4", color: 'white'}}>
                     <CardContent style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', }}>
                         <Button onClick={openSubmit} style={{ textTransform: 'none', width: '100%' }}>
-                            <Typography style={{ fontFamily: 'Outfit', fontSize: '13.268ppx', color: '#5B5B5B', fontWeight: '400', marginTop: '-18px' }}>
+                            <Typography style={{ fontFamily: 'Outfit', fontSize: '13.268ppx', color: 'white', fontWeight: '400', marginTop: '-16px' }}>
                                 Submit Profile
                             </Typography>
                         </Button>

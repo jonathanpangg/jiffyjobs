@@ -65,8 +65,8 @@ export function Sort({ rawData, setRawData, setJobData }) {
                     >
                         Sort by 
                         { anchorEl 
-                            ? <KeyboardArrowUpIcon className='arrow-pad'/> 
-                            : <KeyboardArrowDownIcon className='arrow-pad'/>
+                            ? <KeyboardArrowUpIcon className='arrow-pad' /> 
+                            : <KeyboardArrowDownIcon className='arrow-pad' />
                         }
                     </Grid>
 
