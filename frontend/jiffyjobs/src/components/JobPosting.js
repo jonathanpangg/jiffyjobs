@@ -612,6 +612,17 @@ export function JobPosting( { onJobDataSubmit } ) {
             fetch(route, requestOptions)
                 .then((response) => {
                     response.json()
+                    toast.dismiss()
+                    toast.success('Your job has been posted!', {
+                        position: "top-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
                     empytyVals()
                     setOpenStartPop(false)
                     setOpenSecondPop(false)
