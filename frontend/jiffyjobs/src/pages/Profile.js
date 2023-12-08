@@ -236,7 +236,7 @@ export function Profile() {
                     </Grid>
                 </Grid>
 
-                <Grid container direction="row" alignItems="center" style={{ marginBottom: '12.67px', marginLeft: '8.45px'  }}>
+                <Grid container direction="row" alignItems="center" style={{ marginBottom: '33.78px', marginLeft: '8.45px'  }}>
                     <Grid item xs={6} container direction="row" justifyContent="flex-end" alignItems="center" spacing={1}>
                         <Grid item >
                             <Typography style={{ fontFamily: 'Outfit', fontWeight: 400, fontSize: '11.825px', marginRight: '10px'  }}>
@@ -250,7 +250,7 @@ export function Profile() {
                     </Grid>
                 </Grid>
 
-                <Typography style={{ fontFamily: 'Outfit', color: '#5B5B5B', fontWeight: 500, fontSize: '11.825x', marginBottom: '16.42px', marginLeft: '8.45px'  }}> Other Information</Typography>
+                <Typography style={{ fontFamily: 'Outfit', color: '#5B5B5B', fontWeight: 500, fontSize: '11.825px', marginBottom: '16.42px', marginLeft: '8.45px'  }}> Other Information</Typography>
 
                 <Grid container direction="row" alignItems="center" style={{ marginLeft: '8.45px'  }}>
                     <Grid item xs={6} container direction="row" justifyContent="flex-end" spacing={1}>
@@ -277,7 +277,7 @@ export function Profile() {
                         <Grid container direction="column" style={{marginTop: '10px'}}>
                             <Typography style={{ fontFamily: 'Outfit', fontWeight: 500, fontSize: '15.203px'}}>Edit Profile</Typography>
 
-                            <Typography style={{ fontFamily: 'Outfit', color: '#5B5B5B', fontWeight: 500, fontSize: '11.825x', marginTop: '17.03px' }}> Basic Information</Typography>
+                            <Typography style={{ fontFamily: 'Outfit', color: '#5B5B5B', fontWeight: 500, fontSize: '11.825px', marginTop: '17.03px' }}> Basic Information</Typography>
 
                             <div style={{ marginTop: '16.49px', marginBottom: '34.63px', display: 'flex', alignItems: 'center' }}>
                                 <Avatar sx={{ bgcolor: '#D9D9D9', width: 42, height: 42, color: 'black', fontSize: '22.155px', fontFamily: 'Outfit', fontWeight: 400, marginLeft: '31.25px' }}>{first && first.length > 0 && first[0]}{last && last.length > 0 && last[0]} </Avatar>
@@ -286,7 +286,7 @@ export function Profile() {
                                     {first && first.length > 0 && first} {last && last.length > 0 && last} 
                                 </div>
                             </div>
-                            <Typography style={{ fontFamily: 'Outfit', color: '#5B5B5B', fontWeight: 500, fontSize: '11.825x', marginBottom: '16.42px', marginLeft: '8.45px' }}> Basic Information</Typography>
+                            <Typography style={{ fontFamily: 'Outfit', color: '#5B5B5B', fontWeight: 500, fontSize: '11.825px', marginBottom: '16.42px', marginLeft: '8.45px' }}> Basic Information</Typography>
                             {renderFields()}
                         </Grid>
                     </div>
