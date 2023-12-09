@@ -64,14 +64,9 @@ export function NavBar() {
         navigate('/dashboard');
     };
 
+    // go to signup
     const handleSignUp = () => {
         navigate('/signup');
-    };
-
-    const getInitials = (first_name, last_name) => {
-        if (first_name && last_name) {
-            return first_name[0] + last_name[0]
-        }
     };
 
     // handle logout

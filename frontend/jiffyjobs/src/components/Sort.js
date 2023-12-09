@@ -32,6 +32,8 @@ export function Sort({ rawData, setRawData, setJobData }) {
         setJobData(sortedData.map(obj => {
             return [[obj._id, obj.title], [`https://source.unsplash.com/random?${obj.categories.toString().split(",")[0]}`, obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
         }));
+
+        setAnchorEl(null);
     };
     
     // sort jobs based on selected criteria
