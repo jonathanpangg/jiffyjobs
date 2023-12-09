@@ -3,7 +3,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { Box, Card, Avatar, Typography, Grid, TextField, Button, InputAdornment, Select, MenuItem } from '@mui/material';
-import logo from '../images/Logo.png'
+import logo from '../images/Logo.png';
+import reject from '../images/Reject.png';
 
 export function Profile() { 
     const [ userRole, setUserRole ] = useState(localStorage.getItem("user"));
@@ -76,6 +77,8 @@ export function Profile() {
             console.log(showToken);
             toast.dismiss()
             toast.error('Please Login!', {
+                icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
+                progressStyle: {backgroundColor: '#C12020'},
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,

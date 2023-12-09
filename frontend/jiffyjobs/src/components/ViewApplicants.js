@@ -5,9 +5,8 @@ import CircleIcon from '@mui/icons-material/Circle';
 import CloseIcon from '@mui/icons-material/Close';
 import { PostedJobDashboard } from './PostedJobDashboard';
 import { ToastContainer, toast } from 'react-toastify';
-import logo from '../images/Logo.png'
-import accept from '../images/Accept.png'
-import reject from '../images/Reject.png'
+import accept from '../images/Accept.png';
+import reject from '../images/Reject.png';
 
 export function ViewApplicants({children, jobID}) {
     const [applicantData, setApplicantData] = useState([]) 
