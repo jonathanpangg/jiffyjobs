@@ -4,6 +4,8 @@ import { Box, Grid, Avatar, Dialog, DialogActions, Button, DialogTitle, DialogCo
 import CircleIcon from '@mui/icons-material/Circle';
 import CloseIcon from '@mui/icons-material/Close';
 import { PostedJobDashboard } from './PostedJobDashboard';
+import { ToastContainer, toast } from 'react-toastify';
+import logo from '../images/Logo.png'
 
 export function ViewApplicants({children, jobID}) {
     const [applicantData, setApplicantData] = useState([]) 
@@ -52,7 +54,19 @@ export function ViewApplicants({children, jobID}) {
                 return response.json();
             })
             .then((_) => {
-                
+                toast.dismiss()
+                toast.info('User Accepted!', {
+                    icon: ({theme, type}) =>  <img src={logo} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
+                    progressStyle: {backgroundColor: '#4A4FE4'},
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
             })
             .catch((error) => {
                 console.log(error)
