@@ -9,6 +9,7 @@ import { Button, TextField, ToggleButton, ToggleButtonGroup, Card,
         IconButton } from '@mui/material';
 
 import { NavBar } from '../components/NavBar';
+import logo from '../images/Logo.png'
 
 
 
@@ -25,7 +26,10 @@ export function Login() {
     useEffect(()=> {
         if (showToken) {
             console.log(showToken);
-            toast.info('Already Logged In!', {
+            toast.dismiss()
+            toast.info('Already logged in!', {
+                icon: ({theme, type}) =>  <img src={logo} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
+                progressStyle: {backgroundColor: '#4A4FE4'},
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,
