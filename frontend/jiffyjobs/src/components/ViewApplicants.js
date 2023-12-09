@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/Dashboard.css';
-import { Box, Grid, Avatar, Dialog, DialogActions, Button, DialogTitle, DialogContent, DialogContentText } from '@mui/material'
+import { Box, Grid, Avatar, Dialog, DialogActions, Button, DialogTitle, DialogContent, DialogContentText, Divider } from '@mui/material'
 import CircleIcon from '@mui/icons-material/Circle';
 import CloseIcon from '@mui/icons-material/Close';
 import { PostedJobDashboard } from './PostedJobDashboard';
@@ -148,41 +148,47 @@ export function ViewApplicants({children, jobID}) {
                     </div>
                     <Box className='progress-box'>
                         <Grid container className='progress-grid' rowSpacing={0} columnSpacing={3} width='70vw' style={{paddingBottom: '1%'}}>
-                            { applicantData.map((key) => {
-                                return (
-                                    <Grid width='70vw' key={key} item> 
-                                        { key[3] !== 'accepted' ? 
-                                            <div style={{display: 'flex', width: '92.5%', height: '50px', alignItems: 'center', fontFamily: 'Outfit', border: '1px solid #D9D9D9', borderTopLeftRadius: key[0] === 0 ? '10px': '0px', borderTopRightRadius: key[0] === 0 ? '10px': '0px', borderBottomLeftRadius: key[0] === applicantData.length-1 ? '10px': '0px', borderBottomRightRadius: key[0] === applicantData.length-1 ? '10px': '0px'}}>
-                                                <Avatar sx={{ bgcolor: "#cccccc", color: "#5B5B5B", width: '26px', height: '26px', fontSize: '16px', fontFamily: 'Outfit', marginLeft: '25px', marginRight: '13px'}}>{ getInitials(key[1], key[2]) }</Avatar>
-                                                <u style={{fontSize: '16px'}}> {key[1] + " " + key[2]} </u>
-                                                <CircleIcon style={{width: '5px', height: '5px', marginLeft: '6px', marginRight: '6px', color: '#5B5B5B'}}/>
-                                                <div style={{fontSize: '12px', color: '#5B5B5B'}} onClick={() => { getUserInfo(key[4]); setTypeResponse('standard')}}> Click to view Profile </div>
-                                                <div style={{display: 'flex', position: 'absolute', right: 200}}>
-                                                    <div style={{display: 'flex', position: 'relative', width: '60.5px', height: '26.25px', fontSize: '12px', color: '#FFFFFF', alignItems: 'center', justifyContent: 'center', backgroundColor: "#66C120", borderRadius: '6px', marginRight: '8.5px'}} onClick={() => { getUserInfo(key[4]); setTypeResponse('accept') }}> Accept </div>
-                                                    <div style={{display: 'flex', position: 'relative', width: '60.5px', height: '26.25px', fontSize: '12px', color: '#FFFFFF', alignItems: 'center', justifyContent: 'center', backgroundColor: "#C12020", borderRadius: '6px'}} onClick={() => { getUserInfo(key[4]); setTypeResponse('reject')}}> Reject </div>
+                            {applicantData.length === 0 ? (
+                                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '10vh', width:'65vw' }}>
+                                <div style={{ textAlign: 'center', marginTop: '20px' }}>Currently there are no applicants.</div>
+                            </div>
+                            ) : (
+                                applicantData.map((key) => {
+                                    return (
+                                        <Grid width='70vw' key={key} item> 
+                                            { key[3] !== 'accepted' ? 
+                                                <div style={{display: 'flex', width: '92.5%', height: '50px', alignItems: 'center', fontFamily: 'Outfit', border: '1px solid #D9D9D9', borderTopLeftRadius: key[0] === 0 ? '10px': '0px', borderTopRightRadius: key[0] === 0 ? '10px': '0px', borderBottomLeftRadius: key[0] === applicantData.length-1 ? '10px': '0px', borderBottomRightRadius: key[0] === applicantData.length-1 ? '10px': '0px',}} >
+                                                    <Avatar sx={{ bgcolor: "#cccccc", color: "#5B5B5B", width: '26px', height: '26px', fontSize: '16px', fontFamily: 'Outfit', marginLeft: '25px', marginRight: '13px', cursor:'pointer'}} onClick={() => { getUserInfo(key[4]); setTypeResponse('standard')}}>{ getInitials(key[1], key[2]) }</Avatar>
+                                                    <u style={{fontSize: '16px', cursor:'pointer'}} onClick={() => { getUserInfo(key[4]); setTypeResponse('standard')}}> {key[1] + " " + key[2]} </u>
+                                                    <CircleIcon style={{width: '5px', height: '5px', marginLeft: '6px', marginRight: '6px', color: '#5B5B5B', cursor:'pointer'}} onClick={() => { getUserInfo(key[4]); setTypeResponse('standard')}}/>
+                                                    <div style={{fontSize: '12px', color: '#5B5B5B', cursor:'pointer'}} onClick={() => { getUserInfo(key[4]); setTypeResponse('standard')}}> Click to view Profile </div>
+                                                    <div style={{display: 'flex', position: 'absolute', right: 200}}>
+                                                        <div style={{display: 'flex', position: 'relative', width: '60.5px', height: '26.25px', fontSize: '12px', color: '#FFFFFF', alignItems: 'center', justifyContent: 'center', backgroundColor: "#66C120", borderRadius: '6px', marginRight: '8.5px', cursor:'pointer'}} onClick={() => { getUserInfo(key[4]); setTypeResponse('accept') }}> Accept </div>
+                                                        <div style={{display: 'flex', position: 'relative', width: '60.5px', height: '26.25px', fontSize: '12px', color: '#FFFFFF', alignItems: 'center', justifyContent: 'center', backgroundColor: "#C12020", borderRadius: '6px', cursor:'pointer' }} onClick={() => { getUserInfo(key[4]); setTypeResponse('reject')}}> Reject </div>
+                                                    </div>
+                                                </div>:
+                                                <div style={{display: 'flex', width: '92.5%', height: '50px', alignItems: 'center', fontFamily: 'Outfit', border: '1px solid #D9D9D9', borderTopLeftRadius: key[0] === 0 ? '10px': '0px', borderTopRightRadius: key[0] === 0 ? '10px': '0px', borderBottomLeftRadius: key[0] === applicantData.length-1 ? '10px': '0px', borderBottomRightRadius: key[0] === applicantData.length-1 ? '10px': '0px', backgroundColor: 'rgba(102, 193, 32, 0.15)'}}>
+                                                    <Avatar sx={{ bgcolor: "#cccccc", color: "#5B5B5B", width: '26px', height: '26px', fontSize: '16px', fontFamily: 'Outfit', marginLeft: '25px', marginRight: '13px'}}>{ getInitials(key[1], key[2]) }</Avatar>
+                                                    <u style={{fontSize: '16px'}}> {key[1] + " " + key[2]} </u>
+                                                    <CircleIcon style={{width: '5px', height: '5px', marginLeft: '6px', marginRight: '6px', color: '#5B5B5B'}}/>
+                                                    <div style={{fontSize: '12px', color: '#5B5B5B'}} onClick={() => { getUserInfo(key[4]); setTypeResponse('selected')}}> Selected Applicant </div>
+                                                    <div style={{display: 'flex', position: 'absolute', right: 200}}>
+                                                        <div style={{display: 'flex', position: 'relative', width: '73px', height: '26.25px', fontSize: '12px', color: '#FFFFFF', alignItems: 'center', justifyContent: 'center', backgroundColor: "#66C120", borderRadius: '6px'}}> Accepted </div>
+                                                    </div>
                                                 </div>
-                                            </div>:
-                                            <div style={{display: 'flex', width: '92.5%', height: '50px', alignItems: 'center', fontFamily: 'Outfit', border: '1px solid #D9D9D9', borderTopLeftRadius: key[0] === 0 ? '10px': '0px', borderTopRightRadius: key[0] === 0 ? '10px': '0px', borderBottomLeftRadius: key[0] === applicantData.length-1 ? '10px': '0px', borderBottomRightRadius: key[0] === applicantData.length-1 ? '10px': '0px', backgroundColor: 'rgba(102, 193, 32, 0.15)'}}>
-                                                <Avatar sx={{ bgcolor: "#cccccc", color: "#5B5B5B", width: '26px', height: '26px', fontSize: '16px', fontFamily: 'Outfit', marginLeft: '25px', marginRight: '13px'}}>{ getInitials(key[1], key[2]) }</Avatar>
-                                                <u style={{fontSize: '16px'}}> {key[1] + " " + key[2]} </u>
-                                                <CircleIcon style={{width: '5px', height: '5px', marginLeft: '6px', marginRight: '6px', color: '#5B5B5B'}}/>
-                                                <div style={{fontSize: '12px', color: '#5B5B5B'}} onClick={() => { getUserInfo(key[4]); setTypeResponse('selected')}}> Selected Applicant </div>
-                                                <div style={{display: 'flex', position: 'absolute', right: 200}}>
-                                                    <div style={{display: 'flex', position: 'relative', width: '73px', height: '26.25px', fontSize: '12px', color: '#FFFFFF', alignItems: 'center', justifyContent: 'center', backgroundColor: "#66C120", borderRadius: '6px'}}> Accepted </div>
-                                                </div>
-                                            </div>
-                                        }
-                                    </Grid>
-                                )
-                            })}
+                                            }
+                                        </Grid>
+                                    )
+                                })
+                            )}
                         </Grid>
                     </Box>
-                    <Dialog open={open} onClose={() => {setOpen(false)}}>
+                    <Dialog open={open} onClose={() => {setOpen(false)}} PaperProps={{sx: { borderRadius: "15px", transform: 'scale(0.95)', }}}>
                         <DialogTitle style={{width: '520px', display: 'flex', justifyContent: 'center', fontFamily: 'Outfit', fontSize: '24px', fontWeight: '500', bold: 'none'}}>
-                            <CloseIcon style={{width: '25px', height: '25px', position: 'absolute', right: 25}} onClick={() => {setOpen(false)}}/>
+                            <CloseIcon style={{width: '25px', height: '25px', position: 'absolute', right: 25, color: '#4A4FE4'}} onClick={() => {setOpen(false)}}/>
                             <div style={{marginTop: '2.5%'}}> { (typeResponse === 'standard' || typeResponse === 'selected') ? "Applicant Profile": (typeResponse === "accept" ? 'Are you sure you want to accept?': 'Are you sure you want to reject?')} </div>
                         </DialogTitle>
-                        <DialogContent style={{display: 'flex', justifyContent: 'center'}}>
+                        <DialogContent style={{display: 'flex', justifyContent: 'center', marginBottom: '-7px'}}>
                             <div style={{ width: '431px', height: '399px', border: '1px solid #A4A4A4', borderRadius: '10px', backgroundColor: (typeResponse === 'standard' || typeResponse === 'selected') ? "white": (typeResponse === "accept" ? 'rgba(102, 193, 32, 0.15)': 'rgba(193, 32, 32, 0.15)')}}>
                                 <DialogContentText>
                                     <div style={{display: 'flex', alignItems: 'center', fontFamily: 'Outfit', marginTop: '26px'}}>
@@ -237,9 +243,10 @@ export function ViewApplicants({children, jobID}) {
                                 </DialogContentText>
                             </div>
                         </DialogContent>
+                        <Divider style={{ width: '100%', height: '1.44px', marginBottom: '7px', fontWeight: 500 }} />
                         { typeResponse !== 'selected' && 
                             <DialogActions>
-                                <div style={{display: 'flex', marginRight: '60px'}}>
+                                <div style={{display: 'flex', marginRight: '60px', marginBottom: '7px'}}>
                                     <Button sx={{textTransform: 'none'}} style={{width: '93px', height: '42px', color: typeResponse === 'standard' ? "#FFF" : "#5B5B5B", backgroundColor: typeResponse === 'standard' ? '#66C120': '#D9D9D9', marginRight: '10px', borderRadius: '10px'}} onClick={() => 
                                         {
                                             if (typeResponse === 'standard') {
