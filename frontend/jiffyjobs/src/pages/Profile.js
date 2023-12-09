@@ -3,6 +3,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { Box, Card, Avatar, Typography, Grid, TextField, Button, InputAdornment, Select, MenuItem } from '@mui/material';
+import logo from '../images/Logo.png'
 
 export function Profile() { 
     const [ userRole, setUserRole ] = useState(localStorage.getItem("user"));
@@ -170,6 +171,20 @@ export function Profile() {
                         org: data.personal_info.organization
                     });
                 }
+
+                toast.dismiss()
+                toast.info('Profile updated Successfully!', {
+                    icon: ({theme, type}) =>  <img src={logo} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
+                    progressStyle: {backgroundColor: '#4A4FE4'},
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
             })
             .catch((error) => {
                 console.log(error);
