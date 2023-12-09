@@ -327,7 +327,7 @@ export function JobBoard() {
             <Box className='job-table-box'>
                 <div className='job-table-inner' style={{ paddingTop: '50px', width: '1136px'}}>
                     <Typography style={{fontFamily: 'Outfit', fontSize: '20px', justifyContent: 'center', alignItems: 'center', textAlign: 'start'}}>
-                        Job Board 
+                        Job Board
                     </Typography>
                 </div>
             </Box>
