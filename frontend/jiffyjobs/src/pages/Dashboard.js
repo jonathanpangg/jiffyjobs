@@ -10,6 +10,7 @@ import { ViewApplicants } from '../components/ViewApplicants';
 import { SavedJobDashboard } from '../components/SavedJobDashboard';
 import { PostedJobDashboard } from '../components/PostedJobDashboard';
 import { useNavigate } from 'react-router-dom';
+import reject from '../images/Reject.png';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -52,6 +53,8 @@ export function Dashboard() {
             console.log(showToken);
             toast.dismiss()
             toast.error('Please Login!', {
+                icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
+                progressStyle: {backgroundColor: '#C12020'},
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,

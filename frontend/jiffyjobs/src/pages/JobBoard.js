@@ -13,6 +13,7 @@ import { JobCards } from '../components/JobCards';
 import { CongratsPopup } from '../components/CongratsPopup';
 import { SubmitProfilePopup } from '../components/SubmitPopup';
 import { JobPopup } from '../components/JobPopup';
+import reject from '../images/Reject.png';
 
 export function JobBoard() {
     const [jobData, setJobData] = useState([])
@@ -194,8 +195,9 @@ export function JobBoard() {
     const openPopUp = (key) => {
         if (!userEmail) {
             toast.dismiss()
-            console.log("here")
             toast.error('Please login to view!', {
+                icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
+                progressStyle: {backgroundColor: '#C12020'},
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -217,6 +219,8 @@ export function JobBoard() {
         if (userRole === 'provider') {
             toast.dismiss()
             toast.error('You can only apply as a Seeker!', {
+                icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
+                progressStyle: {backgroundColor: '#C12020'},
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -286,7 +290,10 @@ export function JobBoard() {
             const err = error.message;
             if (err.startsWith('Error: ')) {
                 alert(err.slice(7));
+                toast.dismiss();
                 toast.error(err.slice(7), {
+                    icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
+                    progressStyle: {backgroundColor: '#C12020'},
                     position: "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -298,6 +305,8 @@ export function JobBoard() {
                 });
             } else {
                 toast.error(err, {
+                    icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
+                    progressStyle: {backgroundColor: '#C12020'},
                     position: "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,

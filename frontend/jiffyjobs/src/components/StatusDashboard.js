@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/Dashboard.css';
-import { Box, Card, Grid, CardActionArea, Typography, } from '@mui/material'
+import { Box, Card, Grid, CardActionArea, Typography, CardMedia } from '@mui/material'
 import dayjs from 'dayjs';
-import acceptedPicture from '../images/Accepted.png'
-import submittedPicture from '../images/Submitted.png'
-import rejectedPicture from '../images/Rejected.png'
 import check from '../images/Check.png'
 import clock from '../images/Clock.png'
 import x from '../images/X.png'
@@ -12,6 +9,11 @@ import x from '../images/X.png'
 export function StatusDashboard() {
     const [statusData, setStatusData] = useState([]) 
     const [prevSize, setPrevSize] = useState([])
+
+    // random image for category
+    const randomImage = (seed) => {
+        return `https://source.unsplash.com/random?${seed}`;
+    };
 
     useEffect(() => {
         async function getJobs() {
@@ -27,7 +29,7 @@ export function StatusDashboard() {
                 })
                 .then((data) => {
                     const newJobData = data.map(function(obj) {
-                        return [[0, obj.title], ["", obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()], ["", obj.status]]
+                        return [[0, obj.title], [randomImage(obj.categories.toString().split(",")[0]), obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()], ["", obj.status]]
                     });
                     setStatusData(newJobData)
                     setPrevSize(newJobData.length)
@@ -58,12 +60,22 @@ export function StatusDashboard() {
                             <Grid key={key} item> 
                                 <Card sx={{width: '264px', height: '264px'}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px'}}>
                                     <div className='overall-card'>
-                                        <img
-                                            style={{ width: '100%'}}
-                                            src={ key[7][1] === "accepted" ? acceptedPicture: (key[7][1] === "submitted" ? submittedPicture: rejectedPicture)}
+                                         <div className='overlay' style={{
+                                            position: 'absolute',
+                                            top: 0,
+                                            left: 0,
+                                            width: '100%',
+                                            height: '99px',
+                                            backgroundColor: key[7][1] === "accepted" ? 'rgba(166, 255, 152, 0.7)' : (key[7][1] === "submitted" ? 'rgba(255, 226, 152, 0.7)': 'rgba(255, 152, 152, 0.7)'),
+                                            zIndex: 1, 
+                                        }}></div>
+                                        <CardMedia
+                                            component="img"
                                             alt="placeholder"
+                                            height="99px"
+                                            image={key[1][0]}
                                         />
-                                        <div style={{position: 'absolute', maxWidth: '100%', top: '50%', left: '50%', textAlign: 'center', transform: 'translate(-50%, -50%)', whiteSpace: 'nowrap'}}>
+                                        <div style={{position: 'absolute', maxWidth: '100%', top: '50%', left: '50%', textAlign: 'center', transform: 'translate(-50%, -50%)', whiteSpace: 'nowrap', zIndex: 2}}>
                                             <img
                                                 style={{ width: '24px', height: '24px'}}
                                                 src={ key[7][1] === "accepted" ? check: (key[7][1] === "submitted" ? clock: x)}

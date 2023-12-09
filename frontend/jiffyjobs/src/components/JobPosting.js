@@ -11,7 +11,9 @@ import { Dialog, DialogActions, DialogContent, DialogTitle,
        DialogContentText, IconButton, TextField, CardContent, 
        Card, Grid, Chip, Divider, MenuItem, InputAdornment, 
        Box, Select, FormControl, FormHelperText, Button } from '@mui/material';
-import { ToastContainer, toast } from 'react-toastify'
+import { ToastContainer, toast } from 'react-toastify';
+import reject from '../images/Reject.png';
+import accept from '../images/Accept.png';
 
 import dayjs from 'dayjs';
 var objectSupport = require("dayjs/plugin/objectSupport");
@@ -209,6 +211,8 @@ export function JobPosting( { onJobDataSubmit } ) {
         } else {
             toast.dismiss()
             toast.error('Please login to post!', {
+                icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
+                progressStyle: {backgroundColor: '#C12020'},
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -610,6 +614,8 @@ export function JobPosting( { onJobDataSubmit } ) {
                     response.json()
                     toast.dismiss()
                     toast.success('Your job has been posted!', {
+                        icon: ({theme, type}) =>  <img src={accept} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
+                        progressStyle: {backgroundColor: '#66C120'},
                         position: "top-center",
                         autoClose: 5000,
                         hideProgressBar: false,

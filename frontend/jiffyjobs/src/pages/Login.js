@@ -9,7 +9,8 @@ import { Button, TextField, ToggleButton, ToggleButtonGroup, Card,
         IconButton } from '@mui/material';
 
 import { NavBar } from '../components/NavBar';
-
+import logo from '../images/Logo.png';
+import reject from '../images/Reject.png';
 
 
 export function Login() {
@@ -25,7 +26,10 @@ export function Login() {
     useEffect(()=> {
         if (showToken) {
             console.log(showToken);
-            toast.info('Already Logged In!', {
+            toast.dismiss()
+            toast.info('Already logged in!', {
+                icon: ({theme, type}) =>  <img src={logo} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
+                progressStyle: {backgroundColor: '#4A4FE4'},
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -123,6 +127,8 @@ export function Login() {
             if (err.startsWith('Error: ')) {
                 alert(err.slice(7));
                 toast.error(err.slice(7), {
+                    icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
+                    progressStyle: {backgroundColor: '#C12020'},
                     position: "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -134,6 +140,8 @@ export function Login() {
                 });
             } else {
                 toast.error(err, {
+                    icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
+                    progressStyle: {backgroundColor: '#C12020'},
                     position: "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,

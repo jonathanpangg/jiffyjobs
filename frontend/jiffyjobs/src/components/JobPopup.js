@@ -7,6 +7,7 @@ import StarRoundedIcon from "@mui/icons-material/StarRounded"
 import { Dialog, Divider, Typography, DialogContentText, 
         DialogContent, DialogActions,Link, Button, CardContent, 
         Card, IconButton, Chip,CardMedia } from '@mui/material';
+import reject from '../images/Reject.png';
 
 export function JobPopup({open, onClose, openPopUp, currentPop, openSubmitProfile, openCongratsPopup, openSubmit}) {
     const [ userEmail, setUserEmail ] = useState(localStorage.getItem("email"));
@@ -23,6 +24,8 @@ export function JobPopup({open, onClose, openPopUp, currentPop, openSubmitProfil
         if (userRole === "provider") {
             toast.dismiss()
             toast.error('You can only save jobs as a Seeker!', {
+                icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
+                progressStyle: {backgroundColor: '#C12020'},
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,
