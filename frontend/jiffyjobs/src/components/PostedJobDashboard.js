@@ -26,7 +26,8 @@ export function PostedJobDashboard() {
                     return response.json();
                 })
                 .then((data) => {
-                    const newJobData = data.map(function(obj) {
+                    const sortedData = data.sort((a, b) => new Date(b.date_posted) - new Date(a.date_posted));
+                    const newJobData = sortedData.map(function(obj) {
                         return [obj.title, obj.job_poster, obj.location, obj.pay, obj.description, dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A'), obj.categories.toString(), obj.status, obj._id]
                     });
                     setStatusData(newJobData)
