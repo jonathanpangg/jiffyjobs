@@ -104,10 +104,11 @@ export function JobPosting( { onJobDataSubmit } ) {
 
     // handles the errors
     function handleError() {
+        const isToday = selectedDate && dayjs(selectedDate).isSame(dayjs(), 'day');
+        const isStartTimeInvalid = startTime && isToday && dayjs(startTime).isBefore(dayjs());
         const isEndTimeInvalid = startTime && endTime && dayjs(endTime).isBefore(dayjs(startTime));
-        const isStartTimeToday = startTime && selectedDate && dayjs(selectedDate).isSame(dayjs(), 'day') && dayjs(startTime).isBefore(dayjs());
+    
         setError({
-        // ... [o
             titleError: val.title === '',
             nameError: val.name === '',
             locationError: val.location === '',
@@ -115,7 +116,7 @@ export function JobPosting( { onJobDataSubmit } ) {
             descriptionError: val.description === '',
             categoryError: selectedCategories.length === 0,
             dateError: !selectedDate,
-            startTimeError: !startTime || isStartTimeToday,
+            startTimeError: !startTime || isStartTimeInvalid,
             endTimeError: !endTime || isEndTimeInvalid,
         })
     }
