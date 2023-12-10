@@ -193,7 +193,7 @@ export function StatusDashboard() {
                                         </div>
 
                                         <div className='overall-card'>
-                                            <div className='status-card'>
+                                            <div className={key[7][1] === 'submitted'? "status-card": ''}>
                                                 <Typography style={{fontFamily: 'Outfit', fontSize:"14px", paddingLeft:'10px', paddingRight:'10px', paddingTop:'10px'}}>
                                                     <u>{key[0][1]}</u>
                                                 </Typography>
@@ -210,11 +210,14 @@ export function StatusDashboard() {
                                                     Description: {key[4][1]}
                                                 </Typography>
                                             </div>
-                                            <div className='withdraw-card'>
-                                                <Card sx={{width: '12.5vw', height: '2.5vw'}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '7px', fontFamily: 'Outfit', fontSize: '12px', cursor:'pointer', fontWeight: '400', fontStyle: 'normal', backgroundColor: '#4A4FE4', color: 'white', display: 'inline-flex', justifyContent: 'center', alignItems: 'center'}}>
-                                                    Withdraw Application
-                                                </Card>
-                                            </div>
+
+                                            {key[7][1] === 'submitted' && 
+                                                <div className='withdraw-card'>
+                                                    <Card sx={{width: '12.5vw', height: '2.5vw'}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '7px', fontFamily: 'Outfit', fontSize: '12px', cursor:'pointer', fontWeight: '400', fontStyle: 'normal', backgroundColor: '#4A4FE4', color: 'white', display: 'inline-flex', justifyContent: 'center', alignItems: 'center'}}>
+                                                        Withdraw Application
+                                                    </Card>
+                                                </div>
+                                            }
                                         </div>
                                     </Card>
                                 </Link>
