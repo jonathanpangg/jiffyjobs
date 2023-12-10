@@ -7,17 +7,13 @@ import { Dialog, Divider, Typography, DialogContentText, DialogContent,
         Stack,  } from '@mui/material';
 
 // handles congrats popup
-export function CongratsPopup({ open, onClose}) {
+export function CongratsPopup({ open, onClose, apply}) {
     const [openPop, setOpenPop] = useState(false)
     const [openCongratsPopup, setOpenCongratsPopup] = useState(false);
 
     const navigate = useNavigate();
 
     // close popups
-    const handleApplyMore = () => {
-        setOpenCongratsPopup(false); 
-        setOpenPop(false); 
-    };
 
     // goes to dashboard
     const handleToDashboard = () => {
@@ -39,7 +35,7 @@ export function CongratsPopup({ open, onClose}) {
                 <Button onClick={handleToDashboard} sx={{ border: '1px solid #5B5B5B', borderRadius: '7px', textTransform: 'none', color: '#5B5B5B', fontFamily: 'Outfit', fontSize: '14px', width: '143px', height: '32px', fontWeight: 400 }}>
                     View Dashboard
                 </Button>
-                <Button onClick={handleApplyMore} sx={{ border: '1px solid #D9D9D9', borderRadius: '7px', textTransform: 'none', color: '#5B5B5B', backgroundColor: '#D9D9D9', '&:hover': {backgroundColor: '#D9D9D9'}, fontFamily: 'Outfit', fontSize: '14px', width: '143px', height: '32px', fontWeight: 400 }}>
+                <Button onClick={apply} sx={{ border: '1px solid #D9D9D9', borderRadius: '7px', textTransform: 'none', color: '#5B5B5B', backgroundColor: '#D9D9D9', '&:hover': {backgroundColor: '#D9D9D9'}, fontFamily: 'Outfit', fontSize: '14px', width: '143px', height: '32px', fontWeight: 400 }}>
                     Back to Job Board
                 </Button>
             </DialogActions>

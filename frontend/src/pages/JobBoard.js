@@ -46,7 +46,7 @@ export function JobBoard() {
         if (!data) {
             data = " ";
         }
-        const route = `http://localhost:4000/api/jobs/search/${data}/prop`;
+        const route = `https://jiffyjobs-api-production.up.railway.app/api/jobs/search/${data}/prop`;
         fetch(route)
             .then((response) => {
                 if (!response.ok) {
@@ -320,6 +320,11 @@ export function JobBoard() {
         });
 
     };
+
+    const handleApplyMore = () => {
+        setOpenCongratsPopup(false); 
+        setOpenPop(false); 
+    };
     
     return (
         <div className={`outerCard2 ${openPop ? 'blur-background' : ''}`}>
@@ -348,7 +353,7 @@ export function JobBoard() {
                 <Pagination count={totalPages} page={page} onChange={(event, value) => setPage(value)}  className="custom-pagination" />
             </div>
             {openSubmitProfile && (<SubmitProfilePopup open={openSubmitProfile} onClose={handleCloseSubmitProfile} onSubmit={handleSubmitProfile} profile={profile}/>)}
-            {openCongratsPopup && (<CongratsPopup open={openCongratsPopup} onClose={() => setOpenCongratsPopup(false)} />)}
+            {openCongratsPopup && (<CongratsPopup open={openCongratsPopup} onClose={() => setOpenCongratsPopup(false)} apply={handleApplyMore}/>)}
             {openPop && (<JobPopup open={openPop} onClose={closePop} openPopUp={openPopUp} currentPop={currentPop} openSubmitProfile={openSubmitProfile} openCongratsPopup={openCongratsPopup} openSubmit={handleOpenSubmitProfile} />)}
         </div>
     )
