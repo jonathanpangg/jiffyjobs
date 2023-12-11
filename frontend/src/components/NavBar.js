@@ -146,7 +146,7 @@ export function NavBar() {
                     <div style={{ position: 'absolute', left: 'calc(100% - 162px)', top: '51%', transform: 'translate(-10%, -50%)', display: 'flex', alignItems: 'center', }}>
                         <Tooltip onClick={handleOpenUserMenu} style={{ display: 'flex', alignItems: 'center' }}>
                             <div className='profile-picture'>
-                                <Avatar sx={{ bgcolor: "#cccccc", marginRight: 10, color: "#5B5B5B", width: 25, height: 25, fontSize: '14px', fontFamily: 'Outfit' }}>{first[0] + last[0]}</Avatar>
+                                <Avatar sx={{ bgcolor: "#4A4FE4", marginRight: 10, color: "#white", width: 25, height: 25, fontSize: '14px', fontFamily: 'Outfit' }}>{first[0] + last[0]}</Avatar>
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left', maxWidth: '120px', wordBreak: 'break-all', marginLeft: '5px' }}>
                                 <span style={{ fontWeight: 500, fontSize: '16px', color: '#5B5B5B', fontFamily: 'Outfit', marginTop: '-0.665px', textDecoration: 'underline' }}>{first} {last}</span>

@@ -10,7 +10,7 @@ export function SubmitProfilePopup({ open, onClose, onSubmit, profile }) {
             <DialogTitle sx={{ textAlign: 'center', fontFamily: 'Outfit', marginTop: 2, fontSize: '24px', fontWeight: 500 }}>Are you sure you want to submit?</DialogTitle>
                 <DialogContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '16px', margin: 'auto', border: '2px dashed #ccc', borderRadius: '10px', width: '326px', height: '395px', transform: 'scale(1.05)'  }}>
                     <Stack direction="row" spacing={2} alignItems="center" justifyContent="center" style={{ paddingBottom: 0, paddingTop: 20, paddingLeft: '14px', marginRight: '113px'}} >
-                        <Avatar sx={{ bgcolor: '#D9D9D9', width: 50, height: 50, color: 'black', fontSize: '26.231px', fontFamily: 'Outfit', fontWeight: 400, }}>{profile[0] && profile[0].length > 0 && profile[0][0]}{profile[1] && profile[1].length > 0 && profile[1][0]}</Avatar>
+                        <Avatar sx={{ bgcolor: '#4A4FE4', width: 50, height: 50, color: 'white', fontSize: '26.231px', fontFamily: 'Outfit', fontWeight: 400, }}>{profile[0] && profile[0].length > 0 && profile[0][0]}{profile[1] && profile[1].length > 0 && profile[1][0]}</Avatar>
                         <Typography style={{ fontFamily: 'Outfit', fontSize: '18px', fontWeight: 500 }}>
                             {profile[0] && profile[0].length > 0 && profile[0]} {profile[1] && profile[1].length > 0 && profile[1]}
                         </Typography>
