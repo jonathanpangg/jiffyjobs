@@ -1,5 +1,5 @@
 {
-  "name": "jiffyjobs",
+  "name": "yes",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -19,6 +19,7 @@
     "firebase": "^10.7.1",
     "gapi-script": "^1.2.0",
     "i": "^0.3.7",
+    "nodemailer": "^6.9.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-google-login": "^5.2.2",
@@ -52,5 +53,10 @@
   },
   "devDependencies": {
     "react-router-dom": "^6.17.0"
-  }
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

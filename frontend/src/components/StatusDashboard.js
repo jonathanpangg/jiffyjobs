@@ -8,6 +8,7 @@ import submittedPicture from '../images/Submitted.png';
 import rejectedPicture from '../images/Rejected.png';
 import { SubmitProfilePopup } from './SubmitPopup';
 import { WithdrawPopup } from './confirmWithdrawPopup';
+import { useNavigate } from 'react-router-dom';
 import { WithdrawNotify } from './WithdrawNotifPopup';
 
 import { JobPopup } from './JobPopup';
@@ -128,6 +129,11 @@ export function StatusDashboard() {
         return `https://source.unsplash.com/random?${seed}`;
     };
 
+    // for link navigation
+    const navigate = useNavigate();
+
+
+
     useEffect(() => {
         async function getJobs() {
             const email = localStorage.getItem("email")
@@ -227,7 +233,7 @@ export function StatusDashboard() {
                 </Grid>
             </Box>
             {openSubmitProfile && (<WithdrawPopup open={openSubmitProfile} onClose={handleCloseSubmitProfile} onSubmit={handleWithdrawProfile} profile={profile}/>)}
-            {openCongratsPopup && (<WithdrawNotify open={openCongratsPopup} onClose={() => setOpenCongratsPopup(false)} />)}
+            {openCongratsPopup && (<WithdrawNotify open={openCongratsPopup} onClose={() => setOpenCongratsPopup(false)}  apply={() => navigate('/jobboard')}/>)}
             {openPop && (<JobPopup open={openPop} onClose={closePop} openPopUp={openPopUp} currentPop={currentPop} openSubmitProfile={openSubmitProfile} openCongratsPopup={openCongratsPopup} openSubmit={handleOpenSubmitProfile} jobData={statusData} />)}
         </div>
     )
