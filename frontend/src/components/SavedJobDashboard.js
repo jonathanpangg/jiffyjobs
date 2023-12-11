@@ -4,6 +4,7 @@ import { Box, Card, Grid, CardMedia, Typography, } from '@mui/material'
 import dayjs from 'dayjs';
 import { JobPopup } from './JobPopup';
 import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import { SubmitProfilePopup } from './SubmitPopup';
 import reject from '../images/Reject.png';
 import { CongratsPopup } from './CongratsPopup';
@@ -196,6 +197,10 @@ export function SavedJobDashboard() {
         setOpenSubmitProfile(false);
     };
 
+    // for link navigation
+    const navigate = useNavigate();
+
+
 
     useEffect(() => {
         async function getJobs() {
@@ -213,7 +218,6 @@ export function SavedJobDashboard() {
                     const newJobData = data.map(function(obj) {
                         return [[obj._id, obj.title], [randomImage(obj.categories.toString().split(",")[0]), obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
                     });
-                    console.log(newJobData, "asdfadfas")
                     setStatusData(newJobData)
                     setPrevSize(newJobData.length)
                 })
@@ -237,7 +241,6 @@ export function SavedJobDashboard() {
             <Box className='progress-box'>
                 <Grid container className='progress-grid' rowSpacing={3} columnSpacing={3} width='70vw' style={{paddingBottom: '1%'}}>
                     {statusData.map((key) => {
-                        console.log(key, "asdfa");
                         return ( 
                             <Grid key={key} item> 
                                 <Card sx={{width: '264px', height: '264px'}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px'}} onClick={() => openPopUp(key)}>
@@ -284,7 +287,7 @@ export function SavedJobDashboard() {
                 </Grid>
             </Box>
             {openSubmitProfile && (<SubmitProfilePopup open={openSubmitProfile} onClose={handleCloseSubmitProfile} onSubmit={handleSubmitProfile} profile={profile}/>)}
-            {openCongratsPopup && (<CongratsPopup open={openCongratsPopup} onClose={() => setOpenCongratsPopup(false)} />)}
+            {openCongratsPopup && (<CongratsPopup open={openCongratsPopup} onClose={() => setOpenCongratsPopup(false)} apply={() => navigate('/jobboard')}/>)}
             {openPop && (<JobPopup open={openPop} onClose={closePop} openPopUp={openPopUp} currentPop={currentPop} openSubmitProfile={openSubmitProfile} openCongratsPopup={openCongratsPopup} openSubmit={handleOpenSubmitProfile} />)}
         </div>
     )
