@@ -160,7 +160,7 @@ export function ViewApplicants({children, jobID}) {
                                         <Grid width='70vw' key={key} item> 
                                             { key[3] !== 'accepted' ? 
                                                 <div style={{display: 'flex', width: '92.5%', height: '50px', alignItems: 'center', fontFamily: 'Outfit', border: '1px solid #D9D9D9', borderTopLeftRadius: key[0] === 0 ? '10px': '0px', borderTopRightRadius: key[0] === 0 ? '10px': '0px', borderBottomLeftRadius: key[0] === applicantData.length-1 ? '10px': '0px', borderBottomRightRadius: key[0] === applicantData.length-1 ? '10px': '0px',}} >
-                                                    <Avatar sx={{ bgcolor: "#cccccc", color: "#5B5B5B", width: '26px', height: '26px', fontSize: '16px', fontFamily: 'Outfit', marginLeft: '25px', marginRight: '13px', cursor:'pointer'}} onClick={() => { getUserInfo(key[4]); setTypeResponse('standard')}}>{ getInitials(key[1], key[2]) }</Avatar>
+                                                    <Avatar sx={{ bgcolor: '#4A4FE4', color: "white", width: '26px', height: '26px', fontSize: '16px', fontFamily: 'Outfit', marginLeft: '25px', marginRight: '13px', cursor:'pointer'}} onClick={() => { getUserInfo(key[4]); setTypeResponse('standard')}}>{ getInitials(key[1], key[2]) }</Avatar>
                                                     <u style={{fontSize: '16px', cursor:'pointer'}} onClick={() => { getUserInfo(key[4]); setTypeResponse('standard')}}> {key[1] + " " + key[2]} </u>
                                                     <CircleIcon style={{width: '5px', height: '5px', marginLeft: '6px', marginRight: '6px', color: '#5B5B5B', cursor:'pointer'}} onClick={() => { getUserInfo(key[4]); setTypeResponse('standard')}}/>
                                                     <div style={{fontSize: '12px', color: '#5B5B5B', cursor:'pointer'}} onClick={() => { getUserInfo(key[4]); setTypeResponse('standard')}}> Click to view Profile </div>
@@ -170,7 +170,7 @@ export function ViewApplicants({children, jobID}) {
                                                     </div>
                                                 </div>:
                                                 <div style={{display: 'flex', width: '92.5%', height: '50px', alignItems: 'center', fontFamily: 'Outfit', border: '1px solid #D9D9D9', borderTopLeftRadius: key[0] === 0 ? '10px': '0px', borderTopRightRadius: key[0] === 0 ? '10px': '0px', borderBottomLeftRadius: key[0] === applicantData.length-1 ? '10px': '0px', borderBottomRightRadius: key[0] === applicantData.length-1 ? '10px': '0px', backgroundColor: 'rgba(102, 193, 32, 0.15)'}}>
-                                                    <Avatar sx={{ bgcolor: "#cccccc", color: "#5B5B5B", width: '26px', height: '26px', fontSize: '16px', fontFamily: 'Outfit', marginLeft: '25px', marginRight: '13px'}}>{ getInitials(key[1], key[2]) }</Avatar>
+                                                    <Avatar sx={{ bgcolor: '#4A4FE4', color: "white", width: '26px', height: '26px', fontSize: '16px', fontFamily: 'Outfit', marginLeft: '25px', marginRight: '13px'}}>{ getInitials(key[1], key[2]) }</Avatar>
                                                     <u style={{fontSize: '16px'}}> {key[1] + " " + key[2]} </u>
                                                     <CircleIcon style={{width: '5px', height: '5px', marginLeft: '6px', marginRight: '6px', color: '#5B5B5B'}}/>
                                                     <div style={{fontSize: '12px', color: '#5B5B5B'}} onClick={() => { getUserInfo(key[4]); setTypeResponse('selected')}}> Selected Applicant </div>
@@ -194,13 +194,13 @@ export function ViewApplicants({children, jobID}) {
                             <div style={{ width: '431px', height: '399px', border: '1px solid #A4A4A4', borderRadius: '10px', backgroundColor: (typeResponse === 'standard' || typeResponse === 'selected') ? "white": (typeResponse === "accept" ? 'rgba(102, 193, 32, 0.15)': 'rgba(193, 32, 32, 0.15)')}}>
                                 <DialogContentText>
                                     <div style={{display: 'flex', alignItems: 'center', fontFamily: 'Outfit', marginTop: '26px'}}>
-                                        <Avatar sx={{ bgcolor: "#cccccc", color: "black", width: '50px', height: '50px', fontSize: '26px', fontFamily: 'Outfit', marginLeft: '35px', marginRight: '11px'}}>{ getInitials(applicant[0], applicant[1]) }</Avatar>
+                                        <Avatar sx={{ bgcolor: '#4A4FE4', color: "white", width: '50px', height: '50px', fontSize: '26px', fontFamily: 'Outfit', marginLeft: '35px', marginRight: '11px'}}>{ getInitials(applicant[0], applicant[1]) }</Avatar>
                                         <div style={{fontSize: '18px', fontWeight: '500', color: "black"}}> {applicant[0] + " " + applicant[1]} </div>
                                     </div>
         
                                     <div style={{display: 'flex', position: 'absolute', alignItems: 'center', fontFamily: 'Outfit', marginTop: '40px', right: 245}}>
                                         <div style={{color: 'black', marginRight: '10px'}}> School </div>
-                                        <div style={{width: '161px', height: '28px', borderRadius: '5px', border: '1px solid #A4A4A4', backgroundColor: '#D9D9D9', display: 'flex', alignItems: 'center'}}> 
+                                        <div style={{width: '161px', height: '28px', borderRadius: '5px', border: '1px solid #A4A4A4', backgroundColor: 'white', display: 'flex', alignItems: 'center'}}> 
                                             <div style={{display: 'flex', alignItems: 'center', marginLeft: '10px', fontSize: '12px'}}>
                                                 {applicant[2]}
                                             </div>
@@ -209,7 +209,7 @@ export function ViewApplicants({children, jobID}) {
         
                                     <div style={{display: 'flex', position: 'absolute', alignItems: 'center', fontFamily: 'Outfit', marginTop: '78px', right: 245}}>
                                         <div style={{color: 'black', marginRight: '10px'}}> Major </div>
-                                        <div style={{width: '161px', height: '28px', borderRadius: '5px', border: '1px solid #A4A4A4', backgroundColor: '#D9D9D9', display: 'flex', alignItems: 'center'}}> 
+                                        <div style={{width: '161px', height: '28px', borderRadius: '5px', border: '1px solid #A4A4A4', backgroundColor: 'white', display: 'flex', alignItems: 'center'}}> 
                                             <div style={{display: 'flex', alignItems: 'center', marginLeft: '10px', fontSize: '12px'}}>
                                                 {applicant[6]}
                                             </div>
@@ -218,7 +218,7 @@ export function ViewApplicants({children, jobID}) {
         
                                     <div style={{display: 'flex', position: 'absolute', alignItems: 'center', fontFamily: 'Outfit', marginTop: '116px', right: 245}}>
                                         <div style={{color: 'black', marginRight: '10px'}}> Grade </div>
-                                        <div style={{width: '161px', height: '28px', borderRadius: '5px', border: '1px solid #A4A4A4', backgroundColor: '#D9D9D9', display: 'flex', alignItems: 'center'}}> 
+                                        <div style={{width: '161px', height: '28px', borderRadius: '5px', border: '1px solid #A4A4A4', backgroundColor: 'white', display: 'flex', alignItems: 'center'}}> 
                                             <div style={{display: 'flex', alignItems: 'center', marginLeft: '10px', fontSize: '12px'}}>
                                                 {applicant[3]}
                                             </div>
@@ -227,7 +227,7 @@ export function ViewApplicants({children, jobID}) {
                                     
                                     <div style={{display: 'flex', position: 'absolute', alignItems: 'center', fontFamily: 'Outfit', marginTop: '154px', right: 245 }}>
                                         <div style={{color: 'black', marginRight: '10px'}}> Email </div>
-                                        <div style={{width: '161px', height: '28px', borderRadius: '5px', border: '1px solid #A4A4A4', backgroundColor: '#D9D9D9', display: 'flex', alignItems: 'center'}}> 
+                                        <div style={{width: '161px', height: '28px', borderRadius: '5px', border: '1px solid #A4A4A4', backgroundColor: 'white', display: 'flex', alignItems: 'center'}}> 
                                             <div style={{display: 'flex', alignItems: 'center', marginLeft: '10px', fontSize: '12px'}}>
                                                 {applicant[4]}
                                             </div>
@@ -236,7 +236,7 @@ export function ViewApplicants({children, jobID}) {
         
                                     <div style={{display: 'flex', position: 'absolute', alignItems: 'start', fontFamily: 'Outfit', marginTop: '192px', right: 93 }}>
                                         <div style={{color: 'black', marginRight: '10px'}}> Bio </div>
-                                        <div style={{width: '313px', height: '112px', borderRadius: '5px', border: '1px solid #A4A4A4', backgroundColor: '#D9D9D9', display: 'flex', alignItems: 'start'}}> 
+                                        <div style={{width: '313px', height: '112px', borderRadius: '5px', border: '1px solid #A4A4A4', backgroundColor: 'white', display: 'flex', alignItems: 'start'}}> 
                                             <div style={{display: 'flex', alignItems: 'center', marginLeft: '10px', fontSize: '12px'}}>
                                                 {applicant[5]}
                                             </div>
