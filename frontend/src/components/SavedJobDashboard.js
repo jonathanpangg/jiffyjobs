@@ -258,20 +258,20 @@ export function SavedJobDashboard() {
                                     </div>
                                     <div className='overall-card'>
                                         <div style={{height: '200px'}}>
-                                            <Typography style={{fontFamily: 'Outfit', fontSize:"14px", paddingLeft:'10px', paddingRight:'10px', paddingTop:'10px'}}>
-                                                <u>{key[0]}</u>
+                                            <Typography style={{fontFamily: 'Outfit', fontSize:"14px", paddingLeft:'16px', paddingRight:'10px', paddingTop:'10px'}}>
+                                                <u>{key[0][1]}</u>
                                             </Typography>
-                                            <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px', paddingTop:'15px'}}>
-                                                Pay: ${key[3]}
+                                            <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'16px', paddingRight:'10px', paddingTop:'15px'}}>
+                                                Pay: ${key[3][1]}
                                             </Typography>
-                                            <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px'}}>
-                                                Location: <u>{key[2]}</u>
+                                            <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'16px', paddingRight:'10px'}}>
+                                                Location: <u>{key[2][1]}</u>
                                             </Typography>
-                                            <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px'}}>
-                                                Time: {key[5]}
+                                            <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'16px', paddingRight:'10px'}}>
+                                                Time: {key[5][1]}
                                             </Typography>
-                                            <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft: '10px', paddingRight:'10px', position:'relative', overflow:'hidden', textOverflow:'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, lineHeight: '1.1', height: '26px'}}>
-                                                Description: {key[4]}
+                                            <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft: '16px', paddingRight:'10px', position:'relative', overflow:'hidden', textOverflow:'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, lineHeight: '1.1', height: '26px'}}>
+                                                Description: {key[4][1]}
                                             </Typography>
                                         </div>
                                     </div>
