@@ -47,10 +47,10 @@ npm run dev
 ```
 ## Built With 
 This webapp was built with 
-* #### React.js
-* #### Node.js
-* #### Express.js
-* #### MongoDB
+- #### React.js
+- #### Node.js
+- #### Express.js
+- #### MongoDB
 
 ## Snapshots
 
