@@ -22,6 +22,7 @@ export function JobPopup({open, onClose, openPopUp, currentPop, openSubmitProfil
             toast.error('You can only save jobs as a Seeker!', {
                 icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
                 progressStyle: {backgroundColor: '#C12020'},
+                style: {fontFamily: 'Outfit'},
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,

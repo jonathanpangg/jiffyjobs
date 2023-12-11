@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/Dashboard.css';
 import { ToastContainer, toast } from 'react-toastify';
-import { Box, Link, Card, Grid, CardActionArea, Typography, } from '@mui/material';
+import { Box, Link, Card, Grid, CardActionArea, Typography, CardMedia } from '@mui/material';
 import dayjs from 'dayjs';
 import acceptedPicture from '../images/Accepted.png';
 import submittedPicture from '../images/Submitted.png';
@@ -9,6 +9,7 @@ import rejectedPicture from '../images/Rejected.png';
 import { SubmitProfilePopup } from './SubmitPopup';
 import { WithdrawPopup } from './confirmWithdrawPopup';
 import { WithdrawNotify } from './WithdrawNotifPopup';
+import reject from '../images/Reject.png'
 
 import { JobPopup } from './JobPopup';
 import check from '../images/Check.png';
@@ -91,8 +92,11 @@ export function StatusDashboard() {
         .catch((error) => {
             const err = error.message;
             if (err.startsWith('Error: ')) {
-                alert(err.slice(7));
+                toast.dismiss();
                 toast.error(err.slice(7), {
+                    icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
+                    progressStyle: {backgroundColor: '#C12020'},
+                    style: {fontFamily: 'Outfit'},
                     position: "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -100,10 +104,14 @@ export function StatusDashboard() {
                     pauseOnHover: true,
                     draggable: true,
                     progress: undefined,
-                    theme: "light"
+                    theme: "light",
                 });
             } else {
+                toast.dismiss();
                 toast.error(err, {
+                    icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
+                    progressStyle: {backgroundColor: '#C12020'},
+                    style: {fontFamily: 'Outfit'},
                     position: "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -111,7 +119,7 @@ export function StatusDashboard() {
                     pauseOnHover: true,
                     draggable: true,
                     progress: undefined,
-                    theme: "light"
+                    theme: "light",
                 });
             }
         });
@@ -175,12 +183,22 @@ export function StatusDashboard() {
                                 <Link overlay underline="none" sx={{ color: 'text.tertiary', cursor: 'pointer' }} onClick={() => openPopUp(key)}>
                                     <Card sx={{width: '264px', height: '264px'}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px'}}>
                                         <div className='overall-card'>
-                                            <img
-                                                style={{ width: '100%'}}
-                                                src={ key[7][1] === "accepted" ? acceptedPicture: (key[7][1] === "submitted" ? submittedPicture: rejectedPicture)}
+                                            <div className='overlay' style={{
+                                                position: 'absolute',
+                                                top: 0,
+                                                left: 0,
+                                                width: '100%',
+                                                height: '99px',
+                                                backgroundColor: key[7][1] === "accepted" ? 'rgba(166, 255, 152, 0.7)' : (key[7][1] === "submitted" ? 'rgba(255, 226, 152, 0.7)': 'rgba(255, 152, 152, 0.7)'),
+                                                zIndex: 1, 
+                                            }}></div>
+                                            <CardMedia
+                                                component="img"
                                                 alt="placeholder"
+                                                height="99px"
+                                                image={key[1][0]}
                                             />
-                                            <div style={{position: 'absolute', maxWidth: '100%', top: '50%', left: '50%', textAlign: 'center', transform: 'translate(-50%, -50%)', whiteSpace: 'nowrap'}}>
+                                            <div style={{position: 'absolute', maxWidth: '100%', top: '50%', left: '50%', textAlign: 'center', transform: 'translate(-50%, -50%)', whiteSpace: 'nowrap', zIndex: 2}}>
                                                 <img
                                                     style={{ width: '24px', height: '24px'}}
                                                     src={ key[7][1] === "accepted" ? check: (key[7][1] === "submitted" ? clock: x)}
