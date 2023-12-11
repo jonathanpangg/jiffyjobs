@@ -211,8 +211,9 @@ export function SavedJobDashboard() {
                 })
                 .then((data) => {
                     const newJobData = data.map(function(obj) {
-                        return [obj.title, obj.job_poster, obj.location, obj.pay, obj.description, dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A'), obj.categories.toString(), obj.status, obj._id]
+                        return [[obj._id, obj.title], [randomImage(obj.categories.toString().split(",")[0]), obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
                     });
+                    console.log(newJobData, "asdfadfas")
                     setStatusData(newJobData)
                     setPrevSize(newJobData.length)
                 })
@@ -236,9 +237,10 @@ export function SavedJobDashboard() {
             <Box className='progress-box'>
                 <Grid container className='progress-grid' rowSpacing={3} columnSpacing={3} width='70vw' style={{paddingBottom: '1%'}}>
                     {statusData.map((key) => {
+                        console.log(key, "asdfa");
                         return ( 
                             <Grid key={key} item> 
-                                <Card sx={{width: '264px', height: '264px'}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px'}}>
+                                <Card sx={{width: '264px', height: '264px'}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px'}} onClick={() => openPopUp(key)}>
                                     <div className='overall-card'>
                                         <CardMedia
                                             component="img"
@@ -246,7 +248,11 @@ export function SavedJobDashboard() {
                                             height="99px"
                                             image={randomImage(key[6][1].split(",")[0])}
                                         />
-                                        <div style={{position: 'absolute', maxWidth: '100%', top: '30%', left: '90%', textAlign: 'center', transform: 'translate(-50%, -50%)', whiteSpace: 'nowrap', cursor: "pointer"}} onClick={() => {savedJobs(key[8])}}>
+                                        <div style={{position: 'absolute', maxWidth: '100%', top: '30%', left: '90%', textAlign: 'center', transform: 'translate(-50%, -50%)', whiteSpace: 'nowrap', cursor: "pointer"}}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                savedJobs(key[8]);
+                                            }}>
                                             <StarRoundedIcon
                                                 style={{ width: '40px', height: '40px', color: '#4A4FE4'}}
                                             />
@@ -255,19 +261,19 @@ export function SavedJobDashboard() {
                                     <div className='overall-card'>
                                         <div style={{height: '200px'}}>
                                             <Typography style={{fontFamily: 'Outfit', fontSize:"14px", paddingLeft:'10px', paddingRight:'10px', paddingTop:'10px'}}>
-                                                <u>{key[0]}</u>
+                                                <u>{key[0][1]}</u>
                                             </Typography>
                                             <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px', paddingTop:'15px'}}>
-                                                Pay: ${key[3]}
+                                                Pay: ${key[3][1]}
                                             </Typography>
                                             <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px'}}>
-                                                Location: <u>{key[2]}</u>
+                                                Location: <u>{key[2][1]}</u>
                                             </Typography>
                                             <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px'}}>
-                                                Time: {key[5]}
+                                                Time: {key[5][1]}
                                             </Typography>
                                             <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft: '10px', paddingRight:'10px', position:'relative', overflow:'hidden', textOverflow:'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, lineHeight: '1.1', height: '26px'}}>
-                                                Description: {key[4]}
+                                                Description: {key[4][1]}
                                             </Typography>
                                         </div>
                                     </div>

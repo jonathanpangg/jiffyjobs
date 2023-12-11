@@ -1,5 +1,5 @@
 {
-  "name": "jiffyjobs",
+  "name": "yes",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -52,5 +52,10 @@
   },
   "devDependencies": {
     "react-router-dom": "^6.17.0"
-  }
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
