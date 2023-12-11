@@ -48,9 +48,14 @@ export function JobBoard() {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' }
             }
-            var route = "https://jiffyjobs-api-production.up.railway.app/api/jobs/filter"
-            var query = "/*/*/" + Array.from(filterList) + "/*/*"
-            route = route + query
+            var route = ""
+            if (filterList.size > 0) {
+                route = "https://jiffyjobs-api-production.up.railway.app/api/jobs/filter"
+                var query = "/*/*/" + Array.from(filterList) + "/*/*"
+                route = route + query
+            } else {
+                route = "https://jiffyjobs-api-production.up.railway.app/api/jobs/get"
+            }
             fetch(route, requestOptions)
                 .then((response) => {
                     if (!response.ok) { 
