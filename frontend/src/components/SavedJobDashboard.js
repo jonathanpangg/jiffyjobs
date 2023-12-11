@@ -4,7 +4,6 @@ import { Box, Card, Grid, CardMedia, Typography, } from '@mui/material'
 import dayjs from 'dayjs';
 import { JobPopup } from './JobPopup';
 import { ToastContainer, toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
 import { SubmitProfilePopup } from './SubmitPopup';
 import reject from '../images/Reject.png';
 import { CongratsPopup } from './CongratsPopup';
@@ -72,6 +71,7 @@ export function SavedJobDashboard() {
             toast.error('Please login to view!', {
                 icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
                 progressStyle: {backgroundColor: '#C12020'},
+                style: {fontFamily: 'Outfit'},
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -96,6 +96,7 @@ export function SavedJobDashboard() {
             toast.error('You can only apply to jobs as a Seeker!', {
                 icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
                 progressStyle: {backgroundColor: '#C12020'},
+                style: {fontFamily: 'Outfit'},
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -164,6 +165,7 @@ export function SavedJobDashboard() {
                 toast.error(err.slice(7), {
                     icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
                     progressStyle: {backgroundColor: '#C12020'},
+                    style: {fontFamily: 'Outfit'},
                     position: "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -177,6 +179,7 @@ export function SavedJobDashboard() {
                 toast.error(err, {
                     icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
                     progressStyle: {backgroundColor: '#C12020'},
+                    style: {fontFamily: 'Outfit'},
                     position: "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -197,10 +200,6 @@ export function SavedJobDashboard() {
         setOpenSubmitProfile(false);
     };
 
-    // for link navigation
-    const navigate = useNavigate();
-
-
 
     useEffect(() => {
         async function getJobs() {
@@ -216,7 +215,7 @@ export function SavedJobDashboard() {
                 })
                 .then((data) => {
                     const newJobData = data.map(function(obj) {
-                        return [[obj._id, obj.title], [randomImage(obj.categories.toString().split(",")[0]), obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
+                        return [obj.title, obj.job_poster, obj.location, obj.pay, obj.description, dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A'), obj.categories.toString(), obj.status, obj._id]
                     });
                     setStatusData(newJobData)
                     setPrevSize(newJobData.length)
@@ -243,7 +242,7 @@ export function SavedJobDashboard() {
                     {statusData.map((key) => {
                         return ( 
                             <Grid key={key} item> 
-                                <Card sx={{width: '264px', height: '264px'}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px'}} onClick={() => openPopUp(key)}>
+                                <Card sx={{width: '264px', height: '264px'}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px'}}>
                                     <div className='overall-card'>
                                         <CardMedia
                                             component="img"
@@ -251,11 +250,7 @@ export function SavedJobDashboard() {
                                             height="99px"
                                             image={randomImage(key[6][1].split(",")[0])}
                                         />
-                                        <div style={{position: 'absolute', maxWidth: '100%', top: '30%', left: '90%', textAlign: 'center', transform: 'translate(-50%, -50%)', whiteSpace: 'nowrap', cursor: "pointer"}}
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                savedJobs(key[8]);
-                                            }}>
+                                        <div style={{position: 'absolute', maxWidth: '100%', top: '30%', left: '90%', textAlign: 'center', transform: 'translate(-50%, -50%)', whiteSpace: 'nowrap', cursor: "pointer"}} onClick={() => {savedJobs(key[8])}}>
                                             <StarRoundedIcon
                                                 style={{ width: '40px', height: '40px', color: '#4A4FE4'}}
                                             />
@@ -287,7 +282,7 @@ export function SavedJobDashboard() {
                 </Grid>
             </Box>
             {openSubmitProfile && (<SubmitProfilePopup open={openSubmitProfile} onClose={handleCloseSubmitProfile} onSubmit={handleSubmitProfile} profile={profile}/>)}
-            {openCongratsPopup && (<CongratsPopup open={openCongratsPopup} onClose={() => setOpenCongratsPopup(false)} apply={() => navigate('/jobboard')}/>)}
+            {openCongratsPopup && (<CongratsPopup open={openCongratsPopup} onClose={() => setOpenCongratsPopup(false)} />)}
             {openPop && (<JobPopup open={openPop} onClose={closePop} openPopUp={openPopUp} currentPop={currentPop} openSubmitProfile={openSubmitProfile} openCongratsPopup={openCongratsPopup} openSubmit={handleOpenSubmitProfile} />)}
         </div>
     )
