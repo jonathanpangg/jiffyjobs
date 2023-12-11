@@ -55,6 +55,16 @@ export function JobBoard() {
                 return response.json();
             })
             .then((data) => {
+                const sortedData = data.sort((a, b) => {
+                    const startTimeA = dayjs(a.time[0]);
+                    const startTimeB = dayjs(b.time[0]);
+                    
+                    if (!startTimeA.isValid()) return 1;
+                    if (!startTimeB.isValid()) return -1;
+                    
+                    return startTimeA.isAfter(startTimeB) ? 1 : -1;
+                });
+                
                 setRawData(data);
                 const newJobData = data.map(function(obj) {
                     return [[obj._id, obj.title], [randomImage(obj.categories.toString().split(",")[0]), obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]

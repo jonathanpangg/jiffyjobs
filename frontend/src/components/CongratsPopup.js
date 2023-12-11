@@ -8,12 +8,7 @@ import { Dialog, Divider, Typography, DialogContentText, DialogContent,
 
 // handles congrats popup
 export function CongratsPopup({ open, onClose, apply}) {
-    const [openPop, setOpenPop] = useState(false)
-    const [openCongratsPopup, setOpenCongratsPopup] = useState(false);
-
     const navigate = useNavigate();
-
-    // close popups
 
     // goes to dashboard
     const handleToDashboard = () => {
