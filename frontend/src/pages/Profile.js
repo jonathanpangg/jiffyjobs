@@ -79,6 +79,7 @@ export function Profile() {
             toast.error('Please Login!', {
                 icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
                 progressStyle: {backgroundColor: '#C12020'},
+                style: {fontFamily: 'Outfit'},
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -179,6 +180,7 @@ export function Profile() {
                 toast.info('Profile updated Successfully!', {
                     icon: ({theme, type}) =>  <img src={logo} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
                     progressStyle: {backgroundColor: '#4A4FE4'},
+                    style: {fontFamily: 'Outfit'},
                     position: "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,

@@ -30,6 +30,7 @@ export function Login() {
             toast.info('Already logged in!', {
                 icon: ({theme, type}) =>  <img src={logo} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
                 progressStyle: {backgroundColor: '#4A4FE4'},
+                style: {fontFamily: 'Outfit'},
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -125,10 +126,10 @@ export function Login() {
         .catch((error) => {
             const err = error.message;
             if (err.startsWith('Error: ')) {
-                alert(err.slice(7));
                 toast.error(err.slice(7), {
                     icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
                     progressStyle: {backgroundColor: '#C12020'},
+                    style: {fontFamily: 'Outfit'},
                     position: "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -142,6 +143,7 @@ export function Login() {
                 toast.error(err, {
                     icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
                     progressStyle: {backgroundColor: '#C12020'},
+                    style: {fontFamily: 'Outfit'},
                     position: "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,
