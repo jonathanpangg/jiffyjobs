@@ -177,7 +177,7 @@ export function Profile() {
                 }
 
                 toast.dismiss()
-                toast.info('Profile updated Successfully!', {
+                toast.info('Profile updated successfully!', {
                     icon: ({theme, type}) =>  <img src={logo} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
                     progressStyle: {backgroundColor: '#4A4FE4'},
                     style: {fontFamily: 'Outfit'},
