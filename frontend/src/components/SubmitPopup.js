@@ -64,7 +64,7 @@ export function SubmitProfilePopup({ open, onClose, onSubmit, profile }) {
                 <Button onClick={onClose} sx={{ border: '1px solid #5B5B5B', borderRadius: '9.6px', fontFamily: 'Outfit', textTransform: 'none', color: '#5B5B5B', fontSize: '19.2px', width: '102.2px', height: '44.2px', fontWeight: 400 }}>
                     Cancel
                 </Button>
-                <Button onClick={onSubmit} sx={{ border: '1px solid #D9D9D9', borderRadius: '9.6px', fontFamily: 'Outfit', textTransform: 'none', color: 'white', backgroundColor: '#4A4FE4', '&:hover': {backgroundColor: '#4A4FE4'}, fontSize: '19.2px', width: '162.2px', height: '44.2px', fontWeight: 400}}>
+                <Button onClick={onSubmit} sx={{ border: '1px solid #D9D9D9', borderRadius: '9.6px', fontFamily: 'Outfit', textTransform: 'none', color: 'white', backgroundColor: '#4A4FE4', '&:hover': {backgroundColor: '#4A4FE4'}, fontSize: '19.2px', width: '184.2px', height: '44.2px', fontWeight: 400}}>
                     Confirm Submit
                 </Button>
             </DialogActions>

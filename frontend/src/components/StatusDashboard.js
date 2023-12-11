@@ -170,7 +170,7 @@ export function StatusDashboard() {
     return (
         <div>
             <div className='header-one'>
-                Progress
+                Status
             </div>
             <div className='header-two'>
                 Check your the progress on your job applications!

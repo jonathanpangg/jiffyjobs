@@ -341,71 +341,73 @@ export function JobPosting( { onJobDataSubmit } ) {
     // first job slide
     const firstJobSlide = () => {
         return (
-            <Dialog open={openStartPop} onClose={closePop} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
-                <div className='popup-title'>
-                    <DialogTitle style={{width: "90%", fontFamily: 'Outfit', fontSize: '20px', fontWeight: 500, color: '#4A4FE4'}}> 
+            <Dialog open={openStartPop} onClose={closePop} maxWidth={"890px"} PaperProps={{sx: { borderRadius: "15px",}}}>
+                <div className='popup-title' style={{paddingRight: '32px', paddingLeft: '32px'}}>
+                    <DialogTitle style={{width: "98%", fontFamily: 'Outfit', fontSize: '20px', fontWeight: 500, color: '#4A4FE4'}}> 
                         Tell us more about the job!
                     </DialogTitle>
-                    <IconButton onClick={closePop} style={{color: '#4A4FE4'}}>
+                    <IconButton onClick={closePop} style={{color: '#4A4FE4', marginLeft: '-82px'}}>
                         <ClearIcon/>
                     </IconButton>
                 </div>
+
                 <Divider/>
-                    <DialogContent>
-                        <DialogContentText ref={descriptionElementRefStartPop} tabIndex={-1} style={{width: '1000px'}}>
-                            <div>
+        
+                <DialogContent>
+                    <DialogContentText ref={descriptionElementRefStartPop} tabIndex={-1} style={{width: '821px', marginTop: '-2px', marginBottom: '4px', paddingRight: '32px', paddingLeft: '32px'}}>
+                        <div>
+                            <text className='pop-textfield-title' style={{fontFamily: 'Outfit', fontSize: '14px', color: 'black'}}>
+                                Job title
+                                <span style={{"color": "red"}}>*</span>
+                            </text> <br></br>
+                            <TextField error={error.titleError} helperText={error.titleError ? "*This field is required" : ""} required={true} placeholder="Add the title you are hiring for" type="search" square={false} style={{width: '100%'}} FormHelperTextProps={{ style: { fontFamily: 'Outfit', fontSize: '14px', }}} onChange={(e) => {handleValues(e)}} id='title' value={val.title}
+                                InputProps={{
+                                    style: {  borderRadius: '10px', fontFamily: 'Outfit', fontSize: '14px' }
+                                }}
+                            />
+                        </div>
+                        <div style={{paddingTop: '18px'}}>
+                            <text className='pop-textfield-title' style={{fontFamily: 'Outfit', fontSize: '14px', color: 'black'}}>
+                                Company or Employer Name
+                                <span style={{"color": "red"}}>*</span>
+                            </text> <br></br>
+                            <TextField error={error.nameError} helperText={error.nameError ? "*This field is required" : ""} required={true} placeholder="Add your or your company/department name" type="search" square={false} style={{width: '100%'}} FormHelperTextProps={{ style: { fontFamily: 'Outfit', fontSize: '14px' }}} onChange={(e) => {handleValues(e)}} id='name' value={val.name}
+                                InputProps={{
+                                    style: {  borderRadius: '10px', fontFamily: 'Outfit', fontSize: '14px' }
+                                }}
+                            />
+                        </div>
+                        <div style={{paddingTop: '18px'}}>
+                            <text className='pop-textfield-title' style={{fontFamily: 'Outfit', fontSize: '14px', color: 'black'}}>
+                                Job Location
+                                <span style={{"color": "red"}}>*</span>
+                            </text> <br></br>
+                            <TextField error={error.locationError} helperText={error.locationError ? "*This field is required" : ""} required={true} placeholder="Add the job location" type="search" square={false} style={{width: '100%'}} FormHelperTextProps={{ style: { fontFamily: 'Outfit', fontSize: '14px' }}} onChange={(e) => {handleValues(e)}} id='location' value={val.location}
+                                InputProps={{
+                                    style: {  borderRadius: '10px', fontFamily: 'Outfit', fontSize: '14px' }
+                                }}
+                            />
+                        </div>
+                        <div style={{paddingTop: '18px', display: 'flex'}}>
+                            <div style={{width: '25%', paddingRight: '2.5%'}}>
                                 <text className='pop-textfield-title' style={{fontFamily: 'Outfit', fontSize: '14px', color: 'black'}}>
-                                    Job title
+                                    Total Payment
                                     <span style={{"color": "red"}}>*</span>
                                 </text> <br></br>
-                                <TextField error={error.titleError} helperText={error.titleError ? "*This field is required" : ""} required={true} placeholder="Add the title you are hiring for" type="search" square={false} style={{width: '98.5%'}} FormHelperTextProps={{ style: { fontFamily: 'Outfit', fontSize: '14px', }}} onChange={(e) => {handleValues(e)}} id='title' value={val.title}
-                                    InputProps={{
-                                        style: {  borderRadius: '10px', fontFamily: 'Outfit', fontSize: '14px' }
-                                    }}
-                                />
+                                <TextField InputProps={{style: {  borderRadius: '10px', fontFamily: 'Outfit', fontSize: '14px' }, inputProps: {inputMode: 'numeric', pattern: '[0-9.]*'}, startAdornment: <InputAdornment position="start"> <span style={{ fontFamily: 'Outfit', fontSize: '14px' }}>$</span></InputAdornment>}} error={error.payError} helperText={error.payError ? "*Invalid number" : ""} required={true} placeholder="00.00" type="search" square={false} className='pop-textfield-title' style={{width: '100%'}} FormHelperTextProps={{ style: { fontFamily: 'Outfit', fontSize: '14px', }}} onChange={(e) => {handleValues(e)}} id='pay' value={val.pay}/>
                             </div>
-                            <div style={{paddingTop: '1.5%'}}>
-                                <text className='pop-textfield-title' style={{fontFamily: 'Outfit', fontSize: '14px', color: 'black'}}>
-                                    Company or Employer Name
-                                    <span style={{"color": "red"}}>*</span>
-                                </text> <br></br>
-                                <TextField error={error.nameError} helperText={error.nameError ? "*This field is required" : ""} required={true} placeholder="Add your or your company/department name" type="search" square={false} style={{width: '98.5%'}} FormHelperTextProps={{ style: { fontFamily: 'Outfit', fontSize: '14px' }}} onChange={(e) => {handleValues(e)}} id='name' value={val.name}
-                                    InputProps={{
-                                        style: {  borderRadius: '10px', fontFamily: 'Outfit', fontSize: '14px' }
-                                    }}
-                                />
-                            </div>
-                            <div style={{paddingTop: '1.5%'}}>
-                                <text className='pop-textfield-title' style={{fontFamily: 'Outfit', fontSize: '14px', color: 'black'}}>
-                                    Job Location
-                                    <span style={{"color": "red"}}>*</span>
-                                </text> <br></br>
-                                <TextField error={error.locationError} helperText={error.locationError ? "*This field is required" : ""} required={true} placeholder="Add the job location" type="search" square={false} style={{width: '98.5%'}} FormHelperTextProps={{ style: { fontFamily: 'Outfit', fontSize: '14px' }}} onChange={(e) => {handleValues(e)}} id='location' value={val.location}
-                                    InputProps={{
-                                        style: {  borderRadius: '10px', fontFamily: 'Outfit', fontSize: '14px' }
-                                    }}
-                                />
-                            </div>
-                            <div style={{paddingTop: '1.5%', display: 'flex'}}>
-                                <div style={{width: '35%', paddingRight: '2.5%'}}>
-                                    <text className='pop-textfield-title' style={{fontFamily: 'Outfit', fontSize: '14px', color: 'black'}}>
-                                        Total Payment
-                                        <span style={{"color": "red"}}>*</span>
-                                    </text> <br></br>
-                                    <TextField InputProps={{style: {  borderRadius: '10px', fontFamily: 'Outfit', fontSize: '14px' }, inputProps: {inputMode: 'numeric', pattern: '[0-9.]*'}, startAdornment: <InputAdornment position="start"> <span style={{ fontFamily: 'Outfit', fontSize: '14px' }}>$</span></InputAdornment>}} error={error.payError} helperText={error.payError ? "*Invalid number" : ""} required={true} placeholder="00.00" type="search" square={false} className='pop-textfield-title' style={{width: '100%'}} FormHelperTextProps={{ style: { fontFamily: 'Outfit', fontSize: '14px', }}} onChange={(e) => {handleValues(e)}} id='pay' value={val.pay}/>
-                                </div>
-                            </div>
-                        </DialogContentText>
-                    </DialogContent>
+                        </div>
+                    </DialogContentText>
+                </DialogContent>
                 <Divider/>
-                    <DialogActions>
-                        <Card sx={{height: 40, width: '7%'}} square={false} style={{overflow:'hidden', borderRadius: '10px', color: '#5B5B5B', border: "1px solid #5B5B5B", transform: 'translateX(-31.5px)'}}>
-                            <CardContent style={{ height: '25%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Outfit', fontSize: '16px', cursor:'pointer'}} onClick={closePop}> 
+                    <DialogActions style={{paddingRight: '56px', marginTop: '5px', marginBottom: '5px'}}>
+                        <Card sx={{height: '40px', width: '85.5px'}} square={false} style={{overflow:'hidden', borderRadius: '8px', color: '#5B5B5B', border: "1px solid #5B5B5B", display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                            <CardContent style={{marginTop: '7px', fontFamily: 'Outfit', fontSize: '16px', cursor:'pointer'}} onClick={closePop}> 
                                 Cancel
                             </CardContent>
                         </Card>
-                        <Card sx={{height: 40, width: '7%'}} square={false} style={{overflow:'hidden', borderRadius: '10px', background: "#4A4FE4", color: 'white', transform: 'translateX(-31.5px)'}}>
-                            <CardContent style={{ height: '25%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Outfit', fontSize: '16px', cursor:'pointer'}} onClick={openNextPop}> 
+                        <Card sx={{height: '40px', width: '71px'}} square={false} style={{overflow:'hidden', borderRadius: '8px', background: "#4A4FE4", color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <CardContent style={{marginTop: '7px', fontFamily: 'Outfit', fontSize: '16px', cursor:'pointer'}} onClick={openNextPop}> 
                                 Next
                             </CardContent>
                         </Card>
@@ -417,20 +419,22 @@ export function JobPosting( { onJobDataSubmit } ) {
     // second job slide
     const secondJobSlide = () => {
         return (
-            <Dialog open={openSecondPop} onClose={closeNextPop} maxWidth={"1000px"} PaperProps={{sx: { borderRadius: "15px"}}}>
-                <div className='popup-title'>
-                    <DialogTitle style={{width: "90%", fontFamily: 'Outfit', fontSize: '20px', fontWeight: 500, color: '#4A4FE4'}}> 
+            <Dialog open={openSecondPop} onClose={closeNextPop} maxWidth={"890px"} PaperProps={{sx: { borderRadius: "15px"}}}>
+                <div className='popup-title' style={{paddingRight: '32px', paddingLeft: '32px'}}>
+                    <DialogTitle style={{width: "98%", fontFamily: 'Outfit', fontSize: '20px', fontWeight: 500, color: '#4A4FE4'}}> 
                         Tell us more about the job!
                     </DialogTitle>
-                    <IconButton onClick={closeNextPop} style={{color: '#4A4FE4'}}> 
+                    <IconButton onClick={closeNextPop} style={{color: '#4A4FE4', marginLeft: '-82px'}}> 
                         <ClearIcon/>
                     </IconButton>
                 </div>
-            <Divider/>
-                <DialogContent>
-                    <DialogContentText ref={descriptionElementRefNextPop} tabIndex={-1} style={{width: '1000px'}}>
 
-                        <div className='time-outer' style={{width: '98.5%'}}> 
+                <Divider/>
+
+                <DialogContent>
+                    <DialogContentText ref={descriptionElementRefStartPop} tabIndex={-1} style={{width: '821px', marginTop: '-2px', marginBottom: '4px', paddingRight: '32px', paddingLeft: '32px'}}>
+
+                        <div className='time-outer' style={{width: '100%'}}> 
                             <div className='date'>
                                 <text className='pop-textfield-title' style={{fontFamily: 'Outfit', fontSize: '14px', color: 'black'}}>
                                     Date
@@ -540,23 +544,23 @@ export function JobPosting( { onJobDataSubmit } ) {
                     
                         </div>
                       
-                        <div style={{paddingTop: '1.5%'}}>
+                        <div style={{paddingTop: '18px'}}>
                             <text className='pop-textfield-title' style={{fontFamily: 'Outfit', fontSize: '14px', color: 'black'}}>
                                 Description
                                 <span style={{"color": "red"}}>*</span>
                             </text> <br></br>
-                            <TextField error={error.descriptionError} helperText={error.descriptionError ? "*This field is required" : ""} required={true} multiline rows={8} placeholder="Add the job description" type="search" square={false} style={{width: '98.5%'}} FormHelperTextProps={{ style: { fontFamily: 'Outfit', fontSize: '14px' }}} onChange={(e) => {handleValues(e)}} id='description' value={val.description}
+                            <TextField error={error.descriptionError} helperText={error.descriptionError ? "*This field is required" : ""} required={true} multiline rows={6} placeholder="Add the job description" type="search" square={false} style={{width: '100%'}} FormHelperTextProps={{ style: { fontFamily: 'Outfit', fontSize: '14px' }}} onChange={(e) => {handleValues(e)}} id='description' value={val.description}
                                 InputProps={{
                                     style: {  borderRadius: '10px', fontFamily: 'Outfit', fontSize: '14px' }
                                 }}
                             />
                         </div>
-                        <div style={{ paddingTop: '1.5%' }} >
+                        <div style={{ paddingTop: '18px',  }} >
                             <text className='pop-textfield-title' style={{fontFamily: 'Outfit', fontSize: '14px', color: 'black'}}>
                                 Category
                                 <span style={{"color": "red"}}>*</span>
                             </text> <br></br>
-                            <FormControl style={{ width: '98.5%' }} error={error.categoryError}>
+                            <FormControl style={{ width: '100%' }} error={error.categoryError}>
                                 <Select
                                     multiple
                                     displayEmpty
@@ -595,15 +599,17 @@ export function JobPosting( { onJobDataSubmit } ) {
                         </div>
                     </DialogContentText>
                 </DialogContent>
-                <Divider/>
-                <DialogActions>
-                    <Card sx={{height: 40, width: '7%'}} square={false} style={{overflow:'hidden', borderRadius: '10px', color: '#5B5B5B', border: "1px solid #5B5B5B", transform: 'translateX(-31.5px)'}}>
-                        <CardContent style={{ height: '25%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Outfit', fontSize: '16px', cursor:'pointer'}} onClick={backSecondPop}> 
+
+                <Divider style={{marginTop: '-4px'}}/>
+
+                <DialogActions style={{paddingRight: '56px', marginTop: '5px', marginBottom: '5px'}}>
+                    <Card sx={{height: '40px', width: '71'}} square={false} style={{overflow:'hidden', borderRadius: '8px', color: '#5B5B5B', border: "1px solid #5B5B5B", display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                        <CardContent style={{ marginTop: '7px', fontFamily: 'Outfit', fontSize: '16px', cursor:'pointer'}} onClick={backSecondPop}> 
                             Back
                         </CardContent>
                     </Card>
-                    <Card sx={{height: 40, width: '7%'}} square={false} style={{overflow:'hidden', borderRadius: '10px', background: "##4A4FE4", color: 'white', transform: 'translateX(-31.5px)' }}>
-                        <CardContent style={{ height: '25%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Outfit', fontSize: '16px', cursor:'pointer'}} onClick={PostJobs}> 
+                        <Card sx={{height: '40px', width: '85.5px'}} square={false} style={{overflow:'hidden', borderRadius: '8px', background: "#4A4FE4", color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <CardContent style={{ marginTop: '7px', fontFamily: 'Outfit', fontSize: '16px', cursor:'pointer'}} onClick={PostJobs}> 
                             Submit
                         </CardContent>
                     </Card>
@@ -729,7 +735,7 @@ export function JobPosting( { onJobDataSubmit } ) {
                                                 </Button>
                                             </InputAdornment>
                                         ),
-                                        style: {  borderRadius: '11px', fontFamily: 'Outfit', fontSize: '18px', backgroundColor: '#EFEFEF', color: '#54555B' }
+                                        style: {  borderRadius: '11px', fontFamily: 'Outfit', fontSize: '18px', backgroundColor: '#EFEFEF', color: '#141414' }
                                     }}
                                 />
                                 <Card sx={{ width: '140px', height: '58px' }} style={{borderRadius: '8px', background: "#4348DB", color: 'white', display: 'flex', justifyContent: 'center', cursor:'pointer'}}>

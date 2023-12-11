@@ -213,7 +213,7 @@ export function JobPopup({open, onClose, openPopUp, currentPop, openSubmitProfil
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '6.58px' }}>
                     <div style={{ width: '100%', paddingRight: '34px', paddingLeft: '29.02px', marginTop: '6.58px' }}>
                         <Divider/>
-                        </div>
+                    </div>
                 </div>
             { currentPop.length === 8 && currentPop[7][1] !== "submitted" ?
                <div></div>
