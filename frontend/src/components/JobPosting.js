@@ -213,9 +213,12 @@ export function JobPosting( { onJobDataSubmit } ) {
             }
         }));
     
+        const isToday = selectedDate && dayjs(selectedDate).isSame(dayjs(), 'day');
+        const isStartTimeInvalid = newStartTime && isToday && dayjs(newStartTime).isBefore(dayjs());
+
         setError(prevError => ({
             ...prevError,
-            startTimeError: !newStartTime.isValid() || (selectedDate && newStartTime.isBefore(dayjs(selectedDate)))
+            startTimeError: !newStartTime.isValid() || isStartTimeInvalid
         }));
     }
     
@@ -620,7 +623,6 @@ export function JobPosting( { onJobDataSubmit } ) {
 
     // posts the job
     async function PostJobs() {
-        // checks errors directly before submitting
         const hasTitleError = val.title === '';
         const hasNameError = val.name === '';
         const hasLocationError = val.location === '';
@@ -628,7 +630,9 @@ export function JobPosting( { onJobDataSubmit } ) {
         const hasDescriptionError = val.description === '';
         const hasCategoryError = selectedCategories.length === 0;
         const hasDateError = !selectedDate;
-        const isStartTimeToday = startTime && selectedDate && dayjs(selectedDate).isSame(dayjs(), 'day') && dayjs(startTime).isBefore(dayjs());
+
+        const isToday = selectedDate && dayjs(selectedDate).isSame(dayjs(), 'day');
+        const isStartTimeInvalid = startTime && isToday && dayjs(startTime).isBefore(dayjs());
         const isEndTimeInvalid = !endTime || (startTime && endTime && dayjs(endTime).isBefore(dayjs(startTime)));
 
         setError({
@@ -639,11 +643,11 @@ export function JobPosting( { onJobDataSubmit } ) {
             descriptionError: hasDescriptionError,
             categoryError: hasCategoryError,
             dateError: hasDateError,
-            startTimeError: !startTime || isStartTimeToday,
+            startTimeError: isStartTimeInvalid,
             endTimeError: isEndTimeInvalid,
         });
 
-        if (hasTitleError || hasNameError || hasLocationError || hasPayError || hasDescriptionError || hasCategoryError || hasDateError || !startTime || !endTime || isStartTimeToday || isEndTimeInvalid) {
+        if (hasTitleError || hasNameError || hasLocationError || hasPayError || hasDescriptionError || hasCategoryError || hasDateError || isStartTimeInvalid || isEndTimeInvalid) {
             return;
         }
 
