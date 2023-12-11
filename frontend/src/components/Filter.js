@@ -88,13 +88,13 @@ export function Filter() {
       const columns = Math.ceil(options.length / maxColumns);
     
       return (
-        <div style={{ width: '12.5%', cursor: 'pointer'}} className='filters'>
+        <div style={{ width: '12.5%', cursor: 'pointer'}}>
           <Grid item xs={1.5} onClick={() => toggleFilter(filterCategory)} className='filter-tab' style={{ fontFamily: 'Outfit', fontSize: '14px', fontWeight: 500 }}>
             {filterCategory} 
             {bool ? <KeyboardArrowUpIcon className='arrow-pad'/> : <KeyboardArrowDownIcon className='arrow-pad'/>}
           </Grid>
           {bool && 
-            <div style={{ display: 'flex', whiteSpace: 'nowrap', minWidth: '250%', marginTop: '10px' }}>
+            <div style={{ display: 'flex', whiteSpace: 'nowrap', minWidth: '250%', marginTop: '10px', marginBottom: '18px' }}>
               {Array.from({ length: columns }, (_, columnIndex) => (
                 <div key={columnIndex} style={{ display: 'flex', flexDirection: 'column', marginRight: '16px', fontFamily: 'Outfit' }}>
                   {options.slice(columnIndex * maxColumns, (columnIndex + 1) * maxColumns).map((option) => (
