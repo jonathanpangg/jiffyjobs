@@ -79,6 +79,7 @@ export function Profile() {
             toast.error('Please Login!', {
                 icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
                 progressStyle: {backgroundColor: '#C12020'},
+                style: {fontFamily: 'Outfit'},
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -179,6 +180,7 @@ export function Profile() {
                 toast.info('Profile updated Successfully!', {
                     icon: ({theme, type}) =>  <img src={logo} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
                     progressStyle: {backgroundColor: '#4A4FE4'},
+                    style: {fontFamily: 'Outfit'},
                     position: "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -302,17 +304,15 @@ export function Profile() {
         }
     };
     return (
-        <div className='outerCardProfile' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <Box style={{ width: '850px',  marginTop: '-10px' }}>
+        <div className='outerCardProfile' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',  }}>
+            <Box style={{ width: '850px',  marginTop: '15px', transform: 'scale(1.095)' }}>
                 <Card elevation={4} style={{ overflow: 'hidden', borderRadius: '15px', width: '850px',  }}>
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginLeft: '61px', marginRight: '80px', marginTop: '38px' }}>
                         <Grid container direction="column" style={{marginTop: '10px'}}>
                             <Typography style={{ fontFamily: 'Outfit', fontWeight: 500, fontSize: '15.203px'}}>Edit Profile</Typography>
 
-                            <Typography style={{ fontFamily: 'Outfit', color: '#5B5B5B', fontWeight: 500, fontSize: '11.825px', marginTop: '17.03px' }}> Basic Information</Typography>
-
-                            <div style={{ marginTop: '16.49px', marginBottom: '34.63px', display: 'flex', alignItems: 'center' }}>
-                                <Avatar sx={{ bgcolor: '#D9D9D9', width: 42, height: 42, color: 'black', fontSize: '22.155px', fontFamily: 'Outfit', fontWeight: 400, marginLeft: '31.25px' }}>{first && first.length > 0 && first[0]}{last && last.length > 0 && last[0]} </Avatar>
+                            <div style={{ marginTop: '17.03px', marginBottom: '34.63px', display: 'flex', alignItems: 'center' }}>
+                                <Avatar sx={{ bgcolor: '#4A4FE4', width: 42, height: 42, color: 'white', fontSize: '22.155px', fontFamily: 'Outfit', fontWeight: 400, marginLeft: '31.25px' }}>{first && first.length > 0 && first[0]}{last && last.length > 0 && last[0]} </Avatar>
                             
                                 <div style={{ fontFamily: 'Outfit', fontSize: '15.203px', fontWeight: 500, marginLeft: '13px' }}>
                                     {first && first.length > 0 && first} {last && last.length > 0 && last} 

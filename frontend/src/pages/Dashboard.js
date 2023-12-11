@@ -42,6 +42,8 @@ export function Dashboard() {
     const { renderVerticalDashBoard, value } = VerticalDashboardBar()
     const [token, setToken] = useState(localStorage.getItem("token"));
     const [showToken, setShowToken] = useState(false);
+    // gives either 'seeker' or 'provider'
+    const [userRole, setUserRole] = useState(localStorage.getItem('user'));
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -55,6 +57,7 @@ export function Dashboard() {
             toast.error('Please Login!', {
                 icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
                 progressStyle: {backgroundColor: '#C12020'},
+                style: {fontFamily: 'Outfit'},
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,

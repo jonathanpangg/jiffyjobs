@@ -68,12 +68,12 @@
 }
 
 .job-board-outer {
-  background-color: #f3f3f3;
+  background-color: #F0F0F5;
   height: 100%;
 }
 
 .job-board-outer1 {
-  background-color: #f3f3f3;
+  background-color: #F0F0F5;
   height: 100vh;
 }
 
@@ -96,7 +96,7 @@
 }
 
 .job-table-box {
-  background-color: #f3f3f3;
+  background-color: #F0F0F5;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -131,12 +131,12 @@
 }
 
 .selected-options {
-  background: #f0f0f000; /* Set the background color as needed */
-  border: 1px solid #ccc; /* Add a border if desired */
-  padding: 5px; /* Adjust padding as needed */
-  border-radius: 5px; /* Add border radius for rounded corners */
-  max-height: 80px; /* Limit the maximum height of the display */
-  overflow-y: auto; /* Add a scrollbar when content overflows */
+  background: #f0f0f000; 
+  border: 1px solid #ccc; 
+  padding: 5px; 
+  border-radius: 5px; 
+  max-height: 80px; 
+  overflow-y: auto;
 }
 
 .job-table-grid .job-posting {
@@ -147,42 +147,42 @@
 }
 
 .outerCard2 {
-  background-color: #f3f3f3;
+  background-color: #F0F0F5;
   height: 100%;
   padding: 1%;
   align-items: center;
 }
 
 .outerCard1 {
-  background-color: #f3f3f3;
+  background-color: #F0F0F5;
   height: 100vh;
   padding: 2%;
   align-items: center;
 }
 
 .outerCardLogin {
-  background-color: #f3f3f3;
+  background-color: #F0F0F5;
   height: 83.25vh;
   padding: 2%;
   align-items: center;
 }
 
 .outerCardSignup1 {
-  background-color: #f3f3f3;
+  background-color: #F0F0F5;
   height: 84.75vh;
   padding: 2%;
   align-items: center;
 }
 
 .outerCardSignup2 {
-  background-color: #f3f3f3;
+  background-color: #F0F0F5;
   height: 98.75vh;
   padding: 2%;
   align-items: center;
 }
 
 .outerCardProfile {
-  background-color: #f3f3f3;
+  background-color: #F0F0F5;
   height: 83.5vh;
   padding: 2%;
   align-items: center;

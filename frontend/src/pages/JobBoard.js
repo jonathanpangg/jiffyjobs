@@ -197,6 +197,7 @@ export function JobBoard() {
             toast.error('Please login to view!', {
                 icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
                 progressStyle: {backgroundColor: '#C12020'},
+                style: {fontFamily: 'Outfit'},
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -220,6 +221,7 @@ export function JobBoard() {
             toast.error('You can only apply as a Seeker!', {
                 icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
                 progressStyle: {backgroundColor: '#C12020'},
+                style: {fontFamily: 'Outfit'},
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -293,6 +295,7 @@ export function JobBoard() {
                 toast.error(err.slice(7), {
                     icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
                     progressStyle: {backgroundColor: '#C12020'},
+                    style: {fontFamily: 'Outfit'},
                     position: "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -303,9 +306,11 @@ export function JobBoard() {
                     theme: "light"
                 });
             } else {
+                toast.dismiss();
                 toast.error(err, {
                     icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
                     progressStyle: {backgroundColor: '#C12020'},
+                    style: {fontFamily: 'Outfit'},
                     position: "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -329,7 +334,7 @@ export function JobBoard() {
         <div className={`outerCard2 ${openPop ? 'blur-background' : ''}`}>
             <JobPosting onJobDataSubmit={handleJobPostingData} /> 
             <Box className='job-table-box'>
-                <div className='job-table-inner' style={{ paddingTop: '50px', width: '1136px'}}>
+                <div className='job-table-inner' style={{ paddingTop: '50px', width: '1136px', paddingBottom: '10px',}}>
                     <Typography style={{fontFamily: 'Outfit', fontSize: '20px', justifyContent: 'center', alignItems: 'center', textAlign: 'start'}}>
                         Job Board
                     </Typography>

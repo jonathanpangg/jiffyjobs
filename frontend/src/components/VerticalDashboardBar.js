@@ -68,7 +68,7 @@ export function VerticalDashboardBar() {
                         <path d="M14.2517 9.89041C10.0375 8.13813 8.97909 3.4939 9.17493 1.24093C9.18541 1.12042 9.31281 1.05158 9.42249 1.10258L19.4501 5.76448C23.9299 7.96991 25.1821 12.1179 25.3714 14.1828C25.3752 14.2248 25.2925 14.245 25.2694 14.2097C24.8459 13.5631 23.6671 12.9898 23.0643 12.641C20.6738 11.2578 16.6141 10.7254 14.2517 9.89041Z" fill="#4A4FE4" stroke="#4A4FE4" stroke-width="0.359769"/>
                     </svg>
                 </div>
-                <div className='logo' style={{paddingLeft: '24px', paddingBottom: '14px'}}></div>
+                <div className='logo' style={{paddingLeft: '24px', paddingBottom: '32px'}}></div>
 
                 <CustomTab label='Status' icon={<TrendingUpIcon/>} iconPosition="start" {...allyProps(2)}/> 
                 <CustomTab label='Jobs Posted' icon={<AssignmentIcon/>} iconPosition="start" {...allyProps(3)}/>      

@@ -28,6 +28,10 @@ function App() {
         </Routes>
       </header>
       <ToastContainer
+            style={{".Toastify__toast-body": {
+                  fontFamily: 'Outfit'
+
+            }}}
             position="top-center"
             autoClose={5000}
             hideProgressBar={false}

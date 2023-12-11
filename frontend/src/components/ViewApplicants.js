@@ -59,6 +59,7 @@ export function ViewApplicants({children, jobID}) {
                 toast.success(`Accepted ${email}`, {
                     icon: ({theme, type}) =>  <img src={accept} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
                     progressStyle: {backgroundColor: '#66C120'},
+                    style: {fontFamily: 'Outfit'},
                     position: "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -93,6 +94,7 @@ export function ViewApplicants({children, jobID}) {
                 toast.error(`Rejected ${email}`, {
                     icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
                     progressStyle: {backgroundColor: '#C12020'},
+                    style: {fontFamily: 'Outfit'},
                     position: "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -247,7 +249,7 @@ export function ViewApplicants({children, jobID}) {
                         { typeResponse !== 'selected' && 
                             <DialogActions>
                                 <div style={{display: 'flex', marginRight: '60px', marginBottom: '7px'}}>
-                                    <Button sx={{textTransform: 'none'}} style={{width: '93px', height: '42px', color: typeResponse === 'standard' ? "#FFF" : "#5B5B5B", backgroundColor: typeResponse === 'standard' ? '#66C120': '#D9D9D9', marginRight: '10px', borderRadius: '10px'}} onClick={() => 
+                                    <Button sx={{textTransform: 'none', fontFamily: 'Outfit'}} style={{width: '93px', height: '42px', color: typeResponse === 'standard' ? "#FFF" : "#5B5B5B", backgroundColor: typeResponse === 'standard' ? '#66C120': '#D9D9D9', marginRight: '10px', borderRadius: '10px'}} onClick={() => 
                                         {
                                             if (typeResponse === 'standard') {
                                                 acceptUser(applicant[4], jobID)
@@ -260,7 +262,7 @@ export function ViewApplicants({children, jobID}) {
                                         }}> 
                                         { typeResponse === 'standard'? 'Accept': 'Back'}
                                     </Button>
-                                    <Button sx={{textTransform: 'none'}} style={{width: '93px', height: '42px', color: "#FFF", backgroundColor: typeResponse === 'accept' ? '#66C120': '#C12020', borderRadius: '10px'}} onClick={() => 
+                                    <Button sx={{textTransform: 'none', fontFamily: 'Outfit'}} style={{width: '93px', height: '42px', color: "#FFF", backgroundColor: typeResponse === 'accept' ? '#66C120': '#C12020', borderRadius: '10px'}} onClick={() => 
                                         {
                                             if (typeResponse === 'accept') {
                                                 acceptUser(applicant[4], jobID)

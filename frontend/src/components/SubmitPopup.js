@@ -10,7 +10,7 @@ export function SubmitProfilePopup({ open, onClose, onSubmit, profile }) {
             <DialogTitle sx={{ textAlign: 'center', fontFamily: 'Outfit', marginTop: 2, fontSize: '24px', fontWeight: 500 }}>Are you sure you want to submit?</DialogTitle>
                 <DialogContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '16px', margin: 'auto', border: '2px dashed #ccc', borderRadius: '10px', width: '326px', height: '395px', transform: 'scale(1.05)'  }}>
                     <Stack direction="row" spacing={2} alignItems="center" justifyContent="center" style={{ paddingBottom: 0, paddingTop: 20, paddingLeft: '14px', marginRight: '113px'}} >
-                        <Avatar sx={{ bgcolor: '#D9D9D9', width: 50, height: 50, color: 'black', fontSize: '26.231px', fontFamily: 'Outfit', fontWeight: 400, }}>{profile[0] && profile[0].length > 0 && profile[0][0]}{profile[1] && profile[1].length > 0 && profile[1][0]}</Avatar>
+                        <Avatar sx={{ bgcolor: '#4A4FE4', width: 50, height: 50, color: 'white', fontSize: '26.231px', fontFamily: 'Outfit', fontWeight: 400, }}>{profile[0] && profile[0].length > 0 && profile[0][0]}{profile[1] && profile[1].length > 0 && profile[1][0]}</Avatar>
                         <Typography style={{ fontFamily: 'Outfit', fontSize: '18px', fontWeight: 500 }}>
                             {profile[0] && profile[0].length > 0 && profile[0]} {profile[1] && profile[1].length > 0 && profile[1]}
                         </Typography>
@@ -64,7 +64,7 @@ export function SubmitProfilePopup({ open, onClose, onSubmit, profile }) {
                 <Button onClick={onClose} sx={{ border: '1px solid #5B5B5B', borderRadius: '9.6px', fontFamily: 'Outfit', textTransform: 'none', color: '#5B5B5B', fontSize: '19.2px', width: '102.2px', height: '44.2px', fontWeight: 400 }}>
                     Cancel
                 </Button>
-                <Button onClick={onSubmit} sx={{ border: '1px solid #D9D9D9', borderRadius: '9.6px', fontFamily: 'Outfit', textTransform: 'none', color: 'white', backgroundColor: '#4A4FE4', '&:hover': {backgroundColor: '#4A4FE4'}, fontSize: '19.2px', width: '162.2px', height: '44.2px', fontWeight: 400}}>
+                <Button onClick={onSubmit} sx={{ border: '1px solid #D9D9D9', borderRadius: '9.6px', fontFamily: 'Outfit', textTransform: 'none', color: 'white', backgroundColor: '#4A4FE4', '&:hover': {backgroundColor: '#4A4FE4'}, fontSize: '19.2px', width: '184.2px', height: '44.2px', fontWeight: 400}}>
                     Confirm Submit
                 </Button>
             </DialogActions>

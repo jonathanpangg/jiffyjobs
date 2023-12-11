@@ -12,7 +12,6 @@ import reject from '../images/Reject.png';
 export function JobPopup({open, onClose, openPopUp, currentPop, openSubmitProfile, openCongratsPopup, openSubmit, jobData}) {
     const [ userEmail, setUserEmail ] = useState(localStorage.getItem("email"));
     const [ userRole, setUserRole ] = useState(localStorage.getItem("user"));
-    const [showSavedMessage, setShowSavedMessage] = useState(false);
     const [savedJobs, setSavedJobs] = useState([]) 
     const [jobSaved, setJobSaved] = useState(false)
 
@@ -23,6 +22,7 @@ export function JobPopup({open, onClose, openPopUp, currentPop, openSubmitProfil
             toast.error('You can only save jobs as a Seeker!', {
                 icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
                 progressStyle: {backgroundColor: '#C12020'},
+                style: {fontFamily: 'Outfit'},
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -55,10 +55,6 @@ export function JobPopup({open, onClose, openPopUp, currentPop, openSubmitProfil
                 getJobs();
                 setJobSaved(savedJobs.includes(jobDetails));
 
-                setShowSavedMessage(true);
-                setTimeout(() => setShowSavedMessage(false), 1000);
-
-                console.log("here");
             }).catch((error) => {
                 console.log(error);
             });
@@ -127,12 +123,13 @@ export function JobPopup({open, onClose, openPopUp, currentPop, openSubmitProfil
                         <div style={{ display: 'inline-block', position: 'relative' }}>
                             <IconButton onClick={() => toggleSaveJob(currentPop[0][0])} style={{ borderRadius: '10px' }}>
                                 {savedJobs.includes(currentPop[0] && currentPop[0].length > 1 && currentPop[0][0]) ? 
-                                    <StarRoundedIcon style={{ width: '27.046px', height: '27.046px', color: '#4A4FE4' }} /> : 
-                                    <StarBorderRounded style={{ width: '27.046px', height: '27.046px', color: '#4A4FE4' }} />}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="27.046px" height="27.046px" viewBox="0 0 40 40" fill="none">
+                                        <path d="M24.1636 7.4292L25.2399 10.6907C25.7262 12.2003 27.1274 13.2266 28.7134 13.2347H32.1054C33.6962 13.2246 35.1107 14.2452 35.6026 15.7581C36.0944 17.271 35.5506 18.9283 34.258 19.8557L31.4694 21.8778C30.1857 22.8097 29.6463 24.461 30.1322 25.971L31.2085 29.2326C31.7408 30.7478 31.2211 32.4329 29.9278 33.3851C28.6346 34.3373 26.8711 34.3331 25.5823 33.3747L22.8427 31.3363C21.5584 30.4059 19.8217 30.4059 18.5374 31.3363L15.7977 33.3747C14.5162 34.3127 12.7754 34.3152 11.4912 33.3809C10.207 32.4466 9.67356 30.7895 10.1716 29.2815L11.2479 26.02C11.7338 24.5099 11.1943 22.8587 9.91065 21.9267L7.0568 19.872C5.738 18.9427 5.18497 17.2583 5.69627 15.7282C6.20758 14.198 7.66211 13.1845 9.27465 13.2347H12.6667C14.2439 13.2312 15.6425 12.2201 16.1402 10.7234L17.2165 7.46182C17.699 5.95533 19.0963 4.93058 20.6782 4.92315C22.26 4.91573 23.6669 5.92731 24.1636 7.4292Z" fill="#4A4FE4"/>
+                                    </svg>: 
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="27.046px" height="27.046px" viewBox="0 0 40 40" fill="none">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M17.1259 8.03585C17.5956 6.51659 19.0093 5.4878 20.5994 5.50815C22.1985 5.49209 23.6151 6.53628 24.0729 8.06846L25.1493 11.33C25.6326 12.8395 27.0378 13.8621 28.6228 13.8577H32.0148C33.637 13.7962 35.1052 14.8127 35.6186 16.3528C36.1319 17.8929 35.5673 19.5871 34.2326 20.5112L31.444 22.5497C30.1587 23.4729 29.618 25.1214 30.1068 26.6266L31.1831 29.8882C31.5529 31.0172 31.3532 32.2555 30.6471 33.211C29.941 34.1665 28.8159 34.721 27.628 34.6989C26.8577 34.6931 26.1093 34.4418 25.4917 33.9814L22.8172 31.9429C21.5346 31.0074 19.7946 31.0074 18.512 31.9429L15.7071 33.9814C15.0821 34.4843 14.3077 34.7654 13.5056 34.7805C12.309 34.7904 11.1828 34.2163 10.4879 33.2422C9.79305 32.268 9.61681 31.0163 10.0157 29.8882L11.092 26.6266C11.6106 25.126 11.0956 23.4624 9.82002 22.5171L7.0314 20.4786C5.7388 19.5513 5.195 17.894 5.68688 16.3811C6.17876 14.8682 7.5932 13.8476 9.18402 13.8577H12.576C14.1698 13.8576 15.5779 12.8198 16.0496 11.2974L17.1259 8.03585ZM21.4637 8.88385C21.3634 8.49334 21.0021 8.22742 20.5994 8.24785C20.1768 8.23338 19.808 8.53252 19.7351 8.94908L18.6588 12.2106C17.8034 14.8465 15.3472 16.631 12.576 16.63H9.11879C8.73451 16.6411 8.39831 16.8916 8.27784 17.2567C8.15736 17.6217 8.27842 18.0232 8.58063 18.2608L11.3692 20.2992C13.6185 21.9261 14.5608 24.8187 13.7012 27.4583L12.6249 30.7199C12.5192 30.9877 12.5626 31.2914 12.7391 31.5189C12.9221 31.7824 13.2177 31.9453 13.5382 31.9592C13.7339 31.9534 13.9226 31.8848 14.0763 31.7635L16.8323 29.7251C19.0786 28.0931 22.1202 28.0931 24.3665 29.7251L27.0899 31.6657C27.2436 31.7869 27.4323 31.8555 27.628 31.8614C27.934 31.8415 28.2151 31.686 28.3945 31.4374C28.5709 31.2099 28.6143 30.9061 28.5086 30.6383L27.4323 27.3768C26.5728 24.7372 27.515 21.8446 29.7643 20.2177L32.5529 18.1955C32.8552 17.9579 32.9762 17.5565 32.8557 17.1914C32.7353 16.8264 32.3991 16.5758 32.0148 16.5648H28.6228C25.8516 16.5658 23.3954 14.7812 22.54 12.1454L21.4637 8.88385Z" fill="#4A4FE4"/>
+                                    </svg>}
                             </IconButton>
-                            {showSavedMessage && <div style={{ position: 'absolute', bottom: '-18px', left: '50%', transform: 'translateX(-50%)', fontSize: '10px', fontFamily: 'Outfit', fontWeight: 500, textAlign: 'center', color: '#4A4FE4' }}>
-                            {jobSaved ? 'Job Unsaved' : 'Job Saved'}
-                            </div>}
                         </div>
                     </div>
                     <Typography style={{fontFamily: 'Outfit', fontSize:'16.585px', color:'#141414', fontWeight: '500', paddingLeft: '8.3px', marginTop: '-5.57px'}}>
@@ -216,7 +213,7 @@ export function JobPopup({open, onClose, openPopUp, currentPop, openSubmitProfil
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '6.58px' }}>
                     <div style={{ width: '100%', paddingRight: '34px', paddingLeft: '29.02px', marginTop: '6.58px' }}>
                         <Divider/>
-                        </div>
+                    </div>
                 </div>
             { currentPop.length === 8 && currentPop[7][1] !== "submitted" ?
                <div></div>
