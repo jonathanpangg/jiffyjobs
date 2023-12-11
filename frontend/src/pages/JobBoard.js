@@ -340,7 +340,7 @@ export function JobBoard() {
         <div className={`outerCard2 ${openPop ? 'blur-background' : ''}`}>
             <JobPosting onJobDataSubmit={handleJobPostingData} /> 
             <Box className='job-table-box'>
-                <div className='job-table-inner' style={{ paddingTop: '50px', width: '1136px'}}>
+                <div className='job-table-inner' style={{ paddingTop: '50px', width: '1136px', paddingBottom: '10px',}}>
                     <Typography style={{fontFamily: 'Outfit', fontSize: '20px', justifyContent: 'center', alignItems: 'center', textAlign: 'start'}}>
                         Job Board
                     </Typography>
