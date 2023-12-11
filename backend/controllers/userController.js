@@ -7,10 +7,6 @@ import {
 import Seeker from "../models/SeekerSchema.js";
 import Provider from "../models/ProviderSchema.js";
 import Jobs from "../models/JobSchema.js"
-import nodemailer from 'nodemailer';
-import dotenv from 'dotenv';
-
-
 
 // get user information when called
 export const getUserinfo = async(req, res) => {
@@ -164,7 +160,7 @@ export const allAppliedJobs = async(req, res) => {
         if (!seeker) {
             return handleNotFound(res, "Seeker not found");
         }
-        const appliedJobIds = seeker.jobs_applied.map(job => job._id).reverse();;
+        const appliedJobIds = seeker.jobs_applied.map(job => job._id);
 
         const appliedJobs = await Jobs.find({ '_id': { $in: appliedJobIds } });
 
@@ -234,32 +230,11 @@ export const acceptApplicant = async(req, res) => {
         if (myPostedJob.acceptedApplicant && myPostedJob.acceptedApplicant !== "") {
             return res.status(400).json({ message: "This job has already been filled." });
         }
-        console.log("aha")
+
         // Update the job with the accepted applicant
         myPostedJob.acceptedApplicant = applicantEmail;
         myPostedJob.hired = true;
         const updatedJob = await myPostedJob.save();
-
-        // let transporter = nodemailer.createTransport({
-        //     service: 'gmail',
-        //     auth: {
-        //         user: process.env.EMAIL,  
-        //         pass: process.env.GMAILPASS
-        //     }
-        // });
-        // let mailOptions = {
-        //     from: EMAIL,
-        //     to: applicantEmail,
-        //     subject: 'JiffyJObs',
-        //     text: 'This is a test email sent from JiffyJobs!',
-        // };
-        // transporter.sendMail(mailOptions, (error, info) => {
-        //     if (error) {
-        //         console.log(error);
-        //     } else {
-        //         console.log('Email sent: ' + info.response);
-        //     }
-        // });
 
         return handleSuccess(res, updatedJob);
 

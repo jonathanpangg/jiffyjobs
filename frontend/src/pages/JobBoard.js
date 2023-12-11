@@ -25,8 +25,6 @@ export function JobBoard() {
     const [currentPop, setCurrentPop] = useState([])
     const [profile, setProfile] = useState([])
     const [gotProfile, setGotProfile] = useState(false);
-    const [filteredJobs, setfilteredJobs] = useState([]);
-    const [searchedJobs, setSearchedJobs] = useState([]);
 
     const [page, setPage] = useState(1);
     const cardsPerPage = 20;
@@ -173,13 +171,11 @@ export function JobBoard() {
                         console.log(obj.time)
                         return [[obj._id, obj.title], [randomImage(obj.categories.toString().split(",")[0]), obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
                     });
-                    
                     setJobData(newJobData);
-                    setfilteredJobs(newJobData);
-                    
 
                     const newSize = newJobData.length;
                     setSize(newSize);
+
                     if (newSize <= 4) {
                         setBackground("1")
                     } else {
@@ -418,6 +414,7 @@ export function JobBoard() {
                     </div>
                     <Divider width='1136px'/>
                 </div>
+                {/* <button onClick={handleLogJobData}>Log Job Data</button> */}
             </Box>
             <JobCards jobData={jobData} page={page} cardsPerPage={cardsPerPage} openPopUp={openPopUp}/>
             <div style={{ display: 'flex', justifyContent: 'center', padding: '1%', fontFamily: 'Outfit', fontSize: '14px' }}>
