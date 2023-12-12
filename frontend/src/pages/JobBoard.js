@@ -337,6 +337,10 @@ export function JobBoard() {
         setOpenCongratsPopup(false); 
         setOpenPop(false); 
     };
+
+    const handleToDashboard = () => {
+        navigate('/dashboard');
+    };
     
     return (
         <div className={`outerCard2 ${openPop ? 'blur-background' : ''}`}>
@@ -364,8 +368,9 @@ export function JobBoard() {
                 <Pagination count={totalPages} page={page} onChange={(event, value) => setPage(value)}  className="custom-pagination" />
             </div>
             {openSubmitProfile && (<SubmitProfilePopup open={openSubmitProfile} onClose={handleCloseSubmitProfile} onSubmit={handleSubmitProfile} profile={profile}/>)}
-            {openCongratsPopup && (<CongratsPopup open={openCongratsPopup} onClose={() => setOpenCongratsPopup(false)} apply={handleApplyMore}/>)}
+            {openCongratsPopup && (<CongratsPopup open={openCongratsPopup} onClose={() => setOpenCongratsPopup(false)} dashboard={handleToDashboard} apply={handleApplyMore}/>)}
             {openPop && (<JobPopup open={openPop} onClose={closePop} openPopUp={openPopUp} currentPop={currentPop} openSubmitProfile={openSubmitProfile} openCongratsPopup={openCongratsPopup} openSubmit={handleOpenSubmitProfile} />)}
         </div>
     )
 }
+

@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Dashboard.css';
 import { ToastContainer, toast } from 'react-toastify';
-import { Box, Link, Card, Grid, CardActionArea, Typography, CardMedia } from '@mui/material';
+import { Box, Link, Card, Grid, CardActionArea, Typography, CardMedia, Button } from '@mui/material';
 import dayjs from 'dayjs';
-import acceptedPicture from '../images/Accepted.png';
-import submittedPicture from '../images/Submitted.png';
-import rejectedPicture from '../images/Rejected.png';
-import { SubmitProfilePopup } from './SubmitPopup';
 import { WithdrawPopup } from './confirmWithdrawPopup';
 import { WithdrawNotify } from './WithdrawNotifPopup';
 import reject from '../images/Reject.png'
@@ -30,6 +27,7 @@ export function StatusDashboard() {
     const [ userEmail, setUserEmail ] = useState(localStorage.getItem("email"));
     const [ userRole, setUserRole ] = useState(localStorage.getItem("user"));
 
+    const navigate = useNavigate();
 
     // open popup
     const openPopUp = (key) => {
@@ -136,6 +134,10 @@ export function StatusDashboard() {
         return `https://source.unsplash.com/random?${seed}`;
     };
 
+    const goToJobBoard = () => {   
+        navigate('/jobboard');
+    }
+
     useEffect(() => {
         async function getJobs() {
             const email = localStorage.getItem("email")
@@ -176,6 +178,7 @@ export function StatusDashboard() {
                 Check your the progress on your job applications!
             </div>
             <Box className='progress-box'>
+                {statusData.length > 0 ? (
                 <Grid container className='progress-grid' rowSpacing={3} columnSpacing={3} width='70vw' style={{paddingBottom: '1%'}}>
                     {statusData.map((key) => {
                         return ( 
@@ -243,6 +246,16 @@ export function StatusDashboard() {
                         )
                     })}
                 </Grid>
+                 ) : (
+                    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '10vh', width:'65vw' }}>
+                        <div style={{ textAlign: 'center', marginTop: '20px', fontFamily: 'Outfit' }}>
+                            Currently you have not applied to any jobs.
+                        </div>
+                        <Button variant="contained" style={{ width: '200px', height: '34px', backgroundColor: '#4A4FE4', color: 'white', marginTop: '20px', fontSize: '14px', fontFamily: 'Outfit', fontWeight: 400, padding: '13px 18px', borderRadius: '8px' }} onClick={goToJobBoard}>
+                            <span style={{textTransform:'none'}}>Begin Your Job Search</span>
+                        </Button>
+                    </div>
+                )}
             </Box>
             {openSubmitProfile && (<WithdrawPopup open={openSubmitProfile} onClose={handleCloseSubmitProfile} onSubmit={handleWithdrawProfile} profile={profile}/>)}
             {openCongratsPopup && (<WithdrawNotify open={openCongratsPopup} onClose={() => setOpenCongratsPopup(false)} />)}
