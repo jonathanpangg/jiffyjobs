@@ -66,11 +66,12 @@ export function JobPopup({open, onClose, openPopUp, currentPop, openSubmitProfil
         const route = `https://jiffyjobs-api-production.up.railway.app/api/users/saved/${userEmail}`
 
         fetch(route)
-            .then((response) => {
+            .then(async (response) => {
+                const res = await response.json();
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error(res.message);
                 }
-                return response.json();
+                return res;
             })
             .then((data) => {
                 const newJobData = data.map(function(obj) {
