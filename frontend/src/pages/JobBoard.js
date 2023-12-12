@@ -168,15 +168,12 @@ export function JobBoard() {
 
             if (filterList.size === 0 && searchInput === "") {
                 getAllJobs();
-
             } else if (filterList.size === 0 && searchInput !== "") {
                 const searchJobdata = await searchJob();
                 setJobData(searchJobdata);
-
             } else if (filterList.size > 0 && searchInput === "") {
                 const filterJobdata = await filterJobs();
                 setJobData(filterJobdata);
-                
             } else {
                 const searchJobData = await searchJob();
                 const filterJobData = await filterJobs();
