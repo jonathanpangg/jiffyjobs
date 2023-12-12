@@ -34,6 +34,8 @@ export function JobBoard() {
     const [userEmail, setUserEmail] = useState(localStorage.getItem("email"));
     const [userRole, setUserRole] = useState(localStorage.getItem("user"));
 
+    const navigate = useNavigate();
+
     // random image for category
     const randomImage = (seed) => {
         return `https://source.unsplash.com/random?${seed}`;
