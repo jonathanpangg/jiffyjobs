@@ -9,7 +9,7 @@ export function PostedJobDashboard() {
     const [statusData, setStatusData] = useState([]); 
     const [prevSize, setPrevSize] = useState([]);
     const [jobID, setJobID] = useState("");
-    const [jobLength, setJobLength] = useState(false);
+    const [jobLength, setJobLength] = useState(true);
 
     const navigate = useNavigate();
 
@@ -40,18 +40,14 @@ export function PostedJobDashboard() {
                     });
                     setStatusData(newJobData)
                     setPrevSize(newJobData.length)
-
-                    
                 })
                 .catch((error) => {
                     console.log(error)
+                    setJobLength(false);
                 })
         }
         if (prevSize != statusData.length || prevSize == 0) {
             getJobs()
-        }
-        if (statusData.length === 0) {
-            setJobLength(true);
         }
     }, [statusData]);
 

@@ -24,7 +24,7 @@ export function StatusDashboard() {
     const [openSubmitProfile, setOpenSubmitProfile] = useState(false);
     const [openConfirmPopup, setOpenConfirmPopup] = useState(false);
 
-    const [jobLength, setJobLength] = useState(false);
+    const [jobLength, setJobLength] = useState(true);
 
 
     const [ userEmail, setUserEmail ] = useState(localStorage.getItem("email"));
@@ -132,13 +132,11 @@ export function StatusDashboard() {
                 })
                 .catch((error) => {
                     console.log(error)
+                    setJobLength(false);
                 })
         }
         if (prevSize != statusData.length || prevSize == 0) {
             getJobs()
-        }
-        if (statusData.length === 0) {
-            setJobLength(true);
         }
     }, [statusData]);
 

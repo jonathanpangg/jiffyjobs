@@ -16,7 +16,7 @@ export function SavedJobDashboard() {
     const [currentPop, setCurrentPop] = useState([])
     const [profile, setProfile] = useState([])
     const [gotProfile, setGotProfile] = useState(false);
-    const [jobLength, setJobLength] = useState(false);
+    const [jobLength, setJobLength] = useState(true);
 
 
     const [ userEmail, setUserEmail ] = useState(localStorage.getItem("email"));
@@ -222,28 +222,28 @@ export function SavedJobDashboard() {
             const route = "https://jiffyjobs-api-production.up.railway.app/api/users/saved/" + email
 
             fetch(route)
-                .then((response) => {
+                .then(async (response) => {
+                    const res = await response.json();
                     if (!response.ok) {
-                        throw new Error('Network response was not ok');
+                        throw new Error(res.message);
                     }
-                    return response.json();
+                    return res;
                 })
-                .then((data) => {
+                .then(async (data) => {
                     const newJobData = data.map(function(obj) {
                         return [[obj._id, obj.title], [randomImage(obj.categories.toString().split(",")[0]), obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
                     });
-                    setStatusData(newJobData)
+                    await setStatusData(newJobData)
                     setPrevSize(newJobData.length)
+                    console.log(statusData.length);
                 })
                 .catch((error) => {
                     console.log(error)
+                    setJobLength(false);
                 })
         }
         if (prevSize !== statusData.length || prevSize === 0) {
             getJobs()
-        }
-        if (statusData.length === 0) {
-            setJobLength(true);
         }
     }, [statusData]);
 
