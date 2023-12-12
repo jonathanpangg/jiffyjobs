@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { Dialog, Divider, Typography, DialogContentText, DialogContent, 
         DialogActions, DialogTitle, Link, Button, Pagination, Grid, 
@@ -7,14 +6,7 @@ import { Dialog, Divider, Typography, DialogContentText, DialogContent,
         Stack,  } from '@mui/material';
 
 // handles congrats popup
-export function CongratsPopup({ open, onClose, apply}) {
-    const navigate = useNavigate();
-
-    // goes to dashboard
-    const handleToDashboard = () => {
-        navigate('/dashboard');
-    };
-
+export function CongratsPopup({ open, onClose, dashboard, apply}) {
     return (
         <Dialog open={open} onClose={onClose} maxWidth={"360px"} PaperProps={{ sx: { width: '374px', height: '209px', borderRadius: "10.9px", display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'Outfit' } }}>
             <DialogContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
@@ -27,10 +19,10 @@ export function CongratsPopup({ open, onClose, apply}) {
             </DialogContent>
             <Divider style={{ width: '100%', height: '1.44px', paddingTop: '10px', fontWeight: 500 }} />
             <DialogActions style={{ justifyContent: 'center', padding: '13px' }}>
-                <Button onClick={handleToDashboard} sx={{ border: '1px solid #5B5B5B', borderRadius: '7px', textTransform: 'none', color: '#5B5B5B', fontFamily: 'Outfit', fontSize: '14px', width: '143px', height: '32px', fontWeight: 400 }}>
+                <Button onClick={dashboard} sx={{ border: '1px solid #5B5B5B', borderRadius: '7px', textTransform: 'none', color: '#5B5B5B', fontFamily: 'Outfit', fontSize: '14px', width: '143px', height: '32px', fontWeight: 400 }}>
                     View Dashboard
                 </Button>
-                <Button onClick={apply} sx={{ border: '1px solid #D9D9D9', borderRadius: '7px', textTransform: 'none', color: '#5B5B5B', backgroundColor: '#D9D9D9', '&:hover': {backgroundColor: '#D9D9D9'}, fontFamily: 'Outfit', fontSize: '14px', width: '143px', height: '32px', fontWeight: 400 }}>
+                <Button onClick={apply} sx={{ border: '1px solid #D9D9D9', borderRadius: '7px', textTransform: 'none', color: 'white', backgroundColor: '#4A4FE4', '&:hover': {backgroundColor: '#4A4FE4'}, fontFamily: 'Outfit', fontSize: '14px', width: '143px', height: '32px', fontWeight: 400 }}>
                     Back to Job Board
                 </Button>
             </DialogActions>
