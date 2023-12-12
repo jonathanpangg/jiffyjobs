@@ -313,7 +313,7 @@ export function SavedJobDashboard() {
             </Box>
             {openSubmitProfile && (<SubmitProfilePopup open={openSubmitProfile} onClose={handleCloseSubmitProfile} onSubmit={handleSubmitProfile} profile={profile}/>)}
             {openConfirmPopup && (<ConfirmPopup open={openConfirmPopup} onClose={() => setOpenConfirmPopup(false)} dashboard={handleToDashboard} apply={() => navigate('/jobboard')}/>)}
-            {openPop && (<JobPopup open={openPop} onClose={closePop} openPopUp={openPopUp} currentPop={currentPop} openSubmitProfile={openSubmitProfile} openConfirmPopup={openConfirmPopup} openSubmit={handleOpenSubmitProfile} />)}
+            {openPop && (<JobPopup open={openPop} onClose={closePop} openPopUp={openPopUp} currentPop={currentPop} openSubmitProfile={openSubmitProfile} openConfirmPopup={openConfirmPopup} openSubmit={handleOpenSubmitProfile} save={'save'}/>)}
         </div>
     )
 }
