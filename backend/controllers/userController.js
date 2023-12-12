@@ -7,7 +7,7 @@ import {
 import Seeker from "../models/SeekerSchema.js";
 import Provider from "../models/ProviderSchema.js";
 import Jobs from "../models/JobSchema.js"
-import nodemailer from 'nodemailer';
+//import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 
 
@@ -80,7 +80,7 @@ export const updateUserInfo = async(req, res) => {
                 { $set: updateData },
                 { new: true, runValidators: true }
               );
-              if (!updatedProvider) {
+              if (!updatedprovider) {
                 return handleNotFound(res, 'Provider not found');
               }
         

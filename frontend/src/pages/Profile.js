@@ -154,7 +154,7 @@ export function Profile() {
             body: JSON.stringify(bodyData)
         };
     
-        const route = 'https://jiffyjobs-api-production.up.railway.app/api/users/getinfo/update';
+        const route = 'http://localhost:4000/api/users/getinfo/update';
         await fetch(route, update)
             .then(async (response) => {
                 const res = await response.json();
