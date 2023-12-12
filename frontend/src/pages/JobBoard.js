@@ -330,7 +330,7 @@ export function JobBoard() {
             { renderJobPosting } 
             <Box className='job-table-box'>
                 <div className='job-table-inner' style={{ paddingTop: '50px', width: '1136px'}}>
-                    <Typography style={{fontFamily: 'Outfit', fontSize: '20px', justifyContent: 'center', alignItems: 'center', textAlign: 'start'}}>
+                    <Typography style={{fontFamily: 'Outfit', fontSize: '20px', justifyContent: 'center', alignItems: 'center', textAlign: 'start', marginBottom: '7px'}}>
                         Job Board
                     </Typography>
                 </div>
@@ -340,7 +340,7 @@ export function JobBoard() {
                     <div style={{ display: 'flex', justifyContent: 'flex-start', width: '1136px', }}>
                         { render }
                         <div>
-                            <Sort rawData={rawData} setRawData={setRawData} setJobData={setJobData} />
+                            <Sort rawData={rawData} setRawData={setRawData} setJobData={setJobData}/>
                         </div>
                     </div>
                     <Divider width='1136px'/>
