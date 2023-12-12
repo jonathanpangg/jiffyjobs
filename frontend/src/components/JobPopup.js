@@ -101,7 +101,7 @@ export function JobPopup({open, onClose, openPopUp, currentPop, openSubmitProfil
     }, [openPopUp])
 
     return (
-        <Dialog open={open} onClose={onClose} className={`${openSubmitProfile || openCongratsPopup ? 'blur-effect' : ''}`} maxWidth={'680px'} PaperProps={{sx: { borderRadius: "10.4px", height: '650px'}}}>
+        <Dialog open={open} onClose={onClose} className={`${openSubmitProfile || openCongratsPopup ? 'blur-effect' : ''}`} maxWidth={'680px'} PaperProps={{sx: { borderRadius: "10.4px", height: currentPop.length === 8 && currentPop[7][1] !== "submitted" ? '600px' : '650px'}}}>
         <div style={{ position: 'relative'}}>
             <CardMedia
                 component="img"
@@ -225,7 +225,7 @@ export function JobPopup({open, onClose, openPopUp, currentPop, openSubmitProfil
                             <Button onClick={openSubmit} style={{ textTransform: 'none', width: '100%' }}>
                                 { currentPop.length === 8 && currentPop[7][1]  === "submitted" ?  
                                     <Typography style={{ fontFamily: 'Outfit', fontSize: '13.268ppx', color: 'white', fontWeight: '400', marginTop: '-16px' }}>
-                                    Withdraw Application
+                                    Confirm Withdraw
                                     </Typography>
                                 :
                                     <Typography style={{ fontFamily: 'Outfit', fontSize: '13.268ppx', color: 'white', fontWeight: '400', marginTop: '-16px' }}>

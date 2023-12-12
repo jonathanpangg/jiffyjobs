@@ -154,7 +154,7 @@ export function Profile() {
             body: JSON.stringify(bodyData)
         };
     
-        const route = 'https://jiffyjobs-api-production.up.railway.app/api/users/getinfo/update';
+        const route = 'http://localhost:4000/api/users/getinfo/update';
         await fetch(route, update)
             .then(async (response) => {
                 const res = await response.json();
@@ -325,7 +325,6 @@ export function Profile() {
                     <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '49px', marginBottom: '29px', marginTop: '40px'}}>
 
                         <Button variant="contained" style={{ width: '131px', height: '34px', backgroundColor: '#4A4FE4', color: 'white', marginTop: '20px', fontSize: '13.514px', fontFamily: 'Outfit', fontWeight: 400, padding: '13px 18px', borderRadius: '8px' }} onClick={saveProfileChanges}>
-
                             <span style={{textTransform:'none'}}>Save changes</span>
                         </Button>
                     </div>

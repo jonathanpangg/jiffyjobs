@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Dashboard.css';
-import { Box, Card, Grid, CardMedia, Typography, } from '@mui/material'
+import { Box, Card, Grid, CardMedia, Typography, Button } from '@mui/material'
 import dayjs from 'dayjs';
 import { ViewApplicants } from './ViewApplicants';
 
@@ -9,9 +10,15 @@ export function PostedJobDashboard() {
     const [prevSize, setPrevSize] = useState([])
     const [jobID, setJobID] = useState("")
 
+    const navigate = useNavigate();
+
     const randomImage = (seed) => {
         return `https://source.unsplash.com/random?${seed}`;
     };
+
+    const goToJobBoard = () => {   
+        navigate('/jobboard');
+    }
 
     useEffect(() => {
         async function getJobs() {
@@ -55,6 +62,7 @@ export function PostedJobDashboard() {
                         Check who applied to your job posting!
                     </div>
                     <Box className='progress-box'>
+                        {statusData.length > 0 ? (
                         <Grid container className='progress-grid' rowSpacing={3} columnSpacing={3} width='70vw' style={{paddingBottom: '1%'}}>
                             {statusData.map((key) => {
                                 return ( 
@@ -70,19 +78,19 @@ export function PostedJobDashboard() {
                                             </div>
                                             <div className='overall-card'>
                                                 <div style={{height: '200px'}}>
-                                                    <Typography style={{fontFamily: 'Outfit', fontSize:"14px", paddingLeft:'16px', paddingRight:'10px', paddingTop:'10px'}}>
+                                                    <Typography style={{fontFamily: 'Outfit', fontSize:"14px", paddingLeft:'10px', paddingRight:'10px', paddingTop:'10px'}}>
                                                         <u>{key[0]}</u>
                                                     </Typography>
-                                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'16px', paddingRight:'10px', paddingTop:'15px'}}>
+                                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px', paddingTop:'15px'}}>
                                                         Pay: ${key[3]}
                                                     </Typography>
-                                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'16px', paddingRight:'10px'}}>
+                                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px'}}>
                                                         Location: <u>{key[2]}</u>
                                                     </Typography>
-                                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'16px', paddingRight:'10px'}}>
+                                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'10px', paddingRight:'10px'}}>
                                                         Time: {key[5]}
                                                     </Typography>
-                                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft: '16px', paddingRight:'10px', position:'relative', overflow:'hidden', textOverflow:'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, lineHeight: '1.1', height: '26px'}}>
+                                                    <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft: '10px', paddingRight:'10px', position:'relative', overflow:'hidden', textOverflow:'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, lineHeight: '1.1', height: '26px'}}>
                                                         Description: {key[4]}
                                                     </Typography>
                                                 </div>
@@ -92,6 +100,16 @@ export function PostedJobDashboard() {
                                 )
                             })}
                         </Grid>
+                         ) : (
+                            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '10vh', width:'65vw' }}>
+                                <div style={{ textAlign: 'center', marginTop: '20px', fontFamily: 'Outfit' }}>
+                                    Currently you have no jobs posted.
+                                </div>
+                                <Button variant="contained" style={{ width: '200px', height: '34px', backgroundColor: '#4A4FE4', color: 'white', marginTop: '20px', fontSize: '14px', fontFamily: 'Outfit', fontWeight: 400, padding: '13px 18px', borderRadius: '8px' }} onClick={goToJobBoard}>
+                                    <span style={{textTransform:'none'}}>Post a Job</span>
+                                </Button>
+                            </div>
+                        )}
                     </Box>
                 </div>
             }

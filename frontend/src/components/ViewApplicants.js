@@ -151,8 +151,10 @@ export function ViewApplicants({children, jobID}) {
                     <Box className='progress-box'>
                         <Grid container className='progress-grid' rowSpacing={0} columnSpacing={3} width='70vw' style={{paddingBottom: '1%'}}>
                             {applicantData.length === 0 ? (
-                                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '10vh', width:'65vw' }}>
-                                <div style={{ textAlign: 'center', marginTop: '20px' }}>Currently there are no applicants.</div>
+                                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '10vh', width:'65vw' }}>
+                                <div style={{ textAlign: 'center', marginTop: '20px', fontFamily: 'Outfit' }}>
+                                    Currently there are no applicants.
+                                </div>
                             </div>
                             ) : (
                                 applicantData.map((key) => {
