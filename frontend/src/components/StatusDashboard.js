@@ -5,13 +5,14 @@ import { ToastContainer, toast } from 'react-toastify';
 import { Box, Link, Card, Grid, CardActionArea, Typography, CardMedia, Button } from '@mui/material';
 import dayjs from 'dayjs';
 
-import { WithdrawNotify } from './WithdrawNotifPopup';
 import reject from '../images/Reject.png'
 
 import { JobPopup } from './JobPopup';
 import check from '../images/Check.png';
 import clock from '../images/Clock.png';
 import x from '../images/X.png';
+
+import { ConfirmPopup } from '../components/ConfirmPopup';
 
 export function StatusDashboard() {
     const [statusData, setStatusData] = useState([]) 
@@ -21,7 +22,7 @@ export function StatusDashboard() {
     const [gotProfile, setGotProfile] = useState(false);
     const [profile, setProfile] = useState([])
     const [openSubmitProfile, setOpenSubmitProfile] = useState(false);
-    const [openCongratsPopup, setOpenCongratsPopup] = useState(false);
+    const [openConfirmPopup, setOpenConfirmPopup] = useState(false);
 
 
     const [ userEmail, setUserEmail ] = useState(localStorage.getItem("email"));
@@ -85,7 +86,7 @@ export function StatusDashboard() {
         })
         .then((data) => {
             handleCloseSubmitProfile();
-            setOpenCongratsPopup(true);
+            setOpenConfirmPopup(true);
         })
         .catch((error) => {
             const err = error.message;
@@ -257,8 +258,8 @@ export function StatusDashboard() {
                     </div>
                 )}
             </Box>
-            {openCongratsPopup && (<WithdrawNotify open={openCongratsPopup} onClose={() => setOpenCongratsPopup(false)} />)}
-            {openPop && (<JobPopup open={openPop} onClose={closePop} openPopUp={openPopUp} currentPop={currentPop} openCongratsPopup={openCongratsPopup} openSubmit={handleWithdrawProfile} jobData={statusData} />)}
+            {openConfirmPopup && (<ConfirmPopup open={openConfirmPopup} onClose={() => setOpenConfirmPopup(false)} />)}
+            {openPop && (<JobPopup open={openPop} onClose={closePop} openPopUp={openPopUp} currentPop={currentPop} openConfirmPopup={openConfirmPopup} openSubmit={handleWithdrawProfile} jobData={statusData} />)}
         </div>
     )
 }

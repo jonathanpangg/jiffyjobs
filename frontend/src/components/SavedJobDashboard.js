@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { SubmitProfilePopup } from './SubmitPopup';
 import reject from '../images/Reject.png';
-import { CongratsPopup } from './CongratsPopup';
+import { ConfirmPopup } from './ConfirmPopup';
 
 export function SavedJobDashboard() {
     const [statusData, setStatusData] = useState([]) 
@@ -22,7 +22,7 @@ export function SavedJobDashboard() {
     const [ userRole, setUserRole ] = useState(localStorage.getItem("user"));
 
     const [openSubmitProfile, setOpenSubmitProfile] = useState(false);
-    const [openCongratsPopup, setOpenCongratsPopup] = useState(false);
+    const [openConfirmPopup, setOpenConfirmPopup] = useState(false);
 
 
     const randomImage = (seed) => {
@@ -156,7 +156,7 @@ export function SavedJobDashboard() {
         })
         .then((data) => {
             handleCloseSubmitProfile();
-            setOpenCongratsPopup(true);
+            setOpenConfirmPopup(true);
         })
         .catch((error) => {
             const err = error.message;
@@ -205,7 +205,7 @@ export function SavedJobDashboard() {
     const navigate = useNavigate();
 
     const handleToDashboard = () => {
-        setOpenCongratsPopup(false); 
+        setOpenConfirmPopup(false); 
         setOpenPop(false); 
     };
 
@@ -252,7 +252,7 @@ export function SavedJobDashboard() {
                     {statusData.map((key) => {
                         return ( 
                             <Grid key={key} item> 
-                                <Card sx={{width: '264px', height: '264px'}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px'}} onClick={() => openPopUp(key)}>
+                                <Card sx={{width: '264px', height: '264px'}} elevation={8} square={false} style={{overflow:'hidden', borderRadius: '15px', cursor:'pointer'}} onClick={() => openPopUp(key)}>
                                     <div className='overall-card'>
                                         <CardMedia
                                             component="img"
@@ -306,8 +306,8 @@ export function SavedJobDashboard() {
                 )}
             </Box>
             {openSubmitProfile && (<SubmitProfilePopup open={openSubmitProfile} onClose={handleCloseSubmitProfile} onSubmit={handleSubmitProfile} profile={profile}/>)}
-            {openCongratsPopup && (<CongratsPopup open={openCongratsPopup} onClose={() => setOpenCongratsPopup(false)} dashboard={handleToDashboard} apply={() => navigate('/jobboard')}/>)}
-            {openPop && (<JobPopup open={openPop} onClose={closePop} openPopUp={openPopUp} currentPop={currentPop} openSubmitProfile={openSubmitProfile} openCongratsPopup={openCongratsPopup} openSubmit={handleOpenSubmitProfile} />)}
+            {openConfirmPopup && (<ConfirmPopup open={openConfirmPopup} onClose={() => setOpenConfirmPopup(false)} dashboard={handleToDashboard} apply={() => navigate('/jobboard')}/>)}
+            {openPop && (<JobPopup open={openPop} onClose={closePop} openPopUp={openPopUp} currentPop={currentPop} openSubmitProfile={openSubmitProfile} openConfirmPopup={openConfirmPopup} openSubmit={handleOpenSubmitProfile} />)}
         </div>
     )
 }
