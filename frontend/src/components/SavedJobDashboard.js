@@ -16,6 +16,7 @@ export function SavedJobDashboard() {
     const [currentPop, setCurrentPop] = useState([])
     const [profile, setProfile] = useState([])
     const [gotProfile, setGotProfile] = useState(false);
+    const [jobLength, setJobLength] = useState(false);
 
 
     const [ userEmail, setUserEmail ] = useState(localStorage.getItem("email"));
@@ -236,6 +237,9 @@ export function SavedJobDashboard() {
         if (prevSize !== statusData.length || prevSize === 0) {
             getJobs()
         }
+        if (statusData.length === 0) {
+            setJobLength(true);
+        }
     }, [statusData]);
 
     return (
@@ -247,7 +251,7 @@ export function SavedJobDashboard() {
                 View all the jobs you saved!
             </div>
             <Box className='progress-box'>
-            {statusData.length > 0 ? (
+            {jobLength ? (
                 <Grid container className='progress-grid' rowSpacing={3} columnSpacing={3} width='70vw' style={{paddingBottom: '1%'}}>
                     {statusData.map((key) => {
                         return ( 

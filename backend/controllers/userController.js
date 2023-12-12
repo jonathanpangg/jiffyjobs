@@ -80,6 +80,7 @@ export const updateUserInfo = async(req, res) => {
                 { $set: updateData },
                 { new: true, runValidators: true }
               );
+              
               if (!updatedprovider) {
                 return handleNotFound(res, 'Provider not found');
               }
