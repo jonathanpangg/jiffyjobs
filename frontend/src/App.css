@@ -232,11 +232,16 @@
 }
 
 .custom-pagination .MuiPaginationItem-page.Mui-selected {
-  background-color: #A0A4FF;
-  color: #54555B; 
+  background-color: #4A4FE4;
+  color: white; 
   border-radius: 50%;
 }
 
+.custom-pagination .MuiPaginationItem-page.Mui-selected:hover {
+  background-color: #A0A4FF; 
+}
+
 .custom-pagination .MuiPaginationItem-page:hover {
-  background-color: #4A4FE4; 
+  color: white; 
+  background-color: #A0A4FF; 
 }
