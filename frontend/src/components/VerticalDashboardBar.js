@@ -32,6 +32,7 @@ function allyProps(index) {
   
 export function VerticalDashboardBar() {
     const [value, setValue] = useState(2);
+    const [userRole, setUserRole] = useState(localStorage.getItem("user"));
 
     const handleChange = (_, newValue) => {
         setValue(newValue);
@@ -70,9 +71,11 @@ export function VerticalDashboardBar() {
                 </div>
                 <div className='logo' style={{paddingLeft: '24px', paddingBottom: '32px'}}></div>
 
-                <CustomTab label='Status' icon={<TrendingUpIcon/>} iconPosition="start" {...allyProps(2)}/> 
-                <CustomTab label='Jobs Posted' icon={<AssignmentIcon/>} iconPosition="start" {...allyProps(3)}/>      
-                <CustomTab label='Saved Jobs' icon={<StarOutlineRoundedIcon/>} iconPosition="start" {...allyProps(4)}/>      
+                {userRole !== 'provider' && (<CustomTab label='Status' icon={<TrendingUpIcon/>} iconPosition="start" {...allyProps(2)}/>)}
+                {userRole === 'provider' ? 
+                <CustomTab label='Jobs Posted' icon={<AssignmentIcon/>} iconPosition="start" {...allyProps(2)}/> :
+                <CustomTab label='Jobs Posted' icon={<AssignmentIcon/>} iconPosition="start" {...allyProps(3)}/>}       
+                {userRole !== 'provider' && (<CustomTab label='Saved Jobs' icon={<StarOutlineRoundedIcon/>} iconPosition="start" {...allyProps(4)}/>)}
             </Tabs>
         )
     }

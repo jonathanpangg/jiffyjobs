@@ -79,15 +79,22 @@ export function Dashboard() {
                     <div className='inner-div'>
                         <Card elevation='4' style={{display: 'flex', overflow: 'hidden', borderRadius: '15px', width: "100%"}}> 
                             { renderVerticalDashBoard }
-                            <TabPanel value={value} index={2} className='progress-tab'>
+                            {userRole !== 'provider' && (
+                                <TabPanel value={value} index={2} className='progress-tab'>
                                 <StatusDashboard/>
-                            </TabPanel>
-                            <TabPanel value={value} index={3} className='progress-tab'>
+                                </TabPanel>
+                            )}
+                            {userRole === 'provider' ? 
+                            <TabPanel value={value} index={2} className='progress-tab'>
                                 <PostedJobDashboard/>
-                            </TabPanel>
-                            <TabPanel value={value} index={4} className='progress-tab'>
+                            </TabPanel> : 
+                            <TabPanel value={value} index={3} className='progress-tab'>
+                            <PostedJobDashboard/>
+                            </TabPanel> }
+                            {userRole !== 'provider' && 
+                            (<TabPanel value={value} index={4} className='progress-tab'>
                                 <SavedJobDashboard/>
-                            </TabPanel>
+                            </TabPanel>)}
                         </Card>
                     </div>
                 </Box> 
