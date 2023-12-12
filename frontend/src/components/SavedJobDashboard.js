@@ -34,7 +34,7 @@ export function SavedJobDashboard() {
         navigate('/jobboard');
     }
 
-    async function savedJobs(jobID) {
+    async function savedJobs(jobID, ) {
         const email = localStorage.getItem("email")
 
         const requestOptions = {
@@ -56,7 +56,12 @@ export function SavedJobDashboard() {
                 return res;
             })
             .then((_) => {
-               setStatusData([])
+                for (let i = 0; i < statusData.length; i++) {
+                    if (statusData[i][0] === jobID) {
+                        statusData.splice(i, 1)
+                    }
+                }
+                setStatusData(statusData)
             }).catch((error) => {
                 console.log(error);
             });

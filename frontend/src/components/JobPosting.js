@@ -749,15 +749,17 @@ export function JobPosting() {
                                         value={searchInput} 
                                         onChange={(e) => {setSearchInput(e.target.value)}}
                                         onKeyDown={(e) => {
-                                            // if (e.key === 'Enter') {
-                                            //     handleSearchClick();
-                                            // }
-                                            // console.log(e)
+                                            if (e.key === 'Enter') {
+                                                setSearchInput(e.target.value);
+                                            }
+                                            if (searchInput === "") {
+                                                setSearchInput("");
+                                            }
                                         }}
                                         InputProps={{
                                             endAdornment: (
                                                 <InputAdornment position="end">
-                                                    <Button onClick={() => {}} style={{ borderRadius: '8px', background: "#4348DB", color: 'white', minWidth: '47px', height: '47px', padding: '0', marginRight: '-6px'}}>
+                                                    <Button onClick={() => {setSearchInput(searchInput)}} style={{ borderRadius: '8px', background: "#4348DB", color: 'white', minWidth: '47px', height: '47px', padding: '0', marginRight: '-6px'}}>
                                                         <SearchIcon />
                                                     </Button>
                                                 </InputAdornment>
