@@ -91,11 +91,10 @@ export function JobBoard() {
     // random image for category
     const randomImage = (seed) => {
         return `https://source.unsplash.com/random?${seed}`;
-    };
-
-
-    // handles getting all jobs
+    };    
+    
     useEffect(() => {
+        // handles getting all jobs
         async function GetAllJobs() {
             const route = "https://jiffyjobs-api-production.up.railway.app/api/jobs/get"
             fetch(route)
@@ -138,15 +137,8 @@ export function JobBoard() {
                     console.log(error)
                 })
         }
-        if (filterList.size === 0) {
-            GetAllJobs()
-        }
-    }, [filterList]);
-    
 
-    // handles filtering job
-    useEffect(() => {
-        console.log(filterList)
+        // handles filtering job
         async function FilterJobs() {
             const requestOptions = {
                 method: 'GET',
@@ -188,6 +180,10 @@ export function JobBoard() {
             )
         }
         
+        if (filterList.size === 0) {
+            GetAllJobs()
+        }
+
         if (filterList.size !== 0) {
             setJobData([])
             FilterJobs()
