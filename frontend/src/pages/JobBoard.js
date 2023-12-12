@@ -115,7 +115,6 @@ export function JobBoard() {
 
         // handles search jobs
         async function searchJob() {
-            console.log("here")
             const route = `https://jiffyjobs-api-production.up.railway.app/api/jobs/search/${searchInput}/prop`;
             fetch(route)
                 .then((response) => {
