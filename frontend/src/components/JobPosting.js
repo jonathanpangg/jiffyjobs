@@ -346,10 +346,10 @@ export function JobPosting( { onJobDataSubmit } ) {
         return (
             <Dialog open={openStartPop} onClose={closePop} maxWidth={"890px"} PaperProps={{sx: { borderRadius: "15px",}}}>
                 <div className='popup-title' style={{paddingRight: '17px', paddingLeft: '17px'}}>
-                    <DialogTitle style={{width: "98%", fontFamily: 'Outfit', fontSize: '20px', fontWeight: 500, color: '#4A4FE4'}}> 
+                    <DialogTitle style={{width: "96%", fontFamily: 'Outfit', fontSize: '20px', fontWeight: 500, color: '#4A4FE4'}}> 
                         Tell us more about the job!
                     </DialogTitle>
-                    <IconButton onClick={closePop} style={{color: '#4A4FE4', marginLeft: '-82px'}}>
+                    <IconButton onClick={closePop} style={{color: '#4A4FE4', marginLeft: '-64px'}}>
                         <ClearIcon/>
                     </IconButton>
                 </div>
@@ -403,7 +403,7 @@ export function JobPosting( { onJobDataSubmit } ) {
                     </DialogContentText>
                 </DialogContent>
                 <Divider/>
-                    <DialogActions style={{paddingRight: '40px', marginTop: '5px', marginBottom: '5px'}}>
+                    <DialogActions style={{paddingRight: '41px', marginTop: '5px', marginBottom: '5px'}}>
                         <Card sx={{height: '40px', width: '85.5px'}} square={false} style={{overflow:'hidden', borderRadius: '8px', color: '#5B5B5B', border: "1px solid #5B5B5B", display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                             <CardContent style={{marginTop: '7px', fontFamily: 'Outfit', fontSize: '16px', cursor:'pointer'}} onClick={closePop}> 
                                 Cancel
@@ -424,10 +424,10 @@ export function JobPosting( { onJobDataSubmit } ) {
         return (
             <Dialog open={openSecondPop} onClose={closeNextPop} maxWidth={"890px"} PaperProps={{sx: { borderRadius: "15px"}}}>
                 <div className='popup-title' style={{paddingRight: '17px', paddingLeft: '17px'}}>
-                    <DialogTitle style={{width: "98%", fontFamily: 'Outfit', fontSize: '20px', fontWeight: 500, color: '#4A4FE4'}}> 
+                    <DialogTitle style={{width: "96%", fontFamily: 'Outfit', fontSize: '20px', fontWeight: 500, color: '#4A4FE4'}}> 
                         Tell us more about the job!
                     </DialogTitle>
-                    <IconButton onClick={closeNextPop} style={{color: '#4A4FE4', marginLeft: '-82px'}}> 
+                    <IconButton onClick={closeNextPop} style={{color: '#4A4FE4', marginLeft: '-64px'}}> 
                         <ClearIcon/>
                     </IconButton>
                 </div>
@@ -472,7 +472,7 @@ export function JobPosting( { onJobDataSubmit } ) {
                                 )}
                                 </FormControl>
                             </div>
-                            <div className='start-time'>
+                            <div className='start-time' >
                                 <text className='pop-textfield-title' style={{fontFamily: 'Outfit', fontSize: '14px', color: 'black'}}>
                                     Start Time
                                     <span style={{"color": "red"}}>*</span>
@@ -605,7 +605,7 @@ export function JobPosting( { onJobDataSubmit } ) {
 
                 <Divider style={{marginTop: '-4px'}}/>
 
-                <DialogActions style={{paddingRight: '40px', marginTop: '5px', marginBottom: '5px'}}>
+                <DialogActions style={{paddingRight: '41px', marginTop: '5px', marginBottom: '5px'}}>
                     <Card sx={{height: '40px', width: '71'}} square={false} style={{overflow:'hidden', borderRadius: '8px', color: '#5B5B5B', border: "1px solid #5B5B5B", display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                         <CardContent style={{ marginTop: '7px', fontFamily: 'Outfit', fontSize: '16px', cursor:'pointer'}} onClick={backSecondPop}> 
                             Back
