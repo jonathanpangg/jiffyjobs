@@ -42,17 +42,59 @@ export function JobBoard() {
     };    
     
     useEffect(() => {
-        // handles getting all jobs
-        async function getAllJobs() {
-            const route = "https://jiffyjobs-api-production.up.railway.app/api/jobs/get"
-            fetch(route)
-                .then((response) => {
+        async function getJobs() {
+            // handles getting all jobs
+            async function getAllJobs() {;
+                const route = "https://jiffyjobs-api-production.up.railway.app/api/jobs/get";
+                fetch(route)
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then((data) => {
+                        data.sort((a, b) => {
+                            const startTimeA = dayjs(a.time[0]);
+                            const startTimeB = dayjs(b.time[0]);
+                            
+                            if (!startTimeA.isValid()) return 1;
+                            if (!startTimeB.isValid()) return -1;
+                            
+                            return startTimeA.isAfter(startTimeB) ? 1 : -1;
+                        });
+                        
+                        setRawData(data);
+                        const newJobData = data.map(function(obj) {
+                            console.log(obj.time)
+                            return [[obj._id, obj.title], [randomImage(obj.categories.toString().split(",")[0]), obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
+                        });
+                        setJobData(newJobData)
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+            }
+        
+            // handles filtering job
+            async function filterJobs() {
+                try {
+                    const requestOptions = {
+                        method: 'GET',
+                        headers: { 'Content-Type': 'application/json' }
+                    };
+                    var route = "https://jiffyjobs-api-production.up.railway.app/api/jobs/filter";
+                    var query = "/*/*/" + Array.from(filterList) + "/*/*";
+                    route += query;
+            
+                    const response = await fetch(route, requestOptions);
+            
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
-                    return response.json();
-                })
-                .then((data) => {
+            
+                    const data = await response.json();
+            
                     data.sort((a, b) => {
                         const startTimeA = dayjs(a.time[0]);
                         const startTimeB = dayjs(b.time[0]);
@@ -62,71 +104,40 @@ export function JobBoard() {
                         
                         return startTimeA.isAfter(startTimeB) ? 1 : -1;
                     });
-                    
+            
                     setRawData(data);
-                    const newJobData = data.map(function(obj) {
-                        console.log(obj.time)
-                        return [[obj._id, obj.title], [randomImage(obj.categories.toString().split(",")[0]), obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
+            
+                    const newFilterData = data.map(obj => {
+                        return [
+                            [obj._id, obj.title], 
+                            [randomImage(obj.categories.toString().split(",")[0]), obj.job_poster], 
+                            ["", obj.location], 
+                            ["", obj.pay], 
+                            ["", obj.description], 
+                            ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A') + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], 
+                            ["", obj.categories.toString()]
+                        ];
                     });
-                    setJobData(newJobData)
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-        }
-
-        // handles filtering job
-        async function filterJobs() {
-            const requestOptions = {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' }
-            }
-            var route = "https://jiffyjobs-api-production.up.railway.app/api/jobs/filter"
-            var query = "/*/*/" + Array.from(filterList) + "/*/*"
-            route = route + query
-            fetch(route, requestOptions)
-                .then((response) => {
-                    if (!response.ok) { 
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then((data) => {
-                    data.sort((a, b) => {
-                        const startTimeA = dayjs(a.time[0]);
-                        const startTimeB = dayjs(b.time[0]);
-                        
-                        if (!startTimeA.isValid()) return 1;
-                        if (!startTimeB.isValid()) return -1;
-                        
-                        return startTimeA.isAfter(startTimeB) ? 1 : -1;
-                    });
-
-                    setRawData(data);
-                    const newJobData = data.map(function(obj) {
-                        return [[obj._id, obj.title], [randomImage(obj.categories.toString().split(",")[0]), obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
-                    });
-
-                    setFilterData(newJobData)
-                })
-                .catch((error) => {
-                    console.log(error)
+            
+                    return newFilterData;
+                } catch (error) {
+                    console.error(error);
+                    return []; 
                 }
-            )
-        }
+            }
 
-        // handles search jobs
-        async function searchJob() {
-            console.log(searchInput)
-            const route = `https://jiffyjobs-api-production.up.railway.app/api/jobs/search/${searchInput}/prop`;
-            fetch(route)
-                .then((response) => {
+            // handles search jobs
+            async function searchJob() {
+                try {
+                    const route = `https://jiffyjobs-api-production.up.railway.app/api/jobs/search/${searchInput}/prop`;
+                    const response = await fetch(route);
+            
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
-                    return response.json();
-                })
-                .then((data) => {
+            
+                    const data = await response.json();
+            
                     data.sort((a, b) => {
                         const startTimeA = dayjs(a.time[0]);
                         const startTimeB = dayjs(b.time[0]);
@@ -136,46 +147,48 @@ export function JobBoard() {
                         
                         return startTimeA.isAfter(startTimeB) ? 1 : -1;
                     });
-    
                     setRawData(data);
-                    const newJobData = data.map(function(obj) {
-                        return [[obj._id, obj.title], [randomImage(obj.categories.toString().split(",")[0]), obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
+                    const newJobData = data.map(obj => {
+                        return [
+                            [obj._id, obj.title], 
+                            [randomImage(obj.categories.toString().split(",")[0]), obj.job_poster], 
+                            ["", obj.location], 
+                            ["", obj.pay], 
+                            ["", obj.description], 
+                            ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A') + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], 
+                            ["", obj.categories.toString()]
+                        ];
                     });
-
-                    setSearchData(newJobData)
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-        };
-    
-        if (searchInput !== "" && filterList.size !== 0) {
-            filterJobs()
-            searchJob()
-
-            var oldData = []
-            var resultingData = []
-
-            for (let i = 0; i < filterData.length; i++) {
-                oldData.push(filterData[i][0][1])
-            }
-
-            for (let i = 0; i < searchData.length; i++) {
-                if (oldData.includes(searchData[i][0][1])) {
-                    resultingData.push(searchData[i])
+                    return newJobData;
+                } catch (error) {
+                    console.error(error);
+                    return []; 
                 }
+            };
+
+            if (filterList.size === 0 && searchInput === "") {
+                getAllJobs();
+
+            } else if (filterList.size === 0 && searchInput !== "") {
+                const searchJobdata = await searchJob();
+                setJobData(searchJobdata);
+
+            } else if (filterList.size > 0 && searchInput === "") {
+                const filterJobdata = await filterJobs();
+                setJobData(filterJobdata);
+                
+            } else {
+                const searchJobData = await searchJob();
+                const filterJobData = await filterJobs();
+                const commonData = searchJobData.filter(searchItem =>
+                    filterJobData.some(filterItem => filterItem[0][0] === searchItem[0][0]));
+                console.log("asdfasfa");
+                setJobData(commonData);
             }
-            setJobData(resultingData);
-        } else if (searchInput !== "") {
-            searchJob()
-            setJobData(searchData)
-        } else if (filterList.size !== 0) {
-            filterJobs()
-            setJobData(filterData)
-        } else {
-            getAllJobs()
         }
-    }, [filterList, searchInput, filterData, searchData])
+        getJobs();
+        
+    }, [searchInput, filterList])
 
     // close popup
     const closePop = () => {
