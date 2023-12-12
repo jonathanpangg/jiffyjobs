@@ -19,7 +19,7 @@ import dayjs from 'dayjs';
 var objectSupport = require("dayjs/plugin/objectSupport");
 dayjs.extend(objectSupport);
 
-export function JobPosting( { onJobDataSubmit } ) {
+export function JobPosting() {
     const [openStartPop, setOpenStartPop] = useState(false)
     const [openSecondPop, setOpenSecondPop] = useState(false)
     const [searchInput, setSearchInput] = useState("");
@@ -147,18 +147,6 @@ export function JobPosting( { onJobDataSubmit } ) {
             };
         });
     }
-
-
-    // changes the values for search input
-    const handleSearchInputChange = (event) => {
-        if (event.target.value === "") {
-            setSearchInput("");
-            onJobDataSubmit("");       
-            return;
-        } else {
-            setSearchInput(event.target.value);
-        }
-    };
     
 
     // handles the category change
@@ -198,6 +186,8 @@ export function JobPosting( { onJobDataSubmit } ) {
             ...prevError,
             dateError: !newDate.isValid()
         }));
+    
+        validateStartAndEndTime(newDate, startTime, endTime);
     }
 
     // handles the start time
@@ -220,6 +210,8 @@ export function JobPosting( { onJobDataSubmit } ) {
             ...prevError,
             startTimeError: !newStartTime.isValid() || isStartTimeInvalid
         }));
+
+        validateStartAndEndTime(selectedDate, newStartTime, endTime);
     }
     
     // handles the end time
@@ -238,6 +230,30 @@ export function JobPosting( { onJobDataSubmit } ) {
         setError(prevError => ({
             ...prevError,
             endTimeError: !newEndTime.isValid() || (startTime && newEndTime.isBefore(dayjs(startTime)))
+        }));
+
+        validateStartAndEndTime(selectedDate, startTime, newEndTime);
+    }
+
+    // validates the start and end time
+    function validateStartAndEndTime(date, startTime, endTime) {
+        const isToday = date && dayjs(date).isSame(dayjs(), 'day');
+        let isStartTimeInvalid = false;
+    
+        if (startTime) {
+            if (isToday) {
+                isStartTimeInvalid = dayjs(startTime).isBefore(dayjs());
+            } 
+        } else {
+            isStartTimeInvalid = true; 
+        }
+    
+        const isEndTimeInvalid = !endTime || (startTime && endTime && dayjs(endTime).isBefore(dayjs(startTime)));
+    
+        setError(prevError => ({
+            ...prevError,
+            startTimeError: isStartTimeInvalid,
+            endTimeError: isEndTimeInvalid
         }));
     }
 
@@ -346,10 +362,10 @@ export function JobPosting( { onJobDataSubmit } ) {
         return (
             <Dialog open={openStartPop} onClose={closePop} maxWidth={"890px"} PaperProps={{sx: { borderRadius: "15px",}}}>
                 <div className='popup-title' style={{paddingRight: '17px', paddingLeft: '17px'}}>
-                    <DialogTitle style={{width: "98%", fontFamily: 'Outfit', fontSize: '20px', fontWeight: 500, color: '#4A4FE4'}}> 
+                    <DialogTitle style={{width: "96%", fontFamily: 'Outfit', fontSize: '20px', fontWeight: 500, color: '#4A4FE4'}}> 
                         Tell us more about the job!
                     </DialogTitle>
-                    <IconButton onClick={closePop} style={{color: '#4A4FE4', marginLeft: '-82px'}}>
+                    <IconButton onClick={closePop} style={{color: '#4A4FE4', marginLeft: '-64px'}}>
                         <ClearIcon/>
                     </IconButton>
                 </div>
@@ -403,7 +419,7 @@ export function JobPosting( { onJobDataSubmit } ) {
                     </DialogContentText>
                 </DialogContent>
                 <Divider/>
-                    <DialogActions style={{paddingRight: '40px', marginTop: '5px', marginBottom: '5px'}}>
+                    <DialogActions style={{paddingRight: '41px', marginTop: '5px', marginBottom: '5px'}}>
                         <Card sx={{height: '40px', width: '85.5px'}} square={false} style={{overflow:'hidden', borderRadius: '8px', color: '#5B5B5B', border: "1px solid #5B5B5B", display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                             <CardContent style={{marginTop: '7px', fontFamily: 'Outfit', fontSize: '16px', cursor:'pointer'}} onClick={closePop}> 
                                 Cancel
@@ -424,10 +440,10 @@ export function JobPosting( { onJobDataSubmit } ) {
         return (
             <Dialog open={openSecondPop} onClose={closeNextPop} maxWidth={"890px"} PaperProps={{sx: { borderRadius: "15px"}}}>
                 <div className='popup-title' style={{paddingRight: '17px', paddingLeft: '17px'}}>
-                    <DialogTitle style={{width: "98%", fontFamily: 'Outfit', fontSize: '20px', fontWeight: 500, color: '#4A4FE4'}}> 
+                    <DialogTitle style={{width: "96%", fontFamily: 'Outfit', fontSize: '20px', fontWeight: 500, color: '#4A4FE4'}}> 
                         Tell us more about the job!
                     </DialogTitle>
-                    <IconButton onClick={closeNextPop} style={{color: '#4A4FE4', marginLeft: '-82px'}}> 
+                    <IconButton onClick={closeNextPop} style={{color: '#4A4FE4', marginLeft: '-64px'}}> 
                         <ClearIcon/>
                     </IconButton>
                 </div>
@@ -472,7 +488,7 @@ export function JobPosting( { onJobDataSubmit } ) {
                                 )}
                                 </FormControl>
                             </div>
-                            <div className='start-time'>
+                            <div className='start-time' >
                                 <text className='pop-textfield-title' style={{fontFamily: 'Outfit', fontSize: '14px', color: 'black'}}>
                                     Start Time
                                     <span style={{"color": "red"}}>*</span>
@@ -605,7 +621,7 @@ export function JobPosting( { onJobDataSubmit } ) {
 
                 <Divider style={{marginTop: '-4px'}}/>
 
-                <DialogActions style={{paddingRight: '40px', marginTop: '5px', marginBottom: '5px'}}>
+                <DialogActions style={{paddingRight: '41px', marginTop: '5px', marginBottom: '5px'}}>
                     <Card sx={{height: '40px', width: '71'}} square={false} style={{overflow:'hidden', borderRadius: '8px', color: '#5B5B5B', border: "1px solid #5B5B5B", display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                         <CardContent style={{ marginTop: '7px', fontFamily: 'Outfit', fontSize: '16px', cursor:'pointer'}} onClick={backSecondPop}> 
                             Back
@@ -632,7 +648,16 @@ export function JobPosting( { onJobDataSubmit } ) {
         const hasDateError = !selectedDate;
 
         const isToday = selectedDate && dayjs(selectedDate).isSame(dayjs(), 'day');
-        const isStartTimeInvalid = startTime && isToday && dayjs(startTime).isBefore(dayjs());
+        let isStartTimeInvalid = false;
+
+        if (startTime) {
+            if (isToday) {
+                isStartTimeInvalid = dayjs(startTime).isBefore(dayjs());
+            } 
+        } else {
+            isStartTimeInvalid = true; 
+        }
+
         const isEndTimeInvalid = !endTime || (startTime && endTime && dayjs(endTime).isBefore(dayjs(startTime)));
 
         setError({
@@ -644,7 +669,7 @@ export function JobPosting( { onJobDataSubmit } ) {
             categoryError: hasCategoryError,
             dateError: hasDateError,
             startTimeError: isStartTimeInvalid,
-            endTimeError: isEndTimeInvalid,
+            endTimeError: isEndTimeInvalid
         });
 
         if (hasTitleError || hasNameError || hasLocationError || hasPayError || hasDescriptionError || hasCategoryError || hasDateError || isStartTimeInvalid || isEndTimeInvalid) {
@@ -701,58 +726,57 @@ export function JobPosting( { onJobDataSubmit } ) {
             })
         }
     }
-
-    const handleSearchClick = () => {
-        // search stuff
-        onJobDataSubmit(searchInput);
-    };
     
 
-    return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-            <Box style={{paddingTop: '3.9px', width: '1128px'}}> 
-                <div className='inner-div' style={{marginBottom: '8px', }}>
-                    <Card elevation={4} style={{ overflow: 'hidden', borderRadius: '15px', textAlign: 'center', height: '222px', width: '1128px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                            <div style={{ marginBottom: '29px' }}> 
-                                <text className='job-search-text' style={{}}> 
-                                    Find jobs or hire college students starting now with <span className='job-search-logo' style={{color: '#4A4FE4'}}>JIFFYJOBS</span>
-                                </text>
+    return {
+        searchInput,
+        renderJobPosting: (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                <Box style={{paddingTop: '3.9px', width: '1128px'}}> 
+                    <div className='inner-div' style={{marginBottom: '8px', }}>
+                        <Card elevation={4} style={{ overflow: 'hidden', borderRadius: '15px', textAlign: 'center', height: '222px', width: '1128px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                <div style={{ marginBottom: '29px' }}> 
+                                    <text className='job-search-text' style={{}}> 
+                                        Find jobs or hire college students starting now with <span className='job-search-logo' style={{color: '#4A4FE4'}}>JIFFYJOBS</span>
+                                    </text>
+                                </div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '23px' }}>
+                                    <TextField 
+                                        placeholder="Search Jobs..." 
+                                        type="search"  
+                                        style={{ width: '332px', }} 
+                                        value={searchInput} 
+                                        onChange={(e) => {setSearchInput(e.target.value)}}
+                                        onKeyDown={(e) => {
+                                            // if (e.key === 'Enter') {
+                                            //     handleSearchClick();
+                                            // }
+                                            // console.log(e)
+                                        }}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <Button onClick={() => {}} style={{ borderRadius: '8px', background: "#4348DB", color: 'white', minWidth: '47px', height: '47px', padding: '0', marginRight: '-6px'}}>
+                                                        <SearchIcon />
+                                                    </Button>
+                                                </InputAdornment>
+                                            ),
+                                            style: {  borderRadius: '11px', fontFamily: 'Outfit', fontSize: '18px', backgroundColor: '#EFEFEF', color: '#141414' }
+                                        }}
+                                    />
+                                    <Card sx={{ width: '140px', height: '58px' }} style={{borderRadius: '8px', background: "#4348DB", color: 'white', display: 'flex', justifyContent: 'center', cursor:'pointer'}}>
+                                        <CardContent onClick={openPop} style={{marginTop: '2px', fontFamily: 'Outfit', fontSize: '18px', fontWeight: 400}}> 
+                                            Post a Job
+                                        </CardContent>
+                                    </Card>
+                                </div>
+                                { openSecondPop ? secondJobSlide() : firstJobSlide() }
                             </div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '23px' }}>
-                                <TextField 
-                                    placeholder="Search Jobs..." 
-                                    type="search"  
-                                    style={{ width: '332px', }} 
-                                    value={searchInput} 
-                                    onChange={handleSearchInputChange}
-                                    onKeyDown={(e) => {
-                                        if (e.key === 'Enter') {
-                                            handleSearchClick();
-                                        }
-                                    }}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <Button onClick={handleSearchClick} style={{ borderRadius: '8px', background: "#4348DB", color: 'white', minWidth: '47px', height: '47px', padding: '0', marginRight: '-6px'}}>
-                                                    <SearchIcon />
-                                                </Button>
-                                            </InputAdornment>
-                                        ),
-                                        style: {  borderRadius: '11px', fontFamily: 'Outfit', fontSize: '18px', backgroundColor: '#EFEFEF', color: '#141414' }
-                                    }}
-                                />
-                                <Card sx={{ width: '140px', height: '58px' }} style={{borderRadius: '8px', background: "#4348DB", color: 'white', display: 'flex', justifyContent: 'center', cursor:'pointer'}}>
-                                    <CardContent onClick={openPop} style={{marginTop: '2px', fontFamily: 'Outfit', fontSize: '18px', fontWeight: 400}}> 
-                                        Post a Job
-                                    </CardContent>
-                                </Card>
-                            </div>
-                            { openSecondPop ? secondJobSlide() : firstJobSlide() }
-                        </div>
-                    </Card>
-                </div>
-            </Box>
-        </div>
-    )
+                        </Card>
+                    </div>
+                </Box>
+            </div>
+        )
+    }
 }
