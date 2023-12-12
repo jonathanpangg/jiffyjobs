@@ -39,7 +39,7 @@ export function ConfirmPopup({ open, onClose, dashboard, apply, state}) {
                             <Button onClick={dashboard} sx={{ border: '1px solid #5B5B5B', borderRadius: '7px', textTransform: 'none', color: '#5B5B5B', fontFamily: 'Outfit', fontSize: '14px', width: '145px', height: '32px', fontWeight: 400 }}>
                                 View Dashboard
                             </Button>
-                            <Button onClick={apply} sx={{ border: '1px solid #D9D9D9', borderRadius: '7px', textTransform: 'none', color: 'white', backgroundColor: '#4A4FE4', '&:hover': {backgroundColor: '#4A4FE4'}, fontFamily: 'Outfit', fontSize: '14px', width: '145px', height: '32px', fontWeight: 400 }}>
+                            <Button onClick={apply} sx={{ borderRadius: '7px', textTransform: 'none', color: 'white', backgroundColor: '#4A4FE4', '&:hover': {backgroundColor: '#4A4FE4'}, fontFamily: 'Outfit', fontSize: '14px', width: '145px', height: '32px', fontWeight: 400 }}>
                                 Continue Applying
                             </Button>
                         </DialogActions>
@@ -63,7 +63,7 @@ export function ConfirmPopup({ open, onClose, dashboard, apply, state}) {
                         <Button onClick={handleToDashboard} sx={{ border: '1px solid #5B5B5B', borderRadius: '7px', textTransform: 'none', color: '#5B5B5B', fontFamily: 'Outfit', fontSize: '14px', width: '145px', height: '32px', fontWeight: 400 }}>
                             Back to Dashboard
                         </Button>
-                        <Button onClick={handleApplyMore} sx={{ border: '1px solid #D9D9D9', borderRadius: '7px', textTransform: 'none', color: 'white', backgroundColor: '#4A4FE4', '&:hover': {backgroundColor: '#4A4FE4'}, fontFamily: 'Outfit', fontSize: '14px', width: '145px', height: '32px', fontWeight: 400 }}>
+                        <Button onClick={handleApplyMore} sx={{ borderRadius: '7px', textTransform: 'none', color: 'white', backgroundColor: '#4A4FE4', '&:hover': {backgroundColor: '#4A4FE4'}, fontFamily: 'Outfit', fontSize: '14px', width: '145px', height: '32px', fontWeight: 400 }}>
                             Apply More
                         </Button>
                     </DialogActions>

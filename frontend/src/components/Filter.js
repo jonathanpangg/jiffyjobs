@@ -88,7 +88,7 @@ export function Filter() {
       const columns = Math.ceil(options.length / maxColumns);
     
       return (
-        <div style={{ width: '12.5%', cursor: 'pointer'}}>
+        <div style={{ width: '12.5%', cursor: 'pointer', marginLeft: '15px', paddingLeft: '2px'}}>
           <Grid item xs={1.5} onClick={() => toggleFilter(filterCategory)} className='filter-tab' style={{ fontFamily: 'Outfit', fontSize: '14px', fontWeight: 500 }}>
             {filterCategory} 
             {bool ? <KeyboardArrowUpIcon className='arrow-pad'/> : <KeyboardArrowDownIcon className='arrow-pad'/>}
@@ -96,7 +96,7 @@ export function Filter() {
           {bool && 
             <div style={{ display: 'flex', whiteSpace: 'nowrap', minWidth: '250%', marginTop: '10px', marginBottom: '18px' }}>
               {Array.from({ length: columns }, (_, columnIndex) => (
-                <div key={columnIndex} style={{ display: 'flex', flexDirection: 'column', marginRight: '16px', fontFamily: 'Outfit' }}>
+                <div key={columnIndex} style={{ display: 'flex', flexDirection: 'column', marginRight: '16px', fontFamily: 'Outfit', paddingLeft: '24px'}}>
                   {options.slice(columnIndex * maxColumns, (columnIndex + 1) * maxColumns).map((option) => (
                     <FormGroup key={option}>
                       <FormControlLabel
@@ -136,7 +136,7 @@ export function Filter() {
       <Box sx={{ flexGrow: 1 }}>
         <Grid container columnSpacing={1} wrap="nowrap" style={{ width: '1116px', marginLeft: '0px', marginRight: '0', cursor:'pointer'}}>
           {Object.keys(filterOptions).map((filterCategory) => (
-            <div style={{ fontFamily: 'Outfit' }}>
+            <div style={{ fontFamily: 'Outfit',}}>
               {renderFilters(filterCategory, expandMap.get(filterCategory))}
             </div>
           ))}   
@@ -147,7 +147,7 @@ export function Filter() {
           }
           {renderSelectedOptions(filterList)} 
           { filterList.size > 0 && 
-            <span className='filter-clearall' onClick={clearAllFilters} style={{ fontFamily: 'Outfit', fontSize: '14px', fontWeight: 500, position: 'relative', top: '1.5px' }}>CLEAR ALL</span>
+            <span className='filter-clearall' onClick={clearAllFilters} style={{ fontFamily: 'Outfit', fontSize: '14px', fontWeight: 500, position: 'relative', top: '1.5px', whiteSpace: 'nowrap' }}>CLEAR ALL</span>
           }
         </div>
     </Box>    
