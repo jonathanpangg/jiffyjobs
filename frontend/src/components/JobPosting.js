@@ -198,6 +198,8 @@ export function JobPosting( { onJobDataSubmit } ) {
             ...prevError,
             dateError: !newDate.isValid()
         }));
+    
+        validateStartAndEndTime(newDate, startTime, endTime);
     }
 
     // handles the start time
@@ -220,6 +222,8 @@ export function JobPosting( { onJobDataSubmit } ) {
             ...prevError,
             startTimeError: !newStartTime.isValid() || isStartTimeInvalid
         }));
+
+        validateStartAndEndTime(selectedDate, newStartTime, endTime);
     }
     
     // handles the end time
@@ -238,6 +242,30 @@ export function JobPosting( { onJobDataSubmit } ) {
         setError(prevError => ({
             ...prevError,
             endTimeError: !newEndTime.isValid() || (startTime && newEndTime.isBefore(dayjs(startTime)))
+        }));
+
+        validateStartAndEndTime(selectedDate, startTime, newEndTime);
+    }
+
+    // validates the start and end time
+    function validateStartAndEndTime(date, startTime, endTime) {
+        const isToday = date && dayjs(date).isSame(dayjs(), 'day');
+        let isStartTimeInvalid = false;
+    
+        if (startTime) {
+            if (isToday) {
+                isStartTimeInvalid = dayjs(startTime).isBefore(dayjs());
+            } 
+        } else {
+            isStartTimeInvalid = true; 
+        }
+    
+        const isEndTimeInvalid = !endTime || (startTime && endTime && dayjs(endTime).isBefore(dayjs(startTime)));
+    
+        setError(prevError => ({
+            ...prevError,
+            startTimeError: isStartTimeInvalid,
+            endTimeError: isEndTimeInvalid
         }));
     }
 
@@ -632,7 +660,16 @@ export function JobPosting( { onJobDataSubmit } ) {
         const hasDateError = !selectedDate;
 
         const isToday = selectedDate && dayjs(selectedDate).isSame(dayjs(), 'day');
-        const isStartTimeInvalid = startTime && isToday && dayjs(startTime).isBefore(dayjs());
+        let isStartTimeInvalid = false;
+
+        if (startTime) {
+            if (isToday) {
+                isStartTimeInvalid = dayjs(startTime).isBefore(dayjs());
+            } 
+        } else {
+            isStartTimeInvalid = true; 
+        }
+
         const isEndTimeInvalid = !endTime || (startTime && endTime && dayjs(endTime).isBefore(dayjs(startTime)));
 
         setError({
@@ -644,7 +681,7 @@ export function JobPosting( { onJobDataSubmit } ) {
             categoryError: hasCategoryError,
             dateError: hasDateError,
             startTimeError: isStartTimeInvalid,
-            endTimeError: isEndTimeInvalid,
+            endTimeError: isEndTimeInvalid
         });
 
         if (hasTitleError || hasNameError || hasLocationError || hasPayError || hasDescriptionError || hasCategoryError || hasDateError || isStartTimeInvalid || isEndTimeInvalid) {
