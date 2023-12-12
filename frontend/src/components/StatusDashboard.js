@@ -24,6 +24,8 @@ export function StatusDashboard() {
     const [openSubmitProfile, setOpenSubmitProfile] = useState(false);
     const [openConfirmPopup, setOpenConfirmPopup] = useState(false);
 
+    const [jobLength, setJobLength] = useState(false);
+
 
     const [ userEmail, setUserEmail ] = useState(localStorage.getItem("email"));
     const [ userRole, setUserRole ] = useState(localStorage.getItem("user"));
@@ -33,41 +35,12 @@ export function StatusDashboard() {
     // open popup
     const openPopUp = (key) => {
         setCurrentPop(key);
-        console.log(currentPop);
         setOpenPop(true);
     }
     // close popup
     const closePop = () => {
         setOpenPop(false);
     }
-
-    // open submit profile popup
-    const handleOpenSubmitProfile = () => {
-        if (!gotProfile) {
-            const requestedOptions = {
-                method: "GET",
-                headers: { 'Content-Type': 'application/json' },
-            }
-    
-            const route = `https://jiffyjobs-api-production.up.railway.app/api/users/getinfo/${userEmail}/${userRole}`;
-            fetch(route, requestedOptions)
-            .then(async (response) => {
-                const res = await response.json()
-                if (!response.ok) {
-                    throw new Error(res.message);
-                }
-                return res;
-            })
-            .then((data) => {
-                const user = [data.personal_info.first_name, data.personal_info.last_name, data.personal_info.school, data.personal_info.major, data.personal_info.grade, data.personal_info.personal_statement[0]];
-                setProfile(user);
-                setOpenSubmitProfile(true);
-                setGotProfile(true);
-            })
-        } else {
-            setOpenSubmitProfile(true);
-        }
-    };
 
     const handleWithdrawProfile = () => {
         const user = {
@@ -144,11 +117,11 @@ export function StatusDashboard() {
             const email = localStorage.getItem("email")
             const route = `https://jiffyjobs-api-production.up.railway.app/api/users/jobsApplied/${email}`
             fetch(route)
-                .then((response) => {
+                .then(async (response) => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
-                    return response.json();
+                    return await response.json();
                 })
                 .then((data) => {
 
@@ -156,10 +129,7 @@ export function StatusDashboard() {
                         return [[obj._id, obj.title], [randomImage(obj.categories.toString().split(",")[0]), obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()], ["", obj.status]]
                     });
                     setStatusData(newJobData)
-
                     setPrevSize(newJobData.length)
-
-                    
                 })
                 .catch((error) => {
                     console.log(error)
@@ -167,6 +137,9 @@ export function StatusDashboard() {
         }
         if (prevSize != statusData.length || prevSize == 0) {
             getJobs()
+        }
+        if (statusData.length === 0) {
+            setJobLength(true);
         }
     }, [statusData]);
 
@@ -179,7 +152,7 @@ export function StatusDashboard() {
                 Check your the progress on your job applications!
             </div>
             <Box className='progress-box'>
-                {statusData.length > 0 ? (
+                {jobLength ? (
                 <Grid container className='progress-grid' rowSpacing={3} columnSpacing={3} width='70vw' style={{paddingBottom: '1%'}}>
                     {statusData.map((key) => {
                         return ( 

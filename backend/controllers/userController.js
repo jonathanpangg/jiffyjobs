@@ -80,6 +80,7 @@ export const updateUserInfo = async(req, res) => {
                 { $set: updateData },
                 { new: true, runValidators: true }
               );
+              
               if (!updatedprovider) {
                 return handleNotFound(res, 'Provider not found');
               }
@@ -182,7 +183,7 @@ export const allAppliedJobs = async(req, res) => {
             // Determine the status based on the conditions provided
             if (job.acceptedApplicant === userEmail) {
                 jobWithStatus.status = 'accepted';
-            } else if (job.time[0] < currentDateTime && job.acceptedApplicant === "" && !job.rejectedApplicants.includes(userEmail)) {
+            } else if (job.time[0] > currentDateTime && job.acceptedApplicant === "" && !job.rejectedApplicants.includes(userEmail)) {
                 jobWithStatus.status = 'submitted';
             } else {
                 jobWithStatus.status = 'rejected';
@@ -307,7 +308,7 @@ export const allApplicants = async(req, res) => {
             // Determine the status based on the conditions provided
             if (jobs.acceptedApplicant === seeker.email) {
                 seekerWithStatus.status = 'accepted';
-            } else if (jobs.time[0] < currentDateTime && jobs.acceptedApplicant === "" && !jobs.rejectedApplicants.includes(seeker.email)) {
+            } else if (jobs.time[0] > currentDateTime && jobs.acceptedApplicant === "" && !jobs.rejectedApplicants.includes(seeker.email)) {
                 seekerWithStatus.status = 'submitted';
             } else {
                 seekerWithStatus.status = 'rejected';
@@ -329,7 +330,7 @@ export const withdrawApp = async(req, res) => {
         const seekerEmail = req.params.seekerEmail;
         const today = new Date();
 
-        const job = await Jobs.findOne({ _id: jobId, 'time.0': { $lt: today }, hired: false });
+        const job = await Jobs.findOne({ _id: jobId, 'time.0': { $gt: today }, hired: false });
 
         if (!job) {
             return handleNotFound(res, 'You cannot withdraw application from an in-progress job');
