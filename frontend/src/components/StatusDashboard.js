@@ -222,7 +222,7 @@ export function StatusDashboard() {
                                                     Pay: <span style={{ fontWeight: '500' }}>$</span><span style={{ fontWeight: '500' }}>{key[3][1]}</span>
                                                 </Typography>
                                                 <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'16px', paddingRight:'10px', fontWeight: 400,}}>
-                                                    Location:<span style={{ fontWeight: '500' }}>{<u>{key[2][1]}</u>}</span>
+                                                    Location: <span style={{ fontWeight: '500' }}>{<u>{key[2][1]}</u>}</span>
                                                 </Typography>
                                                 <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'16px', paddingRight:'10px', fontWeight: 400,}}>
                                                     Time: <span style={{ fontWeight: '500' }}>{key[5][1]}</span>
