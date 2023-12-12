@@ -42,6 +42,10 @@ export function StatusDashboard() {
         setOpenPop(false);
     }
 
+    const handleCloseConfirm = () => {
+        window.location.href = '/dashboard';
+    }
+
     const handleWithdrawProfile = () => {
         const user = {
             method: "DELETE",
@@ -58,7 +62,7 @@ export function StatusDashboard() {
             return res;
         })
         .then((data) => {
-            handleCloseSubmitProfile();
+            closePop();
             setOpenConfirmPopup(true);
         })
         .catch((error) => {
@@ -96,11 +100,6 @@ export function StatusDashboard() {
             }
         });
 
-    };
-
-   // close submit profile popup
-   const handleCloseSubmitProfile = () => {
-    setOpenSubmitProfile(false);
     };
 
     // random image for category
@@ -231,7 +230,7 @@ export function StatusDashboard() {
                     </div>
                 )}
             </Box>
-            {openConfirmPopup && (<ConfirmPopup open={openConfirmPopup} onClose={() => setOpenConfirmPopup(false)} />)}
+            {openConfirmPopup && (<ConfirmPopup open={openConfirmPopup} onClose={handleCloseConfirm} />)}
             {openPop && (<JobPopup open={openPop} onClose={closePop} openPopUp={openPopUp} currentPop={currentPop} openConfirmPopup={openConfirmPopup} openSubmit={handleWithdrawProfile} jobData={statusData} />)}
         </div>
     )
