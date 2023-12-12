@@ -192,7 +192,7 @@ export function ViewApplicants({children, jobID}) {
                             <CloseIcon style={{width: '25px', height: '25px', position: 'absolute', right: 25, color: '#4A4FE4'}} onClick={() => {setOpen(false)}}/>
                             <div style={{marginTop: '2.5%'}}> { (typeResponse === 'standard' || typeResponse === 'selected') ? "Applicant Profile": (typeResponse === "accept" ? 'Are you sure you want to accept?': 'Are you sure you want to reject?')} </div>
                         </DialogTitle>
-                        <DialogContent style={{display: 'flex', justifyContent: 'center', marginBottom: '-7px'}}>
+                        <DialogContent style={{display: 'flex', justifyContent: 'center', marginBottom: typeResponse !== 'selected' ? '-7px' : '0px'}}>
                             <div style={{ width: '431px', height: '399px', border: '1px solid #A4A4A4', borderRadius: '10px', backgroundColor: (typeResponse === 'standard' || typeResponse === 'selected') ? "white": (typeResponse === "accept" ? 'rgba(102, 193, 32, 0.15)': 'rgba(193, 32, 32, 0.15)')}}>
                                 <DialogContentText>
                                     <div style={{display: 'flex', alignItems: 'center', fontFamily: 'Outfit', marginTop: '26px'}}>
@@ -247,7 +247,9 @@ export function ViewApplicants({children, jobID}) {
                                 </DialogContentText>
                             </div>
                         </DialogContent>
+                        { typeResponse !== 'selected' && 
                         <Divider style={{ width: '100%', height: '1.44px', marginBottom: '7px', fontWeight: 500 }} />
+                        }
                         { typeResponse !== 'selected' && 
                             <DialogActions>
                                 <div style={{display: 'flex', marginRight: '60px', marginBottom: '7px'}}>

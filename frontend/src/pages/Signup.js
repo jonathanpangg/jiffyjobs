@@ -212,7 +212,7 @@ export function Signup() {
                     <text style={{ fontFamily: 'Outfit', textAlign: 'center', color: '#5B5B5B', fontSize: '16px' }}>Sign up as a...</text>
 
                     <ToggleButtonGroup value={role} exclusive onChange={handleRole} fullWidth sx={{ mb: 2, justifyContent: 'center',  marginTop: '10px', marginBottom: '25px', }}>
-                        <ToggleButton value="jobSeeker" sx={{ width: '30%', borderRadius: '10px', fontFamily: 'Outfit', textTransform: 'none', fontSize: '14px'}}>Job Seeker</ToggleButton>
+                        <ToggleButton value="jobSeeker" sx={{ width: '30%', borderRadius: '10px', fontFamily: 'Outfit', textTransform: 'none', fontSize: '14px'}}>Student</ToggleButton>
                         <ToggleButton value="jobProvider" sx={{ width: '30%', borderRadius: '10px', fontFamily: 'Outfit', textTransform: 'none', fontSize: '14px' }}>Job Provider</ToggleButton>
                     </ToggleButtonGroup>
 
@@ -311,7 +311,7 @@ export function Signup() {
                     <div style={{paddingTop: '1.5%'}}>
 
                         <Button type="submit" fullWidth sx={{ width: '68.5%', mt: 1, mb: 2, py: 1.5, backgroundColor: '#4A4FE4', '&:hover': { backgroundColor: '#4A4FE4' }, borderRadius: '30px', textTransform: 'none', color: 'white', fontFamily: 'Outfit'  }}>
-                            Sign up as a {role === 'jobSeeker' ? 'Job Seeker' : 'Job Provider'}
+                            Sign up as a {role === 'jobSeeker' ? 'Student' : 'Job Provider'}
                         </Button>
                     </div>
                     </form>
