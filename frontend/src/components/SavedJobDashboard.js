@@ -9,8 +9,6 @@ import { SubmitProfilePopup } from './SubmitPopup';
 import reject from '../images/Reject.png';
 import { CongratsPopup } from './CongratsPopup';
 
-import StarRoundedIcon from '@mui/icons-material/StarRounded';
-
 export function SavedJobDashboard() {
     const [statusData, setStatusData] = useState([]) 
     const [prevSize, setPrevSize] = useState([])
@@ -168,6 +166,7 @@ export function SavedJobDashboard() {
                 toast.error(err.slice(7), {
                     icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
                     progressStyle: {backgroundColor: '#C12020'},
+                    style: {fontFamily: 'Outfit'},
                     position: "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -181,6 +180,7 @@ export function SavedJobDashboard() {
                 toast.error(err, {
                     icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
                     progressStyle: {backgroundColor: '#C12020'},
+                    style: {fontFamily: 'Outfit'},
                     position: "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,

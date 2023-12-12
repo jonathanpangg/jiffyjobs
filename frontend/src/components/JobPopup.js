@@ -225,7 +225,7 @@ export function JobPopup({open, onClose, openPopUp, currentPop, openSubmitProfil
                             <Button onClick={openSubmit} style={{ textTransform: 'none', width: '100%' }}>
                                 { currentPop.length === 8 && currentPop[7][1]  === "submitted" ?  
                                     <Typography style={{ fontFamily: 'Outfit', fontSize: '13.268ppx', color: 'white', fontWeight: '400', marginTop: '-16px' }}>
-                                    Withdraw Application
+                                    Confirm Withdraw
                                     </Typography>
                                 :
                                     <Typography style={{ fontFamily: 'Outfit', fontSize: '13.268ppx', color: 'white', fontWeight: '400', marginTop: '-16px' }}>

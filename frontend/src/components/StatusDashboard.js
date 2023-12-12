@@ -4,7 +4,7 @@ import '../styles/Dashboard.css';
 import { ToastContainer, toast } from 'react-toastify';
 import { Box, Link, Card, Grid, CardActionArea, Typography, CardMedia, Button } from '@mui/material';
 import dayjs from 'dayjs';
-import { WithdrawPopup } from './confirmWithdrawPopup';
+
 import { WithdrawNotify } from './WithdrawNotifPopup';
 import reject from '../images/Reject.png'
 
@@ -257,9 +257,8 @@ export function StatusDashboard() {
                     </div>
                 )}
             </Box>
-            {openSubmitProfile && (<WithdrawPopup open={openSubmitProfile} onClose={handleCloseSubmitProfile} onSubmit={handleWithdrawProfile} profile={profile}/>)}
             {openCongratsPopup && (<WithdrawNotify open={openCongratsPopup} onClose={() => setOpenCongratsPopup(false)} />)}
-            {openPop && (<JobPopup open={openPop} onClose={closePop} openPopUp={openPopUp} currentPop={currentPop} openSubmitProfile={openSubmitProfile} openCongratsPopup={openCongratsPopup} openSubmit={handleOpenSubmitProfile} jobData={statusData} />)}
+            {openPop && (<JobPopup open={openPop} onClose={closePop} openPopUp={openPopUp} currentPop={currentPop} openCongratsPopup={openCongratsPopup} openSubmit={handleWithdrawProfile} jobData={statusData} />)}
         </div>
     )
 }
