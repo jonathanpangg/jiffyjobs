@@ -101,7 +101,7 @@ export function JobPopup({open, onClose, openPopUp, currentPop, openSubmitProfil
     }, [openPopUp])
 
     return (
-        <Dialog open={open} onClose={onClose} className={`${openSubmitProfile || openCongratsPopup ? 'blur-effect' : ''}`} maxWidth={'680px'} PaperProps={{sx: { borderRadius: "10.4px", height: '650px'}}}>
+        <Dialog open={open} onClose={onClose} className={`${openSubmitProfile || openCongratsPopup ? 'blur-effect' : ''}`} maxWidth={'680px'} PaperProps={{sx: { borderRadius: "10.4px", height: currentPop.length === 8 && currentPop[7][1] !== "submitted" ? '600px' : '650px'}}}>
         <div style={{ position: 'relative'}}>
             <CardMedia
                 component="img"
