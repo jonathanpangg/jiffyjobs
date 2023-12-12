@@ -7,7 +7,7 @@ import { Filter } from '../components/Filter';
 import { Sort } from '../components/Sort';
 import { JobPosting } from '../components/JobPosting';
 import { JobCards } from '../components/JobCards';
-import { CongratsPopup } from '../components/CongratsPopup';
+import { ConfirmPopup } from '../components/ConfirmPopup';
 import { SubmitProfilePopup } from '../components/SubmitPopup';
 import { JobPopup } from '../components/JobPopup';
 import reject from '../images/Reject.png';
@@ -30,7 +30,7 @@ export function JobBoard() {
     const totalPages = Math.ceil(totalCards / cardsPerPage);
 
     const [openSubmitProfile, setOpenSubmitProfile] = useState(false);
-    const [openCongratsPopup, setOpenCongratsPopup] = useState(false);
+    const [openConfirmPopup, setOpenConfirmPopup] = useState(false);
     const [userEmail, setUserEmail] = useState(localStorage.getItem("email"));
     const [userRole, setUserRole] = useState(localStorage.getItem("user"));
 
@@ -277,7 +277,7 @@ export function JobBoard() {
         })
         .then((data) => {
             handleCloseSubmitProfile();
-            setOpenCongratsPopup(true);
+            setOpenConfirmPopup(true);
         })
         .catch((error) => {
             const err = error.message;
@@ -317,7 +317,7 @@ export function JobBoard() {
     };
 
     const handleApplyMore = () => {
-        setOpenCongratsPopup(false); 
+        setOpenConfirmPopup(false); 
         setOpenPop(false); 
     };
 
@@ -351,8 +351,8 @@ export function JobBoard() {
                 <Pagination count={totalPages} page={page} onChange={(event, value) => setPage(value)}  className="custom-pagination" />
             </div>
             {openSubmitProfile && (<SubmitProfilePopup open={openSubmitProfile} onClose={handleCloseSubmitProfile} onSubmit={handleSubmitProfile} profile={profile}/>)}
-            {openCongratsPopup && (<CongratsPopup open={openCongratsPopup} onClose={() => setOpenCongratsPopup(false)} dashboard={handleToDashboard} apply={handleApplyMore}/>)}
-            {openPop && (<JobPopup open={openPop} onClose={closePop} openPopUp={openPopUp} currentPop={currentPop} openSubmitProfile={openSubmitProfile} openCongratsPopup={openCongratsPopup} openSubmit={handleOpenSubmitProfile} />)}
+            {openConfirmPopup && (<ConfirmPopup open={openConfirmPopup} onClose={() => setOpenConfirmPopup(false)} dashboard={handleToDashboard} apply={handleApplyMore} state={'congrats'}/>)}
+            {openPop && (<JobPopup open={openPop} onClose={closePop} openPopUp={openPopUp} currentPop={currentPop} openSubmitProfile={openSubmitProfile} openConfirmPopup={openConfirmPopup} openSubmit={handleOpenSubmitProfile} />)}
         </div>
     )
 }
