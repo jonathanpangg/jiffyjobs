@@ -72,13 +72,10 @@ export function SavedJobDashboard() {
                         });
                         setStatusData(newJobData)
                         setPrevSize(newJobData.length)
-
-                        if (statusData.length === 0) {
-                            setJobLength(true);
-                        }
                     })
                     .catch((error) => {
                         console.log(error)
+                        setJobLength(false);
                     })
             }).catch((error) => {
                 console.log(error);
