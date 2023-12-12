@@ -115,6 +115,7 @@ export function JobBoard() {
 
         // handles search jobs
         async function searchJob() {
+            console.log(searchInput)
             const route = `https://jiffyjobs-api-production.up.railway.app/api/jobs/search/${searchInput}/prop`;
             fetch(route)
                 .then((response) => {
@@ -172,7 +173,7 @@ export function JobBoard() {
         } else {
             getAllJobs()
         }
-    }, [filterList, searchInput])
+    }, [filterList, searchInput, filterData, searchData])
 
     // close popup
     const closePop = () => {
