@@ -62,7 +62,6 @@ export function StatusDashboard() {
             return res;
         })
         .then((data) => {
-            closePop();
             setOpenConfirmPopup(true);
         })
         .catch((error) => {
