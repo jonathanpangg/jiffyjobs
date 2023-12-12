@@ -34,7 +34,7 @@ export function SavedJobDashboard() {
         navigate('/jobboard');
     }
 
-    async function savedJobs(jobID, ) {
+    async function savedJobs(jobID) {
         const email = localStorage.getItem("email")
 
         const requestOptions = {
@@ -56,12 +56,30 @@ export function SavedJobDashboard() {
                 return res;
             })
             .then((_) => {
-                for (let i = 0; i < statusData.length; i++) {
-                    if (statusData[i][0] === jobID) {
-                        statusData.splice(i, 1)
-                    }
-                }
-                setStatusData(statusData)
+                const email = localStorage.getItem("email")
+                const route = "https://jiffyjobs-api-production.up.railway.app/api/users/saved/" + email
+    
+                fetch(route)
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then((data) => {
+                        const newJobData = data.map(function(obj) {
+                            return [[obj._id, obj.title], [randomImage(obj.categories.toString().split(",")[0]), obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
+                        });
+                        setStatusData(newJobData)
+                        setPrevSize(newJobData.length)
+
+                        if (statusData.length === 0) {
+                            setJobLength(true);
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
             }).catch((error) => {
                 console.log(error);
             });
