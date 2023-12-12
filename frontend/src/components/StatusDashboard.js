@@ -215,20 +215,20 @@ export function StatusDashboard() {
 
                                         <div className='overall-card'>
                                             <div className={key[7][1] === 'submitted'? "status-card": ''} >
-                                                <Typography style={{fontFamily: 'Outfit', fontSize:"14px", paddingLeft:'16px', paddingRight:'10px', paddingTop:'10px'}}>
+                                                <Typography style={{fontFamily: 'Outfit', fontSize:"14px", paddingLeft:'16px', paddingRight:'10px', paddingTop:'10px', fontWeight: 500,}}>
                                                     <u>{key[0][1]}</u>
                                                 </Typography>
-                                                <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'16px', paddingRight:'10px', paddingTop:'15px'}}>
-                                                    Pay: ${key[3][1]}
+                                                <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'16px', paddingRight:'10px', paddingTop:'15px', fontWeight: 400,}}>
+                                                    Pay: <span style={{ fontWeight: '500' }}>$</span><span style={{ fontWeight: '500' }}>{key[3][1]}</span>
                                                 </Typography>
-                                                <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'16px', paddingRight:'10px'}}>
-                                                    Location: <u>{key[2][1]}</u>
+                                                <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'16px', paddingRight:'10px', fontWeight: 400,}}>
+                                                    Location:<span style={{ fontWeight: '500' }}>{<u>{key[2][1]}</u>}</span>
                                                 </Typography>
-                                                <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'16px', paddingRight:'10px'}}>
-                                                    Time: {key[5][1]}
+                                                <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'16px', paddingRight:'10px', fontWeight: 400,}}>
+                                                    Time: <span style={{ fontWeight: '500' }}>{key[5][1]}</span>
                                                 </Typography>
-                                                <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft: '16px', paddingRight:'10px', position:'relative', overflow:'hidden', textOverflow:'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, lineHeight: '1.1', height: '26px'}}>
-                                                    Description: {key[4][1]}
+                                                <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft: '16px', paddingRight:'10px', position:'relative', overflow:'hidden', textOverflow:'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, lineHeight: '1.1', height: '27px', fontWeight: 400,}}>
+                                                    Description: <span style={{ fontWeight: '500' }}>{key[4][1]}</span>
                                                 </Typography>
                                             </div>
 

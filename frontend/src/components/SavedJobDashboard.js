@@ -272,20 +272,20 @@ export function SavedJobDashboard() {
                                     </div>
                                     <div className='overall-card'>
                                         <div style={{height: '200px'}}>
-                                            <Typography style={{fontFamily: 'Outfit', fontSize:"14px", paddingLeft:'16px', paddingRight:'10px', paddingTop:'10px'}}>
+                                            <Typography style={{fontFamily: 'Outfit', fontSize:"14px", paddingLeft:'16px', paddingRight:'10px', paddingTop:'10px', fontWeight: 500,}}>
                                                 <u>{key[0][1]}</u>
                                             </Typography>
-                                            <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'16px', paddingRight:'10px', paddingTop:'15px'}}>
-                                                Pay: ${key[3][1]}
+                                            <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'16px', paddingRight:'10px', paddingTop:'15px', fontWeight: 400,}}>
+                                                Pay: <span style={{ fontWeight: '500' }}>$</span><span style={{ fontWeight: '500' }}>{key[3][1]}</span>
                                             </Typography>
-                                            <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'16px', paddingRight:'10px'}}>
-                                                Location: <u>{key[2][1]}</u>
+                                            <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'16px', paddingRight:'10px', fontWeight: 400,}}>
+                                                Location:<span style={{ fontWeight: '500' }}>{<u>{key[2][1]}</u>}</span>
                                             </Typography>
-                                            <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'16px', paddingRight:'10px'}}>
-                                                Time: {key[5][1]}
+                                            <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft:'16px', paddingRight:'10px', fontWeight: 400,}}>
+                                                Time: <span style={{ fontWeight: '500' }}>{key[5][1]}</span>
                                             </Typography>
-                                            <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft: '16px', paddingRight:'10px', position:'relative', overflow:'hidden', textOverflow:'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, lineHeight: '1.1', height: '26px'}}>
-                                                Description: {key[4][1]}
+                                            <Typography style={{fontFamily: 'Outfit', fontSize:"12px", paddingLeft: '16px', paddingRight:'10px', position:'relative', overflow:'hidden', textOverflow:'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, lineHeight: '1.1', height: '27px', fontWeight: 400,}}>
+                                                Description: <span style={{ fontWeight: '500' }}>{key[4][1]}</span>
                                             </Typography>
                                         </div>
                                     </div>
@@ -299,7 +299,7 @@ export function SavedJobDashboard() {
                         <div style={{ textAlign: 'center', marginTop: '20px', fontFamily: 'Outfit' }}>
                             Currently you have not saved any jobs.
                         </div>
-                        <Button variant="contained" style={{ width: '200px', height: '34px', backgroundColor: '#4A4FE4', color: 'white', marginTop: '20px', fontSize: '14px', fontFamily: 'Outfit', fontWeight: 400, padding: '13px 18px', borderRadius: '8px' }} onClick={goToJobBoard}>
+                        <Button variant="contained" style={{ width: '200px', height: '34px', backgroundColor: '#4A4FE4', color: 'white', marginTop: '20px', fontSize: '14px', fontFamily: 'Outfit', fontWeight: 400, padding: '13px 18px', borderRadius: '8px'}} onClick={goToJobBoard}>
                             <span style={{textTransform:'none'}}>Find a Job to Save</span>
                         </Button>
                     </div>
