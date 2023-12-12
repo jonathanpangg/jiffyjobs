@@ -19,7 +19,7 @@ import dayjs from 'dayjs';
 var objectSupport = require("dayjs/plugin/objectSupport");
 dayjs.extend(objectSupport);
 
-export function JobPosting( { onJobDataSubmit } ) {
+export function JobPosting() {
     const [openStartPop, setOpenStartPop] = useState(false)
     const [openSecondPop, setOpenSecondPop] = useState(false)
     const [searchInput, setSearchInput] = useState("");
@@ -147,18 +147,6 @@ export function JobPosting( { onJobDataSubmit } ) {
             };
         });
     }
-
-
-    // changes the values for search input
-    const handleSearchInputChange = (event) => {
-        if (event.target.value === "") {
-            setSearchInput("");
-            onJobDataSubmit("");       
-            return;
-        } else {
-            setSearchInput(event.target.value);
-        }
-    };
     
 
     // handles the category change
@@ -701,58 +689,57 @@ export function JobPosting( { onJobDataSubmit } ) {
             })
         }
     }
-
-    const handleSearchClick = () => {
-        // search stuff
-        onJobDataSubmit(searchInput);
-    };
     
 
-    return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-            <Box style={{paddingTop: '3.9px', width: '1128px'}}> 
-                <div className='inner-div' style={{marginBottom: '8px', }}>
-                    <Card elevation={4} style={{ overflow: 'hidden', borderRadius: '15px', textAlign: 'center', height: '222px', width: '1128px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                            <div style={{ marginBottom: '29px' }}> 
-                                <text className='job-search-text' style={{}}> 
-                                    Find jobs or hire college students starting now with <span className='job-search-logo' style={{color: '#4A4FE4'}}>JIFFYJOBS</span>
-                                </text>
+    return {
+        searchInput,
+        renderJobPosting: (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                <Box style={{paddingTop: '3.9px', width: '1128px'}}> 
+                    <div className='inner-div' style={{marginBottom: '8px', }}>
+                        <Card elevation={4} style={{ overflow: 'hidden', borderRadius: '15px', textAlign: 'center', height: '222px', width: '1128px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                <div style={{ marginBottom: '29px' }}> 
+                                    <text className='job-search-text' style={{}}> 
+                                        Find jobs or hire college students starting now with <span className='job-search-logo' style={{color: '#4A4FE4'}}>JIFFYJOBS</span>
+                                    </text>
+                                </div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '23px' }}>
+                                    <TextField 
+                                        placeholder="Search Jobs..." 
+                                        type="search"  
+                                        style={{ width: '332px', }} 
+                                        value={searchInput} 
+                                        onChange={(e) => {setSearchInput(e.target.value)}}
+                                        onKeyDown={(e) => {
+                                            // if (e.key === 'Enter') {
+                                            //     handleSearchClick();
+                                            // }
+                                            // console.log(e)
+                                        }}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <Button onClick={() => {}} style={{ borderRadius: '8px', background: "#4348DB", color: 'white', minWidth: '47px', height: '47px', padding: '0', marginRight: '-6px'}}>
+                                                        <SearchIcon />
+                                                    </Button>
+                                                </InputAdornment>
+                                            ),
+                                            style: {  borderRadius: '11px', fontFamily: 'Outfit', fontSize: '18px', backgroundColor: '#EFEFEF', color: '#141414' }
+                                        }}
+                                    />
+                                    <Card sx={{ width: '140px', height: '58px' }} style={{borderRadius: '8px', background: "#4348DB", color: 'white', display: 'flex', justifyContent: 'center', cursor:'pointer'}}>
+                                        <CardContent onClick={openPop} style={{marginTop: '2px', fontFamily: 'Outfit', fontSize: '18px', fontWeight: 400}}> 
+                                            Post a Job
+                                        </CardContent>
+                                    </Card>
+                                </div>
+                                { openSecondPop ? secondJobSlide() : firstJobSlide() }
                             </div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '23px' }}>
-                                <TextField 
-                                    placeholder="Search Jobs..." 
-                                    type="search"  
-                                    style={{ width: '332px', }} 
-                                    value={searchInput} 
-                                    onChange={handleSearchInputChange}
-                                    onKeyDown={(e) => {
-                                        if (e.key === 'Enter') {
-                                            handleSearchClick();
-                                        }
-                                    }}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <Button onClick={handleSearchClick} style={{ borderRadius: '8px', background: "#4348DB", color: 'white', minWidth: '47px', height: '47px', padding: '0', marginRight: '-6px'}}>
-                                                    <SearchIcon />
-                                                </Button>
-                                            </InputAdornment>
-                                        ),
-                                        style: {  borderRadius: '11px', fontFamily: 'Outfit', fontSize: '18px', backgroundColor: '#EFEFEF', color: '#141414' }
-                                    }}
-                                />
-                                <Card sx={{ width: '140px', height: '58px' }} style={{borderRadius: '8px', background: "#4348DB", color: 'white', display: 'flex', justifyContent: 'center', cursor:'pointer'}}>
-                                    <CardContent onClick={openPop} style={{marginTop: '2px', fontFamily: 'Outfit', fontSize: '18px', fontWeight: 400}}> 
-                                        Post a Job
-                                    </CardContent>
-                                </Card>
-                            </div>
-                            { openSecondPop ? secondJobSlide() : firstJobSlide() }
-                        </div>
-                    </Card>
-                </div>
-            </Box>
-        </div>
-    )
+                        </Card>
+                    </div>
+                </Box>
+            </div>
+        )
+    }
 }

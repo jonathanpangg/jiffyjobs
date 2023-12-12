@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-
 import { Box, Typography, Divider, Pagination } from '@mui/material';
-
 import dayjs from 'dayjs';
-
 import { Filter } from '../components/Filter';
 import { Sort } from '../components/Sort';
 import { JobPosting } from '../components/JobPosting';
@@ -18,15 +15,14 @@ import reject from '../images/Reject.png';
 export function JobBoard() {
     const [jobData, setJobData] = useState([])
     const [rawData, setRawData] = useState([]);
-    const [size, setSize] = useState(0)
-    const [background, setBackground] = useState("")
-    const { render, filterList } = Filter()
+    const {render, filterList} = Filter()
+    const [filterData, setFilterData] = useState([])
+    const [searchData, setSearchData] = useState([])
+    const {renderJobPosting, searchInput} = JobPosting()
     const [openPop, setOpenPop] = useState(false)
     const [currentPop, setCurrentPop] = useState([])
     const [profile, setProfile] = useState([])
     const [gotProfile, setGotProfile] = useState(false);
-    const [filteredJobs, setfilteredJobs] = useState([]);
-    const [searchedJobs, setSearchedJobs] = useState([]);
 
     const [page, setPage] = useState(1);
     const cardsPerPage = 20;
@@ -35,68 +31,17 @@ export function JobBoard() {
 
     const [openSubmitProfile, setOpenSubmitProfile] = useState(false);
     const [openCongratsPopup, setOpenCongratsPopup] = useState(false);
-
-    const [isJobSaved, setIsJobSaved] = useState({});
-
-    const [ userEmail, setUserEmail ] = useState(localStorage.getItem("email"));
-    const [ userRole, setUserRole ] = useState(localStorage.getItem("user"));
-
-    const navigate = useNavigate();
-
-    // whenever user clicks the search button, gets directed to here
-    const handleJobPostingData = (data) => {
-        if (!data) {
-            data = ""
-        } 
-        
-        const route = `https://jiffyjobs-api-production.up.railway.app/api/jobs/search/${data}/prop`;
-        fetch(route)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then((data) => {
-                const newJobData = data.map(function(obj) {
-                    console.log(obj.time)
-                    return [[obj._id, obj.title], [randomImage(obj.categories.toString().split(",")[0]), obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
-                });
-                
-                setSearchedJobs(newJobData);
-                const updatedJobData = newJobData.filter(newJob => {
-                    return filteredJobs.some(job => job[0][0] === newJob[0][0]);
-                });
-
-                setJobData(updatedJobData);
-                setSize(updatedJobData.length);
-
-                if (size <= 4) {
-                    setBackground("1")
-                } else {
-                    setBackground("")
-                }
-
-                const savedStatus = {};
-                data.forEach(job => {
-                    savedStatus[job.id] = false; 
-                });
-                setIsJobSaved(savedStatus);
-                })
-            .catch((error) => {
-                console.log(error)
-            })
-    };
+    const [userEmail, setUserEmail] = useState(localStorage.getItem("email"));
+    const [userRole, setUserRole] = useState(localStorage.getItem("user"));
 
     // random image for category
     const randomImage = (seed) => {
         return `https://source.unsplash.com/random?${seed}`;
-    };
-
-
-    // handles getting all jobs
+    };    
+    
     useEffect(() => {
-        async function GetAllJobs() {
+        // handles getting all jobs
+        async function getAllJobs() {
             const route = "https://jiffyjobs-api-production.up.railway.app/api/jobs/get"
             fetch(route)
                 .then((response) => {
@@ -106,7 +51,7 @@ export function JobBoard() {
                     return response.json();
                 })
                 .then((data) => {
-                    const sortedData = data.sort((a, b) => {
+                    data.sort((a, b) => {
                         const startTimeA = dayjs(a.time[0]);
                         const startTimeB = dayjs(b.time[0]);
                         
@@ -121,33 +66,15 @@ export function JobBoard() {
                         console.log(obj.time)
                         return [[obj._id, obj.title], [randomImage(obj.categories.toString().split(",")[0]), obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
                     });
-                    
-                    setJobData(newJobData);
-                    setfilteredJobs(newJobData);
-                    
-
-                    const newSize = newJobData.length;
-                    setSize(newSize);
-                    if (newSize <= 4) {
-                        setBackground("1")
-                    } else {
-                        setBackground("")
-                    }
+                    setJobData(newJobData)
                 })
                 .catch((error) => {
                     console.log(error)
                 })
         }
-        if (filterList.size === 0) {
-            GetAllJobs()
-        }
-    }, [filterList]);
-    
 
-    // handles filtering job
-    useEffect(() => {
-        console.log(filterList)
-        async function FilterJobs() {
+        // handles filtering job
+        async function filterJobs() {
             const requestOptions = {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' }
@@ -163,36 +90,90 @@ export function JobBoard() {
                     return response.json();
                 })
                 .then((data) => {
+                    data.sort((a, b) => {
+                        const startTimeA = dayjs(a.time[0]);
+                        const startTimeB = dayjs(b.time[0]);
+                        
+                        if (!startTimeA.isValid()) return 1;
+                        if (!startTimeB.isValid()) return -1;
+                        
+                        return startTimeA.isAfter(startTimeB) ? 1 : -1;
+                    });
+
                     setRawData(data);
                     const newJobData = data.map(function(obj) {
                         return [[obj._id, obj.title], [randomImage(obj.categories.toString().split(",")[0]), obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
                     });
-                    setJobData(newJobData);
-                    setSize(jobData.length)
 
-                    if (size <= 4) {
-                        setBackground("1")
-                    } else {
-                        setBackground("")
-                    }
-
-                    const savedStatus = {};
-                 data.forEach(job => {
-                     savedStatus[job.id] = false; 
-                 });
-                setIsJobSaved(savedStatus);
+                    setFilterData(newJobData)
                 })
                 .catch((error) => {
                     console.log(error)
                 }
             )
         }
-        
-        if (filterList.size !== 0) {
-            setJobData([])
-            FilterJobs()
+
+        // handles search jobs
+        async function searchJob() {
+            console.log("here")
+            const route = `https://jiffyjobs-api-production.up.railway.app/api/jobs/search/${searchInput}/prop`;
+            fetch(route)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    data.sort((a, b) => {
+                        const startTimeA = dayjs(a.time[0]);
+                        const startTimeB = dayjs(b.time[0]);
+                        
+                        if (!startTimeA.isValid()) return 1;
+                        if (!startTimeB.isValid()) return -1;
+                        
+                        return startTimeA.isAfter(startTimeB) ? 1 : -1;
+                    });
+    
+                    setRawData(data);
+                    const newJobData = data.map(function(obj) {
+                        return [[obj._id, obj.title], [randomImage(obj.categories.toString().split(",")[0]), obj.job_poster], ["", obj.location], ["", obj.pay], ["", obj.description], ["", dayjs(new Date(obj.time[0])).format('MM/DD/YY h:mm A')  + " " + " - " + dayjs(new Date(obj.time[1])).format('h:mm A')], ["", obj.categories.toString()]]
+                    });
+
+                    setSearchData(newJobData)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        };
+    
+        if (searchInput !== "" && filterList.size !== 0) {
+            filterJobs()
+            searchJob()
+
+            var oldData = []
+            var resultingData = []
+
+            for (let i = 0; i < filterData.length; i++) {
+                oldData.push(filterData[i][0][1])
+            }
+
+            for (let i = 0; i < searchData.length; i++) {
+                if (oldData.includes(searchData[i][0][1])) {
+                    resultingData.push(searchData[i])
+                }
+            }
+            setJobData(resultingData);
+        } else if (searchInput !== "") {
+            searchJob()
+            setJobData(searchData)
+        } else if (filterList.size !== 0) {
+            filterJobs()
+            setJobData(filterData)
+        } else {
+            getAllJobs()
         }
-    }, [filterList])
+    }, [filterList, searchInput])
 
     // close popup
     const closePop = () => {
@@ -340,7 +321,7 @@ export function JobBoard() {
     
     return (
         <div className={`outerCard2 ${openPop ? 'blur-background' : ''}`}>
-            <JobPosting onJobDataSubmit={handleJobPostingData} /> 
+            { renderJobPosting } 
             <Box className='job-table-box'>
                 <div className='job-table-inner' style={{ paddingTop: '50px', width: '1136px'}}>
                     <Typography style={{fontFamily: 'Outfit', fontSize: '20px', justifyContent: 'center', alignItems: 'center', textAlign: 'start'}}>
