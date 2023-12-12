@@ -56,7 +56,7 @@ export function Sort({ rawData, setRawData, setJobData }) {
     
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <Grid container justifyContent="flex-end" alignItems="center" style={{ marginLeft: '-72px' }}>
+            <Grid container justifyContent="flex-end" alignItems="center" style={{ marginLeft: '-85.5px' }}>
                 <div style={{width: '12.5%', whiteSpace: 'nowrap'}} className='filters'>
                     <Grid 
                       item
