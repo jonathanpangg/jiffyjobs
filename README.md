@@ -60,6 +60,7 @@ To learn more about our backend, please look at the following resources:
 - [Express.js Documentation](https://expressjs.com/) - learn more about Express.js 
 - [MongoDB Documentation](https://www.mongodb.com/docs/) - learn more about MongoDB
 - [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) - learn more about jsonwebtokens
-- [bcrypt](https://www.npmjs.com/package/bcrypt) - learn more about bcrypt 
+- [bcrypt](https://www.npmjs.com/package/bcrypt) - learn more about bcrypt
+- [Vercel Deployment](https://vercel.com/docs/deployments/overview) - learn more about deploying with Vercel
 
 ## Snapshots
