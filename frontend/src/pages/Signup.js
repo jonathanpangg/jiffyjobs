@@ -161,6 +161,7 @@ export function Signup() {
         })
         .catch((error) => {
             const err = error.message;
+            toast.dismiss();
             if (err.startsWith('Error: ')) {
                 alert(err.slice(7));
                 toast.error(err.slice(7), {
