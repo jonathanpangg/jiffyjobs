@@ -154,7 +154,7 @@ export function Profile() {
             body: JSON.stringify(bodyData)
         };
     
-        const route = 'http://jiffyjobs.vercel.app/api/users/getinfo/update';
+        const route = 'https://jiffyjobs.vercel.app/api/users/getinfo/update';
         await fetch(route, update)
             .then(async (response) => {
                 const res = await response.json();
