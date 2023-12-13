@@ -46,7 +46,7 @@ export function SavedJobDashboard() {
             })
         }
 
-        const route = "https://jiffyjobs-api-production.up.railway.app/api/users/save";
+        const route = "https://jiffyjobs.vercel.app/api/users/save";
         fetch(route, requestOptions)
             .then((response) => {
                 const res = response.json()
@@ -57,7 +57,7 @@ export function SavedJobDashboard() {
             })
             .then((_) => {
                 const email = localStorage.getItem("email")
-                const route = "https://jiffyjobs-api-production.up.railway.app/api/users/saved/" + email
+                const route = "https://jiffyjobs.vercel.app/api/users/saved/" + email
     
                 fetch(route)
                     .then((response) => {
@@ -134,7 +134,7 @@ export function SavedJobDashboard() {
                 headers: { 'Content-Type': 'application/json' },
             }
     
-            const route = `https://jiffyjobs-api-production.up.railway.app/api/users/getinfo/${userEmail}/${userRole}`;
+            const route = `https://jiffyjobs.vercel.app/api/users/getinfo/${userEmail}/${userRole}`;
             fetch(route, requestedOptions)
             .then(async (response) => {
                 const res = await response.json()
@@ -234,7 +234,7 @@ export function SavedJobDashboard() {
     useEffect(() => {
         async function getJobs() {
             const email = localStorage.getItem("email")
-            const route = "https://jiffyjobs-api-production.up.railway.app/api/users/saved/" + email
+            const route = "https://jiffyjobs.vercel.app/api/users/saved/" + email
 
             fetch(route)
                 .then(async (response) => {
