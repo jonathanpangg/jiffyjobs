@@ -125,6 +125,7 @@ export function Login() {
         })
         .catch((error) => {
             const err = error.message;
+            toast.dismiss();
             if (err.startsWith('Error: ')) {
                 toast.error(err.slice(7), {
                     icon: ({theme, type}) =>  <img src={reject} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,

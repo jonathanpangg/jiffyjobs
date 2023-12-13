@@ -119,7 +119,7 @@ export function JobBoard() {
                         ];
                     });
             
-                    return newFilterData;
+                    return [newFilterData, data];
                 } catch (error) {
                     console.error(error);
                     return []; 
@@ -159,7 +159,7 @@ export function JobBoard() {
                             ["", obj.categories.toString()]
                         ];
                     });
-                    return newJobData;
+                    return [newJobData, data];
                 } catch (error) {
                     console.error(error);
                     return []; 
@@ -170,17 +170,41 @@ export function JobBoard() {
                 getAllJobs();
             } else if (filterList.size === 0 && searchInput !== "") {
                 const searchJobdata = await searchJob();
-                setJobData(searchJobdata);
+                setJobData(searchJobdata[0]);
             } else if (filterList.size > 0 && searchInput === "") {
                 const filterJobdata = await filterJobs();
-                setJobData(filterJobdata);
+                setJobData(filterJobdata[0]);
             } else {
-                const searchJobData = await searchJob();
-                const filterJobData = await filterJobs();
-                const commonData = searchJobData.filter(searchItem =>
-                    filterJobData.some(filterItem => filterItem[0][0] === searchItem[0][0]));
-                console.log("asdfasfa");
-                setJobData(commonData);
+                const searchJobDataArr = await searchJob();
+                const filterJobDataArr = await filterJobs();
+                if (searchJobDataArr.length >= 2 && filterJobDataArr.length >= 2) {
+                    const searchJobData = searchJobDataArr[0];
+                    const filterJobData = filterJobDataArr[0];
+                    const searchRawData = searchJobDataArr[1];
+                    const filterRawData = filterJobDataArr[1];
+                    const commonData = searchJobData.filter(searchItem =>
+                        filterJobData.some(filterItem => filterItem[0][0] === searchItem[0][0]));
+                    console.log("asdfasfa");
+                    setJobData(commonData);
+                    console.log(filterRawData)
+
+                    var searchRaw = []
+                    console.log(searchRawData)
+                    for (let i = 0; i < searchRawData.length; i++) {
+                       searchRaw.push(searchRawData[i]._id)
+                    }
+
+                    var commonRawData = []
+                    console.log(searchRaw)
+                    for (let i = 0; i < filterRawData.length; i++) {
+                        if (searchRaw.includes(filterRawData[i]._id)) {
+                            commonRawData.push(filterRawData[i])
+                        }
+                    }
+
+                    console.log(commonRawData)
+                    setRawData(commonRawData)
+                }
             }
         }
         getJobs();
