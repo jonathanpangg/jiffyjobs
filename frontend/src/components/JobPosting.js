@@ -648,6 +648,7 @@ export function JobPosting() {
         const hasDateError = !selectedDate;
 
         const isToday = selectedDate && dayjs(selectedDate).isSame(dayjs(), 'day');
+
         let isStartTimeInvalid = false;
 
         if (startTime) {
@@ -704,9 +705,10 @@ export function JobPosting() {
                 .then((response) => {
                     response.json()
                     toast.dismiss()
-                    toast.success('Your job has been posted!', {
+                    toast.success('Success! Please refresh to view', {
                         icon: ({theme, type}) =>  <img src={accept} style={{ width: '24px', height: '24px', marginRight: '10px', marginBottom:'6px'}}/>,
                         progressStyle: {backgroundColor: '#66C120'},
+                        style: {fontFamily: 'Outfit'},
                         position: "top-center",
                         autoClose: 5000,
                         hideProgressBar: false,
