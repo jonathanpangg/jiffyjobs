@@ -166,7 +166,7 @@ export function SavedJobDashboard() {
             })
         }
 
-        const route = "https://jiffyjobs-api-production.up.railway.app/api/users/apply";
+        const route = "https://jiffyjobs.vercel.app/api/users/apply";
         fetch(route, user)
         .then(async (response) => {
             const res = await response.json()
@@ -327,7 +327,7 @@ export function SavedJobDashboard() {
                 )}
             </Box>
             {openSubmitProfile && (<SubmitProfilePopup open={openSubmitProfile} onClose={handleCloseSubmitProfile} onSubmit={handleSubmitProfile} profile={profile}/>)}
-            {openConfirmPopup && (<ConfirmPopup open={openConfirmPopup} onClose={() => setOpenConfirmPopup(false)} dashboard={handleToDashboard} apply={() => navigate('/jobboard')}/>)}
+            {openConfirmPopup && (<ConfirmPopup open={openConfirmPopup} onClose={() => setOpenConfirmPopup(false)} dashboard={handleToDashboard} apply={() => navigate('/jobboard')} state={'congrats'} />)}
             {openPop && (<JobPopup open={openPop} onClose={closePop} openPopUp={openPopUp} currentPop={currentPop} openSubmitProfile={openSubmitProfile} openConfirmPopup={openConfirmPopup} openSubmit={handleOpenSubmitProfile} save={'save'}/>)}
         </div>
     )

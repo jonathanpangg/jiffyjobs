@@ -47,7 +47,7 @@ export function StatusDashboard() {
             headers: { 'Content-Type': 'application/json' },
         }
 
-        const route = `https://jiffyjobs-api-production.up.railway.app/api/users/withDraw/${currentPop[0][0]}/${userEmail}`;
+        const route = `https://jiffyjobs.vercel.app/api/users/withDraw/${currentPop[0][0]}/${userEmail}`;
         fetch(route, user)
         .then(async (response) => {
             const res = await response.json()
@@ -108,7 +108,7 @@ export function StatusDashboard() {
     useEffect(() => {
         async function getJobs() {
             const email = localStorage.getItem("email")
-            const route = `https://jiffyjobs-api-production.up.railway.app/api/users/jobsApplied/${email}`
+            const route = `https://jiffyjobs.vercel.app/api/users/jobsApplied/${email}`
             fetch(route)
                 .then(async (response) => {
                     if (!response.ok) {
@@ -222,7 +222,7 @@ export function StatusDashboard() {
                     </div>
                 )}
             </Box>
-            {openConfirmPopup && (<ConfirmPopup open={openConfirmPopup} onClose={handleCloseConfirm} />)}
+            {openConfirmPopup && (<ConfirmPopup open={openConfirmPopup} onClose={handleCloseConfirm}/>)}
             {openPop && (<JobPopup open={openPop} onClose={closePop} openPopUp={openPopUp} currentPop={currentPop} openConfirmPopup={openConfirmPopup} openSubmit={handleWithdrawProfile} jobData={statusData} save={'save'} />)}
         </div>
     )

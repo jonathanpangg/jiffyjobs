@@ -41,7 +41,7 @@ export function JobPopup({open, onClose, openPopUp, currentPop, openSubmitProfil
                 })
             }
 
-            const route = "https://jiffyjobs-api-production.up.railway.app/api/users/save";
+            const route = "https://jiffyjobs.vercel.app/api/users/save";
             await fetch(route, save)
             .then(async (response) => {
                 const res = await response.json()
@@ -62,7 +62,7 @@ export function JobPopup({open, onClose, openPopUp, currentPop, openSubmitProfil
     };
 
     async function getJobs() {
-        const route = `https://jiffyjobs-api-production.up.railway.app/api/users/saved/${userEmail}`
+        const route = `https://jiffyjobs.vercel.app/api/users/saved/${userEmail}`
 
         fetch(route)
             .then(async (response) => {

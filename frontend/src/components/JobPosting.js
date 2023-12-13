@@ -699,7 +699,7 @@ export function JobPosting() {
                     poster_email: localStorage.getItem("email")
                 })
             }
-            const route = "https://jiffyjobs-api-production.up.railway.app/api/jobs/create"
+            const route = "https://jiffyjobs.vercel.app/api/jobs/create"
             console.log(requestOptions)
             fetch(route, requestOptions)
                 .then((response) => {

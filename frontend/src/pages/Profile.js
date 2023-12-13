@@ -95,7 +95,7 @@ export function Profile() {
     }, [showToken])
 
     async function getProfile() {
-        const route = `https://jiffyjobs-api-production.up.railway.app/api/users/getinfo/${userEmail}/${userRole}`;
+        const route = `https://jiffyjobs.vercel.app/api/users/getinfo/${userEmail}/${userRole}`;
         fetch(route)
             .then(async (response) => {
                 const res = await response.json();

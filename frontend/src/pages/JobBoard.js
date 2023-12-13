@@ -45,7 +45,7 @@ export function JobBoard() {
         async function getJobs() {
             // handles getting all jobs
             async function getAllJobs() {;
-                const route = "https://jiffyjobs-api-production.up.railway.app/api/jobs/get";
+                const route = "https://jiffyjobs.vercel.app/api/jobs/get";
                 fetch(route)
                     .then((response) => {
                         if (!response.ok) {
@@ -83,7 +83,7 @@ export function JobBoard() {
                         method: 'GET',
                         headers: { 'Content-Type': 'application/json' }
                     };
-                    var route = "https://jiffyjobs-api-production.up.railway.app/api/jobs/filter";
+                    var route = "https://jiffyjobs.vercel.app/api/jobs/filter";
                     var query = "/*/*/" + Array.from(filterList) + "/*/*";
                     route += query;
             
@@ -129,7 +129,7 @@ export function JobBoard() {
             // handles search jobs
             async function searchJob() {
                 try {
-                    const route = `https://jiffyjobs-api-production.up.railway.app/api/jobs/search/${searchInput}/prop`;
+                    const route = `https:/jiffyjobs.vercel.app/api/jobs/search/${searchInput}/prop`;
                     const response = await fetch(route);
             
                     if (!response.ok) {
@@ -239,7 +239,7 @@ export function JobBoard() {
                 headers: { 'Content-Type': 'application/json' },
             }
     
-            const route = `https://jiffyjobs-api-production.up.railway.app/api/users/getinfo/${userEmail}/${userRole}`;
+            const route = `https://jiffyjobs.vercel.app/api/users/getinfo/${userEmail}/${userRole}`;
             fetch(route, requestedOptions)
             .then(async (response) => {
                 const res = await response.json()
@@ -276,7 +276,7 @@ export function JobBoard() {
             })
         }
 
-        const route = "https://jiffyjobs-api-production.up.railway.app/api/users/apply";
+        const route = "https://jiffyjobs.vercel.app/api/users/apply";
         fetch(route, user)
         .then(async (response) => {
             const res = await response.json()
