@@ -137,9 +137,9 @@ export function Signup() {
         }
         
         console.log(role);
-        let route = "https://jiffyjobs-api-production.up.railway.app/api/auth/providerSignUp";
+        let route = "https://jiffyjobs.vercel.app/api/auth/providerSignUp";
         if (role === 'jobSeeker' || val.email.endsWith(".edu")) {
-            route = "https://jiffyjobs-api-production.up.railway.app/api/auth/seekerSignUp";
+            route = "https://jiffyjobs.vercel.app/api/auth/seekerSignUp";
         }
         fetch(route, register)
         .then(async (response) => {

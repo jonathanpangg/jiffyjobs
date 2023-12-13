@@ -24,7 +24,7 @@ export function PostedJobDashboard() {
     useEffect(() => {
         async function getJobs() {
             const email = localStorage.getItem("email")
-            const route = "https://jiffyjobs-api-production.up.railway.app/api/users/jobsPosted/" + email
+            const route = "https://jiffyjobs.vercel.app/api/users/jobsPosted/" + email
 
             fetch(route)
                 .then((response) => {

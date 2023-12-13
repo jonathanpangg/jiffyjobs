@@ -22,7 +22,7 @@ export function ViewApplicants({children, jobID}) {
     }
 
     async function getUserInfo(email) {
-        const route = "https://jiffyjobs-api-production.up.railway.app/api/users/getInfo/" + email + "/seeker"
+        const route = "https://jiffyjobs.vercel.appp/api/users/getInfo/" + email + "/seeker"
 
         fetch(route)
             .then((response) => {
@@ -45,7 +45,7 @@ export function ViewApplicants({children, jobID}) {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' }
         }
-        const route = "https://jiffyjobs-api-production.up.railway.app/api/users/hire/" + jobID + "/" + email
+        const route = "https://jiffyjobs.vercel.app/api/users/hire/" + jobID + "/" + email
 
         fetch(route, requestOptions)
             .then((response) => {
@@ -80,7 +80,7 @@ export function ViewApplicants({children, jobID}) {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' }
         }
-        const route = "https://jiffyjobs-api-production.up.railway.app/api/users/reject/" + jobID + "/" + email
+        const route = "https://jiffyjobs.vercel.app/api/users/reject/" + jobID + "/" + email
 
         fetch(route, requestOptions)
             .then((response) => {
@@ -112,7 +112,7 @@ export function ViewApplicants({children, jobID}) {
 
     useEffect(() => {
         async function getApplicants() {
-            const route = "https://jiffyjobs-api-production.up.railway.app/api/users/applicants/" + jobID
+            const route = "https://jiffyjobs.vercel.app/api/users/applicants/" + jobID
 
             fetch(route)
                 .then((response) => {
