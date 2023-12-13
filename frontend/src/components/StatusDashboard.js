@@ -228,7 +228,7 @@ export function StatusDashboard() {
                 )}
             </Box>
             {openConfirmPopup && (<ConfirmPopup open={openConfirmPopup} onClose={handleCloseConfirm} />)}
-            {openPop && (<JobPopup open={openPop} onClose={closePop} openPopUp={openPopUp} currentPop={currentPop} openConfirmPopup={openConfirmPopup} openSubmit={handleWithdrawProfile} jobData={statusData} />)}
+            {openPop && (<JobPopup open={openPop} onClose={closePop} openPopUp={openPopUp} currentPop={currentPop} openConfirmPopup={openConfirmPopup} openSubmit={handleWithdrawProfile} jobData={statusData} save={'save'} />)}
         </div>
     )
 }
