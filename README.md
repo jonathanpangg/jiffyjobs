@@ -41,7 +41,7 @@ If you would like to modify any of the code, visit the following folders:
 - `frontend/src/components` - to see our components
 
 ## Built With 
-This webapp was built with 
+This webapp was built with: 
 - React.js
 - Node.js
 - Express.js
@@ -65,17 +65,17 @@ To learn more about our backend, please look at the following resources:
 
 ## Snapshots
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Job Board
 <p align="middle">
-  <img width="800" src="https://github.com/jonathanpangg/jiffyjobs/blob/main/frontend/assets/screenshots/jobboard.png"/>
+  The Job Board<br />
+  <kbd><img width="800" src="https://github.com/jonathanpangg/jiffyjobs/blob/main/frontend/assets/screenshots/jobboard.png"/></kbd>
 </p>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Dashboard
 <p align="middle">
-  <img width="800" src="https://github.com/jonathanpangg/jiffyjobs/blob/main/frontend/assets/screenshots/dashboard.png"/>
+  The Dashboard<br />
+  <kbd><img width="800" src="https://github.com/jonathanpangg/jiffyjobs/blob/main/frontend/assets/screenshots/dashboard.png"/></kbd>
 </p>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Profile
 <p align="middle">
-  <img width="800" src="https://github.com/jonathanpangg/jiffyjobs/blob/main/frontend/assets/screenshots/profile.png"/>
+  The Profile<br />
+  <kbd><img width="800" src="https://github.com/jonathanpangg/jiffyjobs/blob/main/frontend/assets/screenshots/profile.png"/></kbd>
 </p>
