@@ -59,8 +59,23 @@ To learn more about our backend, please look at the following resources:
 - [Node.js Documentation](https://nodejs.org/docs/latest/api/) - learn more about Node.js
 - [Express.js Documentation](https://expressjs.com/) - learn more about Express.js 
 - [MongoDB Documentation](https://www.mongodb.com/docs/) - learn more about MongoDB
-- [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) - learn more about jsonwebtokens
-- [bcrypt](https://www.npmjs.com/package/bcrypt) - learn more about bcrypt
+- [jsonwebtoken Documentation](https://www.npmjs.com/package/jsonwebtoken) - learn more about jsonwebtokens
+- [bcrypt Documentation](https://www.npmjs.com/package/bcrypt) - learn more about bcrypt
 - [Vercel Deployment](https://vercel.com/docs/deployments/overview) - learn more about deploying with Vercel
 
 ## Snapshots
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Job Board
+<p align="middle">
+  <img width="800" src="https://github.com/jonathanpangg/jiffyjobs/blob/main/frontend/assets/screenshots/jobboard.png"/>
+</p>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Dashboard
+<p align="middle">
+  <img width="800" src="https://github.com/jonathanpangg/jiffyjobs/blob/main/frontend/assets/screenshots/dashboard.png"/>
+</p>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Profile
+<p align="middle">
+  <img width="800" src="https://github.com/jonathanpangg/jiffyjobs/blob/main/frontend/assets/screenshots/profile.png"/>
+</p>
