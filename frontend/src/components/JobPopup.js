@@ -15,7 +15,6 @@ export function JobPopup({open, onClose, openPopUp, currentPop, openSubmitProfil
     const [savedJobs, setSavedJobs] = useState([]) 
     const [jobSaved, setJobSaved] = useState(false)
 
-
     const toggleSaveJob = async (jobDetails) => {
         if (userRole === "provider") {
             toast.dismiss()
@@ -102,7 +101,7 @@ export function JobPopup({open, onClose, openPopUp, currentPop, openSubmitProfil
     }, [openPopUp])
 
     return (
-        <Dialog open={open} onClose={onClose} className={`${openSubmitProfile || openCongratsPopup ? 'blur-effect' : ''}`} maxWidth={'680px'} PaperProps={{sx: { borderRadius: "10.4px", height: currentPop.length === 8 && currentPop[7][1] !== "submitted" ? '600px' : '650px'}}}>
+        <Dialog open={open} onClose={onClose} className={`${openSubmitProfile || openCongratsPopup ? 'blur-effect' : ''}`} maxWidth={'680px'} PaperProps={{sx: { borderRadius: "10.4px", height: currentPop.length === 8 && currentPop[7][1] !== "submitted" || userRole !== 'seeker' ? '600px' : '650px'}}}>
         <div style={{ position: 'relative'}}>
             <CardMedia
                 component="img"
@@ -123,7 +122,7 @@ export function JobPopup({open, onClose, openPopUp, currentPop, openSubmitProfil
                             {currentPop[0] && currentPop[0].length > 1 && currentPop[0][1]}
                         </Typography>
                         <div style={{ display: 'inline-block', position: 'relative' }}>
-                            {save === 'save' ? (
+                            {save === 'save' || userRole !== 'seeker' ? (
                                 <div></div>
                             ) : (
                                     <IconButton onClick={() => toggleSaveJob(currentPop[0][0])} style={{ borderRadius: '10px' }}>
@@ -221,7 +220,7 @@ export function JobPopup({open, onClose, openPopUp, currentPop, openSubmitProfil
                         <Divider/>
                     </div>
                 </div>
-            { currentPop.length === 8 && currentPop[7][1] !== "submitted" ?
+            { currentPop.length === 8 && currentPop[7][1] !== "submitted" || userRole !== 'seeker'  ?
                <div></div>
             :
             <DialogActions style={{ justifyContent: 'center', marginBottom: '6.58px', marginTop: '6.58px' }}>

@@ -19,16 +19,11 @@ export function StatusDashboard() {
     const [prevSize, setPrevSize] = useState([])
     const [openPop, setOpenPop] = useState(false)
     const [currentPop, setCurrentPop] = useState([])
-    const [gotProfile, setGotProfile] = useState(false);
-    const [profile, setProfile] = useState([])
-    const [openSubmitProfile, setOpenSubmitProfile] = useState(false);
     const [openConfirmPopup, setOpenConfirmPopup] = useState(false);
 
     const [jobLength, setJobLength] = useState(true);
 
-
     const [ userEmail, setUserEmail ] = useState(localStorage.getItem("email"));
-    const [ userRole, setUserRole ] = useState(localStorage.getItem("user"));
 
     const navigate = useNavigate();
 
