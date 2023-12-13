@@ -22,7 +22,7 @@ export function ViewApplicants({children, jobID}) {
     }
 
     async function getUserInfo(email) {
-        const route = "https://jiffyjobs.vercel.appp/api/users/getInfo/" + email + "/seeker"
+        const route = "https://jiffyjobs.vercel.app/api/users/getInfo/" + email + "/seeker"
 
         fetch(route)
             .then((response) => {
