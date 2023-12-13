@@ -170,7 +170,9 @@ export function JobPosting() {
     function handleDate(event) {
         const newDate = dayjs(event);
         setSelectedDate(newDate);
-    
+
+        const isPastDate = newDate.isBefore(dayjs(), 'day');
+
         setVal(prevVal => ({
             ...prevVal,
             date: {
@@ -181,14 +183,15 @@ export function JobPosting() {
             startTime: prevVal.startTime,
             endTime: prevVal.endTime
         }));
-    
+
         setError(prevError => ({
             ...prevError,
-            dateError: !newDate.isValid()
+            dateError: !newDate.isValid() || isPastDate
         }));
-    
+
         validateStartAndEndTime(newDate, startTime, endTime);
     }
+
 
     // handles the start time
     function handleStartTime(time) {
@@ -645,7 +648,9 @@ export function JobPosting() {
         const hasPayError = val.pay === '' || parseFloat(val.pay) <= 0;
         const hasDescriptionError = val.description === '';
         const hasCategoryError = selectedCategories.length === 0;
-        const hasDateError = !selectedDate;
+        const isPastDate = selectedDate && dayjs(selectedDate).isBefore(dayjs(), 'day');
+        const hasDateError = !selectedDate || isPastDate;
+
 
         const isToday = selectedDate && dayjs(selectedDate).isSame(dayjs(), 'day');
 
