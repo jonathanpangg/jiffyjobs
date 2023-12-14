@@ -129,7 +129,7 @@ export function JobBoard() {
             // handles search jobs
             async function searchJob() {
                 try {
-                    const route = `https:/jiffyjobs.vercel.app/api/jobs/search/${searchInput}/prop`;
+                    const route = `https://jiffyjobs.vercel.app/api/jobs/search/${searchInput}/prop`;
                     const response = await fetch(route);
             
                     if (!response.ok) {
