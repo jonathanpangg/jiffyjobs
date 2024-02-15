@@ -13,7 +13,9 @@ const app = express();
 
 // enable CORS 
 app.use(cors({
-  origin: 'https://jiffyjobs-b7c65.web.app'
+  origin: '*',
+  headers: 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization',
+  credentials: true,
 }));
 
 app.use(express.json());
