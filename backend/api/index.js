@@ -15,13 +15,13 @@ app.use(cors({
 }));
 
 // middleware
-app.use(express.json())
+app.use(express.json());
+
 app.use((req, res, next) => {
-  console.log(req.path, req.method)
-  next()
-})
-
-
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 
 // routes
 app.use('/api/jobs', jobRoutes)
