@@ -14,9 +14,11 @@ const app = express();
 // enable CORS 
 app.use(cors({
   origin: '*',
-  headers: 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization',
+  headers: '*',
   credentials: true,
 }));
+
+console.log(process.env.DB);
 
 app.use(express.json());
 
